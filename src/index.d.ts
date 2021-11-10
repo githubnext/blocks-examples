@@ -1,6 +1,6 @@
 interface FileContext {
   download_url: string;
-  filename: string;
+  file: string;
   path: string;
   repo: string;
   owner: string;
@@ -22,7 +22,7 @@ type FileViewerProps = FileData & CommonViewerProps;
 
 interface FolderContext {
   download_url: string;
-  filename: string; // this is the folder name
+  folder: string; // this is the folder name
   path: string;
   repo: string;
   owner: string;

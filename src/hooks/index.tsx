@@ -59,7 +59,7 @@ async function getFolderContent(
 
   const context = {
     download_url: apiUrl,
-    filename: path.split("/").pop() || "",
+    folder: path.split("/").pop() || "",
     path: path,
     repo: repo,
     owner: owner,
@@ -95,7 +95,7 @@ async function getFileContent(
 
   const context = {
     download_url: apiUrl,
-    filename: path.split("/").pop() || "",
+    file: path.split("/").pop() || "",
     path: path,
     repo: repo,
     owner: owner,
