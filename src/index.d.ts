@@ -22,7 +22,7 @@ type FileViewerProps = FileData & CommonViewerProps;
 
 interface FolderContext {
   download_url: string;
-  folder: string; // this is the folder name
+  folder: string;
   path: string;
   repo: string;
   owner: string;
