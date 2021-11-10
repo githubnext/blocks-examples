@@ -9,27 +9,70 @@
   "viewers": [
     {
       "type": "file",
-      "title": "Example File Viewer",
-      "description": "A basic file viewer",
-      "entry": "/viewers/example-file-viewer/index.tsx"
+      "title": "Code viewer",
+      "description": "A basic code viewer",
+      "entry": "/viewers/file-viewers/code/index.tsx",
+      "extensions": [
+        "*"
+      ]
     },
     {
-      "type": "folder",
-      "title": "Example Folder Viewer",
-      "description": "A basic folder viewer",
-      "entry": "/viewers/example-folder-viewer/index.tsx"
+      "type": "file",
+      "title": "Drawing viewer",
+      "description": "A whiteboard tool",
+      "entry": "/viewers/file-viewers/excalidraw.tsx",
+      "extensions": [
+        "excalidraw"
+      ]
+    },
+    {
+      "type": "file",
+      "title": "CSS viewer",
+      "description": "View selectors in a css file",
+      "entry": "/viewers/file-viewers/css.tsx",
+      "extensions": [
+        "css"
+      ]
+    },
+    {
+      "type": "file",
+      "title": "3D viewer",
+      "description": "A viewer for 3d files",
+      "entry": "/viewers/file-viewers/3d-files.tsx",
+      "extensions": [
+        "obj",
+        "fbx",
+        "gltf",
+        "glb"
+      ]
+    },
+    {
+      "type": "file",
+      "title": "Flat viewer",
+      "description": "A viewer for flat data files",
+      "entry": "/viewers/file-viewers/flat.tsx",
+      "extensions": [
+        "csv",
+        "json"
+      ]
     }
   ],
   "dependencies": {
     "@codesandbox/sandpack-react": "^0.1.20",
+    "@excalidraw/excalidraw": "^0.10.0",
     "@octokit/rest": "^18.12.0",
+    "@react-three/drei": "^7.20.5",
+    "@react-three/fiber": "^7.0.19",
     "buffer": "^6.0.3",
+    "cssjson": "^2.1.3",
     "git-url-parse": "^11.6.0",
     "lodash": "^4.17.21",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
     "react-error-boundary": "^3.1.4",
-    "react-query": "^3.32.1"
+    "react-query": "^3.32.1",
+    "react-syntax-highlighter": "^15.4.4",
+    "three": "^0.134.0"
   },
   "devDependencies": {
     "@tailwindcss/forms": "^0.3.4",
@@ -38,6 +81,7 @@
     "@types/parse-github-url": "^1.0.0",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
+    "@types/react-syntax-highlighter": "^13.5.2",
     "@vitejs/plugin-react": "^1.0.0",
     "autoprefixer": "^10.4.0",
     "postcss": "^8.3.11",

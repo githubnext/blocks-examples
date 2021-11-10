@@ -35,7 +35,11 @@ async function getFolderContent(
 
   const apiUrl = `https://api.github.com/repos/${owner}/${repo}/git/trees/${branch}?recursive=1`;
 
-  const res = await fetch(apiUrl);
+  const res = await fetch(apiUrl, {
+    headers: {
+      Accept: `Bearer ${PAT}`,
+    },
+  });
   const { tree } = await res.json();
 
   return (tree as TreeItem[]).filter((item) => {
@@ -43,13 +47,18 @@ async function getFolderContent(
   });
 }
 
+const PAT = import.meta.env.VITE_GITHUB_PAT
 async function getFileContent(
   params: UseFileContentParams
 ): Promise<DirectoryItem[]> {
   const { repo, owner, path, fileRef } = params;
 
   const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${path}?ref=${fileRef}`;
-  const res = await fetch(apiUrl);
+  const res = await fetch(apiUrl, {
+    headers: {
+      Accept: `Bearer ${PAT}`,
+    },
+  });
 
   if (res.status !== 200) throw new Error("Something bad happened");
 
