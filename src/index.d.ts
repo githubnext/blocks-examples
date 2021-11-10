@@ -1,7 +1,6 @@
-interface ViewerMeta {
-  language: string;
+interface FileContext {
   download_url: string;
-  name: string;
+  filename: string;
   path: string;
   repo: string;
   owner: string;
@@ -15,10 +14,11 @@ interface CommonViewerProps {
   onRequestUpdateContent: () => any;
 }
 
-interface FileViewerProps extends CommonViewerProps {
+interface FileData {
   content: string;
-  meta: ViewerMeta;
+  context: FileContext;
 }
+type FileViewerProps = FileData & CommonViewerProps;
 
 interface FolderViewerProps extends CommonViewerProps {
   tree: {

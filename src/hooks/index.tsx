@@ -50,10 +50,13 @@ async function getFolderContent(
 const PAT = import.meta.env.VITE_GITHUB_PAT
 async function getFileContent(
   params: UseFileContentParams
-): Promise<DirectoryItem[]> {
+): Promise<FileData> {
   const { repo, owner, path, fileRef } = params;
 
-  const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${path}?ref=${fileRef}`;
+  // const apiUrl = `https://github.com/${owner}/${repo}/raw/HEAD/${path}`;
+  // const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${path}?ref=${fileRef}`;
+
+  const apiUrl = `https://raw.githubusercontent.com/${owner}/${repo}/HEAD/${path}`
   const res = await fetch(apiUrl, {
     headers: {
       Accept: `Bearer ${PAT}`,
@@ -62,18 +65,27 @@ async function getFileContent(
 
   if (res.status !== 200) throw new Error("Something bad happened");
 
-  const data = await res.json();
+  const content = await res.text();
 
-  if (Array.isArray(data)) {
-    return data.map(convertContentToString);
-  } else {
-    return [convertContentToString(data)];
+  const context = {
+    download_url: apiUrl,
+    filename: path.split("/").pop() || "",
+    path: path,
+    repo: repo,
+    owner: owner,
+    sha: "HEAD",
+    username: "mona",
+  }
+
+  return {
+    content,
+    context
   }
 }
 
 export function useFileContent(
   params: UseFileContentParams,
-  config?: UseQueryOptions<DirectoryItem[]>
+  config?: UseQueryOptions<FileData>
 ) {
   const { repo, owner, path, fileRef } = params;
 

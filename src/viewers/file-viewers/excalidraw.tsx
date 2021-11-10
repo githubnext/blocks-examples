@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import Excalidraw, { serializeAsJSON } from "@excalidraw/excalidraw"
 
 export function Viewer(props: FileViewerProps) {
-  const { content, meta, onRequestUpdateContent } = props;
+  const { content, onRequestUpdateContent } = props;
 
   const [appState, setAppState] = useState(null);
   const [elements, setElements] = useState([]);

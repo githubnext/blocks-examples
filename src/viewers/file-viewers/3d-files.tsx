@@ -1,5 +1,5 @@
 import { Suspense, useRef } from "react";
-import { useGLTF } from "@react-three/drei/index.cjs";
+import { useGLTF } from "@react-three/drei";
 import { Canvas, useStore } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 
@@ -18,15 +18,15 @@ function Model({ url }: { url: string }) {
 }
 
 export function Viewer(props: FileViewerProps) {
-  const { meta } = props;
+  const { context } = props;
 
   return (
-    <Canvas style={{ height: "100%" }}>
+    <Canvas style={{ height: "100vh" }} >
       <ambientLight />
       <LControl />
       <pointLight position={[10, 10, 10]} />
       <Suspense fallback={null}>
-        <Model url={meta.download_url} />
+        <Model url={context.download_url} />
       </Suspense>
     </Canvas>
   );

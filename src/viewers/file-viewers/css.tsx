@@ -1,7 +1,8 @@
 import { useEffect, useMemo } from "react";
 import { toJSON } from 'cssjson';
 
-export function Viewer({ content }: FileViewerProps) {
+export function Viewer(props: FileViewerProps) {
+  const { content } = props;
 
   useEffect(() => {
     const script = document.createElement('script');

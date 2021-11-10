@@ -2,19 +2,21 @@ import { useMemo } from "react";
 import { csvParse } from "d3";
 import { Grid } from "@githubocto/flat-ui";
 
-export function Viewer({ contents }: { contents: string }) {
+export function Viewer(props: FileViewerProps) {
+  const { content } = props;
+
   const data = useMemo(() => {
     try {
-      return JSON.parse(contents);
+      return JSON.parse(content);
     } catch (e) {
       try {
-        const csvData = csvParse(contents);
+        const csvData = csvParse(content);
         return csvData;
       } catch (e) {
         return [];
       }
     }
-  }, [contents]);
+  }, [content]);
 
   return <Grid data={data} />;
 }
