@@ -20,7 +20,16 @@ interface FileData {
 }
 type FileViewerProps = FileData & CommonViewerProps;
 
-interface FolderViewerProps extends CommonViewerProps {
+interface FolderContext {
+  download_url: string;
+  filename: string; // this is the folder name
+  path: string;
+  repo: string;
+  owner: string;
+  sha: string;
+  username: string;
+}
+interface FolderData {
   tree: {
     path: string;
     mode: string;
@@ -29,15 +38,6 @@ interface FolderViewerProps extends CommonViewerProps {
     size: number;
     url: string;
   }[];
-  content: string;
-  meta: {
-    theme: string;
-    download_url: string;
-    name: string;
-    path: string;
-    repo: string;
-    owner: string;
-    sha: string;
-    username: string;
-  };
+  context: FolderContext;
 }
+type FolderViewerProps = FolderData & CommonViewerProps;

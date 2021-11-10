@@ -29,7 +29,7 @@ function convertContentToString(d: DirectoryItem) {
 
 async function getFolderContent(
   params: UseFolderContentParams
-): Promise<TreeItem[]> {
+): Promise<FolderData> {
   const { repo, owner, path, fileRef } = params;
   let branch = fileRef || "HEAD";
 
@@ -40,11 +40,37 @@ async function getFolderContent(
       Accept: `Bearer ${PAT}`,
     },
   });
-  const { tree } = await res.json();
+  const { tree: rawTree } = await res.json();
 
-  return (tree as TreeItem[]).filter((item) => {
+  const files = (rawTree as TreeItem[]).filter((item) => {
     return item.path?.includes(path);
   });
+
+  const tree = files.map((item) => {
+    return {
+      path: item.path || "",
+      mode: item.mode || "",
+      type: item.type || "",
+      sha: item.sha || "",
+      size: item.size || 0,
+      url: item.url || "",
+    }
+  })
+
+  const context = {
+    download_url: apiUrl,
+    filename: path.split("/").pop() || "",
+    path: path,
+    repo: repo,
+    owner: owner,
+    sha: branch,
+    username: "mona",
+  }
+
+  return {
+    tree,
+    context
+  }
 }
 
 const PAT = import.meta.env.VITE_GITHUB_PAT
@@ -56,7 +82,7 @@ async function getFileContent(
   // const apiUrl = `https://github.com/${owner}/${repo}/raw/HEAD/${path}`;
   // const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${path}?ref=${fileRef}`;
 
-  const apiUrl = `https://raw.githubusercontent.com/${owner}/${repo}/HEAD/${path}`
+  const apiUrl = `https://raw.githubusercontent.com/${owner}/${repo}/${fileRef}/${path}`
   const res = await fetch(apiUrl, {
     headers: {
       Accept: `Bearer ${PAT}`,
@@ -73,7 +99,7 @@ async function getFileContent(
     path: path,
     repo: repo,
     owner: owner,
-    sha: "HEAD",
+    sha: fileRef || "",
     username: "mona",
   }
 
@@ -109,7 +135,7 @@ export function useFileContent(
 
 export function useFolderContent(
   params: UseFolderContentParams,
-  config?: UseQueryOptions<TreeItem[]>
+  config?: UseQueryOptions<FolderData>
 ) {
   const { repo, owner, path, fileRef } = params;
 
