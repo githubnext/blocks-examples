@@ -55,6 +55,12 @@
         "csv",
         "json"
       ]
+    },
+    {
+      "type": "folder",
+      "title": "Minimap",
+      "description": "A visualization of your folders and files",
+      "entry": "/viewers/folder-viewers/minimap/index.tsx"
     }
   ],
   "dependencies": {
@@ -75,6 +81,7 @@
     "react-error-boundary": "^3.1.4",
     "react-query": "^3.32.1",
     "react-syntax-highlighter": "^15.4.4",
+    "react-use": "^17.3.1",
     "three": "^0.134.0"
   },
   "devDependencies": {

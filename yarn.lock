@@ -3682,7 +3682,7 @@ react-use-measure@^2.0.4:
   dependencies:
     debounce "^1.2.0"
 
-react-use@^17.2.0:
+react-use@^17.2.0, react-use@^17.3.1:
   version "17.3.1"
   resolved "https://registry.yarnpkg.com/react-use/-/react-use-17.3.1.tgz#12b248555775519aa2b900b22f1928d029bf99d1"
   integrity sha512-hs7+tS4rRm1QLHPfanLCqXIi632tP4V7Sai1ENUP2WTufU6am++tU9uSw9YrNCFqbABiEv0ndKU1XCUcfu2tXA==

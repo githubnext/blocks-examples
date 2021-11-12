@@ -5,16 +5,14 @@ import { AppInnerProps } from "./app-inner";
 import { ErrorState } from "./error-state";
 import { LoadingState } from "./loading-state";
 
-interface SandboxedViewerProps {
-  viewer: string;
-  meta: ViewerMeta;
-  tree: TreeItem[];
+type SandboxedViewerProps = FolderViewerProps & {
+  viewerId: string;
   dependencies: object;
 }
 
 function SandboxedViewer(props: SandboxedViewerProps) {
-  const { viewer, meta, dependencies, tree } = props;
-  const { data, status } = useRawImportSource(viewer, dependencies);
+  const { context, tree, viewerId, dependencies } = props;
+  const { data, status } = useRawImportSource(viewerId, dependencies);
 
   if (status === "loading") return <LoadingState />;
   if (status === "error") return <ErrorState />;
@@ -23,7 +21,7 @@ function SandboxedViewer(props: SandboxedViewerProps) {
     const injectedSource = `
       ${data.source}
       export default function WrappedViewer() {
-        return <Viewer meta={${JSON.stringify(meta)}} tree={${JSON.stringify(
+        return <Viewer context={${JSON.stringify(context)}} tree={${JSON.stringify(
       tree
     )}} />
       }
@@ -37,6 +35,9 @@ function SandboxedViewer(props: SandboxedViewerProps) {
           customSetup={{
             dependencies: data.dependencies,
             files: data.files,
+          }}
+          options={{
+            showNavigator: false,
           }}
         />
       </div>
@@ -73,26 +74,21 @@ export function FolderViewer(
   if (status === "loading") return <LoadingState />;
   if (status === "error") return <ErrorState />;
   if (status === "success" && data) {
-    const meta = {
-      owner: owner,
-      repo: name,
-      path: filepath,
-      language: "",
-      sha: ref,
-      username: "",
-      download_url: "",
-      name: "",
-    };
 
     return (
       <SandboxedViewer
-        tree={data}
-        meta={meta}
+        {...data}
         dependencies={dependencies}
-        viewer={viewer}
+        viewerId={viewer}
+        metadata={defaultMetadata}
+        onUpdateMetadata={noop}
+        onRequestUpdateContent={noop}
       />
     );
   }
 
   return null;
 }
+
+const defaultMetadata = {}
+const noop = () => { }
