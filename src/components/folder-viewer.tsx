@@ -51,7 +51,6 @@ export function FolderViewer(
   props: Omit<AppInnerProps, "onReset" | "viewerType">
 ) {
   const { viewer, urlParts, dependencies } = props;
-  console.log(urlParts)
 
   if (urlParts.filepathtype === "blob") {
     throw new Error(
