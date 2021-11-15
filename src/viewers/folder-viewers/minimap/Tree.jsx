@@ -15,7 +15,7 @@ import countBy from "lodash/countBy";
 import maxBy from "lodash/maxBy";
 import entries from "lodash/entries";
 import flatten from "lodash/flatten";
-import { CircleText } from "./CircleText";
+import { CircleText } from "./CircleText.jsx";
 import defaultFileColors from "./language-colors.js"
 import { useDebounce, useMeasure } from "react-use"
 
