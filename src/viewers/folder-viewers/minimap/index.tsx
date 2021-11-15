@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { stratify } from 'd3';
 // @ts-ignore
-import { Tree } from "./Tree"
+import { Tree } from "./Tree.jsx"
 
 export function Viewer(props: FolderViewerProps) {
   const { context, tree } = props;
