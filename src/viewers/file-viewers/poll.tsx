@@ -3,23 +3,23 @@ import { useState } from "react";
 // import { ViewerProps } from ".";
 
 interface PollOptions {
-    text: string;
-    votes: number;
+  text: string;
+  votes: number;
 }
-  
+
 type Poll = {
-    poll: string; // title
-    options: PollOptions[];
-}
+  poll: string; // title
+  options: PollOptions[];
+};
 
 export function Viewer(props: FileViewerProps) {
-    const { content } = props;
-    const [poll, setPoll] = useState<Poll>(JSON.parse(content));
+  const { content } = props;
+  const [poll, setPoll] = useState<Poll>(JSON.parse(content));
 
-    const totalVotes = poll.options.reduce((acc, cur) => acc + cur.votes, 0);
+  const totalVotes = poll.options.reduce((acc, cur) => acc + cur.votes, 0);
 
-    // for saving the poll file
-        /*
+  // for saving the poll file
+  /*
     const {
         data: dataRes,
         status,
@@ -53,24 +53,24 @@ export function Viewer(props: FileViewerProps) {
     };
     */
 
-    return (
-        <div className="w-full">
-        {poll.poll}
-        {poll.options.map((option, index) => {
-            const percent = Math.floor((option.votes / totalVotes) * 100);
-            return (
-            <div key={index} className="my-2">
-                <div className="font-bold">{option.text}</div>
-                <div className="flex row items-center">
-                <div className="w-80 border border-gray-200 mr-2">
-                    <div
-                    className="bg-blue-400 h-3"
-                    style={{ width: `${percent}%` }}
-                    ></div>
-                </div>
-                <span className="mr-2">{percent}%</span>
-                <span className="font-light mr-2">{option.votes} votes</span>
-                {/* <button
+  return (
+    <div className="w-full">
+      {poll.poll}
+      {poll.options.map((option, index) => {
+        const percent = Math.floor((option.votes / totalVotes) * 100);
+        return (
+          <div key={index} className="my-2">
+            <div className="font-bold">{option.text}</div>
+            <div className="flex row items-center">
+              <div className="w-80 border border-gray-200 mr-2">
+                <div
+                  className="bg-blue-400 h-3"
+                  style={{ width: `${percent}%` }}
+                ></div>
+              </div>
+              <span className="mr-2">{percent}%</span>
+              <span className="font-light mr-2">{option.votes} votes</span>
+              {/* <button
                     className="bg-transparent hover:bg-blue-500 text-blue-400 hover:text-white px-2 border border-blue-500 hover:border-transparent rounded"
                     onClick={() => {
                     poll.options[index].votes += 1;
@@ -80,10 +80,10 @@ export function Viewer(props: FileViewerProps) {
                 >
                     Vote
                 </button> */}
-                </div>
             </div>
-            );
-        })}
-        </div>
-    );
+          </div>
+        );
+      })}
+    </div>
+  );
 }

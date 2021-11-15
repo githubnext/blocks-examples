@@ -11,7 +11,7 @@ import { useRawImportSource } from "../hooks";
 type SandboxedViewerProps = FileViewerProps & {
   viewerId: string;
   dependencies: object;
-}
+};
 
 function SandboxedViewer(props: SandboxedViewerProps) {
   const { context, viewerId, content, dependencies } = props;
@@ -24,20 +24,22 @@ function SandboxedViewer(props: SandboxedViewerProps) {
     const injectedSource = `
       ${data.source}
       export default function WrappedViewer() {
-        return <Viewer context={${JSON.stringify(context)}} content={${JSON.stringify(
-      content
-    )}} />
+        return <Viewer context={${JSON.stringify(
+          context
+        )}} content={${JSON.stringify(content)}} />
       }
     `;
 
     return (
       <div className="flex-1 h-full sandbox-wrapper">
         <SandpackRunner
-          template="react"
+          template="react-ts"
           code={injectedSource}
           customSetup={{
             dependencies: data.dependencies,
-            files: data.files,
+            files: {
+              ...data.files,
+            },
           }}
           options={{
             showNavigator: false,
@@ -79,7 +81,6 @@ export function FileViewer(
   if (status === "loading") return <LoadingState />;
   if (status === "error") return <ErrorState />;
   if (status === "success" && data) {
-
     return (
       <SandboxedViewer
         {...data}
@@ -95,5 +96,5 @@ export function FileViewer(
   return null;
 }
 
-const defaultMetadata = {}
-const noop = () => { }
+const defaultMetadata = {};
+const noop = () => {};
