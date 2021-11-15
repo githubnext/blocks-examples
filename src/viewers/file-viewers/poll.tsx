@@ -2,6 +2,8 @@ import { useState } from "react";
 // import { useUpdateFileContents, useFileContent } from "hooks";
 // import { ViewerProps } from ".";
 
+// import './index.css'; // TODO: need to import tailwind
+
 interface PollOptions {
   text: string;
   votes: number;
