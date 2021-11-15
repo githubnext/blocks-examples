@@ -2,7 +2,7 @@ import { useState } from "react";
 // import { useUpdateFileContents, useFileContent } from "hooks";
 // import { ViewerProps } from ".";
 
-// import './index.css'; // TODO: need to import tailwind
+import { useTailwindCdn } from '@githubnext/utils'; // to import tailwind css
 
 interface PollOptions {
   text: string;
@@ -15,6 +15,8 @@ type Poll = {
 };
 
 export function Viewer(props: FileViewerProps) {
+  useTailwindCdn();
+
   const { content } = props;
   const [poll, setPoll] = useState<Poll>(JSON.parse(content));
 
@@ -56,7 +58,7 @@ export function Viewer(props: FileViewerProps) {
     */
 
   return (
-    <div className="w-full">
+    <div className="w-full m-2">
       {poll.poll}
       {poll.options.map((option, index) => {
         const percent = Math.floor((option.votes / totalVotes) * 100);
