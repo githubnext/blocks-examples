@@ -1,9 +1,9 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import { csvParse } from "d3";
-import { Vega } from "react-vega";
-// import JSONInput from "react-json-editor-ajrm";
+import { Vega }from "react-vega";
 
-// export function ChartViewer({ contents, meta, metadata, onUpdateMetadata }: ViewerProps) {
+console.log(Vega);
+
 export function Viewer(props: FileViewerProps) {
     const { content } = props;
 
