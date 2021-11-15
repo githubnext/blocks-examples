@@ -66,6 +66,15 @@
       ]
     },
     {
+      "type": "file",
+      "title": "Poll viewer",
+      "description": "View simple polls beautifully",
+      "entry": "/viewers/file-viewers/poll.tsx",
+      "extensions": [
+        "json"
+      ]
+    },
+    {
       "type": "folder",
       "title": "Minimap",
       "description": "A visualization of your folders and files",
