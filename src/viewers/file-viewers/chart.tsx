@@ -1,18 +1,21 @@
 import { useMemo } from "react";
 import { csvParse } from "d3";
+// need to explicitely import libraries
+import "vega";
+import "vega-lite";
 import { Vega }from "react-vega";
-
-console.log(Vega);
 
 export function Viewer(props: FileViewerProps) {
     const { content } = props;
 
   const data = useMemo(() => ({ data: parseData(content) }), [content]);
 
+  console.log(data);
   const parsedConfig = {
     width: 500,
     height: 500,
     data: [{ name: "data" }],
+    // ...config
   };
 
   return (
