@@ -6,7 +6,7 @@ The Composable Github app depends on a set of "viewers" that handle how to rende
 
 Viewers come in two types: file viewers and folder viewers. 
 
-All viewers require an object within [`package.json`]() to describe their intended use. For example:
+All viewers require an object within [`package.json`](https://github.com/githubnext/composable-github-example-viewers/blob/main/package.json#L9) to describe their intended use. For example:
 
 ```json
 {
