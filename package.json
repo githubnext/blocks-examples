@@ -57,6 +57,15 @@
       ]
     },
     {
+      "type": "file",
+      "title": "Iframe viewer",
+      "description": "An iframe viewer",
+      "entry": "/viewers/file-viewers/iframe.tsx",
+      "extensions": [
+        "iframe"
+      ]
+    },
+    {
       "type": "folder",
       "title": "Minimap",
       "description": "A visualization of your folders and files",
