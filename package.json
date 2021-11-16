@@ -87,7 +87,7 @@
       "type": "file",
       "title": "Markdown viewer",
       "description": "A simple markdown viewer",
-      "entry": "/viewers/file-viewers/markdown/markdown.tsx",
+      "entry": "/viewers/file-viewers/markdown.tsx",
       "extensions": [
         "md"
       ]
@@ -117,10 +117,12 @@
     "react-dom": "^17.0.0",
     "react-error-boundary": "^3.1.4",
     "react-json-editor-ajrm": "^2.5.13",
+    "react-markdown": "^7.1.0",
     "react-query": "^3.32.1",
     "react-syntax-highlighter": "^15.4.4",
     "react-use": "^17.3.1",
     "react-vega": "^7.4.4",
+    "remark-gfm": "^3.0.1",
     "three": "^0.134.0",
     "vega": "^5.21.0",
     "vega-lite": "^5.1.1"
