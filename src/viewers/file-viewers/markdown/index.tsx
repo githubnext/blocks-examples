@@ -10,8 +10,8 @@ import {
 import SyntaxHighlighter from "react-syntax-highlighter";
 import "styled-components";
 // we need to specify extensions for all files
-// @ts-ignore
-import { CodeSandbox } from "./CodeSandbox.tsx";
+// // @ts-ignore
+// import { CodeSandbox } from "./CodeSandbox.tsx";
 // @ts-ignore
 import { ErrorBoundary } from "./error-boundary.tsx";
 import "./style.css"
@@ -84,7 +84,7 @@ const components = {
   Issues,
   Releases,
   Commits,
-  CodeSandbox,
+  // CodeSandbox,
   code({ inline, className, children }: {
     inline: boolean;
     className: string;
