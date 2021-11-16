@@ -1,6 +1,6 @@
 import { useQuery, UseQueryOptions } from "react-query";
 import { components } from "@octokit/openapi-types";
-import { Buffer } from "buffer";
+import { FileData, FolderData } from "@githubnext/utils";
 
 export interface RepoContext {
   repo: string;
@@ -19,13 +19,6 @@ export interface UseFolderContentParams extends RepoContext {
 
 export type DirectoryItem = components["schemas"]["content-directory"][number];
 export type TreeItem = components["schemas"]["git-tree"]["tree"][number];
-
-function convertContentToString(d: DirectoryItem) {
-  return {
-    ...d,
-    content: Buffer.from(d.content ? d.content : "", "base64").toString(),
-  };
-}
 
 async function getFolderContent(
   params: UseFolderContentParams
@@ -54,8 +47,8 @@ async function getFolderContent(
       sha: item.sha || "",
       size: item.size || 0,
       url: item.url || "",
-    }
-  })
+    };
+  });
 
   const context = {
     download_url: apiUrl,
@@ -65,29 +58,31 @@ async function getFolderContent(
     owner: owner,
     sha: branch,
     username: "mona",
-  }
+  };
 
   return {
     tree,
-    context
-  }
+    context,
+  };
 }
 
-const PAT = import.meta.env.VITE_GITHUB_PAT
-async function getFileContent(
-  params: UseFileContentParams
-): Promise<FileData> {
+const PAT = import.meta.env.VITE_GITHUB_PAT;
+
+async function getFileContent(params: UseFileContentParams): Promise<FileData> {
   const { repo, owner, path, fileRef } = params;
+  const branch = fileRef || "HEAD";
 
-  // const apiUrl = `https://github.com/${owner}/${repo}/raw/HEAD/${path}`;
-  // const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${path}?ref=${fileRef}`;
-
-  const apiUrl = `https://raw.githubusercontent.com/${owner}/${repo}/${fileRef}/${path}`
-  const res = await fetch(apiUrl, {
-    headers: {
-      Accept: `Bearer ${PAT}`,
-    },
-  });
+  const apiUrl = `https://raw.githubusercontent.com/${owner}/${repo}/${branch}/${path}`;
+  const res = await fetch(
+    apiUrl,
+    PAT
+      ? {
+        headers: {
+          Accept: `Bearer ${PAT}`,
+        },
+      }
+      : {}
+  );
 
   if (res.status !== 200) throw new Error("Something bad happened");
 
@@ -99,14 +94,14 @@ async function getFileContent(
     path: path,
     repo: repo,
     owner: owner,
-    sha: fileRef || "",
+    sha: "HEAD",
     username: "mona",
-  }
+  };
 
   return {
     content,
-    context
-  }
+    context,
+  };
 }
 
 export function useFileContent(
@@ -182,7 +177,7 @@ export function useRawImportSource(viewer: string, dependencies: object) {
       const { dir, file } = separatePathFromFile(viewer);
       if (!file) throw new Error("No viewer file found");
 
-      const literallyEverything = await import.meta.glob(`/src/**/*`);
+      const literallyEverything = await import.meta.glob(`/**/*`);
 
       const relevantFilePaths = Object.keys(literallyEverything).filter(
         (f) => f.includes(dir.replace("./", "")) && !f.endsWith(file)

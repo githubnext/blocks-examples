@@ -4,10 +4,18 @@ import { ErrorBoundary } from "react-error-boundary";
 import { FileViewer } from "./file-viewer";
 import { FolderViewer } from "./folder-viewer";
 
+interface Viewer {
+  type: string;
+  title: string;
+  description: string;
+  entry: string;
+  extensions?: string[];
+}
 export interface AppInnerProps {
-  viewer: string;
-  viewerType: "file" | "folder";
-  dependencies: object;
+  metadata: any;
+  onUpdateMetadata: (metadata: any) => Promise<void>;
+  viewer: Viewer;
+  dependencies: Record<string, string>;
   urlParts: gitUrlParse.GitUrl;
   onReset: () => void;
 }
@@ -46,7 +54,8 @@ function ErrorFallback({
 }
 
 export function AppInner(props: AppInnerProps) {
-  const { onReset, viewerType, ...rest } = props;
+  const { onReset, viewer, ...rest } = props;
+  const viewerType = viewer?.type;
 
   return (
     <ErrorBoundary
@@ -55,8 +64,8 @@ export function AppInner(props: AppInnerProps) {
       FallbackComponent={ErrorFallback}
     >
       <React.Fragment>
-        {viewerType === "file" && <FileViewer {...rest} />}
-        {viewerType === "folder" && <FolderViewer {...rest} />}
+        {viewerType === "file" && <FileViewer {...rest} viewer={viewer} />}
+        {viewerType === "folder" && <FolderViewer {...rest} viewer={viewer} />}
       </React.Fragment>
     </ErrorBoundary>
   );

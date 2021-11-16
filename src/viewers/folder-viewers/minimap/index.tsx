@@ -4,7 +4,7 @@ import { stratify } from 'd3';
 import { Tree } from "./Tree.jsx"
 
 export function Viewer(props: FolderViewerProps) {
-  const { context, tree } = props;
+  const { tree } = props;
 
   const data = useMemo(() => {
     const nestedTree = nestFileTree(tree);

@@ -286,7 +286,7 @@
     "@codemirror/view" "^0.19.0"
     "@lezer/common" "^0.15.0"
 
-"@codemirror/closebrackets@0.19.0":
+"@codemirror/closebrackets@^0.19.0":
   version "0.19.0"
   resolved "https://registry.yarnpkg.com/@codemirror/closebrackets/-/closebrackets-0.19.0.tgz#69fdcee85779d638a00a42becd9f53a33a26d77f"
   integrity sha512-dFWX5OEVYWRNtGaifSbwIAlymnRRjxWMiMbffbAjF7p0zfGHDbdGkiT56q3Xud63h5/tQdSo5dK1iyNTzHz5vg==
@@ -297,7 +297,7 @@
     "@codemirror/text" "^0.19.0"
     "@codemirror/view" "^0.19.0"
 
-"@codemirror/commands@0.19.5":
+"@codemirror/commands@^0.19.5":
   version "0.19.5"
   resolved "https://registry.yarnpkg.com/@codemirror/commands/-/commands-0.19.5.tgz#2607b5c12c5c96df2cabce2e43f6285c07cfaf11"
   integrity sha512-8PZOtx7d/GbKhFYA88zs2wINDtaUgj3pEjLYScKTd/Vsyw8qOp86tJQQNnMFTRZj/ISQl9Lbg3aAmHvroMqspw==
@@ -309,7 +309,7 @@
     "@codemirror/view" "^0.19.0"
     "@lezer/common" "^0.15.0"
 
-"@codemirror/comment@0.19.0":
+"@codemirror/comment@^0.19.0":
   version "0.19.0"
   resolved "https://registry.yarnpkg.com/@codemirror/comment/-/comment-0.19.0.tgz#4f23497924e9346898c2e0123011acc535a0bea6"
   integrity sha512-3hqAd0548fxqOBm4khFMcXVIivX8p0bSlbAuZJ6PNoUn/0wXhxkxowPp0FmFzU2+y37Z+ZQF5cRB5EREWPRIiQ==
@@ -318,16 +318,7 @@
     "@codemirror/text" "^0.19.0"
     "@codemirror/view" "^0.19.0"
 
-"@codemirror/gutter@0.19.4":
-  version "0.19.4"
-  resolved "https://registry.yarnpkg.com/@codemirror/gutter/-/gutter-0.19.4.tgz#7f2f3ceb72b96042380d23316bb6c43a7e05f111"
-  integrity sha512-zcDtGafuzLs9mvSBqHVuLNbS4UpHBo1+DRY6NtZfC31bV8abDxOPgokq2+6UsVPQp+RA1LgmPHatp4gOYSM+cA==
-  dependencies:
-    "@codemirror/rangeset" "^0.19.0"
-    "@codemirror/state" "^0.19.0"
-    "@codemirror/view" "^0.19.0"
-
-"@codemirror/gutter@^0.19.4":
+"@codemirror/gutter@^0.19.4", "@codemirror/gutter@^0.19.5":
   version "0.19.5"
   resolved "https://registry.yarnpkg.com/@codemirror/gutter/-/gutter-0.19.5.tgz#b90527832c3f3066d1aeb53b003a764b5a561cfc"
   integrity sha512-Vqy+RXgBdnmbxNYx4/irQcfU9ecFz8SB/vhDOeHHSGtDqs+TihYHnHgBZLz6uILEG0YIjp0/zYY3P2NgZ/iyEg==
@@ -336,7 +327,7 @@
     "@codemirror/state" "^0.19.0"
     "@codemirror/view" "^0.19.0"
 
-"@codemirror/highlight@0.19.6", "@codemirror/highlight@^0.19.6":
+"@codemirror/highlight@^0.19.6":
   version "0.19.6"
   resolved "https://registry.yarnpkg.com/@codemirror/highlight/-/highlight-0.19.6.tgz#7f2e066f83f5649e8e0748a3abe0aaeaf64b8ac2"
   integrity sha512-+eibu6on9quY8uN3xJ/n3rH+YIDLlpX7YulVmFvqAIz/ukRQ5tWaBmB7fMixHmnmRIRBRZgB8rNtonuMwZSAHQ==
@@ -348,7 +339,7 @@
     "@lezer/common" "^0.15.0"
     style-mod "^4.0.0"
 
-"@codemirror/history@0.19.0":
+"@codemirror/history@^0.19.0":
   version "0.19.0"
   resolved "https://registry.yarnpkg.com/@codemirror/history/-/history-0.19.0.tgz#cc8095c927c9566f7b69fa404074edde4c54d39c"
   integrity sha512-E0H+lncH66IMDhaND9jgkjE7s0dhYfjCPmS+Ig2Yes9I8+UIEecIdObj8c8HPCFGctGg3fxXqRAw2mdHl2Wouw==
@@ -356,7 +347,7 @@
     "@codemirror/state" "^0.19.0"
     "@codemirror/view" "^0.19.0"
 
-"@codemirror/lang-css@0.19.3", "@codemirror/lang-css@^0.19.0":
+"@codemirror/lang-css@^0.19.0", "@codemirror/lang-css@^0.19.3":
   version "0.19.3"
   resolved "https://registry.yarnpkg.com/@codemirror/lang-css/-/lang-css-0.19.3.tgz#7a17adf78c6fcdab4ad5ee4e360631c41e949e4a"
   integrity sha512-tyCUJR42/UlfOPLb94/p7dN+IPsYSIzHbAHP2KQHANj0I+Orqp+IyIOS++M8TuCX4zkWh9dvi8s92yy/Tn8Ifg==
@@ -367,7 +358,7 @@
     "@codemirror/state" "^0.19.0"
     "@lezer/css" "^0.15.2"
 
-"@codemirror/lang-html@0.19.3":
+"@codemirror/lang-html@^0.19.3":
   version "0.19.3"
   resolved "https://registry.yarnpkg.com/@codemirror/lang-html/-/lang-html-0.19.3.tgz#73ff276efd4b22d28062f70367fd0f638993f36a"
   integrity sha512-QlZN8VhQ+vlOpDMbcfXcG3HiiNeklAfIYnKonPM902SM3nJc4rJ66X9O8mzy0TUDBmew9zaYDubvQcqw7rc5Bg==
@@ -381,20 +372,7 @@
     "@lezer/common" "^0.15.0"
     "@lezer/html" "^0.15.0"
 
-"@codemirror/lang-javascript@0.19.2":
-  version "0.19.2"
-  resolved "https://registry.yarnpkg.com/@codemirror/lang-javascript/-/lang-javascript-0.19.2.tgz#afefd3154979b825605bed894850a4cea957a4e0"
-  integrity sha512-qNFjCSTWOTZ/KusoVx3CxjmNS37DrhVoVO9E1IkrIMVC3tkk8Hs2eA6HNMxT4VGp5O+0yBmf1DE2o5QQSMs0jg==
-  dependencies:
-    "@codemirror/autocomplete" "^0.19.0"
-    "@codemirror/highlight" "^0.19.6"
-    "@codemirror/language" "^0.19.0"
-    "@codemirror/lint" "^0.19.0"
-    "@codemirror/state" "^0.19.0"
-    "@codemirror/view" "^0.19.0"
-    "@lezer/javascript" "^0.15.0"
-
-"@codemirror/lang-javascript@^0.19.0":
+"@codemirror/lang-javascript@^0.19.0", "@codemirror/lang-javascript@^0.19.3":
   version "0.19.3"
   resolved "https://registry.yarnpkg.com/@codemirror/lang-javascript/-/lang-javascript-0.19.3.tgz#281b3447d8b65d98311ebf25893ef5c30a11418b"
   integrity sha512-2NE5z98Nz9Rv4OS5UtgehCSnyQjac+P85+evzy1D/4wllp/EPaHIEEtSP1daBvrLy49SdI/9vES3ZJu6rSv4/w==
@@ -407,18 +385,7 @@
     "@codemirror/view" "^0.19.0"
     "@lezer/javascript" "^0.15.1"
 
-"@codemirror/language@0.19.3":
-  version "0.19.3"
-  resolved "https://registry.yarnpkg.com/@codemirror/language/-/language-0.19.3.tgz#e4f61555dec0787f757b78348a54a00f3bb23c9c"
-  integrity sha512-6vjkRYHRJg/z9wdAk75nU2fQwCJBsh2HpkIjKXIHfzISSgLt5qSDxVhPd8Uu8PD5WMmFFP8tX7I9kdIt873o0A==
-  dependencies:
-    "@codemirror/state" "^0.19.0"
-    "@codemirror/text" "^0.19.0"
-    "@codemirror/view" "^0.19.0"
-    "@lezer/common" "^0.15.5"
-    "@lezer/lr" "^0.15.0"
-
-"@codemirror/language@^0.19.0":
+"@codemirror/language@^0.19.0", "@codemirror/language@^0.19.4":
   version "0.19.4"
   resolved "https://registry.yarnpkg.com/@codemirror/language/-/language-0.19.4.tgz#14e54003ae822bf51a298a7cc6e4e7d51a21e8ff"
   integrity sha512-yLnLDUkK00BlRVXpPkoJMYEssYKuRLOmK+DdJJ8zOOD4D62T7bSQ05NPyWzWr3PQX1k7sxGICGKR7INzfv9Snw==
@@ -442,7 +409,7 @@
     "@codemirror/view" "^0.19.0"
     crelt "^1.0.5"
 
-"@codemirror/matchbrackets@0.19.3", "@codemirror/matchbrackets@^0.19.0":
+"@codemirror/matchbrackets@^0.19.0", "@codemirror/matchbrackets@^0.19.3":
   version "0.19.3"
   resolved "https://registry.yarnpkg.com/@codemirror/matchbrackets/-/matchbrackets-0.19.3.tgz#1f430ada6fa21af2205280ff344ef57bb95dd3cb"
   integrity sha512-ljkrBxaLgh8jesroUiBa57pdEwqJamxkukXrJpL9LdyFZVJaF+9TldhztRaMsMZO1XnCSSHQ9sg32iuHo7Sc2g==
@@ -467,14 +434,7 @@
   dependencies:
     "@codemirror/state" "^0.19.0"
 
-"@codemirror/state@0.19.4":
-  version "0.19.4"
-  resolved "https://registry.yarnpkg.com/@codemirror/state/-/state-0.19.4.tgz#db6ee73ec3eb5a237d0d04652a8d8e7b4cb7758b"
-  integrity sha512-PLsY1PvuGynylzv4FVEi1vDz4gituIxJR4XdEVT4+UK6C2l14Y2TGLkUTw3D8xlq+xmY1J1TR7UbicZtJIxO6A==
-  dependencies:
-    "@codemirror/text" "^0.19.0"
-
-"@codemirror/state@^0.19.0", "@codemirror/state@^0.19.2", "@codemirror/state@^0.19.3", "@codemirror/state@^0.19.4":
+"@codemirror/state@^0.19.0", "@codemirror/state@^0.19.2", "@codemirror/state@^0.19.3", "@codemirror/state@^0.19.4", "@codemirror/state@^0.19.5":
   version "0.19.5"
   resolved "https://registry.yarnpkg.com/@codemirror/state/-/state-0.19.5.tgz#af56e3af50224d748a992e56d1e31a52287594a5"
   integrity sha512-a3bJnkFuh4Z36nuOzAYobWViQ9eq5ux2wOb/46jUl+0Sj2BGrdz+pY1L+y2NUZhwPyWGcIrBtranr5P0rEEq8A==
@@ -494,17 +454,6 @@
     "@codemirror/state" "^0.19.0"
     "@codemirror/view" "^0.19.0"
 
-"@codemirror/view@0.19.14":
-  version "0.19.14"
-  resolved "https://registry.yarnpkg.com/@codemirror/view/-/view-0.19.14.tgz#25af82dbde8102f792002f38d7e085962fb5c887"
-  integrity sha512-NCaR406AaqVfYBUcM/mhqHOiQArlBbXrxS7ORTjZb2WtBOQQ5fiTbd7xro5hjOWCTgYP41CzHPdBGoozJhMn4Q==
-  dependencies:
-    "@codemirror/rangeset" "^0.19.0"
-    "@codemirror/state" "^0.19.3"
-    "@codemirror/text" "^0.19.0"
-    style-mod "^4.0.0"
-    w3c-keyname "^2.2.4"
-
 "@codemirror/view@^0.19.0":
   version "0.19.16"
   resolved "https://registry.yarnpkg.com/@codemirror/view/-/view-0.19.16.tgz#647d6dd4febdd28cfec8414b7b1dcddc6b40a986"
@@ -516,34 +465,45 @@
     style-mod "^4.0.0"
     w3c-keyname "^2.2.4"
 
-"@codesandbox/sandpack-client@^0.3.0":
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/@codesandbox/sandpack-client/-/sandpack-client-0.3.0.tgz#345ea97a91c45f7ff76646c0fc70145e3ecb6115"
-  integrity sha512-p78UeXK/UHxt/PuoKBPSeol9kk7JBqygalUWxWJfRPzmvoL0fc1cPbjI6lcl6paP1WAiIIgwAPSjMiHehQsOLw==
+"@codemirror/view@^0.19.16":
+  version "0.19.18"
+  resolved "https://registry.yarnpkg.com/@codemirror/view/-/view-0.19.18.tgz#8189dacd3b07cb728d425a9f43633401300297c0"
+  integrity sha512-OxYc+6PvppfFVKcheLZtqRxzYoiC9dGzKZfCBzx63en/HsKuM2ZBOHHKH57ZtGNcI2ctW0j5Wr2yNm9QAdgGsA==
+  dependencies:
+    "@codemirror/rangeset" "^0.19.0"
+    "@codemirror/state" "^0.19.3"
+    "@codemirror/text" "^0.19.0"
+    style-mod "^4.0.0"
+    w3c-keyname "^2.2.4"
+
+"@codesandbox/sandpack-client@^0.3.7":
+  version "0.3.7"
+  resolved "https://registry.yarnpkg.com/@codesandbox/sandpack-client/-/sandpack-client-0.3.7.tgz#ac1884c87954b4ce1f4e9ba5992ed29731594e3b"
+  integrity sha512-NEV7NDjZeZ/ovBF/wbI0QnRBCEtsAcmFRO9C/gQ3UAQKSQnNctktSKLPq31QZv6jBrFUf86+sjHrwGEKAumczQ==
   dependencies:
     codesandbox-import-utils "^1.2.3"
     lodash.isequal "^4.5.0"
 
-"@codesandbox/sandpack-react@^0.3.0":
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/@codesandbox/sandpack-react/-/sandpack-react-0.3.0.tgz#bdeaf5e314e96180d2b9b83cb5aedfc19cefd516"
-  integrity sha512-rZpehlTxnJ7Z91LzrmQ+9xz6gsSEJJAuRLCbN9gRz7q7SxWIPJQmusOZLvePZtCwtNfD9DK5OyG0s/Wnu7+XmQ==
+"@codesandbox/sandpack-react@^0.3.3":
+  version "0.3.7"
+  resolved "https://registry.yarnpkg.com/@codesandbox/sandpack-react/-/sandpack-react-0.3.7.tgz#937bd45f1bcf898d8dd91da175ff8283595fe5ee"
+  integrity sha512-drdiJyqSrH/OX1kf3l08vbBpZ3C/VzTnoyuzZeZ2V62wruNE4iG8qPf8CR+EEZ2aXU3McK6sB8LxKnXxR9KePQ==
   dependencies:
     "@code-hike/classer" "^0.0.0-aa6efee"
-    "@codemirror/closebrackets" "0.19.0"
-    "@codemirror/commands" "0.19.5"
-    "@codemirror/comment" "0.19.0"
-    "@codemirror/gutter" "0.19.4"
-    "@codemirror/highlight" "0.19.6"
-    "@codemirror/history" "0.19.0"
-    "@codemirror/lang-css" "0.19.3"
-    "@codemirror/lang-html" "0.19.3"
-    "@codemirror/lang-javascript" "0.19.2"
-    "@codemirror/language" "0.19.3"
-    "@codemirror/matchbrackets" "0.19.3"
-    "@codemirror/state" "0.19.4"
-    "@codemirror/view" "0.19.14"
-    "@codesandbox/sandpack-client" "^0.3.0"
+    "@codemirror/closebrackets" "^0.19.0"
+    "@codemirror/commands" "^0.19.5"
+    "@codemirror/comment" "^0.19.0"
+    "@codemirror/gutter" "^0.19.5"
+    "@codemirror/highlight" "^0.19.6"
+    "@codemirror/history" "^0.19.0"
+    "@codemirror/lang-css" "^0.19.3"
+    "@codemirror/lang-html" "^0.19.3"
+    "@codemirror/lang-javascript" "^0.19.3"
+    "@codemirror/language" "^0.19.4"
+    "@codemirror/matchbrackets" "^0.19.3"
+    "@codemirror/state" "^0.19.5"
+    "@codemirror/view" "^0.19.16"
+    "@codesandbox/sandpack-client" "^0.3.7"
     codesandbox-import-util-types "^2.2.3"
     codesandbox-import-utils "^2.2.3"
 
@@ -617,11 +577,13 @@
   resolved "https://registry.yarnpkg.com/@excalidraw/excalidraw/-/excalidraw-0.10.0.tgz#5329d6fb1b0cca068e2cd34da6d648dd6d0d3fec"
   integrity sha512-0fHc/oX394dHAT7LEacwZ0vh8aeI179plYnfaeLeRHBtHARgmtlmvxcnxd2pxJ0Z1Uj/Cy76oK9MVw/y8P1HhQ==
 
-"@githubnext/utils@^0.6.0":
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/@githubnext/utils/-/utils-0.6.0.tgz#d7d8e97a3c0bc22571879ade60e62580e9bfe29f"
-  integrity sha512-S5blRTFEbl7U76Rc6AOH/VOoSm9jb1XyJ20dcbpJTcsaUKwk/XsVKklFqjHxE8+8Whi+eLhsYROIBsxoEBC9SA==
+"@githubnext/utils@^0.9.5":
+  version "0.9.5"
+  resolved "https://registry.yarnpkg.com/@githubnext/utils/-/utils-0.9.5.tgz#afcafcc73ccf5c86c68cd3707199ce98f406661c"
+  integrity sha512-d4G8wzLi3MV2R9Ony26tj3YVdmZJA3bD4uW9e8CixSXtWbWjY0/VyFiTwFoNA+POKCZY5/g+tXwl4Ha0cDPVtQ==
   dependencies:
+    "@codesandbox/sandpack-react" "^0.3.3"
+    parse-static-imports "^1.1.0"
     react "^17.0.2"
     zod "^3.11.6"
 
@@ -675,7 +637,7 @@
   dependencies:
     "@lezer/lr" "^0.15.0"
 
-"@lezer/javascript@^0.15.0", "@lezer/javascript@^0.15.1":
+"@lezer/javascript@^0.15.1":
   version "0.15.1"
   resolved "https://registry.yarnpkg.com/@lezer/javascript/-/javascript-0.15.1.tgz#12794febbea8b9113edae46acae1994ff801805d"
   integrity sha512-EnfO9MF2yDMpN2DEovPbKKdi4tj1phuolBxcEDC35cx+OUfToweMOEBZHr/nhHI79+6HkLMoCK2coch+PT+oBA==
@@ -4079,6 +4041,11 @@ parse-path@^4.0.0:
     protocols "^1.4.0"
     qs "^6.9.4"
     query-string "^6.13.8"
+
+parse-static-imports@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/parse-static-imports/-/parse-static-imports-1.1.0.tgz#ae2f18f18da1a993080ae406a5219455c0bbad5d"
+  integrity sha512-HlxrZcISCblEV0lzXmAHheH/8qEkKgmqkdxyHTPbSqsTUV8GzqmN1L+SSti+VbNPfbBO3bYLPHDiUs2avbAdbA==
 
 parse-url@^6.0.0:
   version "6.0.0"

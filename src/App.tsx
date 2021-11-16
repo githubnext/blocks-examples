@@ -1,13 +1,14 @@
 import { useMemo, useState } from "react";
 import GitUrlParse from "git-url-parse";
+import "@githubnext/utils/dist/index.css"
 
 import { usePackageJson } from "./hooks";
 import { AppInner } from "./components/app-inner";
 
 function App() {
-  const [selectedViewer, setSelectedViewer] = useState("");
+  const [viewerId, setViewerId] = useState("");
   const [fileUrl, setFileUrl] = useState(
-    "https://github.com/githubocto/repo-visualizer/tree/main/src"
+    "https://github.com/githubocto/flat/blob/main/src/git.ts"
   );
 
   const { data: pkgJson, status } = usePackageJson();
@@ -21,6 +22,8 @@ function App() {
       return null;
     }
   }, [fileUrl]);
+
+  const viewer = pkgJson?.viewers.find((v) => v.entry === viewerId);
 
   return (
     <div className="h-screen flex flex-col overflow-hidden">
@@ -45,9 +48,9 @@ function App() {
           </label>
           <select
             onChange={(e) => {
-              setSelectedViewer(e.target.value);
+              setViewerId(e.target.value);
             }}
-            value={selectedViewer}
+            value={viewerId}
             disabled={!pkgJson || status !== "success"}
             className="form-select text-sm"
             name="viewer"
@@ -84,22 +87,20 @@ function App() {
         </div>
       </div>
       <div className="flex-1 overflow-auto">
-        {(!selectedViewer || !fileUrl) && (
+        {(!viewerId || !fileUrl) && (
           <div className="p-4">
             <p className="text-sm">
               Please select a viewer and enter a file path.
             </p>
           </div>
         )}
-        {selectedViewer && fileUrl && urlParts && (
+        {!!viewer && !!fileUrl && !!urlParts && (
           <AppInner
+            metadata={{}}
+            onUpdateMetadata={() => { return new Promise(() => { }) }}
             onReset={() => setFileUrl("")}
-            viewer={selectedViewer}
-            // @ts-ignore
-            viewerType={
-              pkgJson?.viewers.find((v) => v.entry === selectedViewer)?.type
-            }
-            dependencies={pkgJson?.dependencies as object}
+            viewer={viewer}
+            dependencies={pkgJson?.dependencies as Record<string, string>}
             urlParts={urlParts}
           />
         )}

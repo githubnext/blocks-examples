@@ -1,6 +1,7 @@
-interface FileContext {
+interface ViewerMeta {
+  language: string;
   download_url: string;
-  file: string;
+  name: string;
   path: string;
   repo: string;
   owner: string;
@@ -14,22 +15,12 @@ interface CommonViewerProps {
   onRequestUpdateContent: () => any;
 }
 
-interface FileData {
+interface FileViewerProps extends CommonViewerProps {
   content: string;
-  context: FileContext;
+  meta: ViewerMeta;
 }
-type FileViewerProps = FileData & CommonViewerProps;
 
-interface FolderContext {
-  download_url: string;
-  folder: string;
-  path: string;
-  repo: string;
-  owner: string;
-  sha: string;
-  username: string;
-}
-interface FolderData {
+interface FolderViewerProps extends CommonViewerProps {
   tree: {
     path: string;
     mode: string;
@@ -38,6 +29,15 @@ interface FolderData {
     size: number;
     url: string;
   }[];
-  context: FolderContext;
+  content: string;
+  meta: {
+    theme: string;
+    download_url: string;
+    name: string;
+    path: string;
+    repo: string;
+    owner: string;
+    sha: string;
+    username: string;
+  };
 }
-type FolderViewerProps = FolderData & CommonViewerProps;

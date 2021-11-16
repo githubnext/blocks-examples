@@ -1,61 +1,14 @@
+import { useCallback } from "react";
 import { useFileContent } from "../hooks";
 import { AppInnerProps } from "./app-inner";
-
 import { ErrorState } from "./error-state";
 import { LoadingState } from "./loading-state";
-
-import { SandpackRunner } from "@codesandbox/sandpack-react";
-
-import { useRawImportSource } from "../hooks";
-
-type SandboxedViewerProps = FileViewerProps & {
-  viewerId: string;
-  dependencies: object;
-};
-
-function SandboxedViewer(props: SandboxedViewerProps) {
-  const { context, viewerId, content, dependencies } = props;
-  const { data, status } = useRawImportSource(viewerId, dependencies);
-
-  if (status === "loading") return <LoadingState />;
-  if (status === "error") return <ErrorState />;
-
-  if (status === "success" && data) {
-    const injectedSource = `
-      ${data.source}
-      export default function WrappedViewer() {
-        return <Viewer context={${JSON.stringify(
-          context
-        )}} content={${JSON.stringify(content)}} />
-      }
-    `;
-
-    return (
-      <div className="flex-1 h-full sandbox-wrapper">
-        <SandpackRunner
-          template="react-ts"
-          code={injectedSource}
-          customSetup={{
-            dependencies: data.dependencies,
-            files: {
-              ...data.files,
-            },
-          }}
-          options={{
-            showNavigator: false,
-          }}
-        />
-      </div>
-    );
-  }
-
-  return null;
-}
+import { SandboxedViewer } from "@githubnext/utils";
 
 export function FileViewer(
   props: Omit<AppInnerProps, "onReset" | "viewerType">
 ) {
-  const { viewer, dependencies, urlParts } = props;
+  const { viewer, metadata = {}, onUpdateMetadata, dependencies, urlParts } = props;
 
   if (
     urlParts.filepathtype !== "blob" ||
@@ -78,18 +31,34 @@ export function FileViewer(
     fileRef: ref,
   });
 
+  const getFileContent = useCallback(async (path: string) => {
+    const importType = path.endsWith(".css") ? "inline" : "raw";
+    const contents = await import(
+      /* @vite-ignore */ `../../..${path}?${importType}`
+    );
+    return contents.default;
+  }, []);
+
   if (status === "loading") return <LoadingState />;
   if (status === "error") return <ErrorState />;
   if (status === "success" && data) {
     return (
-      <SandboxedViewer
-        {...data}
-        dependencies={dependencies}
-        viewerId={viewer}
-        metadata={defaultMetadata}
-        onUpdateMetadata={noop}
-        onRequestUpdateContent={noop}
-      />
+      <div className="sandbox-wrapper h-full w-full">
+        <SandboxedViewer
+          getFileContent={getFileContent}
+          contents={data.content}
+          context={{
+            ...data.context,
+            file: name,
+          }}
+          dependencies={dependencies}
+          viewer={viewer}
+          metadata={metadata}
+          onUpdateMetadata={onUpdateMetadata}
+          session={{ token: "" }}
+          onRequestUpdateContent={() => { }}
+        />
+      </div>
     );
   }
 
@@ -97,4 +66,3 @@ export function FileViewer(
 }
 
 const defaultMetadata = {};
-const noop = () => {};
