@@ -577,14 +577,15 @@
   resolved "https://registry.yarnpkg.com/@excalidraw/excalidraw/-/excalidraw-0.10.0.tgz#5329d6fb1b0cca068e2cd34da6d648dd6d0d3fec"
   integrity sha512-0fHc/oX394dHAT7LEacwZ0vh8aeI179plYnfaeLeRHBtHARgmtlmvxcnxd2pxJ0Z1Uj/Cy76oK9MVw/y8P1HhQ==
 
-"@githubnext/utils@^0.9.5":
-  version "0.9.5"
-  resolved "https://registry.yarnpkg.com/@githubnext/utils/-/utils-0.9.5.tgz#afcafcc73ccf5c86c68cd3707199ce98f406661c"
-  integrity sha512-d4G8wzLi3MV2R9Ony26tj3YVdmZJA3bD4uW9e8CixSXtWbWjY0/VyFiTwFoNA+POKCZY5/g+tXwl4Ha0cDPVtQ==
+"@githubnext/utils@^0.9.18":
+  version "0.9.18"
+  resolved "https://registry.yarnpkg.com/@githubnext/utils/-/utils-0.9.18.tgz#eb6a2af16e3326fe2944921e5aba6a3b097c3723"
+  integrity sha512-xOGL7ZKcI2j6FxC6fPw+W1LFeSFT4zGuJpaqYtFx5zb1dILPBZ7hhX5LtrGpIH5qTliK5kPoOQ9Ps3berrGBXg==
   dependencies:
     "@codesandbox/sandpack-react" "^0.3.3"
     parse-static-imports "^1.1.0"
     react "^17.0.2"
+    react-use "^17.3.1"
     zod "^3.11.6"
 
 "@githubocto/flat-ui@^0.10.2":

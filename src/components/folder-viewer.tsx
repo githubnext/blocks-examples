@@ -8,17 +8,17 @@ import { SandboxedViewer } from "@githubnext/utils";
 export function FolderViewer(
   props: Omit<AppInnerProps, "onReset" | "viewerType">
 ) {
-  const { viewer, metadata = {}, onUpdateMetadata, dependencies, urlParts } = props;
+  const { viewer, metadata = {}, dependencies, urlParts } = props;
 
   if (
-    urlParts.filepathtype !== "blob" ||
+    urlParts.filepathtype === "blob" ||
     !urlParts.owner ||
     !urlParts.name ||
     !urlParts.ref ||
     !urlParts.filepath
   ) {
     throw new Error(
-      "Unable to parse this GitHub URL. Are you sure you've linked to a file and not a directory?"
+      "Unable to parse this GitHub URL. Are you sure you've linked to a folder and not a file?"
     );
   }
 
@@ -52,9 +52,7 @@ export function FolderViewer(
           dependencies={dependencies}
           viewer={viewer}
           metadata={metadata}
-          onUpdateMetadata={onUpdateMetadata}
           session={{ token: "" }}
-          onRequestUpdateContent={() => { }}
         />
       </div>
     );

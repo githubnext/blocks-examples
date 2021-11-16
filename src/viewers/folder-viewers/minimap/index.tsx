@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import { stratify } from 'd3';
 // @ts-ignore
 import { Tree } from "./Tree.jsx"
+import { FolderViewerProps } from "@githubnext/utils";
 
 export function Viewer(props: FolderViewerProps) {
   const { tree } = props;

@@ -1,3 +1,4 @@
+import { FileViewerProps } from '@githubnext/utils';
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 
