@@ -9,9 +9,11 @@ import {
 } from "react";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import "styled-components";
-import { CodeSandbox } from "./CodeSandbox";
+// we need to specify extensions for all files
 // @ts-ignore
-import { ErrorBoundary } from "./error-boundary.tsx"; // we need to specify extensions for all files
+import { CodeSandbox } from "./CodeSandbox.tsx";
+// @ts-ignore
+import { ErrorBoundary } from "./error-boundary.tsx";
 import "./style.css"
 
 export interface RepoContext {
