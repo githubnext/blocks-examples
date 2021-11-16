@@ -84,6 +84,15 @@
       ]
     },
     {
+      "type": "file",
+      "title": "Markdown viewer",
+      "description": "A simple markdown viewer",
+      "entry": "/viewers/file-viewers/markdown/markdown.tsx",
+      "extensions": [
+        "md"
+      ]
+    },
+    {
       "type": "folder",
       "title": "Minimap",
       "description": "A visualization of your folders and files",
