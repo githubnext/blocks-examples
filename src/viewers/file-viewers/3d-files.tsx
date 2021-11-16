@@ -2,6 +2,7 @@ import { Suspense, useRef } from "react";
 import { useGLTF } from "@react-three/drei";
 import { Canvas, useStore } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
+import { FileViewerProps } from "@githubnext/utils";
 
 const LControl = () => {
   // @ts-ignore

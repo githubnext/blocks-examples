@@ -1,5 +1,6 @@
 import "./style.css"
 import SyntaxHighlighter from "react-syntax-highlighter";
+import { FileViewerProps } from "@githubnext/utils";
 
 export function Viewer(props: FileViewerProps) {
   const { content } = props;

@@ -1,5 +1,6 @@
 import { useEffect, useMemo } from "react";
 import { toJSON } from 'cssjson';
+import { FileViewerProps } from "@githubnext/utils";
 
 export function Viewer(props: FileViewerProps) {
   const { content } = props;
@@ -20,7 +21,7 @@ export function Viewer(props: FileViewerProps) {
   const { tree, flattenedRules, widelyApplicableAttributes } = useMemo(() => {
     const tree = toJSON(content)
     // const rules = getRulesFromTreeItem(tree)
-    let flattenedRules = {}
+    let flattenedRules = {} as any
     Object.keys(tree.children).forEach(key => {
       const selectors = key.split(",").map(s => s.trim())
       selectors.forEach(selector => {

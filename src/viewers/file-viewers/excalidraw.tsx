@@ -1,5 +1,6 @@
-import { useState, useEffect, useRef } from "react";
-import Excalidraw, { serializeAsJSON } from "@excalidraw/excalidraw"
+import Excalidraw, { serializeAsJSON } from "@excalidraw/excalidraw";
+import { FileViewerProps } from "@githubnext/utils";
+import { useState } from "react";
 
 export function Viewer(props: FileViewerProps) {
   const { content, onRequestUpdateContent } = props;

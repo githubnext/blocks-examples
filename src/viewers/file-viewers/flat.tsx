@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { csvParse } from "d3";
 import { Grid } from "@githubocto/flat-ui";
+import { FileViewerProps } from "@githubnext/utils";
 
 export function Viewer(props: FileViewerProps) {
   const { content } = props;

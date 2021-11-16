@@ -1,3 +1,5 @@
+import { FileViewerProps } from "@githubnext/utils";
+
 export function Viewer(props: FileViewerProps) {
     const { content } = props;
 

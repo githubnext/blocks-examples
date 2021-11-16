@@ -3,7 +3,8 @@ import { csvParse } from "d3";
 // need to explicitely import libraries
 import "vega";
 import "vega-lite";
-import { Vega }from "react-vega";
+import { Vega } from "react-vega";
+import { FileViewerProps } from "@githubnext/utils";
 
 const config = {
   "path": "data.csv",
@@ -184,28 +185,28 @@ const config = {
 }
 
 export function Viewer(props: FileViewerProps) {
-    const { content } = props;
+  const { content } = props;
 
-    const data = useMemo(() => ({ data: parseData(content) }), [content]);
+  const data = useMemo(() => ({ data: parseData(content) }), [content]);
 
-    const parsedConfig = {
-      width: 500,
-      height: 500,
-      // data: [{ name: "data" }],
-      ...config
-    };
+  const parsedConfig = {
+    width: 500,
+    height: 500,
+    // data: [{ name: "data" }],
+    ...config
+  };
 
-    return (
-      <div className="w-full h-full">
-        <div className="flex w-full h-full">
-          {/* <ConfigEditor config={config} setConfig={setConfig} metadata={metadata} onUpdateMetadata={onUpdateMetadata} /> */}
-          <div className="flex-1 font-mono p-8 px-10">
-            {/* @ts-ignore */}
-            {!!data && <Vega spec={parsedConfig} data={data} />}
-          </div>
+  return (
+    <div className="w-full h-full">
+      <div className="flex w-full h-full">
+        {/* <ConfigEditor config={config} setConfig={setConfig} metadata={metadata} onUpdateMetadata={onUpdateMetadata} /> */}
+        <div className="flex-1 font-mono p-8 px-10">
+          {/* @ts-ignore */}
+          {!!data && <Vega spec={parsedConfig} data={data} />}
         </div>
       </div>
-    );
+    </div>
+  );
 }
 
 const parseData = (str: string) => {
