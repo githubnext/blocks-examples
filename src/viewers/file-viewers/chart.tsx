@@ -1,10 +1,12 @@
 import { useMemo } from "react";
 import { csvParse } from "d3";
-// need to explicitely import libraries
+// need to explicitly import libraries
 import "vega";
 import "vega-lite";
 import { Vega } from "react-vega";
 import { FileViewerProps } from "@githubnext/utils";
+import "prop-types"
+
 
 const config = {
   "path": "data.csv",

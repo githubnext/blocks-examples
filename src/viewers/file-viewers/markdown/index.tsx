@@ -13,7 +13,7 @@ import "styled-components";
 // // @ts-ignore
 // import { CodeSandbox } from "./CodeSandbox.tsx";
 // @ts-ignore
-import { ErrorBoundary } from "./error-boundary.tsx";
+import { ErrorBoundary } from "./ErrorBoundary.tsx";
 import "./style.css"
 
 export interface RepoContext {
