@@ -1,10 +1,9 @@
-import { useEffect, useMemo, useState } from "react";
+import "@githubnext/utils/dist/index.css";
 import GitUrlParse from "git-url-parse";
-import "@githubnext/utils/dist/index.css"
-
-import { useLocalStorage, usePackageJson } from "./hooks";
+import { useEffect, useMemo, useState } from "react";
 import { AppInner } from "./components/app-inner";
-import { FileContext, FolderContext } from "@githubnext/utils";
+import { useLocalStorage, usePackageJson } from "./hooks";
+
 
 function App() {
   const [viewerId, setViewerId] = useState("/src/viewers/file-viewers/code/index.tsx");
@@ -34,7 +33,7 @@ function App() {
   }, [metadataKey])
 
   const onUpdateMetadata = (newMetadata: any) => {
-    return new Promise<void>((resolve, reject) => {
+    return new Promise<void>((resolve) => {
       setMetadata(newMetadata)
       resolve()
     })
