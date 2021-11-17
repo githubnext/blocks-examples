@@ -1,4 +1,4 @@
-import { FileViewerProps, useTailwindCdn } from "@githubnext/utils";
+import { FileBlockProps, useTailwindCdn } from "@githubnext/utils";
 import { parse } from "papaparse";
 import { useEffect, useMemo, useState } from "react";
 // @ts-ignore
@@ -6,7 +6,7 @@ import { Chart } from "./Chart.tsx";
 // @ts-ignore
 import { ErrorBoundary } from "./ErrorBoundary.tsx";
 
-export function Viewer(props: FileViewerProps) {
+export function Block(props: FileBlockProps) {
   useTailwindCdn()
   const { content, metadata, onUpdateMetadata } = props;
   const [xMetric, setXMetric] = useState("");

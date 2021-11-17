@@ -1,4 +1,4 @@
-import { FileViewerProps, useTailwindCdn } from "@githubnext/utils";
+import { FileBlockProps, useTailwindCdn } from "@githubnext/utils";
 import MDX from "@mdx-js/runtime";
 import { Avatar, Box, StateLabel } from "@primer/components";
 import { timeFormat } from "d3";
@@ -26,7 +26,7 @@ export const MarkdownContext = createContext({
   releases: [],
   commits: [],
 });
-export function Viewer(props: FileViewerProps) {
+export function Block(props: FileBlockProps) {
   const { context, content } = props;
   useTailwindCdn()
 

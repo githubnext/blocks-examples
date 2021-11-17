@@ -1,8 +1,8 @@
 import "./style.css"
 import SyntaxHighlighter from "react-syntax-highlighter";
-import { FileViewerProps } from "@githubnext/utils";
+import { FileBlockProps } from "@githubnext/utils";
 
-export function Viewer(props: FileViewerProps) {
+export function Block(props: FileBlockProps) {
   const { content } = props;
 
   return (

@@ -1,8 +1,8 @@
 import { useEffect, useMemo } from "react";
 import { toJSON } from 'cssjson';
-import { FileViewerProps } from "@githubnext/utils";
+import { FileBlockProps } from "@githubnext/utils";
 
-export function Viewer(props: FileViewerProps) {
+export function Block(props: FileBlockProps) {
   const { content } = props;
 
   useEffect(() => {

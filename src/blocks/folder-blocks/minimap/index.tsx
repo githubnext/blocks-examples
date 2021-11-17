@@ -2,9 +2,9 @@ import { useMemo } from "react";
 import { stratify } from 'd3';
 // @ts-ignore
 import { Tree } from "./Tree.jsx"
-import { FolderViewerProps } from "@githubnext/utils";
+import { FolderBlockProps } from "@githubnext/utils";
 
-export function Viewer(props: FolderViewerProps) {
+export function Block(props: FolderBlockProps) {
   const { tree } = props;
 
   const data = useMemo(() => {

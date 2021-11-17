@@ -4,7 +4,7 @@ import { csvParse } from "d3";
 import "vega";
 import "vega-lite";
 import { Vega } from "react-vega";
-import { FileViewerProps } from "@githubnext/utils";
+import { FileBlockProps } from "@githubnext/utils";
 import "prop-types"
 
 
@@ -186,7 +186,7 @@ const config = {
   ]
 }
 
-export function Viewer(props: FileViewerProps) {
+export function Block(props: FileBlockProps) {
   const { content } = props;
 
   const data = useMemo(() => ({ data: parseData(content) }), [content]);

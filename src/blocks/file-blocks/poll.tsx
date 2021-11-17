@@ -1,8 +1,8 @@
 import { useState } from "react";
 // import { useUpdateFileContents, useFileContent } from "hooks";
-// import { ViewerProps } from ".";
+// import { BlockProps } from ".";
 
-import { FileViewerProps, useTailwindCdn } from '@githubnext/utils'; // to import tailwind css
+import { FileBlockProps, useTailwindCdn } from '@githubnext/utils'; // to import tailwind css
 
 interface PollOptions {
   text: string;
@@ -14,7 +14,7 @@ type Poll = {
   options: PollOptions[];
 };
 
-export function Viewer(props: FileViewerProps) {
+export function Block(props: FileBlockProps) {
   useTailwindCdn();
 
   const { content } = props;

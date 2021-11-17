@@ -1,44 +1,44 @@
 {
-  "name": "custom-viewer-template",
+  "name": "custom-block-template",
   "version": "0.0.0",
   "scripts": {
     "dev": "vite --port 4000",
     "build": "tsc && vite build",
     "serve": "vite preview"
   },
-  "viewers": [
+  "blocks": [
     {
       "type": "file",
-      "title": "Code viewer",
-      "description": "A basic code viewer",
-      "entry": "/src/viewers/file-viewers/code/index.tsx",
+      "title": "Code block",
+      "description": "A basic code block",
+      "entry": "/src/blocks/file-blocks/code/index.tsx",
       "extensions": [
         "*"
       ]
     },
     {
       "type": "file",
-      "title": "Drawing viewer",
+      "title": "Drawing block",
       "description": "A whiteboard tool",
-      "entry": "/src/viewers/file-viewers/excalidraw.tsx",
+      "entry": "/src/blocks/file-blocks/excalidraw.tsx",
       "extensions": [
         "excalidraw"
       ]
     },
     {
       "type": "file",
-      "title": "CSS viewer",
+      "title": "CSS block",
       "description": "View selectors in a css file",
-      "entry": "/src/viewers/file-viewers/css.tsx",
+      "entry": "/src/blocks/file-blocks/css.tsx",
       "extensions": [
         "css"
       ]
     },
     {
       "type": "file",
-      "title": "3D viewer",
-      "description": "A viewer for 3d files",
-      "entry": "/src/viewers/file-viewers/3d-files.tsx",
+      "title": "3D block",
+      "description": "A block for 3d files",
+      "entry": "/src/blocks/file-blocks/3d-files.tsx",
       "extensions": [
         "obj",
         "fbx",
@@ -48,9 +48,9 @@
     },
     {
       "type": "file",
-      "title": "Flat viewer",
-      "description": "A viewer for flat data files",
-      "entry": "/src/viewers/file-viewers/flat.tsx",
+      "title": "Flat block",
+      "description": "A block for flat data files",
+      "entry": "/src/blocks/file-blocks/flat.tsx",
       "extensions": [
         "csv",
         "json"
@@ -58,27 +58,27 @@
     },
     {
       "type": "file",
-      "title": "Iframe viewer",
-      "description": "An iframe viewer",
-      "entry": "/src/viewers/file-viewers/iframe.tsx",
+      "title": "Iframe block",
+      "description": "An iframe block",
+      "entry": "/src/blocks/file-blocks/iframe.tsx",
       "extensions": [
         "iframe"
       ]
     },
     {
       "type": "file",
-      "title": "Poll viewer",
+      "title": "Poll block",
       "description": "View simple polls beautifully",
-      "entry": "/src/viewers/file-viewers/poll.tsx",
+      "entry": "/src/blocks/file-blocks/poll.tsx",
       "extensions": [
         "json"
       ]
     },
     {
       "type": "file",
-      "title": "Chart viewer",
-      "description": "An interactive chart viewer",
-      "entry": "/src/viewers/file-viewers/charts/index.tsx",
+      "title": "Chart block",
+      "description": "An interactive chart block",
+      "entry": "/src/blocks/file-blocks/charts/index.tsx",
       "extensions": [
         "csv"
       ],
@@ -86,9 +86,9 @@
     },
     {
       "type": "file",
-      "title": "Markdown viewer",
-      "description": "A simple markdown viewer",
-      "entry": "/src/viewers/file-viewers/markdown.tsx",
+      "title": "Markdown block",
+      "description": "A simple markdown block",
+      "entry": "/src/blocks/file-blocks/markdown.tsx",
       "extensions": [
         "md"
       ]
@@ -97,7 +97,7 @@
       "type": "file",
       "title": "Live Markdown",
       "description": "View rich markdown files",
-      "entry": "/src/viewers/file-viewers/markdown/index.tsx",
+      "entry": "/src/blocks/file-blocks/markdown/index.tsx",
       "extensions": [
         "md"
       ]
@@ -106,12 +106,12 @@
       "type": "folder",
       "title": "Minimap",
       "description": "A visualization of your folders and files",
-      "entry": "/src/viewers/folder-viewers/minimap/index.tsx"
+      "entry": "/src/blocks/folder-blocks/minimap/index.tsx"
     }
   ],
   "dependencies": {
     "@excalidraw/excalidraw": "^0.10.0",
-    "@githubnext/utils": "^0.9.18",
+    "@githubnext/utils": "^0.10.0",
     "@githubocto/flat-ui": "^0.10.2",
     "@loadable/component": "^5.15.0",
     "@mdx-js/runtime": "^1.6.22",
