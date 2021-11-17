@@ -1,5 +1,5 @@
 import uniqueId from "lodash/uniqueId";
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 
 export const CircleText = ({
   r = 10,

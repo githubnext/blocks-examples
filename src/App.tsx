@@ -6,15 +6,9 @@ import { useLocalStorage, usePackageJson } from "./hooks";
 import { AppInner } from "./components/app-inner";
 import { FileContext, FolderContext } from "@githubnext/utils";
 
-
-interface MetadataEvent {
-  context: FileContext | FolderContext
-  metadata: any
-}
 function App() {
   const [viewerId, setViewerId] = useState("/src/viewers/file-viewers/code/index.tsx");
   const [fileUrl, setFileUrl] = useState(
-    // "https://github.com/the-pudding/data/blob/master/pockets/measurements.csv"
     "https://github.com/githubocto/flat/blob/main/src/git.ts"
   );
   const [doMimicProductionEnvironment, setDoMimicProductionEnvironment] = useState(false);

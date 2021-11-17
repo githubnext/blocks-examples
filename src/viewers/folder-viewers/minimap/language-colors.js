@@ -1,4 +1,4 @@
-export default map = {
+export default {
   "bsl": "#814CCC",
   "os": "#814CCC",
   "4dm": "#004289",
