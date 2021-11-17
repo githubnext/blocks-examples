@@ -23,7 +23,6 @@ function App() {
       if (event.data.codesandbox) return
       if (event.data.type !== "update-metadata") return
       const newMetadata = event?.data?.metadata || {};
-
       setMetadata(newMetadata)
     }
     window.addEventListener("message", onUpdateMetadata as EventListener)

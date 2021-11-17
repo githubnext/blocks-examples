@@ -1,9 +1,9 @@
 import { FileBlockProps, useTailwindCdn } from "@githubnext/utils";
 import { parse } from "papaparse";
 import { useEffect, useMemo, useState } from "react";
-// @ts-ignore
+// @ts-ignore: we need to specify the file extension
 import { Chart } from "./Chart.tsx";
-// @ts-ignore
+// @ts-ignore: we need to specify the file extension
 import { ErrorBoundary } from "./ErrorBoundary.tsx";
 
 export function Block(props: FileBlockProps) {
@@ -34,12 +34,15 @@ export function Block(props: FileBlockProps) {
     const getIsValidKey = (d: string) => keys.includes(d)
     if (!getIsValidKey(xMetric)) setXMetric(keys[0]);
     if (!getIsValidKey(yMetric)) setYMetric(keys[1]);
+    if (savedChartConfigs.length > 0) {
+      onLoadChartConfig(savedChartConfigs[activeChartConfigIndex === -1 ? 0 : activeChartConfigIndex])
+    }
   }, [keys.join(",")])
 
   return (
     <div className="w-full h-full">
       <div className="flex items-center flex-wrap">
-        <Select canBeEmpty label="saved chart" value={activeChartConfig} onChange={onLoadChartConfig} options={savedChartConfigs} />
+        <Select canBeEmpty label="saved charts" value={activeChartConfig} onChange={onLoadChartConfig} options={savedChartConfigs} />
         {activeChartConfigIndex !== -1 ? (
           <button className="py-2 px-4 mt-6 text-sm bg-indigo-500 text-white rounded-xl" onClick={() => {
             const newMetadata = { configs: savedChartConfigs.filter((c: string) => c !== activeChartConfig) }
