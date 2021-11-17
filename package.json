@@ -113,6 +113,7 @@
     "@excalidraw/excalidraw": "^0.10.0",
     "@githubnext/utils": "^0.9.18",
     "@githubocto/flat-ui": "^0.10.2",
+    "@loadable/component": "^5.15.0",
     "@mdx-js/runtime": "^1.6.22",
     "@octokit/rest": "^18.12.0",
     "@primer/components": "^31.1.0",
