@@ -9,10 +9,11 @@ import {
   // @ts-ignore
 } from 'react-image-annotation/lib/selectors'
 import { useEffect, useState } from 'react';
-import { FileBlockProps } from '@githubnext/utils';
+import { FileBlockProps, useTailwindCdn } from '@githubnext/utils';
 
 export function Block({ content, context }: FileBlockProps) {
   const { owner, repo, path } = context
+  useTailwindCdn()
 
   const componentName = path.split('/').pop()?.split(".")[0]
   const [componentDefinition, setComponentDefinition] = useState(`<${componentName}>\n</${componentName}>`)
