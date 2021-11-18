@@ -103,6 +103,15 @@
       ]
     },
     {
+      "type": "file",
+      "title": "React component feedback",
+      "description": "Give feedback on a React component",
+      "entry": "/src/blocks/file-blocks/annotate-react/index.tsx",
+      "extensions": [
+        "md"
+      ]
+    },
+    {
       "type": "folder",
       "title": "Minimap",
       "description": "A visualization of your folders and files",
@@ -134,6 +143,7 @@
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
     "react-error-boundary": "^3.1.4",
+    "react-image-annotation": "^0.9.10",
     "react-json-editor-ajrm": "^2.5.13",
     "react-markdown": "^7.1.0",
     "react-query": "^3.32.1",

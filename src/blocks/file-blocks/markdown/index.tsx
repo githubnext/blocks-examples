@@ -1,4 +1,5 @@
 import { FileBlockProps, useTailwindCdn } from "@githubnext/utils";
+// @ts-ignore
 import MDX from "@mdx-js/runtime";
 import { Avatar, Box, StateLabel } from "@primer/components";
 import {
