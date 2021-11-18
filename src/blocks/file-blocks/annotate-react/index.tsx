@@ -34,7 +34,7 @@ export function Block({ content, context }: FileBlockProps) {
 
 
   const onSubmit = async (annotations: AnnotationType[], title: string, description: string) => {
-    const url = `https://github-blocks.vercel.app?${owner}/${repo}&path=${path}&annotations=${encodeURIComponent(JSON.stringify(annotations))}&componentDefinition=${encodeURIComponent(JSON.stringify(componentDefinition))}&blockId=githubnext--blocks-examples--%2Fsrc%2Fblocks%2Ffile-blocks%2Fannotate-react%2Findex.tsx`
+    const url = `https://github-blocks.vercel.app/${owner}/${repo}?path=${path}&annotations=${encodeURIComponent(JSON.stringify(annotations))}&componentDefinition=${encodeURIComponent(JSON.stringify(componentDefinition))}&blockId=githubnext--blocks-examples--%2Fsrc%2Fblocks%2Ffile-blocks%2Fannotate-react%2Findex.tsx`
     const body = `${description}
 
 [Annotated component](${encodeURIComponent(url)})`
