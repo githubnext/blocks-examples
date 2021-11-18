@@ -72,22 +72,19 @@ ReactDOM.render(
         <CodeSandbox language="js" dependencies={["react", "react-dom"]}>
           {wrappedContents}
         </CodeSandbox>
-        {/* <Compiler {...params.compilerProps} /> */}
       </Annotator>
-      {/* <Editor {...params.editorProps} language="jsx" />
-      <Error {...params.errorProps} /> */}
     </div>
   );
 }
 
 const annotationTypes = [{
-  id: RectangleSelector,
+  id: RectangleSelector.TYPE,
   name: "Rectangle",
 }, {
-  id: PointSelector,
+  id: PointSelector.TYPE,
   name: "Point",
 }, {
-  id: OvalSelector,
+  id: OvalSelector.TYPE,
   name: "Oval",
 }]
 
@@ -126,7 +123,6 @@ const Annotator = ({ defaultAnnotations, onSubmit, children }: {
 
   return (
     <div className="flex py-6 w-full">
-
       <div className="flex-1 w-full p-6 pt-0 z-10">
         <div className="flex w-full items-center pb-1">
           <div className="mr-6 py-2 text-xs uppercase tracking-widest">
