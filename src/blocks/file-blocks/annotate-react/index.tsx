@@ -145,6 +145,9 @@ const AnnotationSetList = ({ saved, onUpdateMetadata, annotations, setAnnotation
     componentDefinition,
     annotations,
   })
+  const selectedAnnotationSetIndex = saved.findIndex((set) => (
+    annotationSetToString(set) === selectedAnnotationSetString
+  ))
 
   return (
     <div className="w-80 h-full flex flex-col divide-y divide-gray-200">
@@ -183,7 +186,7 @@ const AnnotationSetList = ({ saved, onUpdateMetadata, annotations, setAnnotation
           }} />
         </div>
         <button className={`w-full p-2 px-3 ${canSubmitForm ? "bg-indigo-500 text-white" : "bg-gray-200 text-gray-400"}`} disabled={!canSubmitForm}
-          type="submit">Save annotation set</button>
+          type="submit">Save new annotation set</button>
       </form>
       <div className="flex-1 flex flex-col h-full w-full mt-6 pt-5">
         <div className="p-2 font-bold">
@@ -191,7 +194,7 @@ const AnnotationSetList = ({ saved, onUpdateMetadata, annotations, setAnnotation
         </div>
         <div className="divide-y divide-gray-200 w-full flex-1 overflow-y-auto">
           {saved.map((annotationSet, index) => {
-            const isSelected = annotationSetToString(annotationSet) === selectedAnnotationSetString
+            const isSelected = selectedAnnotationSetIndex === index
             return (
               <button key={index} className={`group relative p-2 px-4 w-full text-left ${isSelected ? "bg-indigo-100" : ""}`} onClick={() => {
                 setAnnotations(annotationSet.annotations)
@@ -214,6 +217,16 @@ const AnnotationSetList = ({ saved, onUpdateMetadata, annotations, setAnnotation
               </button>
             )
           })}
+          <button className="group relative py-4 px-4 w-full flex items-center justify-center text-gray-500" onClick={() => {
+            setAnnotations([])
+            setComponentDefinition("")
+            setTitle("")
+          }}>
+            <svg className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+              <path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" />
+            </svg>
+            Create a new annotation set
+          </button>
         </div>
       </div>
     </div>
