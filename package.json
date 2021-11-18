@@ -108,7 +108,10 @@
       "description": "Give feedback on a React component",
       "entry": "/src/blocks/file-blocks/annotate-react/index.tsx",
       "extensions": [
-        "md"
+        "js",
+        "jsx",
+        "ts",
+        "tsx"
       ]
     },
     {
