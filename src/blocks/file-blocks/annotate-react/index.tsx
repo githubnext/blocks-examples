@@ -1,4 +1,5 @@
-import { CodeSandbox } from './CodeSandbox';
+// @ts-ignore:
+import { CodeSandbox } from './CodeSandbox.tsx';
 // @ts-ignore
 import Annotation from 'react-image-annotation'
 import {
