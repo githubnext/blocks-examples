@@ -11,37 +11,13 @@ import {
 import { useEffect, useState } from 'react';
 import { FileBlockProps, useTailwindCdn } from '@githubnext/utils';
 
-export function Block({ content, context }: FileBlockProps) {
+export function Block({ content, context, metadata, onUpdateMetadata }: FileBlockProps) {
   const { owner, repo, path } = context
   useTailwindCdn()
 
   const componentName = path.split('/').pop()?.split(".")[0]
   const [componentDefinition, setComponentDefinition] = useState(`<${componentName}>\n</${componentName}>`)
-
-  const [defaultAnnotations, setDefaultAnnotations] = useState([])
-
-  useEffect(() => {
-    const query = window.location.search
-    const params = new URLSearchParams(query)
-    const annotations = params.get('annotations')
-    const defaultAnnotations = annotations ? JSON.parse(decodeURIComponent(annotations)) : [];
-    setDefaultAnnotations(defaultAnnotations)
-    const componentDefinition = params.get('componentDefinition') || ""
-    if (componentDefinition) {
-      setComponentDefinition(decodeURIComponent(componentDefinition))
-    }
-  }, [])
-
-
-  const onSubmit = async (annotations: AnnotationType[], title: string, description: string) => {
-    const url = `https://github-blocks.vercel.app/${owner}/${repo}?path=${path}&annotations=${encodeURIComponent(JSON.stringify(annotations))}&componentDefinition=${encodeURIComponent(JSON.stringify(componentDefinition))}&blockId=githubnext--blocks-examples--%2Fsrc%2Fblocks%2Ffile-blocks%2Fannotate-react%2Findex.tsx`
-    const body = `${description}
-
-[Annotated component](${encodeURIComponent(url)})`
-
-    const newIssueUrl = `https://github.com/${owner}/${repo}/issues/new?title=${title}&body=${body}`
-    window.open(newIssueUrl, "_blank")
-  }
+  const [annotations, setAnnotations] = useState([])
 
   const wrappedContents = `
 import ReactDOM from "react-dom";
@@ -57,22 +33,25 @@ ReactDOM.render(
 `
 
   return (
-    <div className="relative w-full">
-      <div className="p-2">
-        <div className="p-2 px-3">
-          Component definition (you can set props)
-        </div>
-        <textarea className="w-full mb-2 p-2 px-3 bg-gray-100 max-w-[40em] font-mono" value={componentDefinition} onChange={(e) => {
-          const value = e.target.value
-          if (!value) return
-          setComponentDefinition(value)
-        }} />
+    <div className="relative w-full flex h-full">
+      <div className="flex flex-col flex-1 max-w-[80em]">
+        <Annotator
+          annotations={annotations}
+          // @ts-ignore
+          setAnnotations={setAnnotations}>
+          <CodeSandbox language="js" dependencies={["react", "react-dom"]}>
+            {wrappedContents}
+          </CodeSandbox>
+        </Annotator>
       </div>
-      <Annotator defaultAnnotations={defaultAnnotations} onSubmit={onSubmit}>
-        <CodeSandbox language="js" dependencies={["react", "react-dom"]}>
-          {wrappedContents}
-        </CodeSandbox>
-      </Annotator>
+      <AnnotationSetList
+        saved={metadata.saved || []}
+        onUpdateMetadata={onUpdateMetadata}
+        annotations={annotations}
+        // @ts-ignore
+        setAnnotations={setAnnotations}
+        componentDefinition={componentDefinition}
+        setComponentDefinition={setComponentDefinition} />
     </div>
   );
 }
@@ -94,18 +73,15 @@ type AnnotationType = {
     id: number,
   }
 }
+type AnnotationSet = {
+  annotations: AnnotationType[],
+  title: string,
+  componentDefinition: string,
+}
 
-const Annotator = ({ defaultAnnotations, onSubmit, children }: {
-  defaultAnnotations: any[],
-  onSubmit: (annotations: AnnotationType[], title: string, description: string) => void,
-  children: any
-}) => {
+const Annotator = ({ annotations, setAnnotations, children }: { annotations: AnnotationType[], setAnnotations: (annotations: AnnotationType[]) => void, children: any }) => {
   const [annotation, setAnnotation] = useState({})
   const [annotationType, setAnnotationType] = useState(annotationTypes[0].id)
-  const [annotations, setAnnotations] = useState(defaultAnnotations || [])
-  const [issueTitle, setIssueTitle] = useState("")
-  const [issueDescription, setIssueDescription] = useState("")
-  const [hasEdited, setHasEdited] = useState(false)
 
   const onAddAnnotation = (annotation: AnnotationType) => {
     const { geometry, data } = annotation
@@ -118,7 +94,6 @@ const Annotator = ({ defaultAnnotations, onSubmit, children }: {
       }
     }]
     setAnnotations(newAnnotations)
-    setHasEdited(true)
   }
 
   return (
@@ -155,33 +130,96 @@ const Annotator = ({ defaultAnnotations, onSubmit, children }: {
           </Annotation>
         </div>
       </div>
-      <div className="flex-1 p-6 self-stretch max-h-[40em] max-w-[35em]">
-        {!!annotations.length && hasEdited && (
-          <form className="flex flex-col h-full space-y-2" onSubmit={(e) => {
-            e.preventDefault()
-            onSubmit(
-              annotations, issueTitle, issueDescription
-            )
-          }}>
-            <div className="text-lg font-bold">Create a new GitHub Issue</div>
-            <input className="bg-white border border-gray-300 focus:outline-none focus:border-indigo-500 py-2 px-4 block w-full appearance-none leading-normal" type="text" placeholder="Title" value={issueTitle} onChange={(e) => {
-              setIssueTitle(e.target.value)
-            }} />
-            <textarea className="bg-white border border-gray-300 flex-1 focus:outline-none focus:border-indigo-500 py-2 px-4 block w-full appearance-none leading-normal resize-none"
-              placeholder="Description"
-              value={issueDescription}
-              onChange={(e) => {
-                setIssueDescription(e.target.value)
-              }}
-            />
-            <button className={`bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white py-3 px-4 rounded-full transition ${issueTitle.length > 0 && issueDescription.length > 0 ? "opacity-100" : "opacity-50"
-              }`} type="submit">
-              Create issue
-            </button>
+    </div>
+  )
+}
 
-          </form>
-        )}
+const AnnotationSetList = ({ saved, onUpdateMetadata, annotations, setAnnotations, componentDefinition, setComponentDefinition }: {
+  saved: AnnotationSet[], onUpdateMetadata: (metadata: any) => void, annotations: AnnotationType[], setAnnotations: (annotations: AnnotationType[]) => void, componentDefinition: string, setComponentDefinition: (componentDefinition: string) => void
+}) => {
+  const [title, setTitle] = useState("")
+
+  const canSubmitForm = annotations.length && title.length
+  const selectedAnnotationSetString = annotationSetToString({
+    title,
+    componentDefinition,
+    annotations,
+  })
+
+  return (
+    <div className="w-80 h-full flex flex-col divide-y divide-gray-200">
+      <form className="mb-2" onSubmit={e => {
+        e.preventDefault()
+        if (!canSubmitForm) return
+        const newMetadata = {
+          saved: [
+            ...saved,
+            {
+              title,
+              componentDefinition,
+              annotations
+            }
+          ]
+        }
+        onUpdateMetadata(newMetadata)
+      }}>
+        <div className="mt-8 pb-4">
+          Annotation set title
+          <input type="text" value={title} onChange={(e) => setTitle(e.target.value)}
+            className="w-full mt-1 p-2 px-3 bg-gray-100"
+          />
+        </div>
+        <div className="">
+          <div className="pb-2">
+            Component definition
+            <div className="text-gray-500 text-sm font-light">
+              You can specify the props and children
+            </div>
+          </div>
+          <textarea className="w-full mb-2 p-2 px-3 bg-gray-100 max-w-[40em] font-mono" value={componentDefinition} onChange={(e) => {
+            const value = e.target.value
+            if (!value) return
+            setComponentDefinition(value)
+          }} />
+        </div>
+        <button className={`w-full p-2 px-3 ${canSubmitForm ? "bg-indigo-500 text-white" : "bg-gray-200 text-gray-400"}`} disabled={!canSubmitForm}
+          type="submit">Save annotation set</button>
+      </form>
+      <div className="flex-1 flex flex-col h-full w-full mt-6 pt-5">
+        <div className="p-2 font-bold">
+          Saved annotation sets
+        </div>
+        <div className="divide-y divide-gray-200 w-full flex-1 overflow-y-auto">
+          {saved.map((annotationSet, index) => {
+            const isSelected = annotationSetToString(annotationSet) === selectedAnnotationSetString
+            return (
+              <button key={index} className={`group relative p-2 px-4 w-full text-left ${isSelected ? "bg-indigo-100" : ""}`} onClick={() => {
+                setAnnotations(annotationSet.annotations)
+                setComponentDefinition(annotationSet.componentDefinition)
+                setTitle(annotationSet.title)
+              }}>
+                {annotationSet.title}
+                <div className="text-gray-500 text-sm italic">
+                  {annotationSet.annotations.length} annotation{annotationSet.annotations.length > 1 ? "s" : ""}
+                </div>
+                <button className="absolute top-1/2 right-2 h-10 w-10 transform -translate-y-1/2 cursor-pointer flex items-center justify-center transition-opacity opacity-0 group-hover:opacity-100 focus:opacity-100" onClick={(e) => {
+                  e.stopPropagation()
+                  const newSaved = saved.filter((_, i) => i !== index)
+                  onUpdateMetadata({ saved: newSaved })
+                }}>
+                  <svg className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clipRule="evenodd" />
+                  </svg>
+                </button>
+              </button>
+            )
+          })}
+        </div>
       </div>
     </div>
   )
+}
+
+const annotationSetToString = (annotationSet: AnnotationSet) => {
+  return JSON.stringify(annotationSet)
 }
