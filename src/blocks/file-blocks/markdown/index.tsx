@@ -1,7 +1,6 @@
 import { FileBlockProps, useTailwindCdn } from "@githubnext/utils";
 import MDX from "@mdx-js/runtime";
 import { Avatar, Box, StateLabel } from "@primer/components";
-import { timeFormat } from "d3";
 import {
   createContext,
   useContext,
@@ -9,9 +8,8 @@ import {
 } from "react";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import "styled-components";
-// we need to specify extensions for all files
-// // @ts-ignore
-// import { CodeSandbox } from "./CodeSandbox.tsx";
+// @ts-ignore
+import { CodeSandbox } from "./CodeSandbox.tsx";
 // @ts-ignore
 import { ErrorBoundary } from "./ErrorBoundary.tsx";
 import "./style.css"
@@ -84,7 +82,7 @@ const components = {
   Issues,
   Releases,
   Commits,
-  // CodeSandbox,
+  CodeSandbox,
   code({ inline, className, children }: {
     inline: boolean;
     className: string;
@@ -103,7 +101,7 @@ const components = {
   },
 };
 
-const formatDate = timeFormat("%B %-d");
+const formatDate = (d: Date) => d.toLocaleDateString();
 const issueStateToStatusMap = {
   closed: "issueClosed",
   open: "issueOpened",

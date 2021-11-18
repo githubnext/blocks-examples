@@ -1,6 +1,5 @@
 import { ReactNode, useEffect, useState } from "react";
-import { getParameters } from "codesandbox/lib/api/define";
-import "codesandbox"
+import LZString from "lz-string"
 
 export const CodeSandbox = ({
   children,
@@ -48,7 +47,7 @@ export const CodeSandbox = ({
     <div className="w-full h-full mt-3 mb-10">
       {!!url && (
         <iframe
-          className="w-full h-[14em] outline-none"
+          className="w-full h-[20em] outline-none"
           src={url}
           title="CodeSandbox"
           sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"
@@ -67,3 +66,14 @@ const parseDependencies = (dependencies: string[]): Record<string, string> => {
   });
   return res;
 };
+
+// ported from "codesandbox/lib/api/define"
+function compress(input: string) {
+  return LZString.compressToBase64(input)
+    .replace(/\+/g, "-") // Convert '+' to '-'
+    .replace(/\//g, "_") // Convert '/' to '_'
+    .replace(/=+$/, ""); // Remove ending '='
+}
+function getParameters(parameters: any) {
+  return compress(JSON.stringify(parameters));
+}
