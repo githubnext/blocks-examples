@@ -9,6 +9,7 @@
   "blocks": [
     {
       "type": "file",
+      "id": "code-block",
       "title": "Code block",
       "description": "A basic code block",
       "entry": "/src/blocks/file-blocks/code/index.tsx",
@@ -18,6 +19,7 @@
     },
     {
       "type": "file",
+      "id": "excalidraw-block",
       "title": "Drawing block",
       "description": "A whiteboard tool",
       "entry": "/src/blocks/file-blocks/excalidraw.tsx",
@@ -27,6 +29,7 @@
     },
     {
       "type": "file",
+      "id": "css-block",
       "title": "CSS block",
       "description": "View selectors in a css file",
       "entry": "/src/blocks/file-blocks/css.tsx",
@@ -36,6 +39,7 @@
     },
     {
       "type": "file",
+      "id": "3d-model-block",
       "title": "3D block",
       "description": "A block for 3d files",
       "entry": "/src/blocks/file-blocks/3d-files.tsx",
@@ -48,6 +52,7 @@
     },
     {
       "type": "file",
+      "id": "flat-block",
       "title": "Flat block",
       "description": "A block for flat data files",
       "entry": "/src/blocks/file-blocks/flat.tsx",
@@ -58,6 +63,7 @@
     },
     {
       "type": "file",
+      "id": "iframe-block",
       "title": "Iframe block",
       "description": "An iframe block",
       "entry": "/src/blocks/file-blocks/iframe.tsx",
@@ -67,6 +73,7 @@
     },
     {
       "type": "file",
+      "id": "simple-poll-block",
       "title": "Poll block",
       "description": "View simple polls beautifully",
       "entry": "/src/blocks/file-blocks/poll.tsx",
@@ -76,6 +83,7 @@
     },
     {
       "type": "file",
+      "id": "vega-chart-block",
       "title": "Chart block",
       "description": "An interactive chart block",
       "entry": "/src/blocks/file-blocks/charts/index.tsx",
@@ -86,6 +94,7 @@
     },
     {
       "type": "file",
+      "id": "simple-markdown-block",
       "title": "Markdown block",
       "description": "A simple markdown block",
       "entry": "/src/blocks/file-blocks/markdown.tsx",
@@ -95,6 +104,7 @@
     },
     {
       "type": "file",
+      "id": "live-markdown-block",
       "title": "Live Markdown",
       "description": "View rich markdown files",
       "entry": "/src/blocks/file-blocks/markdown/index.tsx",
@@ -104,6 +114,7 @@
     },
     {
       "type": "file",
+      "id": "react-feedback-block",
       "title": "React component feedback",
       "description": "Give feedback on a React component",
       "entry": "/src/blocks/file-blocks/annotate-react/index.tsx",
@@ -116,6 +127,7 @@
     },
     {
       "type": "folder",
+      "id": "minimap-block",
       "title": "Minimap",
       "description": "A visualization of your folders and files",
       "entry": "/src/blocks/folder-blocks/minimap/index.tsx"
@@ -170,6 +182,7 @@
     "@types/react-syntax-highlighter": "^13.5.2",
     "@vitejs/plugin-react": "^1.0.0",
     "autoprefixer": "^10.4.0",
+    "esbuild": "^0.13.14",
     "postcss": "^8.3.11",
     "tailwindcss": "^2.2.19",
     "typescript": "^4.3.2",
