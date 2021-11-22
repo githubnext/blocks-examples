@@ -37,14 +37,6 @@ export const ProductionBlock = (props: ProductionBlockProps) => {
   }
   useEffect(() => { getContents() }, [block.entry])
 
-  const onUpdateMetadata = (newMetadata: any) => {
-    window.postMessage({
-      type: "update-metadata",
-      context,
-      metadata: newMetadata,
-    }, "*")
-  }
-
   useEffect(() => {
     if (!bundleCode || !iframeIsLoaded) return
     const iframeWindow = iframeElement.current?.contentWindow
@@ -60,8 +52,12 @@ export const ProductionBlock = (props: ProductionBlockProps) => {
   const url = "http://localhost:3000/block-testing"
 
   return (
-    <iframe className="w-full h-full border-none" src={url} title="Block testing" onLoad={() => setIframeIsLoaded(true)} ref={iframeElement}
-
+    <iframe
+      className="w-full h-full border-none"
+      src={url}
+      title="Block testing"
+      onLoad={() => setIframeIsLoaded(true)}
+      ref={iframeElement}
     />
   )
 

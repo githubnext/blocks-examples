@@ -94,7 +94,7 @@
     },
     {
       "type": "file",
-      "id": "vega-chart-block",
+      "id": "chart-block",
       "title": "Chart block",
       "description": "An interactive chart block",
       "entry": "/src/blocks/file-blocks/charts/index.tsx",
