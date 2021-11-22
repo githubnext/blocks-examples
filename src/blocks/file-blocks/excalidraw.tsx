@@ -2,7 +2,7 @@ import Excalidraw, { serializeAsJSON } from "@excalidraw/excalidraw";
 import { FileBlockProps } from "@githubnext/utils";
 import { useState } from "react";
 
-export function Block(props: FileBlockProps) {
+export default function (props: FileBlockProps) {
   const { content, onRequestUpdateContent } = props;
 
   const [appState, setAppState] = useState(null);

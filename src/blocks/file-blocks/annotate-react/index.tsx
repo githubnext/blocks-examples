@@ -11,7 +11,7 @@ import {
 import { useEffect, useState } from 'react';
 import { FileBlockProps, useTailwindCdn } from '@githubnext/utils';
 
-export function Block({ content, context, metadata, onUpdateMetadata }: FileBlockProps) {
+export default function ({ content, context, metadata, onUpdateMetadata }: FileBlockProps) {
   const { owner, repo, path } = context
   useTailwindCdn()
 

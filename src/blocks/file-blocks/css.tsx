@@ -2,7 +2,7 @@ import { useEffect, useMemo } from "react";
 import { toJSON } from 'cssjson';
 import { FileBlockProps } from "@githubnext/utils";
 
-export function Block(props: FileBlockProps) {
+export default function (props: FileBlockProps) {
   const { content } = props;
 
   useEffect(() => {

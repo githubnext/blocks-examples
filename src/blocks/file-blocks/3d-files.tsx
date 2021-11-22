@@ -18,7 +18,7 @@ function Model({ url }: { url: string }) {
   return <primitive object={scene} />;
 }
 
-export function Block(props: FileBlockProps) {
+export default function (props: FileBlockProps) {
   const { context } = props;
 
   return (

@@ -186,7 +186,7 @@ const config = {
   ]
 }
 
-export function Block(props: FileBlockProps) {
+export default function (props: FileBlockProps) {
   const { content } = props;
 
   const data = useMemo(() => ({ data: parseData(content) }), [content]);

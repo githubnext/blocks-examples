@@ -14,7 +14,7 @@ type Poll = {
   options: PollOptions[];
 };
 
-export function Block(props: FileBlockProps) {
+export default function (props: FileBlockProps) {
   useTailwindCdn();
 
   const { content } = props;

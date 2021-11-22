@@ -1,6 +1,6 @@
 import { FileBlockProps } from "@githubnext/utils";
 
-export function Block(props: FileBlockProps) {
+export default function (props: FileBlockProps) {
     const { content } = props;
 
     return <div dangerouslySetInnerHTML={{ __html: content }} />

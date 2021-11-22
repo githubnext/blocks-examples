@@ -3,14 +3,13 @@ import { useFileContent } from "../hooks";
 import { AppInnerProps } from "./app-inner";
 import { ErrorState } from "./error-state";
 import { LoadingState } from "./loading-state";
-import { SandboxedBlock } from "@githubnext/utils";
+import { ProductionBlock } from "./production-block"
 import { LocalBlock } from "./local-block";
 
 export function FileBlock(props: Omit<AppInnerProps, "onReset" | "blockType">) {
   const {
     block,
     metadata = {},
-    dependencies,
     urlParts,
     doMimicProductionEnvironment,
   } = props;
@@ -36,46 +35,20 @@ export function FileBlock(props: Omit<AppInnerProps, "onReset" | "blockType">) {
     fileRef: ref,
   });
 
-  const getFileContent = useCallback(async (path: string) => {
-    console.log(path);
-    const importType = path.endsWith(".css") ? "inline" : "raw";
-    const contents = await import(
-      // /* @vite-ignore */ `../../..${path}?${importType}`
-      /* @vite-ignore */ `../dist/file-block.js?raw`
-    );
-    console.log(contents);
-    return contents.default;
-  }, []);
-
   if (status === "loading") return <LoadingState />;
   if (status === "error") return <ErrorState />;
   if (status === "success" && data) {
     return doMimicProductionEnvironment ? (
       <div className="sandbox-wrapper h-full w-full">
-        <SandboxedBlock
-          getFileContent={getFileContent}
+        <ProductionBlock
           contents={data.content}
           context={{
             ...data.context,
             file: name,
           }}
-          dependencies={{}}
           block={block}
           metadata={metadata}
-          session={{ token: "" }}
         />
-        {/* <SandboxedBlock
-          getFileContent={getFileContent}
-          contents={data.content}
-          context={{
-            ...data.context,
-            file: name,
-          }}
-          dependencies={dependencies}
-          block={block}
-          metadata={metadata}
-          session={{ token: "" }}
-        /> */}
       </div>
     ) : (
       <div className="sandbox-wrapper h-full w-full">

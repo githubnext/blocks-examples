@@ -6,7 +6,7 @@ import { Chart } from "./Chart.tsx";
 // @ts-ignore: we need to specify the file extension
 import { ErrorBoundary } from "./ErrorBoundary.tsx";
 
-export function Block(props: FileBlockProps) {
+export default function (props: FileBlockProps) {
   useTailwindCdn()
   const { content, metadata, onUpdateMetadata } = props;
   const [xMetric, setXMetric] = useState("");

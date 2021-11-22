@@ -10,12 +10,13 @@ async function main() {
 
   const blockBuildFuncs = pkg.blocks.map((block) => {
     return esbuild.build({
-      entryPoints: [`./` + block.entry],
+      entryPoints: [`.` + block.entry],
       bundle: true,
-      outfile: `dist/${block.id}.js`,
-      format: "cjs",
+      outdir: `dist/${block.id}`,
+      format: "iife",
+      globalName: "BlockBundle",
       minify: true,
-      platform: "node",
+      external: ["fs", "path", "assert"],
     });
   });
 

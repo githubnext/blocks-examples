@@ -3,7 +3,7 @@ import { csvParse } from "d3";
 import { Grid } from "@githubocto/flat-ui";
 import { FileBlockProps } from "@githubnext/utils";
 
-export function Block(props: FileBlockProps) {
+export default function (props: FileBlockProps) {
   const { content } = props;
 
   const data = useMemo(() => {

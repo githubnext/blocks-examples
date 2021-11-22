@@ -2,7 +2,7 @@ import { FileBlockProps } from '@githubnext/utils';
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 
-export function Block(props: FileBlockProps) {
+export default function (props: FileBlockProps) {
   const { content } = props;
 
   return (

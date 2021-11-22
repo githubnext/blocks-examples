@@ -1,9 +1,20 @@
 {
   "name": "custom-block-template",
   "version": "0.0.0",
+  "watch": {
+    "build-blocks": {
+      "patterns": [
+        "src"
+      ],
+      "extensions": "js,jsx,ts,tsx,css"
+    }
+  },
   "scripts": {
-    "dev": "vite --port 4000",
+    "watch": "npm-watch",
+    "dev": "concurrently --kill-others \"npm run local\" \"npm run watch\"",
+    "local": "vite --port 4000",
     "build": "tsc && vite build",
+    "build-blocks": "node ./build.ts",
     "serve": "vite preview"
   },
   "blocks": [
@@ -135,7 +146,7 @@
   ],
   "dependencies": {
     "@excalidraw/excalidraw": "^0.10.0",
-    "@githubnext/utils": "^0.10.0",
+    "@githubnext/utils": "^0.11.0",
     "@githubocto/flat-ui": "^0.10.2",
     "@loadable/component": "^5.15.0",
     "@mdx-js/runtime": "^1.6.22",
@@ -175,6 +186,10 @@
     "vega": "^5.21.0",
     "vega-lite": "^5.1.1"
   },
+  "resolutions": {
+    "react": "17.0.0",
+    "react-dom": "17.0.0"
+  },
   "devDependencies": {
     "@tailwindcss/forms": "^0.3.4",
     "@types/git-url-parse": "^9.0.1",
@@ -185,8 +200,9 @@
     "@types/react-syntax-highlighter": "^13.5.2",
     "@vitejs/plugin-react": "^1.0.0",
     "autoprefixer": "^10.4.0",
+    "concurrently": "^6.4.0",
     "esbuild": "^0.13.14",
-    "path": "^0.12.7",
+    "npm-watch": "^0.11.0",
     "postcss": "^8.3.11",
     "tailwindcss": "^2.2.19",
     "typescript": "^4.3.2",

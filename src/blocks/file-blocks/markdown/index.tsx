@@ -25,7 +25,7 @@ export const MarkdownContext = createContext({
   releases: [],
   commits: [],
 });
-export function Block(props: FileBlockProps) {
+export default function (props: FileBlockProps) {
   const { context, content } = props;
   useTailwindCdn()
 

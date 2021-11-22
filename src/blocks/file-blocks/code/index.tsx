@@ -2,7 +2,7 @@ import "./style.css"
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { FileBlockProps } from "@githubnext/utils";
 
-export function Block(props: FileBlockProps) {
+export default function (props: FileBlockProps) {
   const { content } = props;
 
   return (
