@@ -55,8 +55,6 @@
       "description": "A block for 3d files",
       "entry": "/src/blocks/file-blocks/3d-files.tsx",
       "extensions": [
-        "obj",
-        "fbx",
         "gltf",
         "glb"
       ]
@@ -108,7 +106,7 @@
       "id": "simple-markdown-block",
       "title": "Markdown block",
       "description": "A simple markdown block",
-      "entry": "/src/blocks/file-blocks/markdown.tsx",
+      "entry": "/src/blocks/file-blocks/simple-markdown/markdown.tsx",
       "extensions": [
         "md"
       ]
@@ -118,7 +116,7 @@
       "id": "live-markdown-block",
       "title": "Live Markdown",
       "description": "View rich markdown files",
-      "entry": "/src/blocks/file-blocks/markdown/index.tsx",
+      "entry": "/src/blocks/file-blocks/live-markdown/index.tsx",
       "extensions": [
         "md"
       ]
