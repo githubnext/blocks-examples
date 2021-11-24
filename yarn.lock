@@ -1102,13 +1102,6 @@
   dependencies:
     defer-to-connect "^1.0.1"
 
-"@tailwindcss/forms@^0.3.4":
-  version "0.3.4"
-  resolved "https://registry.yarnpkg.com/@tailwindcss/forms/-/forms-0.3.4.tgz#e4939dc16450eccf4fd2029770096f38cbb556d4"
-  integrity sha512-vlAoBifNJUkagB+PAdW4aHMe4pKmSLroH398UPgIogBFc91D2VlHUxe4pjxQhiJl0Nfw53sHSJSQBSTQBZP3vA==
-  dependencies:
-    mini-svg-data-uri "^1.2.3"
-
 "@tailwindcss/line-clamp@^0.2.0":
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/@tailwindcss/line-clamp/-/line-clamp-0.2.2.tgz#05843c004bf069353a0c43f9df8cc3a6016252b8"
@@ -1769,7 +1762,7 @@ assert@^2.0.0:
     object-is "^1.0.1"
     util "^0.12.0"
 
-autoprefixer@^10.2.5, autoprefixer@^10.4.0:
+autoprefixer@^10.2.5:
   version "10.4.0"
   resolved "https://registry.yarnpkg.com/autoprefixer/-/autoprefixer-10.4.0.tgz#c3577eb32a1079a440ec253e404eaf1eb21388c8"
   integrity sha512-7FdJ1ONtwzV1G43GDD0kpVMn/qbiNqyOPMFTX5nRffI+7vgWoFEc6DcXOxHJxrWNDXrZh18eDsZjvZGUljSRGA==
@@ -5707,11 +5700,6 @@ mimic-response@^1.0.0, mimic-response@^1.0.1:
   resolved "https://registry.yarnpkg.com/mimic-response/-/mimic-response-1.0.1.tgz#4923538878eef42063cb8a3e3b0798781487ab1b"
   integrity sha512-j5EctnkH7amfV/q5Hgmoal1g2QHFJRraOtmx0JpIqkxhBhI/lJSl1nMpQ45hVarwNETOoWEimndZ4QK0RHxuxQ==
 
-mini-svg-data-uri@^1.2.3:
-  version "1.4.3"
-  resolved "https://registry.yarnpkg.com/mini-svg-data-uri/-/mini-svg-data-uri-1.4.3.tgz#43177b2e93766ba338931a3e2a84a3dfd3a222b8"
-  integrity sha512-gSfqpMRC8IxghvMcxzzmMnWpXAChSA+vy4cia33RgerMS8Fex95akUyQZPbxJJmeBGiGmK7n/1OpUX8ksRjIdA==
-
 minimatch@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-3.0.4.tgz#5166e286457f03306064be5497e8dbb0c3d32083"
@@ -6315,7 +6303,7 @@ postcss-value-parser@^4.0.2, postcss-value-parser@^4.1.0:
   resolved "https://registry.yarnpkg.com/postcss-value-parser/-/postcss-value-parser-4.1.0.tgz#443f6a20ced6481a2bda4fa8532a6e55d789a2cb"
   integrity sha512-97DXOFbQJhk71ne5/Mt6cOu6yxsSfM0QGQyl0L25Gca4yGWEGJaig7l7gbCX623VqTBNGLRLaVUCnNkcedlRSQ==
 
-postcss@^8.1.6, postcss@^8.1.8, postcss@^8.2.1, postcss@^8.3.11, postcss@^8.3.8:
+postcss@^8.1.6, postcss@^8.1.8, postcss@^8.2.1, postcss@^8.3.8:
   version "8.3.11"
   resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.3.11.tgz#c3beca7ea811cd5e1c4a3ec6d2e7599ef1f8f858"
   integrity sha512-hCmlUAIlUiav8Xdqw3Io4LcpA1DOt7h3LSTAC4G6JGHFFaWzI6qvFt9oilvl8BmkbBRX1IhM90ZAmpk68zccQA==
@@ -7653,7 +7641,7 @@ supports-color@^8.1.0:
   dependencies:
     has-flag "^4.0.0"
 
-tailwindcss@^2.2.19, tailwindcss@^2.2.7:
+tailwindcss@^2.2.7:
   version "2.2.19"
   resolved "https://registry.yarnpkg.com/tailwindcss/-/tailwindcss-2.2.19.tgz#540e464832cd462bb9649c1484b0a38315c2653c"
   integrity sha512-6Ui7JSVtXadtTUo2NtkBBacobzWiQYVjYW0ZnKaP9S1ZCKQ0w7KVNz+YSDI/j7O7KCMHbOkz94ZMQhbT9pOqjw==
