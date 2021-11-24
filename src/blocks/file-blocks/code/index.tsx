@@ -1,8 +1,8 @@
 import "./style.css"
 import SyntaxHighlighter from "react-syntax-highlighter";
-import { FileBlockProps } from "@githubnext/utils";
+// import { FileBlockProps } from "@githubnext/utils";
 
-export default function (props: FileBlockProps) {
+export default function (props: any) {
   const { content } = props;
 
   return (
