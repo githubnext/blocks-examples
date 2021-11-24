@@ -55,8 +55,6 @@
       "description": "A block for 3d files",
       "entry": "/src/blocks/file-blocks/3d-files.tsx",
       "extensions": [
-        "obj",
-        "fbx",
         "gltf",
         "glb"
       ]
