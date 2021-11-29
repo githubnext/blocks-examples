@@ -1,8 +1,9 @@
-import { Suspense, useRef } from "react";
+import { Suspense, useRef, useState, useEffect } from "react";
 import { PerspectiveCamera, useGLTF } from "@react-three/drei";
-import { Canvas, useStore } from "@react-three/fiber";
+import { Canvas, useLoader, useStore } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import { FileBlockProps } from "@githubnext/utils";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 
 const LControl = () => {
   // @ts-ignore
@@ -14,8 +15,10 @@ const LControl = () => {
 };
 
 function Model({ url }: { url: string }) {
-  const { scene } = useGLTF(url);
-  return <primitive object={scene} />;
+  // need to load gltf model this way instead of with hook
+  // or you get an infinite loop on the production sandbox side
+  const { scene } = useLoader(GLTFLoader, url);
+  return <primitive object={scene} dispose={null} />;
 }
 
 export default function (props: FileBlockProps) {
@@ -29,7 +32,7 @@ export default function (props: FileBlockProps) {
         // @ts-ignore */}
       <PerspectiveCamera
         makeDefault
-        position={[0, 0, 0.3]}
+        position={[0, 0, 1]}
         near={0.01}
         far={1000}
       />
