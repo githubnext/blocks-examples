@@ -6,6 +6,8 @@ export default function (props: FileBlockProps) {
   const { content } = props;
 
   useEffect(() => {
+    if (typeof document === 'undefined') return;
+
     const script = document.createElement('script');
 
     script.src = "https://cdn-tailwindcss.vercel.app"

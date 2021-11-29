@@ -19,7 +19,7 @@ export default function ({ content, context, metadata, onUpdateMetadata }: FileB
   const [componentDefinition, setComponentDefinition] = useState(`<${componentName}>\n</${componentName}>`)
   const [annotations, setAnnotations] = useState([])
 
-  const wrappedContents = `
+  const wrappedContents = typeof document === 'undefined' ? "" : `
 import ReactDOM from "react-dom";
 
   ${content}
