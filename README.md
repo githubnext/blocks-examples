@@ -1,4 +1,4 @@
-# Composable Github Example Blocks
+# GitBub Blocks Examples
 
 The Composable Github app depends on a set of "blocks" that handle how to render files and folders. This repo contains a set of example blocks that can serve as inspiration for you to create your own.
 
@@ -6,7 +6,7 @@ The Composable Github app depends on a set of "blocks" that handle how to render
 
 Blocks come in two types: file blocks and folder blocks.
 
-All blocks require an object within [`package.json`](https://github.com/githubnext/composable-github-example-blocks/blob/main/package.json#L9) to describe their intended use. For example:
+All blocks require an object within [`package.json`](https://github.com/githubnext/composable-github-example-blocks/blob/main/package.json#L20) to describe their intended use. For example:
 
 ```json
 {
@@ -14,7 +14,8 @@ All blocks require an object within [`package.json`](https://github.com/githubne
   "title": "CSS block",
   "description": "View selectors in a css file",
   "entry": "/blocks/file-blocks/css.tsx",
-  "extensions": ["css"]
+  "extensions": ["css"],
+  "example_path": "https://github.com/githubnext/blocks-tutorial/blob/main/global.css"
 }
 ```
 
@@ -36,6 +37,6 @@ All blocks require an object within [`package.json`](https://github.com/githubne
 | ---------- | ----------------------------------------- |
 | Minimap    | A visualization of your folders and files |
 
-## Create your own custom block
+## Create your own custom blocks
 
-Follow the instructions in our [custom block template](https://github.com/githubnext/composable-github-block-template) repository.
+Follow the instructions in our [custom blocks template](https://github.com/githubnext/blocks-template) repository.
