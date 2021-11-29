@@ -24,12 +24,7 @@ function Model({ url }: { url: string }) {
 export default function (props: FileBlockProps) {
   const { context } = props;
 
-  console.log("in 3d viewer");
-  console.log(context);
-
   const url = `https://raw.githubusercontent.com/${context.owner}/${context.repo}/${context.sha}/${context.path}`;
-
-  console.log(url);
 
   return (
     <Canvas style={{ height: "100vh" }}>
@@ -37,7 +32,7 @@ export default function (props: FileBlockProps) {
         // @ts-ignore */}
       <PerspectiveCamera
         makeDefault
-        position={[0, 0, 0.3]}
+        position={[0, 0, 1]}
         near={0.01}
         far={1000}
       />
