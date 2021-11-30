@@ -1,4 +1,5 @@
 import { useEffect, useMemo } from "react";
+// @ts-ignore: no types
 import { toJSON } from 'cssjson';
 import { FileBlockProps } from "@githubnext/utils";
 

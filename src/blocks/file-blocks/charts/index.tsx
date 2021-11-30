@@ -105,13 +105,14 @@ const parseData = (str: string): any[] => {
     return JSON.parse(str);
   } catch (e) {
     try {
+      // @ts-ignore
       const parsedStr = parse(str, {
         delimiter: "",
         transformHeader: (header: string) => header,
         newline: "",
         header: true,
         skipEmptyLines: true,
-      });
+      }) as any;
       if (parsedStr.errors.length) {
         throw new Error(parsedStr.errors[0].message);
       }
