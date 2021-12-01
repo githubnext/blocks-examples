@@ -121,20 +121,9 @@
     },
     {
       "type": "file",
-      "id": "simple-markdown-block",
-      "title": "Markdown block",
-      "description": "A simple markdown block",
-      "entry": "/src/blocks/file-blocks/simple-markdown/markdown.tsx",
-      "extensions": [
-        "md"
-      ],
-      "example_file": "https://github.com/githubnext/blocks-tutorial/blob/main/README.md"
-    },
-    {
-      "type": "file",
-      "id": "live-markdown-block",
-      "title": "Live Markdown",
-      "description": "View rich markdown files",
+      "id": "markdown-block",
+      "title": "Markdown",
+      "description": "View markdown files. You can also view live repo into, using Issues, Releases, and Commits custom components, as well as live code examples with CodeSandbox.",
       "entry": "/src/blocks/file-blocks/live-markdown/index.tsx",
       "extensions": [
         "md"
@@ -195,12 +184,10 @@
     "react-error-boundary": "^3.1.4",
     "react-image-annotation": "^0.9.10",
     "react-json-editor-ajrm": "^2.5.13",
-    "react-markdown": "^7.1.0",
     "react-query": "^3.32.1",
     "react-syntax-highlighter": "^15.4.4",
     "react-use": "^17.3.1",
     "recharts": "^2.1.6",
-    "remark-gfm": "^3.0.1",
     "styled-components": "^5.3.3",
     "three": "^0.134.0"
   },
