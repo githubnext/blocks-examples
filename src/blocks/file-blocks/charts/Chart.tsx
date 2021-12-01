@@ -8,7 +8,12 @@ export function Chart({ data, xMetric, yMetric, type }: {
   type: "area" | "line" | "bar" | "scatter" | "pie"
 }) {
   const sortedData = [...data].sort((a, b) => a[xMetric] - b[xMetric])
-    .map(d => ({ ...d, style: null, [styleName]: d[styleName] || d["style"] }))
+    .map(d => ({
+      ...d,
+      [xMetric]: Number.isFinite(+d[xMetric]) ? +d[xMetric] : d[xMetric],
+      [yMetric]: Number.isFinite(+d[yMetric]) ? +d[yMetric] : d[yMetric],
+      style: null, [styleName]: d[styleName] || d["style"]
+    }))
   const parsedXMetric = xMetric === "style" ? styleName : xMetric
   const parsedYMetric = yMetric === "style" ? styleName : yMetric
 
@@ -55,7 +60,13 @@ const AreaChartInners = ({ data, xMetric, yMetric }: ChartProps) => {
         <YAxis dataKey={yMetric} />
         <CartesianGrid strokeDasharray="3 3" />
         <Tooltip />
-        <Area type="monotone" dataKey={yMetric} stroke="#8884d8" fillOpacity={1} fill="url(#colorUv)" />
+        <Area
+          type="monotone"
+          dataKey={yMetric}
+          stroke="#8884d8"
+          fillOpacity={1}
+          fill="url(#colorUv)"
+        />
       </AreaChart>
     </ResponsiveContainer>
   )
