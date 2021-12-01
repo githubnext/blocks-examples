@@ -27,7 +27,7 @@
       "extensions": [
         "*"
       ],
-      "example_file": "https://github.com/githubnext/blocks-tutorial/blob/main/Button.jsx"
+      "example_path": "https://github.com/githubnext/blocks-tutorial/blob/main/Aside.jsx"
     },
     {
       "type": "file",
@@ -38,7 +38,7 @@
       "extensions": [
         "excalidraw"
       ],
-      "example_file": "https://github.com/githubnext/blocks-tutorial/blob/main/drawing.excalidraw"
+      "example_path": "https://github.com/githubnext/blocks-tutorial/blob/main/drawing.excalidraw"
     },
     {
       "type": "file",
@@ -49,7 +49,7 @@
       "extensions": [
         "html"
       ],
-      "example_file": "https://github.com/githubnext/blocks-tutorial/blob/main/photos.html"
+      "example_path": "https://github.com/githubnext/blocks-tutorial/blob/main/photos.html"
     },
     {
       "type": "file",
@@ -60,7 +60,7 @@
       "extensions": [
         "css"
       ],
-      "example_file": "https://github.com/githubnext/blocks-tutorial/blob/main/global.css"
+      "example_path": "https://github.com/githubnext/blocks-tutorial/blob/main/global.css"
     },
     {
       "type": "file",
@@ -72,7 +72,7 @@
         "gltf",
         "glb"
       ],
-      "example_file": "https://github.com/githubnext/blocks-tutorial/blob/main/avocado.glb"
+      "example_path": "https://github.com/githubnext/blocks-tutorial/blob/main/avocado.glb"
     },
     {
       "type": "file",
@@ -84,7 +84,7 @@
         "csv",
         "json"
       ],
-      "example_file": "https://github.com/githubnext/blocks-tutorial/blob/main/data.csv"
+      "example_path": "https://github.com/githubnext/blocks-tutorial/blob/main/data.csv"
     },
     {
       "type": "file",
@@ -95,7 +95,7 @@
       "extensions": [
         "iframe"
       ],
-      "example_file": "https://github.com/githubnext/blocks-tutorial/blob/main/figma.iframe"
+      "example_path": "https://github.com/githubnext/blocks-tutorial/blob/main/figma.iframe"
     },
     {
       "type": "file",
@@ -106,7 +106,7 @@
       "extensions": [
         "json"
       ],
-      "example_file": "https://github.com/githubnext/blocks-tutorial/blob/main/poll.json"
+      "example_path": "https://github.com/githubnext/blocks-tutorial/blob/main/poll.json"
     },
     {
       "type": "file",
@@ -117,7 +117,7 @@
       "extensions": [
         "csv"
       ],
-      "example_file": "https://github.com/the-pudding/data/blob/master/pockets/measurements.csv"
+      "example_path": "https://github.com/the-pudding/data/blob/master/pockets/measurements.csv"
     },
     {
       "type": "file",
@@ -128,7 +128,7 @@
       "extensions": [
         "md"
       ],
-      "example_file": "https://github.com/githubnext/blocks-tutorial/blob/main/README.md"
+      "example_path": "https://github.com/githubnext/blocks-tutorial/blob/main/README.md"
     },
     {
       "type": "file",
@@ -140,7 +140,7 @@
         "jsx",
         "tsx"
       ],
-      "example_file": "https://github.com/githubnext/blocks-tutorial/blob/main/Aside.jsx"
+      "example_path": "https://github.com/githubnext/blocks-tutorial/blob/main/Aside.jsx"
     },
     {
       "type": "folder",
@@ -148,7 +148,7 @@
       "title": "Minimap",
       "description": "A visualization of your folders and files",
       "entry": "/src/blocks/folder-blocks/minimap/index.tsx",
-      "example_file": "https://github.com/githubnext/blocks-tutorial"
+      "example_path": "https://github.com/githubnext/blocks-tutorial"
     }
   ],
   "dependencies": {
