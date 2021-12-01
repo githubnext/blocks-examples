@@ -66,7 +66,7 @@ export default function (props: FileBlockProps) {
   return (
     <MarkdownContext.Provider value={scope}>
       <div className="w-full h-full flex items-stretch overflow-hidden">
-        <div className="flex-1 markdown p-6 overflow-y-auto whitespace-pre-wrap">
+        <div className="flex-1 markdown-body p-6 pb-40 overflow-y-auto whitespace-pre-wrap">
           <div className="max-w-[60em] mx-auto">
             <ErrorBoundary key={content}>
               <MDX components={components} scope={scope}>
