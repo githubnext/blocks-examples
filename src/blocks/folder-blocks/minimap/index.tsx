@@ -21,6 +21,14 @@ export default function (props: FolderBlockProps) {
     }} >
       <Tree
         data={data}
+        onClickFile={(path: string) => {
+          if ('URLSearchParams' in window) {
+            var searchParams = new URLSearchParams(window.location.search);
+            searchParams.set("path", path);
+            var newRelativePathQuery = window.location.pathname + '?' + searchParams.toString();
+            history.pushState(null, '', newRelativePathQuery);
+          }
+        }}
       />
     </div>
   );
