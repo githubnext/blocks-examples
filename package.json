@@ -77,12 +77,11 @@
     {
       "type": "file",
       "id": "flat-block",
-      "title": "Flat block",
+      "title": "Flat data block",
       "description": "A block for flat data files",
       "entry": "/src/blocks/file-blocks/flat.tsx",
       "extensions": [
-        "csv",
-        "json"
+        "csv"
       ],
       "example_path": "https://github.com/githubnext/blocks-tutorial/blob/main/data.csv"
     },
