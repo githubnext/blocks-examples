@@ -15,15 +15,8 @@ export default function (props: FileBlockProps) {
 
   const handleSave = async () => {
     if (!serializeAsJSON) return;
-    // onRequestUpdateContent
-    // const serialized = serializeAsJSON(elements, appState);
-    // await mutateAsync({
-    //   content: serialized,
-    //   owner: meta.owner,
-    //   repo: meta.repo,
-    //   path: meta.name,
-    //   sha: meta.sha,
-    // });
+    const serialized = serializeAsJSON(elements, appState);
+    onRequestUpdateContent(serialized)
   };
 
   return (
