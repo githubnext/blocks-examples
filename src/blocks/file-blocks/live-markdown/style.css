@@ -590,6 +590,10 @@
   font-size: inherit;
 }
 
+.markdown-body ul,
+.markdown-body ol {
+  list-style: disc;
+}
 .markdown-body ul.no-list,
 .markdown-body ol.no-list {
   padding: 0;
