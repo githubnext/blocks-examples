@@ -148,6 +148,14 @@
       "description": "A visualization of your folders and files",
       "entry": "/src/blocks/folder-blocks/minimap/index.tsx",
       "example_path": "https://github.com/githubnext/blocks-tutorial"
+    },
+    {
+      "type": "folder",
+      "id": "dashboard-block",
+      "title": "Dashboard",
+      "description": "A dashboard of Blocks",
+      "entry": "/src/blocks/folder-blocks/dashboard/index.tsx",
+      "example_path": "https://github.com/githubnext/blocks-tutorial"
     }
   ],
   "dependencies": {
@@ -182,6 +190,7 @@
     "react-image-annotation": "^0.9.10",
     "react-json-editor-ajrm": "^2.5.13",
     "react-query": "^3.32.1",
+    "react-select": "^5.2.1",
     "react-syntax-highlighter": "^15.4.4",
     "react-use": "^17.3.1",
     "recharts": "^2.1.6",

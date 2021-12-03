@@ -37,7 +37,7 @@ export default function (props: FileBlockProps) {
     if (savedChartConfigs.length > 0) {
       onLoadChartConfig(savedChartConfigs[activeChartConfigIndex === -1 ? 0 : activeChartConfigIndex])
     }
-  }, [keys.join(",")])
+  }, [keys.join(","), savedChartConfigs.join(",")])
 
   return (
     <div className="w-full h-full">
