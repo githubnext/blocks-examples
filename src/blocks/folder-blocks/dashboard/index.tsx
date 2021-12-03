@@ -3,18 +3,17 @@ import { FolderBlockProps, getNestedFileTree, } from "@githubnext/utils";
 import Select from 'react-select'
 
 export default function (props: FolderBlockProps) {
-  const { tree, metadata, onUpdateMetadata, BlockComponent } = props;
+  const { tree, metadata = {}, onUpdateMetadata, BlockComponent } = props;
   const [blockOptions, setBlockOptions] = useState<any>([]);
-  const [blocks, setBlocks] = useState<any>(metadata.blocks || defaultBlocks);
-  useEffect(() => setBlocks(metadata.blocks || blocks), [metadata])
+  const [blocks, setBlocks] = useState<any>(metadata?.blocks || defaultBlocks);
+  useEffect(() => setBlocks(metadata?.blocks || blocks), [metadata])
   const pathOptions = useMemo(() => ([{ value: "", label: "/" }, ...tree.map(d => ({ value: d.path, label: d.path }))]), [tree]);
   const blockOptionsByType = {
     "folder": blockOptions.filter((d: any) => d.type === "folder"),
     "file": blockOptions.filter((d: any) => d.type === "file"),
   }
-  const isDirty = JSON.stringify(blocks) !== JSON.stringify(metadata.blocks || blocks);
+  const isDirty = JSON.stringify(blocks) !== JSON.stringify(metadata?.blocks || blocks);
 
-  console.log(blocks)
   const getPathType = (path: string) => {
     const item = tree.find(d => d.path === path) || {};
     return item.type === "blob" ? "file" : "folder";
