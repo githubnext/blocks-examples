@@ -131,6 +131,17 @@
       "example_path": "https://github.com/githubnext/blocks-tutorial/blob/main/Aside.jsx"
     },
     {
+      "type": "file",
+      "id": "processing",
+      "title": "Processing sketch viewer",
+      "description": "View your p5.js sketches",
+      "entry": "/src/blocks/file-blocks/processing.tsx",
+      "extensions": [
+        "js"
+      ],
+      "example_path": "https://github.com/githubnext/blocks-tutorial/blob/main/processing-sketch.js"
+    },
+    {
       "type": "folder",
       "id": "minimap-block",
       "title": "Minimap",
@@ -159,6 +170,7 @@
     "@react-three/fiber": "^7.0.19",
     "@types/d3": "^7.1.0",
     "@types/lz-string": "^1.3.34",
+    "@types/p5": "^1.3.1",
     "@types/papaparse": "^5.3.1",
     "assert": "^2.0.0",
     "buffer": "^6.0.3",
@@ -172,6 +184,7 @@
     "lodash.isempty": "^4.4.0",
     "lodash.isobject": "^3.0.2",
     "lz-string": "^1.4.4",
+    "p5": "^1.4.0",
     "papaparse": "^5.3.1",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
