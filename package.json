@@ -87,17 +87,6 @@
     },
     {
       "type": "file",
-      "id": "iframe-block",
-      "title": "Iframe block",
-      "description": "An iframe block",
-      "entry": "/src/blocks/file-blocks/iframe.tsx",
-      "extensions": [
-        "iframe"
-      ],
-      "example_path": "https://github.com/githubnext/blocks-tutorial/blob/main/figma.iframe"
-    },
-    {
-      "type": "file",
       "id": "simple-poll-block",
       "title": "Poll block",
       "description": "View simple polls beautifully",
