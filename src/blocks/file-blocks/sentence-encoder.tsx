@@ -76,7 +76,7 @@ export default function (props: FileBlockProps) {
               <h3>{query.query}</h3>
               {query.responses.map((response, j) => (
                 <div key={j}>
-                  <span style={{ marginRight: '2px', fontWeight: 'bold' }}>
+                  <span style={{ marginRight: '2px' }}>
                     {response.response} — 
                   </span>
                   {response.score.toFixed(2)}
