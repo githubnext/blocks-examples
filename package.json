@@ -148,10 +148,9 @@
       "description": "Experiment with your sentence-encoder",
       "entry": "/src/blocks/file-blocks/sentence-encoder.tsx",
       "extensions": [
-        "json",
-        "csv"
+        "json"
       ],
-      "example_path": "https://github.com/githubnext/blocks-tutorial/blob/main/poll.json"
+      "example_path": "https://github.com/githubnext/blocks-tutorial/blob/main/queries.json"
     },
     {
       "type": "folder",
