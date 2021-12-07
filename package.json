@@ -156,10 +156,20 @@
       "description": "A dashboard of Blocks",
       "entry": "/src/blocks/folder-blocks/dashboard/index.tsx",
       "example_path": "https://github.com/githubnext/blocks-tutorial"
+    },
+    {
+      "type": "folder",
+      "id": "code-tour-block",
+      "title": "Code Tour",
+      "description": "Create documented tours of your code",
+      "entry": "/src/blocks/folder-blocks/code-tour/index.tsx",
+      "example_path": "https://github.com/githubnext/blocks-tutorial"
     }
   ],
   "dependencies": {
     "@excalidraw/excalidraw": "^0.10.0",
+    "@fullstackio/cq": "^6.0.9",
+    "@fullstackio/remark-cq": "^6.1.2",
     "@githubnext/utils": "^0.11.1",
     "@githubocto/flat-ui": "^0.10.2",
     "@loadable/component": "^5.15.0",
