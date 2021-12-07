@@ -1,12 +1,21 @@
 import { ReactNode, useEffect, useState } from "react";
 import LZString from "lz-string"
 
+const optionsDefaults = {
+  fontsize: "14",
+  hidenavigation: "1",
+  codemirror: "1",
+  hidedevtools: "1",
+}
 export const CodeSandbox = ({
   children,
   height = "20em",
+  sandboxOptions = {},
   dependencies,
 }: {
   height: string | number;
+  theme: string;
+  sandboxOptions: Record<string, string>;
   children: ReactNode;
   dependencies?: string[];
 }) => {
@@ -33,7 +42,8 @@ export const CodeSandbox = ({
     const res = await fetch(url);
     const data = await res.json();
     const id = data?.sandbox_id;
-    const iframeUrl = `https://codesandbox.io/embed/${id}?fontsize=14&hidenavigation=1&expanddevtools=1&hidenavigation=1&theme=light`;
+    const params = new URLSearchParams({ ...optionsDefaults, ...sandboxOptions }).toString()
+    const iframeUrl = `https://codesandbox.io/embed/${id}?${params}`;
 
     setUrl(iframeUrl);
   };
