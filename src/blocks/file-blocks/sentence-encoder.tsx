@@ -3,6 +3,7 @@ import { FileBlockProps, useTailwindCdn } from "@githubnext/utils";
 import { useEffect, useState } from "react";
 import * as use from "@tensorflow-models/universal-sentence-encoder";
 import { UniversalSentenceEncoderQnA } from "@tensorflow-models/universal-sentence-encoder/dist/use_qna";
+import * as tf from "@tensorflow/tfjs";
 
 // zipWith :: (a -> b -> c) -> [a] -> [b] -> [c]
 const zipWith = (
@@ -50,13 +51,17 @@ export default function (props: FileBlockProps) {
 
   const computeScore = async () => {
     if (model && customQuestion && customAnswer) {
-      const result = model.embed({
+      const embedding = model.embed({
         queries: [customQuestion],
         responses: [customAnswer],
       });
-      const query = result["queryEmbedding"].arraySync() as number[][]; // [1, 100]
-      const answers = result["responseEmbedding"].arraySync() as number[][]; // [1, 100]
-      setComputedScore(dotProduct(query[0], answers[0]) || 0);
+      tf.tidy(() => {
+        const query = embedding["queryEmbedding"].arraySync() as number[][]; // [1, 100]
+        const answers = embedding["responseEmbedding"].arraySync() as number[][]; // [1, 100]
+        setComputedScore(dotProduct(query[0], answers[0]) || 0);
+      });
+      tf.dispose(embedding["queryEmbedding"]); // need to dispose the tensors
+      tf.dispose(embedding["responseEmbedding"]);
     }
   };
 
@@ -66,32 +71,47 @@ export default function (props: FileBlockProps) {
 
       const model = await use.loadQnA();
       setModel(model);
-      const result = model.embed(input);
-      const query = result["queryEmbedding"].arraySync() as number[][]; // [numQueries, 100]
-      const answers = result["responseEmbedding"].arraySync() as number[][]; // [numAnswers, 100]
-      const queriesLength = input.queries.length;
-      const answersLength = input.responses.length;
+      const embedding = model.embed(input);
 
-      const tempResults = [];
-      // go through each query
-      for (let i = 0; i < queriesLength; i++) {
-        const temp = [];
-        // calculate the dot product of the query and each answer
-        for (let j = 0; j < answersLength; j++) {
-          temp.push({
-            response: input.responses[j],
-            score: dotProduct(query[i], answers[j]) || 0,
+      const tempResults: QueryResult[] = [];
+
+      tf.tidy(() => {
+        const query = embedding["queryEmbedding"].arraySync() as number[][]; // [numQueries, 100]
+        const answers = embedding[
+          "responseEmbedding"
+        ].arraySync() as number[][]; // [numAnswers, 100]
+        const queriesLength = input.queries.length;
+        const answersLength = input.responses.length;
+
+        // go through each query
+        for (let i = 0; i < queriesLength; i++) {
+          const temp = [];
+          // calculate the dot product of the query and each answer
+          for (let j = 0; j < answersLength; j++) {
+            temp.push({
+              response: input.responses[j],
+              score: dotProduct(query[i], answers[j]) || 0,
+            });
+          }
+
+          tempResults.push({
+            query: input.queries[i],
+            responses: temp,
           });
         }
+      });
+      tf.dispose(embedding["queryEmbedding"]); // need to dispose the tensors
+      tf.dispose(embedding["responseEmbedding"]);
 
-        tempResults.push({
-          query: input.queries[i],
-          responses: temp,
-        });
-      }
       setResults(tempResults);
     };
+
     init();
+
+    // Specify how to clean up after this effect:
+    return function cleanup() {
+      tf.disposeVariables();
+    };
   }, []);
 
   return (
@@ -145,7 +165,7 @@ export default function (props: FileBlockProps) {
                   <table className="table-auto">
                     <thead>
                       <tr>
-                        <th className="px-4 py-2 text-gray-700">Questions</th>
+                        <th className="px-4 py-2 text-gray-700">Question</th>
                         <th className="px-4 py-2 text-gray-700">Answer</th>
                         <th className="px-4 py-2 text-gray-700">Score</th>
                       </tr>
