@@ -59,17 +59,13 @@ export default function (props: FileBlockProps) {
     getRepoInfo();
   }, []);
 
-  const scope = {
-    ...repoInfo,
-  };
-
   return (
-    <MarkdownContext.Provider value={scope}>
+    <MarkdownContext.Provider value={repoInfo} key={content}>
       <div className="w-full h-full flex items-stretch overflow-hidden">
         <div className="flex-1 markdown-body p-6 pb-40 overflow-y-auto whitespace-pre-wrap">
           <div className="max-w-[60em] mx-auto">
             <ErrorBoundary key={content}>
-              <MDX components={components} scope={scope}>
+              <MDX components={components} scope={repoInfo}>
                 {content}
               </MDX>
             </ErrorBoundary>
