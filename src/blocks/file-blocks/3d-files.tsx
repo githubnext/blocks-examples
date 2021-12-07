@@ -32,7 +32,7 @@ export default function (props: FileBlockProps) {
         // @ts-ignore */}
       <PerspectiveCamera
         makeDefault
-        position={[0, 0, 1]}
+        position={[0, 0, 0.3]}
         near={0.01}
         far={1000}
       />
