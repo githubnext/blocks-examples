@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 // @ts-ignore
 import loadable from "@loadable/component";
 import { FileContext, FolderContext, RepoFiles } from "@githubnext/utils";
+import uniqueId from "lodash/uniqueId";
 
 interface LocalBlockProps {
   block: {
@@ -42,6 +43,48 @@ export const LocalBlock = (props: LocalBlockProps) => {
       metadata: newMetadata,
     }, "*")
   }
+  const onNavigateToPath = useCallback((path) => {
+    if (typeof window === "undefined") return
+    window.postMessage({
+      type: "navigate-to-path",
+      context,
+      path: path,
+    }, "*")
+  }, [])
+  const onRequestUpdateContent = useCallback((content) => {
+    if (typeof window === "undefined") return
+    window.postMessage({
+      type: "update-file",
+      context,
+      content,
+    }, "*")
+  }, [])
+  const onRequestGitHubData = useCallback((requestType, config) => {
+    if (typeof window === "undefined") return
+    const id = uniqueId("github-data--request")
+    window.postMessage({
+      type: "github-data--request",
+      context,
+      id,
+      requestType,
+      config,
+    }, "*")
+
+    return new Promise((resolve, reject) => {
+      const onMessage = (event: MessageEvent) => {
+        if (event.data.type !== "github-data--response") return
+        if (event.data.id !== id) return
+        window.removeEventListener("message", onMessage)
+        resolve(event.data.data)
+      }
+      window.addEventListener("message", onMessage)
+      const maxDelay = 1000 * 60 * 5
+      window.setTimeout(() => {
+        window.removeEventListener("message", onMessage)
+        reject(new Error("Timeout"))
+      }, maxDelay)
+    })
+  }, [])
 
   if (!Block) return null
   return (
@@ -51,6 +94,9 @@ export const LocalBlock = (props: LocalBlockProps) => {
       tree={tree}
       metadata={metadata}
       onUpdateMetadata={onUpdateMetadata}
+      onNavigateToPath={onNavigateToPath}
+      onRequestUpdateContent={onRequestUpdateContent}
+      onRequestGitHubData={onRequestGitHubData}
     />
   )
 
