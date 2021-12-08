@@ -240,7 +240,7 @@
 .markdown-body h4,
 .markdown-body h5,
 .markdown-body h6 {
-  margin-top: 24px;
+  margin-top: 33px;
   margin-bottom: 16px;
   font-weight: 600;
   line-height: 1.25;
@@ -835,6 +835,10 @@
   word-wrap: normal;
   background-color: transparent;
   border: 0;
+}
+
+.markdown-body pre pre {
+  background: none !important;
 }
 
 .markdown-body .csv-data td,
