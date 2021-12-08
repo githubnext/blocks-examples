@@ -36,7 +36,7 @@ export default function (props: FileBlockProps) {
   });
 
   const sanitizedContent = useMemo(() => (
-    sanitizeContent(content)
+    content
   ), [content])
 
   const getRepoInfo = async () => {
@@ -243,24 +243,3 @@ function Commits({
   );
 }
 
-
-const sanitizeContent = (content: string) => {
-  return closeUnclosedTags(content)
-}
-const closeUnclosedTags = (str: string) => {
-  const openTagRegex = /<([a-zA-Z0-9]+)([^>]*)/g;
-  let match;
-  while ((match = openTagRegex.exec(str))) {
-    const tag = match[1];
-    const attrs = match[2];
-    const closeTag = `</${tag}>`;
-    if (str.indexOf(closeTag) === -1) {
-      str = [
-        str.slice(0, match.index),
-        `${match[0]}/`,
-        str.slice(match.index + match[0].length),
-      ].join("");
-    }
-  }
-  return str;
-}
