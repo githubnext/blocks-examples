@@ -5,7 +5,7 @@ import { Avatar, Box, StateLabel } from "@primer/components";
 import {
   createContext,
   useContext,
-  useEffect, useState
+  useEffect, useMemo, useState
 } from "react";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import "styled-components";
@@ -34,6 +34,10 @@ export default function (props: FileBlockProps) {
     releases: [],
     commits: [],
   });
+
+  const sanitizedContent = useMemo(() => (
+    sanitizeContent(content)
+  ), [content])
 
   const getRepoInfo = async () => {
     const issuesUrl = `https://api.github.com/repos/${context.owner}/${context.repo}/issues`;
@@ -66,7 +70,7 @@ export default function (props: FileBlockProps) {
           <div className="max-w-[60em] mx-auto">
             <ErrorBoundary key={content}>
               <MDX components={components} scope={repoInfo}>
-                {content}
+                {sanitizedContent}
               </MDX>
             </ErrorBoundary>
           </div>
@@ -237,4 +241,26 @@ function Commits({
       </div>
     </div>
   );
+}
+
+
+const sanitizeContent = (content: string) => {
+  return closeUnclosedTags(content)
+}
+const closeUnclosedTags = (str: string) => {
+  const openTagRegex = /<([a-zA-Z0-9]+)([^>]*)/g;
+  let match;
+  while ((match = openTagRegex.exec(str))) {
+    const tag = match[1];
+    const attrs = match[2];
+    const closeTag = `</${tag}>`;
+    if (str.indexOf(closeTag) === -1) {
+      str = [
+        str.slice(0, match.index),
+        `${match[0]}/`,
+        str.slice(match.index + match[0].length),
+      ].join("");
+    }
+  }
+  return str;
 }
