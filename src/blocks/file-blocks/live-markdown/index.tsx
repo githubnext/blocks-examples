@@ -126,10 +126,10 @@ function Issues({
             bg="canvas.subtle"
             p={3}
             key={issue.id}
-            className="relative flex-1 min-w-[20em] m-1"
+            className="relative flex-1 min-w-[19em] m-1"
           >
             <div className="flex justify-between items-start">
-              <a className="block text-black text-lg" href={issue.html_url}>
+              <a className="block !text-black" href={issue.html_url}>
                 {issue.title}
               </a>
               <StateLabel
@@ -174,10 +174,10 @@ function Releases({
             bg="canvas.subtle"
             p={3}
             key={release.id}
-            className="relative flex-1 min-w-[20em] m-1"
+            className="relative flex-1 min-w-[19em] m-1"
           >
             <div className="flex justify-between items-center">
-              <a className="block text-black text-lg" href={release.html_url}>
+              <a className="block !text-black" href={release.html_url}>
                 {release.tag_name}
               </a>
             </div>
@@ -213,15 +213,15 @@ function Commits({
           <Box
             p={3}
             key={commit.sha}
-            className="relative flex-1 min-w-[20em] m-1 bg-gray-100"
+            className="relative flex-1 min-w-[19em] m-1 bg-gray-100"
           >
             <div className="flex justify-between items-center">
-              <a className="block text-black text-lg" href={commit.html_url}>
+              <a className="block !text-black" href={commit.html_url}>
                 {commit.commit.message}
               </a>
             </div>
             {/* author */}
-            <Box className="flex items-center mt-1">
+            <Box className="flex items-center mt-3">
               <Avatar src={commit.author.avatar_url} className="mr-2" />
               <div className="flex-1 flex items-center justify-between">
                 <div className="text-sm text-gray-600">
