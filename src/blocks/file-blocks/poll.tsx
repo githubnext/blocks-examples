@@ -19,6 +19,11 @@ export default function (props: FileBlockProps) {
 
   const { content } = props;
   const [poll, setPoll] = useState<Poll>(JSON.parse(content));
+  if (!poll || !poll.options) return (
+    <div className="py-20 text-gray-500 w-full text-center italic">
+      No poll data found
+    </div>
+  )
 
   const totalVotes = poll.options.reduce((acc, cur) => acc + cur.votes, 0);
 
@@ -58,7 +63,7 @@ export default function (props: FileBlockProps) {
     */
 
   return (
-    <div className="w-full m-2">
+    <div className="w-full m-2 py-20 flex flex-col items-center">
       {poll.poll}
       {poll.options.map((option, index) => {
         const percent = Math.floor((option.votes / totalVotes) * 100);
