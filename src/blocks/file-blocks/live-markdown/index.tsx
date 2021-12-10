@@ -100,7 +100,27 @@ const components = {
       <code className={className}>{children}</code>
     );
   },
+  a: Link
 };
+
+function Link(props: Record<string, any>) {
+  const videoExtensions = /\.(mp4|webm|ogv|mov|flv|wmv|avi|m4v|mpg|mpeg|3gp|3g2)$/i;
+  const isVideo = videoExtensions.test(props.href);
+
+  if (isVideo) return (
+    <video controls>
+      <source src={props.href} />
+    </video>
+  )
+
+  return (
+    <a
+      {...props}
+    >
+      {props.children}
+    </a>
+  )
+}
 
 const formatDate = (d: Date) => d.toLocaleDateString();
 const issueStateToStatusMap = {
