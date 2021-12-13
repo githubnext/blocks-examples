@@ -1,18 +1,19 @@
-import { useEffect, useMemo, useState } from "react";
-import { FolderBlockProps, getNestedFileTree, } from "@githubnext/utils";
-import Select from 'react-select'
+import { useEffect, useState } from "react";
+import { FolderBlockProps, } from "@githubnext/utils";
 
 export default function (props: FolderBlockProps) {
-  const { context } = props;
+  const { onRequestGitHubData } = props;
 
   const [url, setUrl] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const getSiteUrl = async () => {
-    const url = `https://api.github.com/repos/${context.owner}/${context.repo}`
-    const response = await fetch(url);
-    const json = await response.json();
-    setUrl(json.homepage);
+    const info = await onRequestGitHubData("repo-info", {
+      owner: props.context.owner,
+      repo: props.context.repo,
+    })
+    console.log({ info })
+    setUrl(info.homepage);
     setIsLoading(false);
   }
   useEffect(() => { getSiteUrl() }, []);
