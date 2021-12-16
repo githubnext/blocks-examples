@@ -47,7 +47,8 @@
       "description": "View HTML content",
       "entry": "/src/blocks/file-blocks/html.tsx",
       "extensions": [
-        "html"
+        "html",
+        "svelte"
       ],
       "example_path": "https://github.com/githubnext/blocks-tutorial/blob/main/photos.html"
     },
@@ -114,7 +115,8 @@
       "description": "View markdown files. You can also view live repo into, using Issues, Releases, and Commits custom components, as well as live code examples with CodeSandbox.",
       "entry": "/src/blocks/file-blocks/live-markdown/index.tsx",
       "extensions": [
-        "md"
+        "md",
+        "mdx"
       ],
       "example_path": "https://github.com/githubnext/blocks-tutorial/blob/main/README.md"
     },
