@@ -85,7 +85,11 @@
       "description": "An interactive view of JSON objects",
       "entry": "/src/blocks/file-blocks/json.tsx",
       "extensions": [
-        "json"
+        "json",
+        "webmanifest",
+        "prettierrc",
+        "yaml",
+        "yml"
       ],
       "example_path": "https://github.com/d3/d3-geo/blob/main/package.json"
     },
@@ -240,6 +244,7 @@
     "dompurify": "^2.3.3",
     "git-url-parse": "^11.6.0",
     "js-base64": "^3.7.2",
+    "js-yaml": "^4.1.0",
     "lodash.isempty": "^4.4.0",
     "lodash.isobject": "^3.0.2",
     "lz-string": "^1.4.4",

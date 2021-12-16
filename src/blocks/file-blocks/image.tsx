@@ -1,7 +1,7 @@
 import { FileBlockProps } from "@githubnext/utils";
 
 export default function (props: FileBlockProps) {
-  const { content, context } = props;
+  const { context } = props;
 
   const url = `https://github.com/${context.owner}/${context.repo}/blob/${context.sha}/${context.path}?raw=true`
 
