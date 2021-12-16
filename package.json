@@ -80,6 +80,17 @@
     },
     {
       "type": "file",
+      "id": "json-block",
+      "title": "Object explorer",
+      "description": "An interactive view of JSON objects",
+      "entry": "/src/blocks/file-blocks/json.tsx",
+      "extensions": [
+        "json"
+      ],
+      "example_path": "https://github.com/d3/d3-geo/blob/main/package.json"
+    },
+    {
+      "type": "file",
       "id": "3d-model-block",
       "title": "3D block",
       "description": "A block for 3d files",
@@ -239,6 +250,7 @@
     "react-error-boundary": "^3.1.4",
     "react-image-annotation": "^0.9.10",
     "react-json-editor-ajrm": "^2.5.13",
+    "react-json-view": "^1.21.3",
     "react-query": "^3.32.1",
     "react-select": "^5.2.1",
     "react-syntax-highlighter": "^15.4.4",
