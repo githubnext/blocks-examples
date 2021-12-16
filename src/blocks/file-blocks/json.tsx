@@ -24,10 +24,12 @@ export default function (props: FileBlockProps) {
     return normalizeContent(modifiedContent) !== normalizeContent(content);
   }, [modifiedContent, content]);
 
+  const extension = context.path.split(".").pop() || ""
+  const isYaml = ["yaml", "yml"].includes(extension)
+
   const data = useMemo(() => {
     try {
-      const extension = context.path.split(".").pop()
-      if (extension === "yml" || extension === "yaml") {
+      if (isYaml) {
         try {
           return jsYaml.load(content)
         } catch (e) {
@@ -97,7 +99,8 @@ export default function (props: FileBlockProps) {
                 cursor: "pointer",
               }}
               onClick={() => {
-                onRequestUpdateContent(modifiedContent);
+                const contentString = isYaml ? jsYaml.dump(data) : JSON.stringify(data, null, 2)
+                onRequestUpdateContent(contentString)
               }}
             >
               Save changes
