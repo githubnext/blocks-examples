@@ -65,6 +65,21 @@
     },
     {
       "type": "file",
+      "id": "image-block",
+      "title": "Image block",
+      "description": "View images",
+      "entry": "/src/blocks/file-blocks/image.tsx",
+      "extensions": [
+        "png",
+        "jpg",
+        "jpeg",
+        "gif",
+        "svg"
+      ],
+      "example_path": "https://github.com/pmndrs/react-spring/blob/HEAD/assets/projects/aragon.png?raw=true"
+    },
+    {
+      "type": "file",
       "id": "3d-model-block",
       "title": "3D block",
       "description": "A block for 3d files",
