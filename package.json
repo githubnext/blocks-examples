@@ -154,19 +154,19 @@
     },
     {
       "type": "folder",
-      "id": "minimap-block",
-      "title": "Minimap",
-      "description": "A visualization of your folders and files",
-      "entry": "/src/blocks/folder-blocks/minimap/index.tsx",
-      "example_path": "https://github.com/githubnext/blocks-tutorial"
-    },
-    {
-      "type": "folder",
       "id": "homepage",
       "title": "Homepage",
       "description": "The homepage of your repo",
       "entry": "/src/blocks/folder-blocks/homepage/index.tsx",
       "example_path": "https://github.com/wattenberger/kumiko"
+    },
+    {
+      "type": "folder",
+      "id": "minimap-block",
+      "title": "Minimap",
+      "description": "A visualization of your folders and files",
+      "entry": "/src/blocks/folder-blocks/minimap/index.tsx",
+      "example_path": "https://github.com/githubnext/blocks-tutorial"
     },
     {
       "type": "folder",

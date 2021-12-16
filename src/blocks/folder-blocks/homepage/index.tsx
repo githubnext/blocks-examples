@@ -12,7 +12,6 @@ export default function (props: FolderBlockProps) {
       owner: props.context.owner,
       repo: props.context.repo,
     })
-    console.log({ info })
     setUrl(info.homepage);
     setIsLoading(false);
   }
