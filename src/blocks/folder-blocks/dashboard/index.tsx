@@ -1,6 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
-import { FolderBlockProps, getNestedFileTree, } from "@githubnext/utils";
+import { FolderBlockProps, } from "@githubnext/utils";
 import Select from 'react-select'
+
+// Note: We're using a BlockComponent prop here to create nested Blocks.
+// This is only implemented for our own example Blocks, to showcase the concept.
 
 export default function (props: FolderBlockProps) {
   const { tree, metadata = {}, onUpdateMetadata, BlockComponent } = props;
@@ -133,7 +136,11 @@ export default function (props: FolderBlockProps) {
               flex: 1,
               overflow: "auto",
             }}>
-              <BlockComponent {...props} block={block.block} path={block.path} />
+              {BlockComponent ? (
+                <BlockComponent {...props} block={block.block} path={block.path} />
+              ) : (
+                "No BlockComponent"
+              )}
             </div>
           )}
         </div>

@@ -2,16 +2,20 @@ import { useCallback, useEffect, useState } from "react";
 // @ts-ignore
 import loadable from "@loadable/component";
 import { FileContext, FolderContext, RepoFiles } from "@githubnext/utils";
-import uniqueId from "lodash/uniqueId";
+import { getFileContent, getRepoInfo } from "../hooks";
 
+interface Block {
+  id: string;
+  type: string;
+  title: string;
+  description: string;
+  entry: string;
+  extensions?: string[];
+  owner?: string;
+  repo?: string;
+}
 interface LocalBlockProps {
-  block: {
-    type: string;
-    title: string;
-    description: string;
-    entry: string;
-    extensions?: string[];
-  };
+  block: Block;
   contents?: string;
   tree?: RepoFiles;
   metadata?: any;
@@ -37,54 +41,27 @@ export const LocalBlock = (props: LocalBlockProps) => {
   useEffect(() => { getContents() }, [block.entry])
 
   const onUpdateMetadata = (newMetadata: any) => {
-    window.postMessage({
-      type: "update-metadata",
-      context,
-      metadata: newMetadata,
-    }, "*")
+    console.log(`Triggered a request to update the file contents`)
+    console.log("From:", metadata)
+    console.log("To:", newMetadata)
   }
   const onNavigateToPath = useCallback((path) => {
-    if (typeof window === "undefined") return
-    window.postMessage({
-      type: "navigate-to-path",
-      context,
-      path: path,
-    }, "*")
+    console.log(`Triggered a navigation to the file/folder: ${path}`)
   }, [])
   const onRequestUpdateContent = useCallback((content) => {
-    if (typeof window === "undefined") return
-    window.postMessage({
-      type: "update-file",
-      context,
-      content,
-    }, "*")
+    console.log(`Triggered a request to update the file contents`)
+    console.log("From:", contents)
+    console.log("To:", content)
   }, [])
-  const onRequestGitHubData = useCallback((requestType, config) => {
-    if (typeof window === "undefined") return
-    const id = uniqueId("github-data--request")
+  const onRequestGitHubData = async (type: string, config: FileContext | FolderContext, id: string) => {
+    const data = await fetchGitHubData(type, config);
     window.postMessage({
-      type: "github-data--request",
-      context,
+      type: "github-data--response",
       id,
-      requestType,
-      config,
-    }, "*")
-
-    return new Promise((resolve, reject) => {
-      const onMessage = (event: MessageEvent) => {
-        if (event.data.type !== "github-data--response") return
-        if (event.data.id !== id) return
-        window.removeEventListener("message", onMessage)
-        resolve(event.data.data)
-      }
-      window.addEventListener("message", onMessage)
-      const maxDelay = 1000 * 60 * 5
-      window.setTimeout(() => {
-        window.removeEventListener("message", onMessage)
-        reject(new Error("Timeout"))
-      }, maxDelay)
-    })
-  }, [])
+      data,
+    }, "*");
+    return data
+  }
 
   if (!Block) return null
   return (
@@ -99,5 +76,50 @@ export const LocalBlock = (props: LocalBlockProps) => {
       onRequestGitHubData={onRequestGitHubData}
     />
   )
+}
 
+
+const getBlockKey = (block: Block) => (
+  `${block?.owner}/${block?.repo}__${block?.id}`.replace(
+    /\//g,
+    "__"
+  )
+)
+const getMetadataPath = (block: Block, path: string) => (
+  `.github/blocks/${block?.type}/${getBlockKey(block)}/${encodeURIComponent(path)}.json`
+)
+const fetchGitHubData = async (type: string, config: FileContext | FolderContext) => {
+  if (type === "file-content") {
+    const data = await getFileContent({
+      owner: config.owner,
+      repo: config.repo,
+      path: config.path,
+      fileRef: config.fileRef || "HEAD",
+    })
+    return data;
+  } else if (type === "metadata") {
+    try {
+      const res = await getFileContent({
+        owner: config.owner,
+        repo: config.repo,
+        path: getMetadataPath(config.block, config.path),
+        fileRef: "HEAD",
+        cache: new Date().toString(),
+      })
+      const fullMetadata = JSON.parse((res.content || "{}") as string);
+      return fullMetadata || {}
+    } catch (e) {
+      return {}
+    }
+  } else if (type === "repo-info") {
+    try {
+      const res = await getRepoInfo({
+        owner: config.owner,
+        repo: config.repo,
+      })
+      return res
+    } catch (e) {
+      return {}
+    }
+  }
 }
