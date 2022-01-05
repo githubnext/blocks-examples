@@ -469,10 +469,10 @@
     unist-util-visit "^1.0.0"
     uuid "^3.3.2"
 
-"@githubnext/utils@^0.11.1":
-  version "0.11.1"
-  resolved "https://registry.yarnpkg.com/@githubnext/utils/-/utils-0.11.1.tgz#125c9ab6cffe4895485baf7241018ea925fec096"
-  integrity sha512-yRo272TGDegnOIcuV/a8W77i8F7Fwsfk1IzlKI0zE4m79/PMcg5JhSXbKfGlheRWrQgWxvQpeE3wZcNKtG5jVw==
+"@githubnext/utils@^0.12.3":
+  version "0.12.3"
+  resolved "https://registry.yarnpkg.com/@githubnext/utils/-/utils-0.12.3.tgz#06b5f9013e0aa0f4e1d740b61d29dce0c260995d"
+  integrity sha512-X75FWy7NIGcHu1OWGqMgWCvO6hcNz32A2FZxJRYvlVtHJLueDcMHboH920WbgQ9443mGxsCSkvHBZb8r6HtF9w==
   dependencies:
     react "^17.0.2"
     zod "^3.11.6"
