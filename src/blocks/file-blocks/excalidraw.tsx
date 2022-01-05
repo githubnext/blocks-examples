@@ -32,7 +32,7 @@ export default function (props: FileBlockProps) {
       </div>
       <div style={{
         flex: "1",
-      }}>
+      }} key={content}>
         <Excalidraw initialData={JSON.parse(content)} onChange={handleChange} />
       </div>
     </div>

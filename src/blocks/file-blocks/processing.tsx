@@ -15,7 +15,7 @@ export default function (props: FileBlockProps) {
         console.log(e);
       }
     }
-  }, [p5Ref.current]);
+  }, [p5Ref.current, content]);
 
   return <div ref={p5Ref}></div>;
 }
