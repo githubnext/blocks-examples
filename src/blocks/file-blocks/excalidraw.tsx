@@ -20,21 +20,13 @@ export default function (props: FileBlockProps) {
   };
 
   return (
-    <div style={{
-      display: "flex",
-      flexDirection: "column",
-      height: "100vh",
-    }}>
-      <div style={{
-        flex: "none"
-      }}>
-        <button onClick={handleSave}>Save Changes</button>
-      </div>
-      <div style={{
-        flex: "1",
-      }} key={content}>
+    <div className="position-relative height-full">
+      <div className="height-full width-full" key={content}>
         <Excalidraw initialData={JSON.parse(content)} onChange={handleChange} />
       </div>
+      <button className="btn btn-primary position-absolute right-2 top-2"
+        style={{ zIndex: 1 }}
+        onClick={handleSave}>Save Changes</button>
     </div>
   );
 }
