@@ -89,7 +89,7 @@ export default function (props: FolderBlockProps) {
                 placeholder="Select tour"
               />
             </div>
-            <button className="px-2 py-1 bg-indigo-50 text-indigo-500 hover:bg-indigo-100" onClick={() => {
+            <button className="btn px-2" onClick={() => {
               setSelectedTourIndex(-1)
             }}>
               +
@@ -148,32 +148,32 @@ const TourControls = ({ steps, setSteps, newStep, setSelectedStepIndex, onSave }
           onSave(name);
         }}>
 
-          <div className="uppercase mb-1 text-xs text-gray-600 tracking-widest">
+          <label className="">
             Tour name
-          </div>
+          </label>
           <input className="flex-1 w-full py-2 px-3 border border-gray-400 rounded-md" type="text"
             autoFocus
             value={name} onChange={(e) => setName(e.target.value)} />
           <div className="mt-1 grid grid-cols-2 gap-2">
-            <button className="px-5 py-4 bg-gray-100 text-gray-500 hover:bg-text-200 w-full" onClick={() => {
+            <button className="btn w-full" onClick={() => {
               setIsSaving(false);
             }} type="button">
               Cancel
             </button>
-            <button className="px-5 py-4 bg-indigo-50 text-indigo-500 hover:bg-indigo-100 w-full">
+            <button className="btn btn-primary w-full">
               Save
             </button>
           </div>
         </form>
       ) : (
         <div className="grid grid-cols-2 gap-2">
-          <button className="mt-3 px-5 py-4 bg-indigo-50 text-indigo-500 hover:bg-indigo-100 w-full" onClick={() => {
+          <button className="mt-3 btn w-full" onClick={() => {
             setSteps([...steps, newStep])
             setSelectedStepIndex(steps.length)
           }}>
             + Add Step
           </button>
-          <button className="mt-3 px-5 py-4 bg-indigo-50 text-indigo-500 hover:bg-indigo-100 w-full" onClick={() => setIsSaving(true)}>
+          <button className="mt-3 btn btn-primary w-full" onClick={() => setIsSaving(true)}>
             Save tour
           </button>
         </div>
@@ -217,7 +217,7 @@ const Step = ({ step, isSelected, onSelect, onDelete }: {
   onDelete: (() => void) | null,
 }) => {
   return (
-    <button className={`relative group w-full text-left py-3 px-4 ${isSelected ? "bg-indigo-500 text-white" : "bg-white"
+    <button className={`relative group w-full text-left py-3 px-3 ${isSelected ? "bg-[#0A69DA] text-white" : "bg-white"
       }`} onClick={onSelect}>
       <div className="font-semibold mb-1">
         {step.name}
@@ -226,7 +226,7 @@ const Step = ({ step, isSelected, onSelect, onDelete }: {
         {step.path}
       </div>
       {!!onDelete && (
-        <button className="absolute top-1/2 right-0 h-8 w-8 rounded-full flex items-center justify-center bg-white text-red-500 hover:bg-red-100 transform -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 focus:opacity-100" onClick={e => {
+        <button className="!absolute top-1/2 right-0 px-2 flex items-center justify-center btn btn-danger transform -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 focus:opacity-100" onClick={e => {
           e.stopPropagation();
           onDelete()
         }}>
@@ -314,17 +314,17 @@ const StepContent = ({ index, step, content, pathOptions, isEditing, onChange }:
     <div className="h-full flex flex-col">
       {isEditing ? (
         <div className="w-full">
-          <div className="uppercase mb-1 text-xs text-gray-600 tracking-widest">
+          <label className="">
             Step name
-          </div>
-          <input value={step.name} onChange={(e) => onChange({ ...step, name: e.target.value })} className="w-full py-2 px-3 border border-gray-300 rounded" />
+          </label>
+          <input className="form-control py-2 w-full" value={step.name} onChange={(e) => onChange({ ...step, name: e.target.value })} />
           {/* <textarea value={step.description} onChange={(e) => onChange({ ...step, description: e.target.value })} className="w-full h-40 py-3 px-5  border border-gray-300 rounded" /> */}
 
           <div className="flex mt-2">
             <div className="flex-1 min-w-0">
-              <div className="uppercase mb-1 text-xs text-gray-600 tracking-widest">
+              <label className="">
                 Path
-              </div>
+              </label>
               <Select options={pathOptions} value={pathOptions.find(d => d.value === step.path)}
                 styles={selectStyles}
                 onChange={(newValue: any) => {
@@ -333,10 +333,10 @@ const StepContent = ({ index, step, content, pathOptions, isEditing, onChange }:
                 }} />
             </div>
             <div className="flex-none min-w-0 w-40 ml-1">
-              <div className="uppercase mb-1 text-xs text-gray-600 tracking-widest">
+              <label className="">
                 Query
-              </div>
-              <input value={localQuery} onChange={(e) => setLocalQuery(e.target.value)} className="w-full py-2 text-sm font-mono px-5 mb-2 border border-gray-300 rounded" />
+              </label>
+              <input className="form-control py-2" value={localQuery} onChange={(e) => setLocalQuery(e.target.value)} />
             </div>
           </div>
         </div>
@@ -351,7 +351,7 @@ const StepContent = ({ index, step, content, pathOptions, isEditing, onChange }:
         </div>
       )}
 
-      <div className="flex flex-1 overflow-y-auto">
+      <div className="flex flex-1 overflow-y-auto mt-1">
 
         <div className="flex-1 h-full flex flex-col overflow-y-auto overflow-x-hidden" ref={codeContainer}>
           <Code code={content} language={language} highlightRangeStart={codeSnippet?.start_line} highlightRangeEnd={codeSnippet && codeSnippet?.start_line + codeSnippet.code.split("\n").length - 1}
