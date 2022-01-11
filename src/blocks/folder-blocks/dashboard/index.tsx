@@ -54,30 +54,18 @@ export default function (props: FolderBlockProps) {
       padding: "0.5em 2em 0.5em 0.5em",
     }}>
       {blocks.map((block: any, index: number) => (
-        <div key={index} style={{
-          border: "1px solid #D8DEE4",
-          margin: "0.5em",
-          flex: "1",
-          display: "flex",
-          flexDirection: "column",
-          minHeight: 0,
-          minWidth: "calc(50% - 4em)",
-          maxHeight: "calc(100% - 1em)",
-          overflow: "hidden",
-        }}>
-          <div key={index} style={{
-            flex: "none",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            width: "100%",
-            fontSize: "0.8em",
-            background: "#F6F8FA",
-            padding: "0.4em 0 0.4em 1em",
-            borderBottom: "1px solid #D8DEE4",
-            color: "#58606A",
-            fontWeight: 500,
+        <div
+          className="Box"
+          style={{
+            margin: "0.5em",
+            flex: "1",
+            minHeight: 0,
+            minWidth: "calc(50% - 4em)",
+            maxHeight: "calc(100% - 1em)",
+            overflow: "hidden",
           }}>
+          <div key={index}
+            className="Box-header d-flex py-2">
             <div>
               <Select options={pathOptions} value={pathOptions.find(d => d.value === block.path)}
                 styles={selectStyles}
@@ -109,9 +97,8 @@ export default function (props: FolderBlockProps) {
                   setBlocks(newBlocks);
                 }} />
             </div>
-            <button style={{
+            <button className="btn btn-danger d-flex flex-items-center mx-1 flex-self-stretch " style={{
               flex: "none",
-              padding: "0.3em 1em"
             }} onClick={() => {
               const newBlocks = [...blocks];
               newBlocks.splice(index, 1);
@@ -145,18 +132,14 @@ export default function (props: FolderBlockProps) {
           )}
         </div>
       ))}
-      <button style={{
-        background: "#0A69DA",
-        color: "#fff",
-        height: "2em",
-        width: "2em",
-        borderRadius: "50%",
+      <button className="btn" style={{
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
         position: "absolute",
         top: "1.5em",
         right: "-0.2em",
+        padding: "0.4em"
       }} onClick={() => {
         const newBlock = {
           path: pathOptions[0].value,
