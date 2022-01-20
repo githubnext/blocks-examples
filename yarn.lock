@@ -477,10 +477,10 @@
     react "^17.0.2"
     zod "^3.11.6"
 
-"@githubocto/flat-ui@^0.12.0":
-  version "0.12.0"
-  resolved "https://registry.yarnpkg.com/@githubocto/flat-ui/-/flat-ui-0.12.0.tgz#6c47a30e5934fbaaa26e2f6b87056e0ed80d51f2"
-  integrity sha512-AcZr1rpDdCPwQ8+lWYryARRf0e8H7IBHvLmGFp8Q2Ir1Ww6qkp6YBH9YrMePEfp/8Y9mfXN+DXlLGguaS4puaw==
+"@githubocto/flat-ui@^0.12.1":
+  version "0.12.1"
+  resolved "https://registry.yarnpkg.com/@githubocto/flat-ui/-/flat-ui-0.12.1.tgz#ae4d9c36f7d4c7ac643b95e57685e6614be47051"
+  integrity sha512-ZY6oXJxC+4WFCeAdHEd5fOMwC4uVrFE5WD9Yobd9DLfNwissMDtrCZz1/+j3WSMCMwVXGWlV0Sp9gWnNl8vStw==
   dependencies:
     "@emotion/react" "^11.4.0"
     "@primer/octicons-react" "^12.1.0"
