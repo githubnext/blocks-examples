@@ -222,7 +222,7 @@
     "@fullstackio/cq": "^6.0.9",
     "@fullstackio/remark-cq": "^6.1.2",
     "@githubnext/utils": "^0.12.3",
-    "@githubocto/flat-ui": "^0.12.2",
+    "@githubocto/flat-ui": "^0.13.0",
     "@loadable/component": "^5.15.0",
     "@mdx-js/runtime": "^1.6.22",
     "@octokit/rest": "^18.12.0",
