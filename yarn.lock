@@ -477,10 +477,10 @@
     react "^17.0.2"
     zod "^3.11.6"
 
-"@githubocto/flat-ui@^0.13.1":
-  version "0.13.1"
-  resolved "https://registry.yarnpkg.com/@githubocto/flat-ui/-/flat-ui-0.13.1.tgz#04786bf4b342e15fa173ccab77fec5f3537c8852"
-  integrity sha512-tZiZEKoxIyA53qEEI4ODryJh41OADCehke5BN3+vjKqEsG4j7DXQ+Io6ABWJNSNi1QfLOdAHJZzTpJ4rIkSIyQ==
+"@githubocto/flat-ui@^0.13.4":
+  version "0.13.4"
+  resolved "https://registry.yarnpkg.com/@githubocto/flat-ui/-/flat-ui-0.13.4.tgz#1d4aaf7df469aba4509ae06519825915ecfc8808"
+  integrity sha512-RuM7TjQZK52Inu9uwQ73vs17hOoXfIsOmCLA7ye61Dd2u1j18EaDqdWnI36NVIxcUWA+p0Lw7kRmfPb2YdmYaA==
   dependencies:
     "@emotion/react" "^11.4.0"
     "@primer/octicons-react" "^12.1.0"
@@ -497,7 +497,7 @@
     date-fns "^2.19.0"
     dompurify "^2.2.9"
     downshift "^6.1.1"
-    immer "^8.0.2"
+    immer "^9.0.12"
     lodash "^4.17.21"
     lodash-es "^4.17.21"
     match-sorter "^6.3.0"
@@ -506,7 +506,7 @@
     react-virtualized-auto-sizer "^1.0.5"
     react-window "^1.8.6"
     twin.macro "^2.6.2"
-    zustand "^3.3.3"
+    zustand "^3.6.9"
 
 "@loadable/component@^5.15.0":
   version "5.15.0"
@@ -4089,10 +4089,10 @@ ignore-by-default@^1.0.1:
   resolved "https://registry.yarnpkg.com/ignore-by-default/-/ignore-by-default-1.0.1.tgz#48ca6d72f6c6a3af00a9ad4ae6876be3889e2b09"
   integrity sha1-SMptcvbGo68Aqa1K5odr44ieKwk=
 
-immer@^8.0.2:
-  version "8.0.4"
-  resolved "https://registry.yarnpkg.com/immer/-/immer-8.0.4.tgz#3a21605a4e2dded852fb2afd208ad50969737b7a"
-  integrity sha512-jMfL18P+/6P6epANRvRk6q8t+3gGhqsJ9EuJ25AXE+9bNTYtssvzeYbEd0mXRYWCmmXSIbnlpz6vd6iJlmGGGQ==
+immer@^9.0.12:
+  version "9.0.12"
+  resolved "https://registry.yarnpkg.com/immer/-/immer-9.0.12.tgz#2d33ddf3ee1d247deab9d707ca472c8c942a0f20"
+  integrity sha512-lk7UNmSbAukB5B6dh9fnh5D0bJTOFKxVg2cyJWTYrWRfhLrLMBquONcUs3aFq507hNoIZEDDh8lb8UtOizSMhA==
 
 import-cwd@^3.0.0:
   version "3.0.0"
@@ -7120,10 +7120,15 @@ zstddec@^0.0.2:
   resolved "https://registry.yarnpkg.com/zstddec/-/zstddec-0.0.2.tgz#57e2f28dd1ff56b750e07d158a43f0611ad9eeb4"
   integrity sha512-DCo0oxvcvOTGP/f5FA6tz2Z6wF+FIcEApSTu0zV5sQgn9hoT5lZ9YRAKUraxt9oP7l4e8TnNdi8IZTCX6WCkwA==
 
-zustand@^3.3.3, zustand@^3.5.1, zustand@^3.5.13:
+zustand@^3.5.1, zustand@^3.5.13:
   version "3.6.5"
   resolved "https://registry.yarnpkg.com/zustand/-/zustand-3.6.5.tgz#42a459397907d6bf0e2375351394733b2f83ee44"
   integrity sha512-/WfLJuXiEJimt61KGMHebrFBwckkCHGhAgVXTgPQHl6IMzjqm6MREb1OnDSnCRiSmRdhgdFCctceg6tSm79hiw==
+
+zustand@^3.6.9:
+  version "3.6.9"
+  resolved "https://registry.yarnpkg.com/zustand/-/zustand-3.6.9.tgz#f61a756ddea9f95c7ee7cfd3af2f88c10078afbc"
+  integrity sha512-OvDNu/jEWpRnEC7k8xh8GKjqYog7td6FZrLMuHs/IeI8WhrCwV+FngVuwMIFhp5kysZXr6emaeReMqjLGaldAQ==
 
 zwitch@^1.0.0:
   version "1.0.5"
