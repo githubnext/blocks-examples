@@ -34,7 +34,6 @@ export default function (props: FolderBlockProps) {
     const url = "https://blocks-marketplace.vercel.app/blocks-processed-full.json"
     const res = await fetch(url)
       .then(res => res.json())
-      .catch(err => console.log(err));
     const exampleBlocks = res.find((d: any) => d.full_name === "githubnext/blocks-examples")?.blocks || []
     setBlockOptions(exampleBlocks.map((block: any) => ({
       ...block,

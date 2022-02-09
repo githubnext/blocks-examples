@@ -357,7 +357,6 @@ const StepContent = ({ index, step, content, pathOptions, isEditing, onChange }:
           <Code code={content} language={language} highlightRangeStart={codeSnippet?.start_line} highlightRangeEnd={codeSnippet && codeSnippet?.start_line + codeSnippet.code.split("\n").length - 1}
             onLineClick={isEditing ? ((lineIndex) => {
               let [start, end] = step.query.split("-").map(d => Number.isFinite(+d) ? +d : null)
-              console.log(start, end)
               if (end === null || end === undefined) {
                 end = lineIndex
               } else {

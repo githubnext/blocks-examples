@@ -100,8 +100,6 @@ export default function (props: FileBlockProps) {
 
   useEffect(() => {
     const init = async () => {
-      console.log("initializing...");
-
       const model = await use.loadQnA();
       setModel(model);
       const result = computeEmbedding(model, input);
@@ -227,13 +225,11 @@ function Table(props: TableProps) {
         {query.responses.map((response, j) => (
           <tr key={j}>
             <td
-              className={`${
-                j === 0
+              className={`${j === 0
                   ? "border border-gray-500 border-b-0"
                   : "invisible border-l border-r border-gray-500"
-              } ${
-                j === query.responses.length - 1 ? "border-b" : ""
-              } px-4 py-2 text-gray-700 font-medium`}
+                } ${j === query.responses.length - 1 ? "border-b" : ""
+                } px-4 py-2 text-gray-700 font-medium`}
             >
               {query.query}
             </td>
