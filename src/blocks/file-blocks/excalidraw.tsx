@@ -16,7 +16,6 @@ export default function (props: FileBlockProps) {
   useEffect(() => {
     import("@excalidraw/excalidraw").then(imp => setExcalidraw(imp.default))
   }, [])
-  console.log(Excalidraw)
 
   const handleChange = (elements: any, appState: any) => {
     setElements(elements);
