@@ -1,7 +1,7 @@
-import { useMemo, useState } from "react";
-import { csvParse, csvFormat } from "d3";
-import { Grid } from "@githubocto/flat-ui";
 import { FileBlockProps } from "@githubnext/utils";
+import { Grid } from "@githubocto/flat-ui";
+import { csvFormat, csvParseRows } from "d3";
+import { useMemo, useState } from "react";
 
 export default function (props: FileBlockProps) {
   const { content, onRequestUpdateContent } = props;
@@ -11,7 +11,14 @@ export default function (props: FileBlockProps) {
 
   const data = useMemo(() => {
     try {
-      const csvData = csvParse(content);
+      const rows = csvParseRows(content);
+      const headers = rows[0];
+      const csvData = rows.slice(1).map((row: any) => {
+        return headers.reduce((acc: Record<string, any>, key, i) => {
+          acc[key] = Number.isFinite(row[i]) ? +row[i] : row[i];
+          return acc;
+        }, {})
+      })
       setModifiedData(csvData);
       setIsDirty(false)
       return csvData;
