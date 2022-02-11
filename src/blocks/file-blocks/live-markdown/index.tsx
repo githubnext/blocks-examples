@@ -7,7 +7,8 @@ import "./style.css"
 export default (props: FileBlockProps) => {
 
   const files = useMemo(() => ({
-    "/App.js": getAppCode(props)
+    "/App.js": getAppCode(props),
+    "/styles.css": styles
   }), [props.content])
 
   return (
@@ -55,7 +56,7 @@ import {
   useEffect, useMemo, useState,
   Component
 } from "react";
-import "./style.css";
+import "./styles.css";
 
 export const MarkdownContext = createContext({
   issues: [],
