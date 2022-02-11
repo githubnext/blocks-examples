@@ -32,7 +32,7 @@ export default (props: FileBlockProps) => {
         autorun
       >
         <SandpackPreview
-          // showOpenInCodeSandbox={false}
+          showOpenInCodeSandbox={false}
           showRefreshButton={false}
         />
       </SandpackProvider>
