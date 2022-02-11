@@ -33,6 +33,7 @@ export default function (props: FileBlockProps) {
         <Grid
           data={modifiedData}
           diffData={data}
+          canDownload={false}
           isEditable
           onEdit={(data: any) => {
             setModifiedData(data);
