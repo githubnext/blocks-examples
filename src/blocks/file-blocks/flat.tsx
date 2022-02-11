@@ -11,19 +11,12 @@ export default function (props: FileBlockProps) {
 
   const data = useMemo(() => {
     try {
-      const data = JSON.parse(content);
-      setModifiedData(data);
+      const csvData = csvParse(content);
+      setModifiedData(csvData);
       setIsDirty(false)
-      return data;
+      return csvData;
     } catch (e) {
-      try {
-        const csvData = csvParse(content);
-        setModifiedData(csvData);
-        setIsDirty(false)
-        return csvData;
-      } catch (e) {
-        return [];
-      }
+      return [];
     }
   }, [content]);
 
