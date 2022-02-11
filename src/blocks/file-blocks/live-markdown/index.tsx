@@ -1,32 +1,70 @@
-import { FileBlockProps, useTailwindCdn } from "@githubnext/utils";
-// @ts-ignore
-import MDX from "@mdx-js/runtime";
+import { SandpackProvider, SandpackPreview } from "@codesandbox/sandpack-react";
+import { FileBlockProps } from "@githubnext/utils";
+import { useMemo } from "react";
+import "styled-components";
+import styles from "./style.css"
+
+export default (props: FileBlockProps) => {
+
+  const files = useMemo(() => ({
+    "/App.js": getAppCode(props),
+    "/style.css": styles
+  }), [props.content])
+
+  return (
+    <div style={{
+      width: "100%",
+      height: "100%",
+    }}>
+      <SandpackProvider
+        template="react"
+        customSetup={{
+          dependencies: {
+            "@mdx-js/runtime": "^2.0.0-next.9",
+            "@primer/components": "^31.1.0",
+            "react-syntax-highlighter": "^15.4.4",
+            "styled-components": "^5.3.3",
+            "@githubnext/utils": "^0.13.1",
+            "lz-string": "^1.4.4",
+          },
+          files: files
+        }}
+        autorun
+      >
+        <SandpackPreview
+          // showOpenInCodeSandbox={false}
+          showRefreshButton={false}
+        />
+      </SandpackProvider>
+    </div>
+  )
+}
+
+
+const getAppCode = (props: FileBlockProps) => (
+  `import MDX from "@mdx-js/runtime";
 import { Avatar, Box, StateLabel } from "@primer/components";
+import "styled-components";
+import SyntaxHighlighter from "react-syntax-highlighter";
+import { useTailwindCdn } from "@githubnext/utils";
+import LZString from "lz-string"
+
 import {
+  ReactNode,
   createContext,
   useContext,
-  useEffect, useMemo, useState
+  useEffect, useMemo, useState,
+  Component
 } from "react";
-import SyntaxHighlighter from "react-syntax-highlighter";
-import "styled-components";
-// @ts-ignore
-import { CodeSandbox } from "./CodeSandbox.tsx";
-// @ts-ignore
-import { ErrorBoundary } from "./ErrorBoundary.tsx";
-import "./style.css"
-
-export interface RepoContext {
-  repo: string;
-  owner: string;
-}
+import "./style.css";
 
 export const MarkdownContext = createContext({
   issues: [],
   releases: [],
   commits: [],
 });
-export default function (props: FileBlockProps) {
-  const { context, content } = props;
+export default function App(props) {
+  const { context, content } = ${JSON.stringify(props)}
   useTailwindCdn()
 
   const [repoInfo, setRepoInfo] = useState({
@@ -40,15 +78,15 @@ export default function (props: FileBlockProps) {
   ), [content])
 
   const getRepoInfo = async () => {
-    const issuesUrl = `https://api.github.com/repos/${context.owner}/${context.repo}/issues`;
+    const issuesUrl = \`https://api.github.com/repos/\${context.owner}/\${context.repo}/issues\`;
     const issuesRes = await fetch(issuesUrl);
     const issues = await issuesRes.json();
 
-    const releasesUrl = `https://api.github.com/repos/${context.owner}/${context.repo}/releases`;
+    const releasesUrl = \`https://api.github.com/repos/\${context.owner}/\${context.repo}/releases\`;
     const releasesRes = await fetch(releasesUrl);
     const releases = await releasesRes.json();
 
-    const commitsUrl = `https://api.github.com/repos/${context.owner}/${context.repo}/commits`;
+    const commitsUrl = \`https://api.github.com/repos/\${context.owner}/\${context.repo}/commits\`;
     const commitsRes = await fetch(commitsUrl);
     const commits = await commitsRes.json();
     const info = {
@@ -83,17 +121,13 @@ const components = {
   Issues,
   Releases,
   Commits,
-  CodeSandbox,
-  code({ inline, className, children }: {
-    inline: boolean;
-    className: string;
-    children: any;
-  }) {
-    const match = /language-(\w+)/.exec(className || "");
+  // CodeSandbox,
+  code({ inline, className, children }) {
+    const match = /language-(\\w+)/.exec(className || "");
     return !inline && match ? (
       <div className="code">
         <SyntaxHighlighter language={match[1]}>
-          {String(children).replace(/\n$/, "")}
+          {String(children).replace(/\\n$/, "")}
         </SyntaxHighlighter>
       </div>
     ) : (
@@ -103,8 +137,8 @@ const components = {
   a: Link
 };
 
-function Link(props: Record<string, any>) {
-  const videoExtensions = /\.(mp4|webm|ogv|mov|flv|wmv|avi|m4v|mpg|mpeg|3gp|3g2)$/i;
+function Link(props) {
+  const videoExtensions = /\\.(mp4|webm|ogv|mov|flv|wmv|avi|m4v|mpg|mpeg|3gp|3g2)$/i;
   const isVideo = videoExtensions.test(props.href);
 
   if (isVideo) return (
@@ -122,17 +156,12 @@ function Link(props: Record<string, any>) {
   )
 }
 
-const formatDate = (d: Date) => d.toLocaleDateString();
+const formatDate = (d) => d.toLocaleDateString();
 const issueStateToStatusMap = {
   closed: "issueClosed",
   open: "issueOpened",
 };
-function Issues({
-  num = 3,
-}: {
-  num: number;
-  children?: React.ReactNode;
-}) {
+function Issues({ num = 3 }) {
   const { issues } = useContext(MarkdownContext);
   const filteredIssues = issues.slice(0, num);
 
@@ -145,7 +174,7 @@ function Issues({
   return (
     <div className="mt-3 mb-6">
       <div className="flex space-x-2 flex-wrap">
-        {filteredIssues.map((issue: any) => (
+        {filteredIssues.map((issue) => (
           <Box
             bg="canvas.subtle"
             p={3}
@@ -175,12 +204,7 @@ function Issues({
     </div>
   );
 }
-function Releases({
-  num = 3,
-}: {
-  num: number;
-  children?: React.ReactNode;
-}) {
+function Releases({ num = 3 }) {
   const { releases = [] } = useContext(MarkdownContext);
   const filteredReleases = releases.slice(0, num);
 
@@ -193,7 +217,7 @@ function Releases({
   return (
     <div className="mt-3 mb-6">
       <div className="flex space-x-2 flex-wrap">
-        {filteredReleases.map((release: any) => (
+        {filteredReleases.map((release) => (
           <Box
             bg="canvas.subtle"
             p={3}
@@ -215,14 +239,9 @@ function Releases({
     </div>
   );
 }
-function Commits({
-  num = 2,
-}: {
-  num: number;
-  children?: React.ReactNode;
-}) {
+function Commits({ num = 2 }) {
   const { commits = [] } = useContext(MarkdownContext);
-  const filteredCommits = commits.slice(0, num);
+  const filteredCommits = commits?.slice?.(0, num) || [];
 
   if (!filteredCommits.length) {
     return <div className="w-full h-10 items-center justify-center italic text-center pt-2 text-gray-500">
@@ -233,7 +252,7 @@ function Commits({
   return (
     <div className="mt-3 mb-6">
       <div className="flex flex-wrap">
-        {filteredCommits.map((commit: any) => (
+        {filteredCommits.map((commit) => (
           <Box
             p={3}
             key={commit.sha}
@@ -263,3 +282,115 @@ function Commits({
   );
 }
 
+export class ErrorBoundary extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false, errorMessage: null };
+  }
+
+  static getDerivedStateFromError(error) {
+    return { hasError: true, errorMessage: error.message };
+  }
+
+  componentDidCatch(error, errorInfo) {
+    // console.log(error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="flex flex-col">
+
+          <h1>Something went wrong.</h1>
+          <p>
+            {/* @ts-ignore */}
+            {this.state.errorMessage || ""}
+          </p>
+        </div>
+      );
+    }
+
+    return this.props.children;
+  }
+}
+
+const optionsDefaults = {
+  fontsize: "14",
+  hidenavigation: "1",
+  codemirror: "1",
+  hidedevtools: "1",
+}
+export const CodeSandbox = ({
+  children,
+  height = "20em",
+  sandboxOptions = {},
+  dependencies,
+}) => {
+  const [url, setUrl] = useState("");
+  const parameters = getParameters({
+    files: {
+      "index.js": {
+        content: children?.props?.children?.props?.children,
+        isBinary: false,
+      },
+      "package.json": {
+        content: JSON.stringify({
+          dependencies: parseDependencies(dependencies),
+        }),
+        isBinary: false,
+      },
+    },
+  });
+
+  const getSandboxUrl = async () => {
+    const url = \`https://codesandbox.io/api/v1/sandboxes/define?parameters=\${parameters}&json=1\`;
+    const res = await fetch(url);
+    const data = await res.json();
+    const id = data?.sandbox_id;
+    const params = new URLSearchParams({ ...optionsDefaults, ...sandboxOptions }).toString()
+    const iframeUrl = \`https://codesandbox.io/embed/\${id}?\${params}\`;
+
+    setUrl(iframeUrl);
+  };
+  useEffect(() => {
+    getSandboxUrl();
+  }, []);
+
+  return (
+    <div className="w-full h-full mt-3 mb-10">
+      {!!url && (
+        <iframe
+          className="w-full outline-none"
+          style={{
+            height
+          }}
+          src={url}
+          title="CodeSandbox"
+          sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"
+        />
+      )}
+    </div>
+  );
+};
+
+const parseDependencies = dependencies => {
+  let res = {};
+  dependencies.forEach((dep) => {
+    const [name, version = "latest"] = dep.split("@");
+    res[name] = version;
+  });
+  return res;
+};
+
+// ported from "codesandbox/lib/api/define"
+function compress(input) {
+  return LZString.compressToBase64(input)
+    .replace(/\\+/g, "-") // Convert '+' to '-'
+    .replace(/\\//g, "_") // Convert '/' to '_'
+    .replace(/=+$/, ""); // Remove ending '='
+}
+function getParameters(parameters) {
+  return compress(JSON.stringify(parameters));
+}
+`
+)
