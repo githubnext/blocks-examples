@@ -29,7 +29,7 @@ import ReactDOM from "react-dom";
 
 ReactDOM.render(
   ${componentDefinition || `<${componentName} />`},
-  document.body.appendChild(document.createElement("DIV"))
+  document.getElementById('root')
 )
 `
 
