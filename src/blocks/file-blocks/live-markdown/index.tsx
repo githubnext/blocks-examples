@@ -2,12 +2,12 @@ import { SandpackProvider, SandpackPreview } from "@codesandbox/sandpack-react";
 import { FileBlockProps } from "@githubnext/utils";
 import { useMemo } from "react";
 import "styled-components";
+import "./style.css"
 
 export default (props: FileBlockProps) => {
 
   const files = useMemo(() => ({
-    "/App.js": getAppCode(props),
-    "/style.css": styles
+    "/App.js": getAppCode(props)
   }), [props.content])
 
   return (
