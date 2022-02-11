@@ -1,18 +1,19 @@
 // @ts-ignore
-import { CodeSandbox } from './CodeSandbox.tsx';
-// @ts-ignore
-import Annotation from 'react-image-annotation'
-import {
-  PointSelector,
-  RectangleSelector,
-  OvalSelector
-  // @ts-ignore
-} from 'react-image-annotation/lib/selectors'
-import { Fragment, useEffect, useState } from 'react';
 import { FileBlockProps, useTailwindCdn } from '@githubnext/utils';
+import { Fragment, useState } from 'react';
+// @ts-ignore
+import Annotation from 'react-image-annotation';
+import {
+  OvalSelector,
+  PointSelector,
+  RectangleSelector
+  // @ts-ignore
+} from 'react-image-annotation/lib/selectors';
+// @ts-ignore
+import { CodeSandbox } from './CodeSandbox.tsx';
 
 export default function ({ content, context, metadata, onUpdateMetadata }: FileBlockProps) {
-  const { owner, repo, path } = context
+  const { path } = context
   useTailwindCdn()
 
   const componentName = path.split('/').pop()?.split(".")[0]
@@ -34,7 +35,7 @@ ReactDOM.render(
 
   return (
     <div className="relative w-full flex h-full">
-      <div className="flex flex-col flex-1 max-w-[80em]">
+      <div className="flex flex-col flex-1 h-full max-w-[80em]">
         <Annotator
           annotations={annotations}
           // @ts-ignore
@@ -97,8 +98,8 @@ const Annotator = ({ annotations, setAnnotations, children }: { annotations: Ann
   }
 
   return (
-    <div className="flex w-full">
-      <div className="flex-1 w-full p-5 pt-0 z-10">
+    <div className="flex w-full h-full">
+      <div className="flex-1 w-full h-full p-5 pt-0 z-10">
         <div className="flex w-full items-center pb-1">
           <label htmlFor="name">
             Annotation type
@@ -113,7 +114,7 @@ const Annotator = ({ annotations, setAnnotations, children }: { annotations: Ann
             ))}
           </div>
         </div>
-        <div className="">
+        <div className="h-full">
           <Annotation
             annotations={annotations}
             type={annotationType}

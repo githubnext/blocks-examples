@@ -225,6 +225,7 @@
     "react-json-view": "^1.21.3",
     "react-query": "^3.32.1",
     "react-select": "^5.2.1",
+    "react-syntax-highlighter": "^15.4.5",
     "react-use": "^17.3.1",
     "recharts": "^2.1.6",
     "three": "^0.134.0"
