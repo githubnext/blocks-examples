@@ -121,7 +121,7 @@ const components = {
   Issues,
   Releases,
   Commits,
-  // CodeSandbox,
+  CodeSandbox,
   code({ inline, className, children }) {
     const match = /language-(\\w+)/.exec(className || "");
     return !inline && match ? (
@@ -320,12 +320,12 @@ const optionsDefaults = {
   codemirror: "1",
   hidedevtools: "1",
 }
-export const CodeSandbox = ({
+function CodeSandbox ({
   children,
   height = "20em",
   sandboxOptions = {},
   dependencies,
-}) => {
+}) {
   const [url, setUrl] = useState("");
   const parameters = getParameters({
     files: {
