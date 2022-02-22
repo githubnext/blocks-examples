@@ -3,8 +3,13 @@ import { useEffect, useState } from "react";
 
 if (typeof window !== "undefined") {
   // to load assets from self domain, instead of the CDN
-  // @ts-ignore
-  window.EXCALIDRAW_ASSET_PATH = "/excalidraw/"
+  const urlObject = new URL(window.location.href);
+  const prototypeDomain = "https://next-devex-blocks.azurewebsites.net"
+  const isPrototype = urlObject.origin === prototypeDomain;
+  if (isPrototype) {
+    // @ts-ignore
+    window.EXCALIDRAW_ASSET_PATH = "/excalidraw/"
+  }
 }
 export default function (props: FileBlockProps) {
   const { content, onRequestUpdateContent } = props;
