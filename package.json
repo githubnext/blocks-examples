@@ -34,7 +34,7 @@
       "id": "excalidraw-block",
       "title": "Drawing block",
       "description": "A whiteboard tool",
-      "entry": "/src/blocks/file-blocks/excalidraw.tsx",
+      "entry": "/src/blocks/file-blocks/excalidraw/index.tsx",
       "extensions": [
         "excalidraw"
       ],

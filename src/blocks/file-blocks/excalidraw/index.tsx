@@ -1,5 +1,6 @@
 import { FileBlockProps } from "@githubnext/utils";
 import { useEffect, useState } from "react";
+import "./style.css"
 
 if (typeof window !== "undefined") {
   // to load assets from self domain, instead of the CDN
@@ -35,7 +36,7 @@ export default function (props: FileBlockProps) {
 
   return (
     <div className="position-relative height-full">
-      <div className="height-full width-full" key={content}>
+      <div className="width-full" key={content} style={{ height: "100vh" }}>
         {Excalidraw && (
           <Excalidraw
             initialData={JSON.parse(content)}
