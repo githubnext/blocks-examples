@@ -4,10 +4,28 @@ import { useMemo } from "react";
 import "styled-components";
 import "./style.css";
 
+const indexHtml = `
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom block</title>
+  </head>
+  <body>
+    <!-- this won't load if added to the head -->
+    <script type="module" src="https://cdn.skypack.dev/twind/shim"></script>
+    <link href="https://unpkg.com/@primer/css@^16.0.0/dist/primer.css" rel="stylesheet" />
+    <div id="root"></div>
+  </body>
+</html>
+`;
+
 export default (props: FileBlockProps) => {
   const files = useMemo(
     () => ({
       "/App.js": getAppCode(props),
+      "/public/index.html": indexHtml,
       "/styles.css": styles,
     }),
     [props.content]
