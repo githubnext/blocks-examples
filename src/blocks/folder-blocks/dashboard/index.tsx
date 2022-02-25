@@ -31,7 +31,7 @@ export default function (props: FolderBlockProps) {
   }
 
   const getBlocks = async () => {
-    const url = "https://next-devex-blocks-marketplace.azurewebsites.net/api/blocks"
+    const url = "https://blocks-marketplace.githubnext.com/api/blocks"
     const res = await fetch(url)
       .then(res => res.json())
     const exampleBlocks = res.find((d: any) => d.full_name === "githubnext/blocks-examples")?.blocks || []
