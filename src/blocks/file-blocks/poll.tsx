@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 // import { useUpdateFileContents, useFileContent } from "hooks";
 // import { BlockProps } from ".";
 
-import { FileBlockProps, useTailwindCdn } from '@githubnext/utils'; // to import tailwind css
+import { FileBlockProps } from "@githubnext/utils"; // to import tailwind css
 
 interface PollOptions {
   text: string;
@@ -15,8 +15,6 @@ type Poll = {
 };
 
 export default function (props: FileBlockProps) {
-  useTailwindCdn();
-
   const { content } = props;
   const [poll, setPoll] = useState<Poll>(JSON.parse(content));
 
@@ -25,14 +23,14 @@ export default function (props: FileBlockProps) {
     newPoll.options[index].votes += 1;
     setPoll(newPoll);
     props.onRequestUpdateContent(JSON.stringify(newPoll));
-  }
+  };
 
-
-  if (!poll || !poll.options) return (
-    <div className="py-20 text-gray-500 w-full text-center italic">
-      No poll data found
-    </div>
-  )
+  if (!poll || !poll.options)
+    return (
+      <div className="py-20 text-gray-500 w-full text-center italic">
+        No poll data found
+      </div>
+    );
 
   const totalVotes = poll.options.reduce((acc, cur) => acc + cur.votes, 0);
 

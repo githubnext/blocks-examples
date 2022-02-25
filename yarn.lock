@@ -633,14 +633,14 @@
     unist-util-visit "^1.0.0"
     uuid "^3.3.2"
 
-"@githubnext/utils@^0.13.1":
-  version "0.13.1"
-  resolved "https://registry.yarnpkg.com/@githubnext/utils/-/utils-0.13.1.tgz#3b07967841f9db3008028cb7e5ecc361727fc7f5"
-  integrity sha512-IkFActYIUiqZA0dV8n2uElUf5EDiQbXGlUtkhpGNHXqHOvTzu46e8+A1NQrIxTQ3voWK0HeD7hvSCyI6NiWIfQ==
+"@githubnext/utils@^0.15.0":
+  version "0.15.0"
+  resolved "https://registry.yarnpkg.com/@githubnext/utils/-/utils-0.15.0.tgz#a6ca88829908b95c404c32a60fbdb78e4daa0dc1"
+  integrity sha512-hf2cSAQY/iijwSvAoq992nx/wgVV40LlR6z2XkXMJuy8AlD0tsThsnL+B3ObbZS6FYkExSv1b4/N+4YZrQRmmA==
   dependencies:
     "@types/lodash.uniqueid" "^4.0.6"
+    git-url-parse "^11.6.0"
     lodash.uniqueid "^4.0.1"
-    react "^17.0.2"
     zod "^3.11.6"
 
 "@githubocto/flat-ui@^0.13.4":
@@ -5556,7 +5556,7 @@ react-window@^1.8.6:
     "@babel/runtime" "^7.0.0"
     memoize-one ">=3.1.1 <6"
 
-react@17.0.0, react@^17.0.2:
+react@17.0.0:
   version "17.0.0"
   resolved "https://registry.yarnpkg.com/react/-/react-17.0.0.tgz#ad96d5fa1a33bb9b06d0cc52672f7992d84aa662"
   integrity sha512-rG9bqS3LMuetoSUKHN8G3fMNuQOePKDThK6+2yXFWtoeTDLVNh/QCaxT+Jr+rNf4lwNXpx+atdn3Aa0oi8/6eQ==
