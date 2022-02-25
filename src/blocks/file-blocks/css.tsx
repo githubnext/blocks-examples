@@ -6,21 +6,6 @@ import { FileBlockProps } from "@githubnext/utils";
 export default function (props: FileBlockProps) {
   const { content } = props;
 
-  useEffect(() => {
-    if (typeof document === "undefined") return;
-
-    const script = document.createElement("script");
-
-    script.src = "https://cdn-tailwindcss.vercel.app";
-    script.async = true;
-
-    document.body.appendChild(script);
-
-    return () => {
-      document.body.removeChild(script);
-    };
-  }, []);
-
   const { tree, flattenedRules, widelyApplicableAttributes } = useMemo(() => {
     const tree = toJSON(content);
     // const rules = getRulesFromTreeItem(tree)

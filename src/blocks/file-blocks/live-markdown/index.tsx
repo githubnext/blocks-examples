@@ -14,7 +14,6 @@ const indexHtml = `
   </head>
   <body>
     <!-- this won't load if added to the head -->
-    <script type="module" src="https://cdn.skypack.dev/twind/shim"></script>
     <link href="https://unpkg.com/@primer/css@^16.0.0/dist/primer.css" rel="stylesheet" />
     <div id="root"></div>
   </body>
@@ -39,6 +38,7 @@ export default (props: FileBlockProps) => {
       }}
     >
       <SandpackProvider
+        externalResources={["https://cdn.tailwindcss.com"]}
         template="react"
         customSetup={{
           dependencies: {
