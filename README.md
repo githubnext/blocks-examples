@@ -19,6 +19,8 @@ All blocks require an object within [`package.json`](https://github.com/githubne
 }
 ```
 
+> 👀 Preview these example blocks by going to the [Blocks Marketplace](https://blocks-marketplace.githubnext.com/)!
+
 ### File blocks
 
 | Block name | Description                  | Supported extensions |
