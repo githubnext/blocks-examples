@@ -1,5 +1,5 @@
 import "@tensorflow/tfjs";
-import { FileBlockProps, useTailwindCdn } from "@githubnext/utils";
+import { FileBlockProps } from "@githubnext/utils";
 import { useEffect, useState } from "react";
 import * as use from "@tensorflow-models/universal-sentence-encoder";
 import { UniversalSentenceEncoderQnA } from "@tensorflow-models/universal-sentence-encoder/dist/use_qna";
@@ -73,8 +73,6 @@ interface QueryResult {
 }
 
 export default function (props: FileBlockProps) {
-  const status = useTailwindCdn();
-
   const { content } = props;
   const input: Input = JSON.parse(content);
 
@@ -116,7 +114,7 @@ export default function (props: FileBlockProps) {
 
   return (
     <>
-      {status === "ready" && model ? (
+      {model ? (
         <div className="m-4">
           <div className="flex row mb-8">
             <h2 className="text-lg text-gray-900 font-semibold mr-4">
@@ -225,11 +223,13 @@ function Table(props: TableProps) {
         {query.responses.map((response, j) => (
           <tr key={j}>
             <td
-              className={`${j === 0
+              className={`${
+                j === 0
                   ? "border border-gray-500 border-b-0"
                   : "invisible border-l border-r border-gray-500"
-                } ${j === query.responses.length - 1 ? "border-b" : ""
-                } px-4 py-2 text-gray-700 font-medium`}
+              } ${
+                j === query.responses.length - 1 ? "border-b" : ""
+              } px-4 py-2 text-gray-700 font-medium`}
             >
               {query.query}
             </td>
