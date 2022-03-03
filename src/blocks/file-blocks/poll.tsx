@@ -16,12 +16,11 @@ type Poll = {
 
 export default function (props: FileBlockProps) {
   const { content } = props;
-  const [poll, setPoll] = useState<Poll>(JSON.parse(content));
+  const poll = JSON.parse(content);
 
   const onVote = (index: number) => {
     const newPoll = { ...poll };
     newPoll.options[index].votes += 1;
-    setPoll(newPoll);
     props.onRequestUpdateContent(JSON.stringify(newPoll));
   };
 
