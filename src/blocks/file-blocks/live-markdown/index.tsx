@@ -141,6 +141,7 @@ const components = {
   Releases,
   Commits,
   CodeSandbox,
+  a: (props) => <a {...props} target="_blank" rel="noreferrer" />,
   code({ inline, className, children }) {
     const match = /language-(\\w+)/.exec(className || "");
     return !inline && match ? (
@@ -168,6 +169,8 @@ function Link(props) {
 
   return (
     <a
+      target="_blank"
+      rel="noreferrer"
       {...props}
     >
       {props.children}
