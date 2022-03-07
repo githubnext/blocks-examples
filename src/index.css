@@ -1,3 +1,5 @@
+/* ./src/index.css */
+
 html,
 body {
   margin: 0;
@@ -15,7 +17,7 @@ body {
   font-style: italic;
 }
 
-.sp-preview-iframe {
+.sandbox-wrapper .sp-preview-iframe {
   outline: none;
   width: 100%;
   border: none;
