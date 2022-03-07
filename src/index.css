@@ -1,12 +1,7 @@
+html,
 body {
   margin: 0;
   padding: 0;
-}
-
-.sp-preview-iframe {
-  outline: none;
-  width: 100%;
-  border: none;
 }
 
 .sandbox-wrapper .sp-loading:before {
@@ -18,4 +13,10 @@ body {
   opacity: 0.5;
   transform: translate(-50%, -50%);
   font-style: italic;
+}
+
+.sp-preview-iframe {
+  outline: none;
+  width: 100%;
+  border: none;
 }
