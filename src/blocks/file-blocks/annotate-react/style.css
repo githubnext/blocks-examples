@@ -1,4 +1,10 @@
-.sp-loading:before {
+.sp-preview-iframe {
+  outline: none;
+  width: 100%;
+  border: none;
+}
+
+.sandbox-wrapper .sp-loading:before {
   content: "Loading...";
   position: absolute;
   top: 30%;
@@ -7,16 +13,4 @@
   opacity: 0.5;
   transform: translate(-50%, -50%);
   font-style: italic;
-}
-.sp-preview-iframe {
-  outline: none;
-  width: 100%;
-  border: none;
-}
-.sp-preview-container,
-.sp-wrapper,
-.sp-layout,
-.sp-stack,
-.sp-preview-iframe {
-  height: 100% !important;
 }

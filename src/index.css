@@ -1,9 +1,12 @@
-/* ./src/index.css */
-
-html,
 body {
   margin: 0;
   padding: 0;
+}
+
+.sp-preview-iframe {
+  outline: none;
+  width: 100%;
+  border: none;
 }
 
 .sandbox-wrapper .sp-loading:before {
@@ -15,16 +18,4 @@ body {
   opacity: 0.5;
   transform: translate(-50%, -50%);
   font-style: italic;
-}
-.sandbox-wrapper .sp-preview-iframe {
-  outline: none;
-  width: 100%;
-  border: none;
-}
-.sandbox-wrapper .sp-preview-container,
-.sandbox-wrapper .sp-wrapper,
-.sandbox-wrapper .sp-layout,
-.sandbox-wrapper .sp-stack,
-.sandbox-wrapper .sp-preview-iframe {
-  height: 100% !important;
 }
