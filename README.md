@@ -1,4 +1,4 @@
-# GitBub Blocks Examples
+# GitHub Blocks Examples
 
 The [GitHub Blocks](https://github.com/githubnext/blocks) app depends on a set of "blocks" that handle how to render files and folders. This repo contains a set of example blocks that can serve as inspiration for you to create your own.
 
