@@ -7,7 +7,7 @@ if (typeof window !== "undefined") {
   const urlObject = new URL(window.location.href);
   const prototypeDomain = "https://blocks.githubnext.com";
   const isPrototype = urlObject.origin === prototypeDomain;
-  if (isPrototype) {
+  if (isPrototype || process.env.NODE_ENV === "development") {
     // @ts-ignore
     window.EXCALIDRAW_ASSET_PATH = "/excalidraw/";
   }
