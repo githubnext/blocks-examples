@@ -182,7 +182,7 @@
       "extensions": [
         "js"
       ],
-      "example_path": "https://github.com/githubnext/blocks-tutorial/blob/ia/old-files/sketch-new2.js"
+      "example_path": "https://github.com/githubnext/blocks-tutorial/blob/main/processing-sketch.js"
     },
     {
       "type": "folder",
