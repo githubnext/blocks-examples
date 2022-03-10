@@ -1,5 +1,7 @@
 import { FileBlockProps } from "@githubnext/utils";
 import { SandpackPreview, SandpackProvider } from "@codesandbox/sandpack-react";
+// these styles are so that the codesandbox preview shows up with full height in Blocks app
+import "./style.css";
 
 export default function (props: FileBlockProps) {
   const { content } = props;

@@ -178,7 +178,7 @@
       "id": "processing-block",
       "title": "Processing block",
       "description": "Run your p5.js sketches",
-      "entry": "/src/blocks/file-blocks/processing.tsx",
+      "entry": "/src/blocks/file-blocks/processing/processing.tsx",
       "extensions": [
         "js"
       ],
