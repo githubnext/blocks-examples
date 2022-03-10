@@ -1,49 +1,80 @@
-import { Area, AreaChart, Line, LineChart, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContainer, BarChart, Bar, ScatterChart, Scatter, PieChart, Pie, Cell, Label } from "recharts";
+import {
+  Area,
+  AreaChart,
+  Line,
+  LineChart,
+  CartesianGrid,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+  BarChart,
+  Bar,
+  ScatterChart,
+  Scatter,
+  PieChart,
+  Pie,
+  Cell,
+  Label,
+} from "recharts";
 
-const styleName = "__style__"
-export function Chart({ data, xMetric, yMetric, type }: {
-  data: Record<string, any>[],
-  xMetric: string,
-  yMetric: string,
-  type: "area" | "line" | "bar" | "scatter" | "pie"
+const styleName = "__style__";
+export function Chart({
+  data,
+  xMetric,
+  yMetric,
+  type,
+}: {
+  data: Record<string, any>[];
+  xMetric: string;
+  yMetric: string;
+  type: "area" | "line" | "bar" | "scatter" | "pie";
 }) {
-  const sortedData = [...data].sort((a, b) => a[xMetric] - b[xMetric])
-    .map(d => ({
+  const sortedData = [...data]
+    .sort((a, b) => a[xMetric] - b[xMetric])
+    .map((d) => ({
       ...d,
       [xMetric]: Number.isFinite(+d[xMetric]) ? +d[xMetric] : d[xMetric],
       [yMetric]: Number.isFinite(+d[yMetric]) ? +d[yMetric] : d[yMetric],
-      style: null, [styleName]: d[styleName] || d["style"]
-    }))
-  const parsedXMetric = xMetric === "style" ? styleName : xMetric
-  const parsedYMetric = yMetric === "style" ? styleName : yMetric
+      style: null,
+      [styleName]: d[styleName] || d["style"],
+    }));
+  const parsedXMetric = xMetric === "style" ? styleName : xMetric;
+  const parsedYMetric = yMetric === "style" ? styleName : yMetric;
 
   const ChartComponent = {
     area: AreaChartInners,
     line: LineChartInners,
     bar: BarChartInners,
     scatter: ScatterChartInners,
-    pie: PieChartInners
-  }[type]
+    pie: PieChartInners,
+  }[type];
   if (!ChartComponent) return null;
 
   return (
     <div className="w-full h-full">
-      <ChartComponent data={sortedData} xMetric={parsedXMetric} yMetric={parsedYMetric} />
+      <ChartComponent
+        data={sortedData}
+        xMetric={parsedXMetric}
+        yMetric={parsedYMetric}
+      />
     </div>
-  )
+  );
 }
 
 type ChartProps = {
-  data: Record<string, any>[],
-  xMetric: string,
-  yMetric: string,
-}
+  data: Record<string, any>[];
+  xMetric: string;
+  yMetric: string;
+};
 
 const AreaChartInners = ({ data, xMetric, yMetric }: ChartProps) => {
   return (
     <ResponsiveContainer width="100%" height={500}>
-      <AreaChart data={data}
-        margin={{ top: 10, right: 30, left: 0, bottom: 30 }}>
+      <AreaChart
+        data={data}
+        margin={{ top: 10, right: 30, left: 0, bottom: 30 }}
+      >
         <defs>
           <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
             <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8} />
@@ -69,13 +100,15 @@ const AreaChartInners = ({ data, xMetric, yMetric }: ChartProps) => {
         />
       </AreaChart>
     </ResponsiveContainer>
-  )
-}
+  );
+};
 const LineChartInners = ({ data, xMetric, yMetric }: ChartProps) => {
   return (
     <ResponsiveContainer width="100%" height={500}>
-      <LineChart data={data}
-        margin={{ top: 10, right: 30, left: 0, bottom: 30 }}>
+      <LineChart
+        data={data}
+        margin={{ top: 10, right: 30, left: 0, bottom: 30 }}
+      >
         <XAxis dataKey={xMetric}>
           <Label value={xMetric} position="bottom" />
         </XAxis>
@@ -85,13 +118,15 @@ const LineChartInners = ({ data, xMetric, yMetric }: ChartProps) => {
         <Line type="monotone" dataKey={yMetric} stroke="#8884d8" />
       </LineChart>
     </ResponsiveContainer>
-  )
-}
+  );
+};
 const BarChartInners = ({ data, xMetric, yMetric }: ChartProps) => {
   return (
     <ResponsiveContainer width="100%" height={500}>
-      <BarChart data={data}
-        margin={{ top: 10, right: 30, left: 0, bottom: 30 }}>
+      <BarChart
+        data={data}
+        margin={{ top: 10, right: 30, left: 0, bottom: 30 }}
+      >
         <XAxis dataKey={xMetric}>
           <Label value={xMetric} position="bottom" />
         </XAxis>
@@ -101,13 +136,15 @@ const BarChartInners = ({ data, xMetric, yMetric }: ChartProps) => {
         <Bar dataKey={yMetric} fill="#8884d8" />
       </BarChart>
     </ResponsiveContainer>
-  )
-}
+  );
+};
 const ScatterChartInners = ({ data, xMetric, yMetric }: ChartProps) => {
   return (
     <ScatterChart
-      width={500} height={500}
-      margin={{ top: 10, right: 30, left: 0, bottom: 30 }}>
+      width={500}
+      height={500}
+      margin={{ top: 10, right: 30, left: 0, bottom: 30 }}
+    >
       <XAxis dataKey={xMetric}>
         <Label value={xMetric} position="bottom" />
       </XAxis>
@@ -116,17 +153,28 @@ const ScatterChartInners = ({ data, xMetric, yMetric }: ChartProps) => {
       <Tooltip />
       <Scatter name="items" data={data} fill="#8884d8" />
     </ScatterChart>
-  )
-}
+  );
+};
 
 const COLORS = [
-  "#7F3C8D", "#11A579", "#3969AC", "#F2B701", "#E73F74", "#80BA5A", "#E68310", "#008695", "#CF1C90", "#f97b72", "#4b4b8f", "#A5AA99"
-]
+  "#7F3C8D",
+  "#11A579",
+  "#3969AC",
+  "#F2B701",
+  "#E73F74",
+  "#80BA5A",
+  "#E68310",
+  "#008695",
+  "#CF1C90",
+  "#f97b72",
+  "#4b4b8f",
+  "#A5AA99",
+];
 const PieChartInners = ({ data, xMetric, yMetric }: ChartProps) => {
-  const parsedData = data.map(d => ({
+  const parsedData = data.map((d) => ({
     ...d,
     value: +d[xMetric],
-  }))
+  }));
   return (
     <PieChart width={500} height={500}>
       <Pie
@@ -134,7 +182,7 @@ const PieChartInners = ({ data, xMetric, yMetric }: ChartProps) => {
         dataKey="value"
         nameKey={yMetric}
         fill="#8884d8"
-        label={d => d[yMetric]}
+        label={(d) => d[yMetric]}
         labelLine={false}
       >
         {data.map((entry, index) => (
@@ -144,5 +192,5 @@ const PieChartInners = ({ data, xMetric, yMetric }: ChartProps) => {
 
       <Tooltip />
     </PieChart>
-  )
-}
+  );
+};

@@ -1,12 +1,7 @@
 import uniqueId from "lodash/uniqueId";
 import { useMemo } from "react";
 
-export const CircleText = ({
-  r = 10,
-  rotate = 0,
-  text = "",
-  ...props
-}) => {
+export const CircleText = ({ r = 10, rotate = 0, text = "", ...props }) => {
   const id = useMemo(() => uniqueId("CircleText--"), []);
 
   return (
@@ -21,8 +16,7 @@ export const CircleText = ({
         id={id}
         transform={`rotate(${rotate})`}
         style={{ pointerEvents: "none" }}
-      >
-      </path>
+      ></path>
       <text textAnchor="middle" {...props}>
         <textPath href={`#${id}`} startOffset="50%">
           {text}

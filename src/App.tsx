@@ -22,8 +22,11 @@ function App() {
 
   useEffect(() => {
     const onUpdateMetadata = (event: MessageEvent) => {
-      const originRegex = new RegExp(/^https:\/\/\d{1,4}-\d{1,4}-\d{1,4}-sandpack\.codesandbox\.io$/)
-      if (!originRegex.test(origin) && origin !== window.location.origin) return;
+      const originRegex = new RegExp(
+        /^https:\/\/\d{1,4}-\d{1,4}-\d{1,4}-sandpack\.codesandbox\.io$/
+      );
+      if (!originRegex.test(origin) && origin !== window.location.origin)
+        return;
       if (event.data.codesandbox) return;
       if (event.data.type !== "update-metadata") return;
       const newMetadata = event?.data?.metadata || {};
@@ -56,29 +59,42 @@ function App() {
   const block = pkgJson?.blocks.find((v) => v.entry === blockId);
 
   return (
-    <div style={{
-      height: "100vh",
-      display: "flex",
-      flexDirection: "column",
-      overflow: "hidden",
-      fontFamily: "sans-serif",
-    }}>
-      <div style={{
-        boxShadow: "0 0 1em rgba(0, 0, 0, 0.1)",
-        flex: "none",
+    <div
+      style={{
+        height: "100vh",
         display: "flex",
-        alignItems: "center",
-        flexWrap: "wrap",
-        padding: "0.5em",
-        zIndex: 10,
-      }}>
-        <div style={{ flex: 1, minWidth: "min(90vw, 13em)", margin: "0.6em 0.5em" }}>
-          <label style={{
-            fontSize: "0.9em",
-            fontWeight: 500,
-            display: "block",
-            marginBottom: "0.5em",
-          }} htmlFor="url">
+        flexDirection: "column",
+        overflow: "hidden",
+        fontFamily: "sans-serif",
+      }}
+    >
+      <div
+        style={{
+          boxShadow: "0 0 1em rgba(0, 0, 0, 0.1)",
+          flex: "none",
+          display: "flex",
+          alignItems: "center",
+          flexWrap: "wrap",
+          padding: "0.5em",
+          zIndex: 10,
+        }}
+      >
+        <div
+          style={{
+            flex: 1,
+            minWidth: "min(90vw, 13em)",
+            margin: "0.6em 0.5em",
+          }}
+        >
+          <label
+            style={{
+              fontSize: "0.9em",
+              fontWeight: 500,
+              display: "block",
+              marginBottom: "0.5em",
+            }}
+            htmlFor="url"
+          >
             GitHub File URL
           </label>
           <input
@@ -96,13 +112,22 @@ function App() {
             }}
           />
         </div>
-        <div style={{ flex: 1, minWidth: "min(90vw, 13em)", margin: "0.6em 0.5em" }}>
-          <label style={{
-            fontSize: "0.9em",
-            fontWeight: 500,
-            display: "block",
-            marginBottom: "0.5em",
-          }} htmlFor="block">
+        <div
+          style={{
+            flex: 1,
+            minWidth: "min(90vw, 13em)",
+            margin: "0.6em 0.5em",
+          }}
+        >
+          <label
+            style={{
+              fontSize: "0.9em",
+              fontWeight: 500,
+              display: "block",
+              marginBottom: "0.5em",
+            }}
+            htmlFor="block"
+          >
             Block
           </label>
           <select
@@ -149,13 +174,22 @@ function App() {
             </optgroup>
           </select>
         </div>
-        <div style={{ flex: 1, minWidth: "min(90vw, 13em)", margin: "0.6em 0.5em" }}>
-          <label style={{
-            fontSize: "0.9em",
-            fontWeight: 500,
-            display: "block",
-            marginBottom: "0.5em",
-          }} htmlFor="block">
+        <div
+          style={{
+            flex: 1,
+            minWidth: "min(90vw, 13em)",
+            margin: "0.6em 0.5em",
+          }}
+        >
+          <label
+            style={{
+              fontSize: "0.9em",
+              fontWeight: 500,
+              display: "block",
+              marginBottom: "0.5em",
+            }}
+            htmlFor="block"
+          >
             Environment
           </label>
           <select
@@ -181,17 +215,19 @@ function App() {
           </select>
         </div>
       </div>
-      <div style={{
-        flex: 1,
-        overflow: "auto",
-      }}>
+      <div
+        style={{
+          flex: 1,
+          overflow: "auto",
+        }}
+      >
         {(!blockId || !fileUrl) && (
-          <div style={{
-            padding: "1em",
-          }}>
-            <p>
-              Please select a block and enter a file path.
-            </p>
+          <div
+            style={{
+              padding: "1em",
+            }}
+          >
+            <p>Please select a block and enter a file path.</p>
           </div>
         )}
         {!!block && !!fileUrl && !!urlParts && (

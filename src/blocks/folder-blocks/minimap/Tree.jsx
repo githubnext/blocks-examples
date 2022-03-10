@@ -16,8 +16,8 @@ import maxBy from "lodash/maxBy";
 import entries from "lodash/entries";
 import flatten from "lodash/flatten";
 import { CircleText } from "./CircleText.tsx";
-import defaultFileColors from "./language-colors.js"
-import { useDebounce, useMeasure } from "react-use"
+import defaultFileColors from "./language-colors.js";
+import { useDebounce, useMeasure } from "react-use";
 
 const fileColors = {
   ...defaultFileColors,
@@ -78,10 +78,15 @@ const defaultWidth = 600;
 const defaultHeight = 600;
 const maxChildren = 9000;
 const numberOfCommitsAccessor = (d) => d?.commits?.length || 0;
-export const Tree = (
-  { data, filesChanged = [], participantLocations = [], maxDepth = 6, onClickFile = (file) => { } }
-) => {
-  const [ref, { width: containerWidth, height: containerHeight }] = useMeasure();
+export const Tree = ({
+  data,
+  filesChanged = [],
+  participantLocations = [],
+  maxDepth = 6,
+  onClickFile = (file) => {},
+}) => {
+  const [ref, { width: containerWidth, height: containerHeight }] =
+    useMeasure();
   const [width, setWidth] = useState(defaultWidth);
   const [height, setHeight] = useState(defaultHeight);
 
@@ -109,21 +114,24 @@ export const Tree = (
     if (!data) return [];
     if (!width || !height) return [];
     const hierarchicalData = hierarchy(
-      processChild(data, getColor, cachedOrders.current),
-    ).sum((d) => d.value)
+      processChild(data, getColor, cachedOrders.current)
+    )
+      .sum((d) => d.value)
       .sort((a, b) => {
-        return (b.data.sortOrder - a.data.sortOrder) ||
-          (b.data.name > a.data.name ? 1 : -1);
+        return (
+          b.data.sortOrder - a.data.sortOrder ||
+          (b.data.name > a.data.name ? 1 : -1)
+        );
       });
 
-    const treeDimensions = width > height ? [width, height * 1.3] : [width * 1.3, height];
+    const treeDimensions =
+      width > height ? [width, height * 1.3] : [width * 1.3, height];
     let packedTree = pack()
       .size(treeDimensions) // we want larger bubbles (.pack() sizes the bubbles to fit the space)
       .padding((d) => {
         if (d.depth <= 0) return 0;
-        const hasChildWithNoChildren = d.children.filter((d) =>
-          !d.children?.length
-        ).length > 1;
+        const hasChildWithNoChildren =
+          d.children.filter((d) => !d.children?.length).length > 1;
         if (hasChildWithNoChildren) return 5;
         return 13;
       })(hierarchicalData);
@@ -154,15 +162,20 @@ export const Tree = (
     return children.slice(0, maxChildren);
   }, [data, width, height]);
 
-  const selectedNode = selectedNodeId &&
-    packedData.find((d) => d.data.path === selectedNodeId);
+  const selectedNode =
+    selectedNodeId && packedData.find((d) => d.data.path === selectedNodeId);
 
   return (
-    <div style={{
-      position: "relative",
-      width: "100%",
-      height: "100%",
-    }} ref={ref} onMouseEnter={() => setIsHovering(true)} onMouseLeave={() => setIsHovering(false)}>
+    <div
+      style={{
+        position: "relative",
+        width: "100%",
+        height: "100%",
+      }}
+      ref={ref}
+      onMouseEnter={() => setIsHovering(true)}
+      onMouseLeave={() => setIsHovering(false)}
+    >
       <svg
         width={width}
         height={height}
@@ -200,10 +213,13 @@ export const Tree = (
               style={{
                 cursor: "pointer",
                 fill: doHighlight
-                  ? isHighlighted ? "#FCE68A" : "#ECEAEB"
+                  ? isHighlighted
+                    ? "#FCE68A"
+                    : "#ECEAEB"
                   : data.color,
-                transition: `transform ${isHighlighted ? "0.3s" : "0s"
-                  } ease-out, fill 0.1s ease-out`,
+                transition: `transform ${
+                  isHighlighted ? "0.3s" : "0s"
+                } ease-out, fill 0.1s ease-out`,
               }}
               transform={`translate(${x}, ${y})`}
               onMouseMove={() => {
@@ -216,30 +232,28 @@ export const Tree = (
                 onClickFile(data.path);
               }}
             >
-              {isParent
-                ? (
-                  <>
-                    <circle
-                      r={r}
-                      style={{ transition: "all 0.3s ease-out" }}
-                      stroke="#290819"
-                      strokeOpacity="0.2"
-                      strokeWidth="1"
-                      fill="white"
-                    />
-                  </>
-                )
-                : (
+              {isParent ? (
+                <>
                   <circle
-                    style={{
-                      filter: isHighlighted ? "url(#glow)" : undefined,
-                      transition: "all 0.5s ease-out",
-                    }}
-                    r={runningR}
-                    strokeWidth={selectedNodeId === data.path ? 3 : 0}
-                    stroke="#374151"
+                    r={r}
+                    style={{ transition: "all 0.3s ease-out" }}
+                    stroke="#290819"
+                    strokeOpacity="0.2"
+                    strokeWidth="1"
+                    fill="white"
                   />
-                )}
+                </>
+              ) : (
+                <circle
+                  style={{
+                    filter: isHighlighted ? "url(#glow)" : undefined,
+                    transition: "all 0.5s ease-out",
+                  }}
+                  r={runningR}
+                  strokeWidth={selectedNodeId === data.path ? 3 : 0}
+                  stroke="#374151"
+                />
+              )}
             </g>
           );
         })}
@@ -255,7 +269,7 @@ export const Tree = (
 
           const label = truncateString(
             data.label,
-            r < 30 ? Math.floor(r / 2.7) + 3 : 100,
+            r < 30 ? Math.floor(r / 2.7) + 3 : 100
           );
 
           let offsetR = r + 12 - depth * 4;
@@ -325,8 +339,7 @@ export const Tree = (
           const isParent = !!children;
           // if (depth <= 1 && !children) runningR *= 3;
           if (data.path === looseFilesId) return null;
-          const isHighlighted =
-            isHovering && filesChanged.includes(data.path);
+          const isHighlighted = isHovering && filesChanged.includes(data.path);
           const doHighlight = isHovering && !!filesChanged.length;
           if (isParent && !isHighlighted) return null;
           if (selectedNodeId === data.path && !isHighlighted) return null;
@@ -342,9 +355,13 @@ export const Tree = (
               key={data.path}
               style={{
                 fill: doHighlight
-                  ? isHighlighted ? "#FCE68A" : "#29081916"
+                  ? isHighlighted
+                    ? "#FCE68A"
+                    : "#29081916"
                   : data.color,
-                transition: `transform ${isHighlighted ? "0.5s" : "0s"} ease-out`,
+                transition: `transform ${
+                  isHighlighted ? "0.5s" : "0s"
+                } ease-out`,
                 // opacity: doHighlight && !isHighlighted ? 0.6 : 1,
               }}
               transform={`translate(${x}, ${y})`}
@@ -402,12 +419,7 @@ export const Tree = (
   );
 };
 
-const processChild = (
-  child,
-  getColor,
-  cachedOrders,
-  i = 0,
-) => {
+const processChild = (child, getColor, cachedOrders, i = 0) => {
   if (!child) return;
   const isRoot = !child.path;
   let name = child.name;
@@ -449,16 +461,16 @@ const processChild = (
       (["woff", "woff2", "ttf", "otf", "png", "jpg", "svg"].includes(extension)
         ? 100
         : Math.min(
-          15000,
-          hasExtension ? child.size : Math.min(child.size, 9000),
-        )) + i, // stupid hack to stabilize circle order/position
+            15000,
+            hasExtension ? child.size : Math.min(child.size, 9000)
+          )) + i, // stupid hack to stabilize circle order/position
     value:
       (["woff", "woff2", "ttf", "otf", "png", "jpg", "svg"].includes(extension)
         ? 100
         : Math.min(
-          15000,
-          hasExtension ? child.size : Math.min(child.size, 9000),
-        )) + i, // stupid hack to stabilize circle order/position
+            15000,
+            hasExtension ? child.size : Math.min(child.size, 9000)
+          )) + i, // stupid hack to stabilize circle order/position
     color: "#fff",
     children,
   };
@@ -475,57 +487,67 @@ const reflowSiblings = (
   parentRadius,
   parentPosition,
   width,
-  height,
+  height
 ) => {
   if (!siblings) return;
-  let items = [...siblings.map((d) => {
-    return {
-      ...d,
-      x: cachedPositions[d.data.path]?.[0] || d.x,
-      y: cachedPositions[d.data.path]?.[1] || d.y,
-      originalX: d.x,
-      originalY: d.y,
-    };
-  })];
-  const paddingScale = scaleSqrt().domain([maxDepth, 1]).range([3, 8]).clamp(
-    true,
-  );
+  let items = [
+    ...siblings.map((d) => {
+      return {
+        ...d,
+        x: cachedPositions[d.data.path]?.[0] || d.x,
+        y: cachedPositions[d.data.path]?.[1] || d.y,
+        originalX: d.x,
+        originalY: d.y,
+      };
+    }),
+  ];
+  const paddingScale = scaleSqrt()
+    .domain([maxDepth, 1])
+    .range([3, 8])
+    .clamp(true);
   const isLandscape = width > height;
   let simulation = forceSimulation(items)
     .force(
       "centerX",
-      forceX(width / 2).strength(items[0].depth <= 2 ? 0.01 : 0),
+      forceX(width / 2).strength(items[0].depth <= 2 ? 0.01 : 0)
     )
     .force(
       "centerY",
-      forceY(height / 2).strength(items[0].depth <= 2 ? 0.01 : 0),
+      forceY(height / 2).strength(items[0].depth <= 2 ? 0.01 : 0)
     )
     .force(
       "centerX2",
-      forceX(parentPosition?.[0]).strength(parentPosition ? isLandscape ? 0.3 : 0.8 : 0),
+      forceX(parentPosition?.[0]).strength(
+        parentPosition ? (isLandscape ? 0.3 : 0.8) : 0
+      )
     )
     .force(
       "centerY2",
-      forceY(parentPosition?.[1]).strength(parentPosition ? isLandscape ? 0.3 : 0.3 : 0),
+      forceY(parentPosition?.[1]).strength(
+        parentPosition ? (isLandscape ? 0.3 : 0.3) : 0
+      )
     )
     .force(
       "x",
       forceX((d) => cachedPositions[d.data.path]?.[0] || width / 2).strength(
         (d) =>
-          cachedPositions[d.data.path]?.[1] ? 0.5 : ((width / height) * 0.3),
-      ),
+          cachedPositions[d.data.path]?.[1] ? 0.5 : (width / height) * 0.3
+      )
     )
     .force(
       "y",
       forceY((d) => cachedPositions[d.data.path]?.[1] || height / 2).strength(
         (d) =>
-          cachedPositions[d.data.path]?.[0] ? 0.5 : ((height / width) * 0.3),
-      ),
+          cachedPositions[d.data.path]?.[0] ? 0.5 : (height / width) * 0.3
+      )
     )
     .force(
       "collide",
-      forceCollide((d) => d.children ? d.r + paddingScale(d.depth) : d.r + 1.6)
-        .iterations(8).strength(1),
+      forceCollide((d) =>
+        d.children ? d.r + paddingScale(d.depth) : d.r + 1.6
+      )
+        .iterations(8)
+        .strength(1)
     )
     .stop();
 
@@ -542,7 +564,7 @@ const reflowSiblings = (
           parentPosition,
           d.r,
           [d.x, d.y],
-          !!d.children?.length,
+          !!d.children?.length
         );
         d.x = containedPosition[0];
         d.y = containedPosition[1];
@@ -562,8 +584,10 @@ const reflowSiblings = (
     return newD;
   };
   for (const item of items) {
-    const itemCachedPosition = cachedPositions[item.data.path] ||
-      [item.x, item.y];
+    const itemCachedPosition = cachedPositions[item.data.path] || [
+      item.x,
+      item.y,
+    ];
     const itemPositionDiffFromCached = [
       item.x - itemCachedPosition[0],
       item.y - itemCachedPosition[1],
@@ -571,17 +595,10 @@ const reflowSiblings = (
 
     if (item.children) {
       let repositionedCachedPositions = { ...cachedPositions };
-      const itemReflowDiff = [
-        item.x - item.originalX,
-        item.y - item.originalY,
-      ];
+      const itemReflowDiff = [item.x - item.originalX, item.y - item.originalY];
 
       item.children = item.children.map((child) =>
-        repositionChildren(
-          child,
-          itemReflowDiff[0],
-          itemReflowDiff[1],
-        )
+        repositionChildren(child, itemReflowDiff[0], itemReflowDiff[1])
       );
       if (item.children.length > 4) {
         if (item.depth > maxDepth) return;
@@ -596,10 +613,7 @@ const reflowSiblings = (
             ];
           } else {
             // const diff = getPositionFromAngleAndDistance(100, item.r);
-            repositionedCachedPositions[child.data.path] = [
-              child.x,
-              child.y,
-            ];
+            repositionedCachedPositions[child.data.path] = [child.x, child.y];
           }
         });
         item.children = reflowSiblings(
@@ -631,9 +645,9 @@ const transformIn = {
   hidden: { transform: "scale(0)", transition: { duration: 0.2 } },
 };
 
-const truncateString = (string = '', length = 20) => {
+const truncateString = (string = "", length = 20) => {
   return string.length > length + 3
-    ? string.substring(0, length) + '...'
+    ? string.substring(0, length) + "..."
     : string;
 };
 
@@ -658,7 +672,7 @@ const keepCircleInsideCircle = (
 ) => {
   const distance = Math.sqrt(
     Math.pow(parentPosition[0] - childPosition[0], 2) +
-    Math.pow(parentPosition[1] - childPosition[1], 2)
+      Math.pow(parentPosition[1] - childPosition[1], 2)
   );
   const angle = getAngleFromPosition(
     childPosition[0] - parentPosition[0],

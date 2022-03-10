@@ -1,7 +1,7 @@
 import { FileBlockProps } from "@githubnext/utils";
 import { useEffect, useMemo, useState } from "react";
-import ReactJson from 'react-json-view'
-import jsYaml from "js-yaml"
+import ReactJson from "react-json-view";
+import jsYaml from "js-yaml";
 
 export default function (props: FileBlockProps) {
   const { content, context, onRequestUpdateContent } = props;
@@ -16,38 +16,39 @@ export default function (props: FileBlockProps) {
     try {
       return JSON.stringify(JSON.parse(str));
     } catch (e) {
-      return str
+      return str;
     }
-  }
+  };
 
   const isDirty = useMemo(() => {
     return normalizeContent(modifiedContent) !== normalizeContent(content);
   }, [modifiedContent, content]);
 
-  const extension = context.path.split(".").pop() || ""
-  const isYaml = ["yaml", "yml"].includes(extension)
+  const extension = context.path.split(".").pop() || "";
+  const isYaml = ["yaml", "yml"].includes(extension);
 
   const data = useMemo(() => {
     try {
       if (isYaml) {
         try {
-          return jsYaml.load(content)
-        } catch (e) {
-        }
+          return jsYaml.load(content);
+        } catch (e) {}
       }
-      return JSON.parse(content)
+      return JSON.parse(content);
     } catch (e) {
-      return null
+      return null;
     }
-  }, [content])
+  }, [content]);
 
   return (
-    <div style={{
-      position: "relative",
-      width: "100%",
-      height: "100%",
-      overflow: "auto",
-    }}>
+    <div
+      style={{
+        position: "relative",
+        width: "100%",
+        height: "100%",
+        overflow: "auto",
+      }}
+    >
       {data ? (
         <>
           <ReactJson
@@ -73,15 +74,15 @@ export default function (props: FileBlockProps) {
             }}
             onEdit={(e) => {
               // @ts-ignore
-              setModifiedContent(e.updated_src)
+              setModifiedContent(e.updated_src);
             }}
             onAdd={(e) => {
               // @ts-ignore
-              setModifiedContent(e.updated_src)
+              setModifiedContent(e.updated_src);
             }}
             onDelete={(e) => {
               // @ts-ignore
-              setModifiedContent(e.updated_src)
+              setModifiedContent(e.updated_src);
             }}
           />
           {isDirty && (
@@ -99,8 +100,10 @@ export default function (props: FileBlockProps) {
                 cursor: "pointer",
               }}
               onClick={() => {
-                const contentString = isYaml ? jsYaml.dump(data) : JSON.stringify(data, null, 2)
-                onRequestUpdateContent(contentString)
+                const contentString = isYaml
+                  ? jsYaml.dump(data)
+                  : JSON.stringify(data, null, 2);
+                onRequestUpdateContent(contentString);
               }}
             >
               Save changes
@@ -108,24 +111,25 @@ export default function (props: FileBlockProps) {
           )}
         </>
       ) : (
-        <div style={{
-          width: "100%",
-          height: "100%",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          textAlign: "center",
-          color: "#999",
-          padding: "0 2em",
-          fontStyle: "italic",
-        }}>
+        <div
+          style={{
+            width: "100%",
+            height: "100%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            textAlign: "center",
+            color: "#999",
+            padding: "0 2em",
+            fontStyle: "italic",
+          }}
+        >
           We couldn't parse that file. Try checking the Code Block view.
         </div>
       )}
     </div>
-  )
+  );
 }
-
 
 const theme = {
   base00: "white",
@@ -143,5 +147,5 @@ const theme = {
   base0C: "#ea580c",
   base0D: "#64748b",
   base0E: "#0891b2",
-  base0F: "#0d9488"
-}
+  base0F: "#0d9488",
+};
