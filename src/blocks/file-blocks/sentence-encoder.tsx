@@ -223,11 +223,7 @@ function Table(props: TableProps) {
         {query.responses.map((response, j) => (
           <tr key={j}>
             <td
-              className={`${
-                j === 0
-                  ? "border-t"
-                  : "invisible"
-              } ${
+              className={`${j === 0 ? "border-t" : "invisible"} ${
                 j === query.responses.length - 1 ? "border-b" : ""
               } px-4 py-2 text-gray-700 font-medium border-gray-200 border-l border-r`}
             >

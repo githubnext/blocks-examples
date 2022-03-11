@@ -1,6 +1,6 @@
 import { SandpackPreview, SandpackProvider } from "@codesandbox/sandpack-react";
 import { useMemo } from "react";
-import "./style.css"
+import "./style.css";
 
 export const CodeSandbox = ({
   children,
@@ -9,19 +9,25 @@ export const CodeSandbox = ({
   children: string;
   dependencies?: string[];
 }) => {
-  const files = useMemo(() => ({
-    "/App.js": children,
-  }), [children]);
+  const files = useMemo(
+    () => ({
+      "/App.js": children,
+    }),
+    [children]
+  );
 
-  const parsedDependencies = useMemo(() => (
-    parseDependencies(dependencies || [])
-  ), [dependencies]);
+  const parsedDependencies = useMemo(
+    () => parseDependencies(dependencies || []),
+    [dependencies]
+  );
 
   return (
-    <div style={{
-      width: "100%",
-      height: "100%",
-    }}>
+    <div
+      style={{
+        width: "100%",
+        height: "100%",
+      }}
+    >
       <SandpackProvider
         template="react"
         customSetup={{
@@ -36,7 +42,7 @@ export const CodeSandbox = ({
         />
       </SandpackProvider>
     </div>
-  )
+  );
 };
 
 const parseDependencies = (dependencies: string[]): Record<string, string> => {

@@ -12,14 +12,14 @@ export default function (props: FileBlockProps) {
       }}
     >
       <SandpackProvider
-        externalResources={[ 'https://cdn.jsdelivr.net/npm/p5@1.4.1/lib/p5.js' ]}
+        externalResources={["https://cdn.jsdelivr.net/npm/p5@1.4.1/lib/p5.js"]}
         customSetup={{
-            files: {
-                "/src/index.js": {
-                  code: content,
-                },
-                "/index.html": {
-                  code: `<!DOCTYPE html>
+          files: {
+            "/src/index.js": {
+              code: content,
+            },
+            "/index.html": {
+              code: `<!DOCTYPE html>
   <html>
   <head>
     <meta charset="UTF-8" />
@@ -28,9 +28,9 @@ export default function (props: FileBlockProps) {
     <main></main>
     <script src="src/index.js"></script>
   </body>
-  </html>`
-                }
-              },
+  </html>`,
+            },
+          },
           dependencies: {},
           entry: "/src/index.js",
           main: "/src/index.js",

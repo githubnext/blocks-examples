@@ -17,10 +17,10 @@ export default function (props: FileBlockProps) {
         return headers.reduce((acc: Record<string, any>, key, i) => {
           acc[key] = Number.isFinite(row[i]) ? +row[i] : row[i];
           return acc;
-        }, {})
-      })
+        }, {});
+      });
       setModifiedData(csvData);
-      setIsDirty(false)
+      setIsDirty(false);
       return csvData;
     } catch (e) {
       return [];
@@ -37,7 +37,7 @@ export default function (props: FileBlockProps) {
           isEditable
           onEdit={(data: any) => {
             setModifiedData(data);
-            setIsDirty(true)
+            setIsDirty(true);
           }}
         />
       </div>
@@ -51,10 +51,11 @@ export default function (props: FileBlockProps) {
           }}
           onClick={() => {
             onRequestUpdateContent(csvFormat(modifiedData));
-          }}>
+          }}
+        >
           Save changes
         </button>
       )}
-    </div >
-  )
+    </div>
+  );
 }

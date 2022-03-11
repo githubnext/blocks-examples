@@ -22,7 +22,6 @@ export class ErrorBoundary extends React.Component {
     if (this.state.hasError) {
       return (
         <div className="flex flex-col">
-
           <h1>Something went wrong.</h1>
           <p>
             {/* @ts-ignore */}
