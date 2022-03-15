@@ -9,7 +9,7 @@ export default function (props: FileBlockProps) {
 
   useEffect(() => {
     if (p5Ref.current) {
-      eval(content);
+      window.eval(content);
       try {
         new p5(undefined as any, p5Ref.current);
       } catch (e) {
