@@ -195,7 +195,7 @@
       "id": "processing-block",
       "title": "Processing block",
       "description": "Run your p5.js sketches",
-      "sandbox": false,
+      "sandbox": true,
       "entry": "/src/blocks/file-blocks/processing.tsx",
       "extensions": [
         "js"
@@ -261,6 +261,7 @@
     "lodash.isobject": "^3.0.2",
     "lodash.uniqueid": "^4.0.1",
     "lz-string": "^1.4.4",
+    "p5": "^1.4.1",
     "papaparse": "^5.3.1",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
@@ -282,6 +283,7 @@
   "devDependencies": {
     "@types/git-url-parse": "^9.0.1",
     "@types/lodash": "^4.14.176",
+    "@types/p5": "^1.4.1",
     "@types/parse-github-url": "^1.0.0",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
