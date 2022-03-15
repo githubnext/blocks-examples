@@ -157,7 +157,7 @@
       "id": "markdown-block",
       "title": "Markdown",
       "description": "View markdown files. You can also view live repo into, using Issues, Releases, and Commits custom components, as well as live code examples with CodeSandbox.",
-      "sandbox": false,
+      "sandbox": true,
       "entry": "/src/blocks/file-blocks/live-markdown/index.tsx",
       "extensions": [
         "md",
@@ -238,6 +238,7 @@
     "@githubnext/utils": "^0.15.4",
     "@githubocto/flat-ui": "^0.13.4",
     "@loadable/component": "^5.15.0",
+    "@mdx-js/runtime": "^2.0.0-next.9",
     "@octokit/rest": "^18.12.0",
     "@primer/components": "^31.1.0",
     "@react-three/drei": "^7.20.5",
@@ -274,6 +275,7 @@
     "react-syntax-highlighter": "^15.4.5",
     "react-use": "^17.3.1",
     "recharts": "^2.1.6",
+    "styled-components": "^5.3.3",
     "three": "^0.134.0"
   },
   "resolutions": {
