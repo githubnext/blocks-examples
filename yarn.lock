@@ -1911,6 +1911,11 @@
   resolved "https://registry.yarnpkg.com/@types/offscreencanvas/-/offscreencanvas-2019.3.0.tgz#3336428ec7e9180cf4566dfea5da04eb586a6553"
   integrity sha512-esIJx9bQg+QYF0ra8GnvfianIY8qWB0GBx54PK5Eps6m+xTj86KLavHv6qDhzKcu5UUOgNfJ2pWaIIV7TRUd9Q==
 
+"@types/p5@^1.4.1":
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/@types/p5/-/p5-1.4.1.tgz#0bd39b5548b53511bc831fde25981908bba5290b"
+  integrity sha512-POOcX1kJYUyvnqug+Zb3XLfR5uzbyrrmxrhOkiGEGFsb6KDtxDrsGYvso5gj2u9DbPf9NBIL3T0m51vzXfdpeA==
+
 "@types/papaparse@^5.3.1":
   version "5.3.1"
   resolved "https://registry.yarnpkg.com/@types/papaparse/-/papaparse-5.3.1.tgz#fb5c613a64473c33b08fb9bc2a5ddbf25e54784e"
@@ -5852,6 +5857,11 @@ p-map@^4.0.0:
   integrity sha512-/bjOqmgETBYB5BoEeGVea8dmvHb2m9GLy1E9W43yeyfP6QQCZGFNa+XRceJEuDB6zqr+gKpIAmlLebMpykw/MQ==
   dependencies:
     aggregate-error "^3.0.0"
+
+p5@^1.4.1:
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/p5/-/p5-1.4.1.tgz#979739a576eb566225642b5d25cf7bb8945b70dd"
+  integrity sha512-3/X+qb0bK2Cg8nuZNpZZvzxkeUSRghOf0S+l8c+U8yIkUTVSbbcV0R8y96rx3InVBVhk8cH9kFC93VlZZElqSw==
 
 package-json@^6.3.0:
   version "6.5.0"
