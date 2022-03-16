@@ -53,10 +53,10 @@ export default function (props: FolderBlockProps) {
     const pathsWithNoContent = usedPaths.filter((d) => !pathsContent[d]);
     let newPathsContent = { ...pathsContent };
     for (const path of pathsWithNoContent) {
-      const query =
-        context.sha && context.sha !== "HEAD" ? `?ref=${context.sha}` : "";
-      const apiUrl = `/repos/${context.owner}/${context.repo}/contents/${path}${query}`;
-      const res = await onRequestGitHubData(apiUrl);
+      const apiUrl = `/repos/${context.owner}/${context.repo}/contents/${path}`;
+      const res = await onRequestGitHubData(apiUrl, {
+        ref: context.sha,
+      });
       const encodedContent = res.content;
       const content = Buffer.from(encodedContent, "base64").toString("utf8");
       newPathsContent[path] = content;
