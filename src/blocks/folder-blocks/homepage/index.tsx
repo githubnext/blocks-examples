@@ -9,7 +9,7 @@ export default function (props: FolderBlockProps) {
 
   const getSiteUrl = async () => {
     const info = await onRequestGitHubData(
-      "https://api.github.com/repos/${props.context.owner}/${props.context.repo}"
+      "/repos/${props.context.owner}/${props.context.repo}"
     );
     setUrl(info.homepage);
     setIsLoading(false);
