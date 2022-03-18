@@ -1,7 +1,12 @@
 import { useCallback, useEffect, useState } from "react";
 // @ts-ignore
 import loadable from "@loadable/component";
-import { FileContext, FolderContext, RepoFiles } from "@githubnext/utils";
+import {
+  FileContext,
+  FolderContext,
+  RepoFiles,
+  onRequestGitHubData as onRequestGitHubDataFetch,
+} from "@githubnext/utils";
 
 interface Block {
   id: string;
@@ -82,7 +87,7 @@ export const LocalBlock = (props: LocalBlockProps) => {
       },
       "*"
     );
-    const data = await fetchGitHubData(path, params);
+    const data = await onRequestGitHubDataFetch(path, params);
     window.postMessage(
       {
         type: "github-data--response",
@@ -107,27 +112,4 @@ export const LocalBlock = (props: LocalBlockProps) => {
       onRequestGitHubData={onRequestGitHubData}
     />
   );
-};
-
-const fetchGitHubData = async (
-  path: string,
-  params: Record<string, any> = {},
-  id: string = ""
-) => {
-  const apiUrl = `https://api.github.com${path}`;
-
-  const res = await fetch(apiUrl, {
-    ...params,
-    // this callback is limited to GET requests
-    method: "GET",
-  });
-
-  if (res.status !== 200) {
-    throw new Error(
-      `Error fetching generic GitHub API data: ${apiUrl}\n${await res.text()}`
-    );
-  }
-
-  const resObject = await res.json();
-  return resObject;
 };
