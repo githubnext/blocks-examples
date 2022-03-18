@@ -156,8 +156,8 @@
       "type": "file",
       "id": "markdown-block",
       "title": "Markdown",
-      "description": "View markdown files. You can also view live repo into, using Issues, Releases, and Commits custom components, as well as live code examples with CodeSandbox.",
-      "sandbox": false,
+      "description": "View markdown files. You can also view live repo info, using Issues, Releases, and Commits custom components, as well as live code examples with CodeSandbox.",
+      "sandbox": true,
       "entry": "/src/blocks/file-blocks/live-markdown/index.tsx",
       "extensions": [
         "md",
