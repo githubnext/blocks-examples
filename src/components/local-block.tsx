@@ -2,7 +2,6 @@ import { useCallback, useEffect, useState } from "react";
 // @ts-ignore
 import loadable from "@loadable/component";
 import { FileContext, FolderContext, RepoFiles } from "@githubnext/utils";
-import { getFileContent, getRepoInfo } from "../hooks";
 
 interface Block {
   id: string;

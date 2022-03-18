@@ -190,19 +190,3 @@ export const useLocalStorage = (key: string, initialValue: any) => {
 
   return [storedValue, setValue];
 };
-
-export async function getRepoInfo(params: RepoContext): Promise<string> {
-  const { repo, owner } = params;
-
-  const apiUrl = `https://api.github.com/repos/${owner}/${repo}`;
-
-  const res = await fetch(apiUrl);
-  if (res.status !== 200) {
-    throw new Error(
-      `Error fetching repo info: ${owner}/${repo}\n${await res.text()}`
-    );
-  }
-
-  const resObject = await res.json();
-  return resObject;
-}

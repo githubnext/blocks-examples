@@ -8,10 +8,9 @@ export default function (props: FolderBlockProps) {
   const [isLoading, setIsLoading] = useState(false);
 
   const getSiteUrl = async () => {
-    const info = await onRequestGitHubData("repo-info", {
-      owner: props.context.owner,
-      repo: props.context.repo,
-    });
+    const info = await onRequestGitHubData(
+      "/repos/${props.context.owner}/${props.context.repo}"
+    );
     setUrl(info.homepage);
     setIsLoading(false);
   };
