@@ -57,7 +57,7 @@
         "html",
         "svelte"
       ],
-      "globs": [
+      "matches": [
         "*.html",
         "*.svelte"
       ],
@@ -73,7 +73,7 @@
       "extensions": [
         "css"
       ],
-      "globs": [
+      "matches": [
         "*.css"
       ],
       "example_path": "https://github.com/githubnext/blocks-tutorial/blob/main/global.css"
@@ -92,7 +92,7 @@
         "gif",
         "svg"
       ],
-      "globs": [
+      "matches": [
         "*.png",
         "*.jpg",
         "*.jpeg",
@@ -115,7 +115,7 @@
         "yaml",
         "yml"
       ],
-      "globs": [
+      "matches": [
         "*.json",
         "*.webmanifest",
         "*.prettierrc",
@@ -135,7 +135,7 @@
         "gltf",
         "glb"
       ],
-      "globs": [
+      "matches": [
         "*.gltf",
         "*.glb"
       ],
@@ -151,7 +151,7 @@
       "extensions": [
         "csv"
       ],
-      "globs": [
+      "matches": [
         "*.csv"
       ],
       "example_path": "https://github.com/githubnext/blocks-tutorial/blob/main/data.csv"
@@ -166,7 +166,7 @@
       "extensions": [
         "json"
       ],
-      "globs": [
+      "matches": [
         "*.json"
       ],
       "example_path": "https://github.com/githubnext/blocks-tutorial/blob/main/poll.json"
@@ -181,7 +181,7 @@
       "extensions": [
         "csv"
       ],
-      "globs": [
+      "matches": [
         "*.csv"
       ],
       "example_path": "https://github.com/the-pudding/data/blob/master/pockets/measurements.csv"
@@ -197,7 +197,7 @@
         "md",
         "mdx"
       ],
-      "globs": [
+      "matches": [
         "*.md",
         "*.mdx"
       ],
@@ -214,7 +214,7 @@
         "jsx",
         "tsx"
       ],
-      "globs": [
+      "matches": [
         "*.jsx",
         "*.tsx"
       ],
@@ -230,7 +230,7 @@
       "extensions": [
         "json"
       ],
-      "globs": [
+      "matches": [
         "*.json"
       ],
       "example_path": "https://github.com/githubnext/blocks-tutorial/blob/main/queries.json"
@@ -245,7 +245,7 @@
       "extensions": [
         "js"
       ],
-      "globs": [
+      "matches": [
         "*.js"
       ],
       "example_path": "https://github.com/githubnext/blocks-tutorial/blob/main/processing-sketch.js"
