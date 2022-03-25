@@ -32,6 +32,9 @@
       "extensions": [
         "*"
       ],
+      "matches": [
+        "*"
+      ],
       "example_path": "https://github.com/githubnext/blocks-tutorial/blob/main/Aside.jsx"
     },
     {
@@ -43,6 +46,9 @@
       "entry": "/src/blocks/file-blocks/excalidraw/index.tsx",
       "extensions": [
         "excalidraw"
+      ],
+      "matches": [
+        "*.excalidraw"
       ],
       "example_path": "https://github.com/githubnext/blocks-tutorial/blob/main/drawing.excalidraw"
     },
@@ -118,6 +124,8 @@
       "matches": [
         "*.json",
         "*.webmanifest",
+        "webmanifest",
+        "prettierrc",
         "*.prettierrc",
         "*.yaml",
         "*.yml"
