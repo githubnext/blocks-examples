@@ -57,6 +57,10 @@
         "html",
         "svelte"
       ],
+      "globs": [
+        "*.html",
+        "*.svelte"
+      ],
       "example_path": "https://github.com/githubnext/blocks-tutorial/blob/main/photos.html"
     },
     {
@@ -68,6 +72,9 @@
       "entry": "/src/blocks/file-blocks/css.tsx",
       "extensions": [
         "css"
+      ],
+      "globs": [
+        "*.css"
       ],
       "example_path": "https://github.com/githubnext/blocks-tutorial/blob/main/global.css"
     },
@@ -85,6 +92,13 @@
         "gif",
         "svg"
       ],
+      "globs": [
+        "*.png",
+        "*.jpg",
+        "*.jpeg",
+        "*.gif",
+        "*.svg"
+      ],
       "example_path": "https://github.com/pmndrs/react-spring/blob/HEAD/assets/projects/aragon.png?raw=true"
     },
     {
@@ -101,6 +115,13 @@
         "yaml",
         "yml"
       ],
+      "globs": [
+        "*.json",
+        "*.webmanifest",
+        "*.prettierrc",
+        "*.yaml",
+        "*.yml"
+      ],
       "example_path": "https://github.com/d3/d3-geo/blob/main/package.json"
     },
     {
@@ -114,6 +135,10 @@
         "gltf",
         "glb"
       ],
+      "globs": [
+        "*.gltf",
+        "*.glb"
+      ],
       "example_path": "https://github.com/githubnext/blocks-tutorial/blob/main/avocado.glb"
     },
     {
@@ -125,6 +150,9 @@
       "entry": "/src/blocks/file-blocks/flat.tsx",
       "extensions": [
         "csv"
+      ],
+      "globs": [
+        "*.csv"
       ],
       "example_path": "https://github.com/githubnext/blocks-tutorial/blob/main/data.csv"
     },
@@ -138,6 +166,9 @@
       "extensions": [
         "json"
       ],
+      "globs": [
+        "*.json"
+      ],
       "example_path": "https://github.com/githubnext/blocks-tutorial/blob/main/poll.json"
     },
     {
@@ -149,6 +180,9 @@
       "entry": "/src/blocks/file-blocks/charts/index.tsx",
       "extensions": [
         "csv"
+      ],
+      "globs": [
+        "*.csv"
       ],
       "example_path": "https://github.com/the-pudding/data/blob/master/pockets/measurements.csv"
     },
@@ -163,6 +197,10 @@
         "md",
         "mdx"
       ],
+      "globs": [
+        "*.md",
+        "*.mdx"
+      ],
       "example_path": "https://github.com/githubnext/blocks-tutorial/blob/main/README.md"
     },
     {
@@ -176,6 +214,10 @@
         "jsx",
         "tsx"
       ],
+      "globs": [
+        "*.jsx",
+        "*.tsx"
+      ],
       "example_path": "https://github.com/githubnext/blocks-tutorial/blob/main/Aside.jsx"
     },
     {
@@ -188,6 +230,9 @@
       "extensions": [
         "json"
       ],
+      "globs": [
+        "*.json"
+      ],
       "example_path": "https://github.com/githubnext/blocks-tutorial/blob/main/queries.json"
     },
     {
@@ -199,6 +244,9 @@
       "entry": "/src/blocks/file-blocks/processing.tsx",
       "extensions": [
         "js"
+      ],
+      "globs": [
+        "*.js"
       ],
       "example_path": "https://github.com/githubnext/blocks-tutorial/blob/main/processing-sketch.js"
     },
