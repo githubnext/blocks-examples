@@ -171,9 +171,8 @@ export default function (props: FileBlockProps) {
   return (
     <div className="position-relative height-full">
       <div
-        className="width-full"
+        className="width-full height-full overflow-auto"
         key={content}
-        style={{ height: "100vh" }}
         ref={editorRef}
       />
       <button
