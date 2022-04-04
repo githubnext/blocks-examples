@@ -24,74 +24,8 @@ import { commentKeymap } from "@codemirror/comment";
 import { rectangularSelection } from "@codemirror/rectangular-selection";
 import { defaultHighlightStyle } from "@codemirror/highlight";
 import { lintKeymap } from "@codemirror/lint";
-import { LanguageDescription, LanguageSupport } from "@codemirror/language";
-
-const languageDescriptions = [
-  {
-    name: "Markdown",
-    extensions: ["md"],
-    load: () =>
-      import("@codemirror/lang-markdown").then(
-        (m) => new LanguageSupport(m.markdownLanguage)
-      ),
-  },
-  {
-    name: "HTML",
-    extensions: ["html"],
-    load: () =>
-      import("@codemirror/lang-html").then(
-        (m) => new LanguageSupport(m.htmlLanguage)
-      ),
-  },
-  {
-    name: "CSS",
-    extensions: ["css"],
-    load: () =>
-      import("@codemirror/lang-css").then(
-        (m) => new LanguageSupport(m.cssLanguage)
-      ),
-  },
-  {
-    name: "JSON",
-    extensions: ["json"],
-    load: () =>
-      import("@codemirror/lang-json").then(
-        (m) => new LanguageSupport(m.jsonLanguage)
-      ),
-  },
-  {
-    name: "JavaScript",
-    extensions: ["js"],
-    load: () =>
-      import("@codemirror/lang-javascript").then(
-        (m) => new LanguageSupport(m.javascriptLanguage)
-      ),
-  },
-  {
-    name: "JavaScript + JSX",
-    extensions: ["jsx"],
-    load: () =>
-      import("@codemirror/lang-javascript").then(
-        (m) => new LanguageSupport(m.jsxLanguage)
-      ),
-  },
-  {
-    name: "TypeScript",
-    extensions: ["ts"],
-    load: () =>
-      import("@codemirror/lang-javascript").then(
-        (m) => new LanguageSupport(m.typescriptLanguage)
-      ),
-  },
-  {
-    name: "TypeScript + TSX",
-    extensions: ["tsx"],
-    load: () =>
-      import("@codemirror/lang-javascript").then(
-        (m) => new LanguageSupport(m.tsxLanguage)
-      ),
-  },
-].map(LanguageDescription.of);
+import { LanguageDescription } from "@codemirror/language";
+import { languages } from "@codemirror/language-data";
 
 const languageConf = new Compartment();
 
@@ -154,10 +88,7 @@ export default function (props: FileBlockProps) {
       parent: editorRef.current,
     });
 
-    const language = LanguageDescription.matchFilename(
-      languageDescriptions,
-      path
-    );
+    const language = LanguageDescription.matchFilename(languages, path);
 
     if (language) {
       language.load().then((lang) => {
