@@ -315,6 +315,7 @@
     "@primer/components": "^31.1.0",
     "@react-three/drei": "^7.20.5",
     "@react-three/fiber": "^7.0.19",
+    "@replit/codemirror-interact": "^0.19.2",
     "@tensorflow-models/universal-sentence-encoder": "^1.3.3",
     "@tensorflow/tfjs": "^3.14.0",
     "@types/d3": "^7.1.0",

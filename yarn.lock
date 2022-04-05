@@ -1528,6 +1528,11 @@
     utility-types "^3.10.0"
     zustand "^3.5.1"
 
+"@replit/codemirror-interact@^0.19.2":
+  version "0.19.2"
+  resolved "https://registry.yarnpkg.com/@replit/codemirror-interact/-/codemirror-interact-0.19.2.tgz#4ce3075e749e070e1bf9c42bd91e8f8b0263e3e6"
+  integrity sha512-pDNZHkA0uhXB89ctPZ4wMubuP/nYc1oF2ebEtvM8yfkVns1iq1Y/MMIMWrESdL2OfWhhFtZksZVhkoNHuNbJWw==
+
 "@rollup/pluginutils@^4.2.0":
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/@rollup/pluginutils/-/pluginutils-4.2.0.tgz#a14bbd058fdbba0a5647143b16ed0d86fb60bd08"
