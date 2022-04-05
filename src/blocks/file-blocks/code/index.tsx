@@ -26,6 +26,7 @@ import { defaultHighlightStyle } from "@codemirror/highlight";
 import { lintKeymap } from "@codemirror/lint";
 import { LanguageDescription } from "@codemirror/language";
 import { languages } from "@codemirror/language-data";
+import interact from "@replit/codemirror-interact";
 
 const languageConf = new Compartment();
 
@@ -48,6 +49,20 @@ const extensions = [
   rectangularSelection(),
   highlightActiveLine(),
   highlightSelectionMatches(),
+  interact({
+    rules: [
+      // dragging numbers
+      {
+        regexp: /-?\b\d+\.?\d*\b/g,
+        cursor: "ew-resize",
+        onDrag: (text, setText, e) => {
+          const newVal = Number(text) + e.movementX;
+          if (isNaN(newVal)) return;
+          setText(newVal.toString());
+        },
+      },
+    ],
+  }),
   keymap.of([
     ...closeBracketsKeymap,
     ...defaultKeymap,
