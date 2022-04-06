@@ -112,7 +112,7 @@ export default function (props: FileBlockProps) {
         });
       });
     }
-  }, [editorRef.current]);
+  }, []);
 
   return (
     <div className="position-relative height-full">
