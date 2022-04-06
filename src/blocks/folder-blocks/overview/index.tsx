@@ -14,7 +14,7 @@ const maxItems = 3;
 
 export default function (props: FolderBlockProps) {
   const { context, onRequestGitHubData, BlockComponent } = props;
-  const [hasLoaded, setHasLoaded] = useState(false);
+  const [hasLoadedActivity, setHasLoadedActivity] = useState(false);
   const [hasLoadedReadme, setHasLoadedReadme] = useState(false);
   const [issues, setIssues] = useState<IssueType[]>([]);
   const [pulls, setPulls] = useState<PullType[]>([]);
@@ -40,42 +40,42 @@ export default function (props: FolderBlockProps) {
 
   const getActivity = async () => {
     if (!isRoot) {
-      setHasLoaded(true);
+      setHasLoadedActivity(true);
       return;
     }
 
-    const issuesUrl = `/repos/${context.owner}/${context.repo}/issues`;
-    const issues = await onRequestGitHubData(issuesUrl, {
-      path: context.path,
-      sha: context.sha,
-    });
-    setIssues(issues || []);
+    try {
+      const issuesUrl = `/repos/${context.owner}/${context.repo}/issues`;
+      const issues = await onRequestGitHubData(issuesUrl, {
+        path: context.path,
+        sha: context.sha,
+      });
+      setIssues(issues || []);
 
-    const pullsUrl = `/repos/${context.owner}/${context.repo}/pulls`;
-    const pulls = await onRequestGitHubData(pullsUrl, {
-      path: context.path,
-      sha: context.sha,
-    });
-    setPulls(pulls || []);
-
-    setHasLoaded(true);
+      const pullsUrl = `/repos/${context.owner}/${context.repo}/pulls`;
+      const pulls = await onRequestGitHubData(pullsUrl, {
+        path: context.path,
+        sha: context.sha,
+      });
+      setPulls(pulls || []);
+    } catch (e) {
+    } finally {
+      setHasLoadedActivity(true);
+    }
   };
   useEffect(() => {
     getReadmeAvailability();
     getActivity();
   }, []);
 
-  if (!hasLoaded)
-    return (
-      <div className="px-3 py-10 w-full text-center color-fg-muted italic">
-        Loading...
-      </div>
-    );
-
   return (
     <div className="w-full">
       <div className="p-3 flex-none">
-        {isRoot && (
+        {!isRoot ? null : !hasLoadedActivity ? (
+          <div className="px-3 py-10 w-full text-center color-fg-muted italic">
+            Loading...
+          </div>
+        ) : (
           <div className="flex w-full">
             <div className="flex-1 p-2">
               <h2 className="h2 px-3 py-1">Issues</h2>
