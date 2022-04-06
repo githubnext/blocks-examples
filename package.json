@@ -269,6 +269,15 @@
     },
     {
       "type": "folder",
+      "id": "overview-block",
+      "title": "Overview",
+      "description": "An overview of a folder: including README, license, and recent activity",
+      "sandbox": false,
+      "entry": "/src/blocks/folder-blocks/overview/index.tsx",
+      "example_path": "https://github.com/githubnext/blocks-tutorial"
+    },
+    {
+      "type": "folder",
       "id": "dashboard-block",
       "title": "Dashboard",
       "description": "A dashboard of Blocks",
@@ -312,6 +321,7 @@
     "@loadable/component": "^5.15.0",
     "@mdx-js/runtime": "2.0.0-next.9",
     "@octokit/rest": "^18.12.0",
+    "@octokit/types": "^6.34.0",
     "@primer/components": "^31.1.0",
     "@react-three/drei": "^7.20.5",
     "@react-three/fiber": "^7.0.19",
