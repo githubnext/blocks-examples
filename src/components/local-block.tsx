@@ -27,6 +27,7 @@ interface LocalBlockProps {
 }
 export const LocalBlock = (props: LocalBlockProps) => {
   const { block, contents, tree, metadata = {}, context } = props;
+  const [content, setContent] = useState<string>(contents || "");
 
   const [Block, setBlock] = useState<React.ComponentType<any> | null>(null);
 
@@ -56,18 +57,6 @@ export const LocalBlock = (props: LocalBlockProps) => {
       {
         type: "navigate-to-path",
         path,
-      },
-      "*"
-    );
-  }, []);
-  const onRequestUpdateContent = useCallback((content) => {
-    console.log(`Triggered a request to update the file contents`);
-    console.log("From:", contents);
-    console.log("To:", content);
-    window.postMessage(
-      {
-        type: "update-file",
-        content,
       },
       "*"
     );
@@ -103,12 +92,12 @@ export const LocalBlock = (props: LocalBlockProps) => {
   return (
     <Block
       context={context}
-      content={contents}
+      content={content}
       tree={tree}
       metadata={metadata}
       onUpdateMetadata={onUpdateMetadata}
       onNavigateToPath={onNavigateToPath}
-      onRequestUpdateContent={onRequestUpdateContent}
+      onRequestUpdateContent={setContent}
       onRequestGitHubData={onRequestGitHubData}
     />
   );

@@ -6,9 +6,6 @@ import { useMemo, useState } from "react";
 export default function (props: FileBlockProps) {
   const { content, onRequestUpdateContent } = props;
 
-  const [modifiedData, setModifiedData] = useState<any[]>([]);
-  const [isDirty, setIsDirty] = useState(false);
-
   const data = useMemo(() => {
     try {
       const rows = csvParseRows(content);
@@ -19,8 +16,6 @@ export default function (props: FileBlockProps) {
           return acc;
         }, {});
       });
-      setModifiedData(csvData);
-      setIsDirty(false);
       return csvData;
     } catch (e) {
       return [];
@@ -28,34 +23,16 @@ export default function (props: FileBlockProps) {
   }, [content]);
 
   return (
-    <div className="height-full d-flex flex-column">
-      <div className="flex-1" style={{ zIndex: 1 }}>
-        <Grid
-          data={modifiedData}
-          diffData={data}
-          canDownload={false}
-          isEditable
-          onEdit={(data: any) => {
-            setModifiedData(data);
-            setIsDirty(true);
-          }}
-        />
-      </div>
-      {isDirty && (
-        <button
-          className="position-absolute btn btn-primary inline-block"
-          style={{
-            bottom: "12px",
-            right: "175px",
-            zIndex: 10,
-          }}
-          onClick={() => {
-            onRequestUpdateContent(csvFormat(modifiedData));
-          }}
-        >
-          Save changes
-        </button>
-      )}
+    <div className="height-full d-flex flex-column flex-1">
+      <Grid
+        data={data}
+        diffData={data}
+        canDownload={false}
+        isEditable
+        onEdit={(data: any) => {
+          onRequestUpdateContent(csvFormat(data));
+        }}
+      />
     </div>
   );
 }

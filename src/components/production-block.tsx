@@ -31,6 +31,7 @@ interface BundleCode {
 }
 export const ProductionBlock = (props: ProductionBlockProps) => {
   const { block, contents, tree, metadata = {}, context } = props;
+  const [content, setContent] = useState<string>(contents || "");
 
   const [bundleCode, setBundleCode] = useState<BundleCode[]>([]);
   const id = useRef(uniqueId("sandboxed-block-"));
@@ -92,6 +93,8 @@ export const ProductionBlock = (props: ProductionBlockProps) => {
                 origin
               );
             });
+        } else if (data.type === "update-file") {
+          setContent(data.content);
         }
       }
     };
@@ -108,7 +111,7 @@ export const ProductionBlock = (props: ProductionBlockProps) => {
     bundleCode,
     context,
     id: id.current,
-    contents,
+    contents: content,
     tree,
     metadata,
   });
