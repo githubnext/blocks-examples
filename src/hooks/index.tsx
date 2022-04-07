@@ -73,15 +73,13 @@ export async function getFileContent(
   const { repo, owner, path, fileRef } = params;
   const branch = fileRef || "HEAD";
 
-  const apiUrl = `https://raw.githubusercontent.com/${owner}/${repo}/${branch}/${path}`;
-  const res = await fetch(
-    apiUrl,
-    PAT
-      ? {
-          headers: PAT ? { Authorization: `token ${PAT}` } : {},
-        }
-      : {}
-  );
+  const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${path}?ref=${branch}`;
+  const res = await fetch(apiUrl, {
+    headers: {
+      ...(PAT ? { Authorization: `token ${PAT}` } : {}),
+      Accept: "application/vnd.github.VERSION.raw",
+    },
+  });
 
   if (res.status !== 200) throw new Error("Something bad happened");
 
