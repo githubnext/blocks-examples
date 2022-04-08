@@ -20,7 +20,7 @@ type Block = {
 };
 interface ProductionBlockProps {
   block: Block;
-  contents?: string;
+  content?: string;
   tree?: RepoFiles;
   metadata?: any;
   context: FileContext | FolderContext;
@@ -30,8 +30,14 @@ interface BundleCode {
   content: string;
 }
 export const ProductionBlock = (props: ProductionBlockProps) => {
-  const { block, contents, tree, metadata = {}, context } = props;
-  const [content, setContent] = useState<string>(contents || "");
+  const {
+    block,
+    content: originalContent,
+    tree,
+    metadata = {},
+    context,
+  } = props;
+  const [content, setContent] = useState<string>(originalContent || "");
 
   const [bundleCode, setBundleCode] = useState<BundleCode[]>([]);
   const id = useRef(uniqueId("sandboxed-block-"));

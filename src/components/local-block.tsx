@@ -20,14 +20,20 @@ interface Block {
 }
 interface LocalBlockProps {
   block: Block;
-  contents?: string;
+  content?: string;
   tree?: RepoFiles;
   metadata?: any;
   context: FileContext | FolderContext;
 }
 export const LocalBlock = (props: LocalBlockProps) => {
-  const { block, contents, tree, metadata = {}, context } = props;
-  const [content, setContent] = useState<string>(contents || "");
+  const {
+    block,
+    content: originalContent,
+    tree,
+    metadata = {},
+    context,
+  } = props;
+  const [content, setContent] = useState<string>(originalContent || "");
 
   const [Block, setBlock] = useState<React.ComponentType<any> | null>(null);
 
