@@ -259,6 +259,27 @@
       "example_path": "https://github.com/githubnext/blocks-tutorial/blob/main/processing-sketch.js"
     },
     {
+      "type": "file",
+      "id": "summarize-block",
+      "title": "Summarize block",
+      "description": "Summarize parts of a file using ML",
+      "sandbox": false,
+      "entry": "/src/blocks/file-blocks/summarize/index.tsx",
+      "extensions": [
+        "js",
+        "ts",
+        "tsx",
+        "jsx"
+      ],
+      "matches": [
+        "*.js",
+        "*.ts",
+        "*.tsx",
+        "*.jsx"
+      ],
+      "example_path": "https://github.com/mattdesl/canvas-sketch/blob/master/lib/save.js"
+    },
+    {
       "type": "folder",
       "id": "minimap-block",
       "title": "Minimap",
@@ -333,6 +354,7 @@
     "@types/lodash.uniqueid": "^4.0.6",
     "@types/papaparse": "^5.3.1",
     "assert": "^2.0.0",
+    "axios": "^0.26.1",
     "buffer": "^6.0.3",
     "chroma-js": "^2.1.2",
     "cssjson": "^2.1.3",
