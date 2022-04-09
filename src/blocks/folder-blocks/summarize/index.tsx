@@ -204,7 +204,7 @@ const breakCodeIntoSections = async (
   language: string
 ): Promise<CodeSection[]> => {
   // this is an endpoint on the main prototype
-  const res = await axios(`/api/code-tree`, {
+  const res = await axios(`/api/code-chunk`, {
     method: "POST",
     data: {
       code,
