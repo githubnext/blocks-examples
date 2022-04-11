@@ -28,7 +28,6 @@ export default function (props: FileBlockProps) {
         ];
       }
     }
-    console.log(sections);
     setSections(sections);
     setSectionExplanations([]);
     sections.forEach(async (section, index) => {
