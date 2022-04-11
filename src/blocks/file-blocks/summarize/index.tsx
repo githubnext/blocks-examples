@@ -6,14 +6,29 @@ import "./index.css";
 
 export default function (props: FileBlockProps) {
   const { content, context } = props;
-  const [sections, setSections] = useState<any[]>([]);
+  const [sections, setSections] = useState<CodeSection[]>([]);
   const [sectionExplanations, setSectionExplanations] = useState<string[]>([]);
   const [isCollapsed, setIsCollapsed] = useState<boolean>(false);
 
   const language = getLanguageFromFilename(context.path.split("/").pop() || "");
 
   const updateSections = async () => {
-    const sections = await breakCodeIntoSections(content, language);
+    let sections = [] as CodeSection[];
+    try {
+      sections = await breakCodeIntoSections(content, language);
+    } catch {
+    } finally {
+      if (!sections.length) {
+        // make sure we at least have the whole file
+        sections = [
+          {
+            type: "string",
+            text: content,
+          },
+        ];
+      }
+    }
+    console.log(sections);
     setSections(sections);
     setSectionExplanations([]);
     sections.forEach(async (section, index) => {
@@ -69,11 +84,11 @@ export default function (props: FileBlockProps) {
           </>
         )}
       </button>
-      <div className="h-full d-flex flex-column bg-gray-50 overflow-auto">
+      <div className="h-full w-full d-flex flex-column bg-gray-50 overflow-auto">
         {/* <p className={`px-6 pt-3 whitespace-pre-wrap ${fileSummary ? "" : "text-gray-400"}`}>
         Briefly, this code will {fileSummary || "..."}
         </p> */}
-        <pre className="divide-y divide-gray-200">
+        <pre className="divide-y divide-gray-200 text-left">
           {!sections.length && (
             <div className="text-center text-gray-500 italic py-10">
               Loading...
@@ -107,13 +122,12 @@ const Section = ({
   isCollapsed,
 }: {
   text: string;
-  name: string;
+  name?: string;
   language: string;
   explanation: string | undefined;
   isCollapsed: boolean;
 }) => {
-  const [isCollapsedLocally, setIsCollapsedLocally] =
-    useState<boolean>(isCollapsed);
+  const [isCollapsedLocally, setIsCollapsedLocally] = useState(isCollapsed);
   useEffect(() => {
     setIsCollapsedLocally(isCollapsed);
   }, [isCollapsed]);
@@ -126,8 +140,13 @@ const Section = ({
 
   return (
     <div
-      className="hover:bg-white whitespace-pre-wrap grid grid-cols-[2fr,1fr]"
+      className={`hover:bg-white whitespace-pre-wrap grid grid-cols-[2fr,1fr] min-h-[3em] ${
+        isCollapsedLocally ? "cursor-pointer" : ""
+      }`}
+      // click to expand, but don't act as a button when expanded, for easier text selection
+      tabIndex={isCollapsedLocally ? 0 : 1}
       onClick={() => {
+        if (!isCollapsedLocally) return;
         setIsCollapsedLocally(!isCollapsedLocally);
       }}
     >
@@ -233,7 +252,7 @@ const breakCodeIntoSections = async (
         runningText.trim().endsWith(prefix)
       );
       const numberOfWhitespaces =
-        runningText.length - runningText.trimRight().length;
+        runningText.length - runningText.trimEnd().length;
       position[0] -= (match?.length || 0) + numberOfWhitespaces;
       sections.push({
         type: "string",
