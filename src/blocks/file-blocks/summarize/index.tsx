@@ -241,6 +241,9 @@ const breakCodeIntoSections = async (
   let runningIndex = 0;
   functions.forEach(({ position, name }) => {
     const runningText = code.slice(runningIndex, position[0]);
+
+    // the way we split out sections misses "prefixes" like `export function X() {}`
+    // let's check for those at the end of the previous section and add them to the current one
     const prefixesToInclude = ["export", "export default"];
     if (prefixesToInclude.includes(runningText.trim())) {
       position[0] -= runningText.length;
@@ -250,9 +253,13 @@ const breakCodeIntoSections = async (
       const match = prefixesToInclude.find((prefix) =>
         runningText.trim().endsWith(prefix)
       );
+
+      // trim newlines to preserve vertical space
+      // sections are separated by divider lines, anyway
       const numberOfWhitespaces =
         runningText.length - runningText.trimEnd().length;
       position[0] -= (match?.length || 0) + numberOfWhitespaces;
+
       sections.push({
         type: "string",
         text: code.slice(runningIndex, position[0]),
