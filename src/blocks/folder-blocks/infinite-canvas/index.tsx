@@ -32,7 +32,7 @@ export default function (
     if (!wrapperElement?.current) return;
     const onWheel = (e: WheelEvent) => {
       setPan((pan) => {
-        const newPan = [pan[0] - e.deltaX, pan[1] - e.deltaY] as Dimensions;
+        const newPan: Dimensions = [pan[0] - e.deltaX, pan[1] - e.deltaY];
         return newPan;
       });
       e.preventDefault();
@@ -48,10 +48,10 @@ export default function (
   }, []);
 
   const { isDragging } = useDrag(wrapperElement, pan, (newPan) => {
-    const boundedDimensions = [
+    const boundedDimensions: Dimensions = [
       Math.min(Math.max(newPan[0], -width), 0),
       Math.min(Math.max(newPan[1], -height), 0),
-    ] as Dimensions;
+    ];
     setPan(boundedDimensions);
   });
 
@@ -98,9 +98,7 @@ export default function (
   const getBlocks = async () => {
     const url = "https://blocks-marketplace.githubnext.com/api/blocks";
     const res = await fetch(url).then((res) => res.json());
-    const exampleBlocks =
-      res.find((d: any) => d.full_name === "githubnext/blocks-examples")
-        ?.blocks || [];
+    const exampleBlocks = res || [];
     setBlockOptions(
       exampleBlocks
         .map((block: any) => ({
@@ -126,7 +124,7 @@ export default function (
         <button
           className="btn"
           onClick={() => {
-            const newItems = [
+            const newItems: ItemType[] = [
               ...items,
               {
                 type: "text",
@@ -136,7 +134,7 @@ export default function (
                   height / 2 - defaultDimensions[1] / 2,
                 ],
                 dimensions: defaultDimensions,
-              } as ItemType,
+              },
             ];
             setItems(newItems);
             setIsDirty(true);
@@ -149,7 +147,7 @@ export default function (
         <FilePicker
           files={files}
           onFileSelected={(file) => {
-            const newItems = [
+            const newItems: ItemType[] = [
               ...items,
               {
                 type: "file",
@@ -163,7 +161,7 @@ export default function (
                   owner: "githubnext",
                   repo: "blocks-examples",
                 },
-              } as ItemType,
+              },
             ];
             setItems(newItems);
             setIsDirty(true);

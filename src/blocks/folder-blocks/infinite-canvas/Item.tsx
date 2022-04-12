@@ -86,6 +86,7 @@ export const Item = ({
           <div
             className="Text focus:outline-none cursor-text w-full h-full text-sm"
             contentEditable
+            suppressContentEditableWarning
             onInput={(e) => onChange({ text: e.target?.innerText || "" })}
             onBlur={() => {
               setTextBuffer(text);
@@ -123,9 +124,10 @@ export const Item = ({
                     block={block}
                     path={path}
                     content={contents}
-                    onRequestGitHubData={(...args) => {
+                    onRequestGitHubData={async (...args) => {
+                      // catch API errors
                       try {
-                        return blockProps.onRequestGitHubData(...args);
+                        return await blockProps.onRequestGitHubData(...args);
                       } catch (e) {
                         console.error(e);
                       }

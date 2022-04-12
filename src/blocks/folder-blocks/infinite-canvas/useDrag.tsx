@@ -17,10 +17,10 @@ export const useDrag = (
       if (startPosition) {
         const deltaX = e.clientX - startPosition[0];
         const deltaY = e.clientY - startPosition[1];
-        const newDimensions = [
+        const newDimensions: Dimensions = [
           startDimensions[0] + deltaX,
           startDimensions[1] + deltaY,
-        ] as Dimensions;
+        ];
 
         onDrag(newDimensions);
       }
