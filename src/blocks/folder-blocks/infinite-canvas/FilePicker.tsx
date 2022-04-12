@@ -8,7 +8,7 @@ export const FilePicker = ({
   files: Files;
   onFileSelected: (file: File) => void;
 }) => {
-  // there must be a better way to close the dropdown!
+  // needed to close the dropdown, which is an uncontrolled detail element
   const [iteration, setIteration] = useState(0);
 
   return (

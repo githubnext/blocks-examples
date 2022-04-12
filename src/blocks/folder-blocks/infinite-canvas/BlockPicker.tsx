@@ -10,7 +10,9 @@ export const BlockPicker = ({
   onChange: (newBlock: Block) => void;
   options: any[];
 }) => {
+  // needed to close the dropdown, which is an uncontrolled detail element
   const [iteration, setIteration] = useState(0);
+
   return (
     <details
       className="dropdown details-reset details-overlay d-inline-block mr-2"
