@@ -136,7 +136,7 @@
       "type": "file",
       "id": "geojson-block",
       "title": "GeoJSON explorer",
-      "description": "An interactive view of GeoJSON data",
+      "description": "View & edit GeoJSON data",
       "sandbox": false,
       "entry": "/src/blocks/file-blocks/geojson.tsx",
       "extensions": [

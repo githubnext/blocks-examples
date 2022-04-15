@@ -1,5 +1,12 @@
 import { FileBlockProps } from "@githubnext/utils";
-import { Fragment, useEffect, useMemo, useRef, useState } from "react";
+import {
+  Fragment,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { RLayerVector, RMap, ROSM, RStyle } from "rlayers";
 import { Feature } from "ol";
 import GeoJSON from "ol/format/GeoJSON";
@@ -8,20 +15,20 @@ import "ol/ol.css";
 
 export default function (props: FileBlockProps) {
   const { content, onRequestUpdateContent } = props;
+
   const [hoveredFeatureId, setHoveredFeatureId] =
     useState<Feature<Geometry> | null>(null);
   const [isHoveredFeatureLocked, setIsHoveredFeatureLocked] = useState(false);
   const [isDirty, setIsDirty] = useState(false);
-
   const [modifiedContent, setModifiedContent] = useState(content);
-
-  const [isMounted, setIsMounted] = useState(false);
   const [lastExtent, setLastExtent] = useState<
     [number, number, number, number] | null
   >([0, 0, 0, 0]);
 
+  const [isMounted, setIsMounted] = useState(false);
   useEffect(() => {
     if (!content) return;
+    // the map won't render if we try to load it right away
     setTimeout(() => {
       setIsMounted(true);
     });
