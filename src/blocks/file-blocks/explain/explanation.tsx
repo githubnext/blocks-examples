@@ -3,7 +3,6 @@ import { useQuery } from "react-query";
 import type { Explanation } from ".";
 
 const fetchExplanation = async (code: string, language: string) => {
-  // TODO: Use Blocks API
   const res = await axios.post(`/api/explain`, {
     code,
     language,
