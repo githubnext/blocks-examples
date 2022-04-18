@@ -1,0 +1,23 @@
+.td-line-num {
+  position: relative;
+  width: 1%;
+  min-width: 50px;
+  padding-right: 10px;
+  padding-left: 10px;
+  font-size: 12px;
+  line-height: 20px;
+  color: #636e7b;
+  text-align: right;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+}
+
+.td-line-num:before {
+  content: attr(data-line-number);
+}
+
+.highlighted {
+  background-color: #fff8c4;
+  box-shadow: inset 2px 0 0 rgba(174, 124, 20, 0.4);
+}
