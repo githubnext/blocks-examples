@@ -93,18 +93,6 @@ function BlockInner(props: FileBlockProps) {
 
   const borderColor = `rgba(0, 0, 0, .1)`;
 
-  const handleCommit = (explanation: Explanation, data: string) => {
-    const { start, end } = explanation;
-    // Add the comment to the line before start.
-    const lines = localContent.split("\n");
-    lines[start - 2] = `\n/* ${data} */\n`;
-    setLocalContent(lines.join("\n"));
-    setExplanations((curr) => {
-      delete curr[start];
-      return curr;
-    });
-  };
-
   return (
     <div className="py-4">
       <div className="max-w-6xl px-8 mx-auto overflow-hidden">
@@ -161,7 +149,6 @@ function BlockInner(props: FileBlockProps) {
                         }}
                       >
                         <ExplanationComponent
-                          onCommit={(data) => handleCommit(explanation, data)}
                           language={language}
                           explanation={explanation}
                         />

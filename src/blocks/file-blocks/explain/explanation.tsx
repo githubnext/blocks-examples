@@ -12,7 +12,6 @@ const fetchExplanation = async (code: string, language: string) => {
 
 export function ExplanationComponent(props: {
   explanation: Explanation;
-  onCommit: (data: string) => void;
   language: string;
 }) {
   const { explanation } = props;
