@@ -74,7 +74,16 @@ export default function (props: FileBlockProps) {
           }}
           onClick={(event) => {
             setIsHoveredFeatureLocked(false);
-            setHoveredFeatureId(null);
+            if (
+              hoveredFeatureId ===
+              event.target.values_.__geojson_internal_index__
+            ) {
+              setHoveredFeatureId(null);
+            } else {
+              setHoveredFeatureId(
+                event.target.values_.__geojson_internal_index__
+              );
+            }
           }}
         >
           {/* tileset */}
@@ -124,7 +133,14 @@ export default function (props: FileBlockProps) {
             }}
             onClick={(event) => {
               event.stopPropagation();
-              setIsHoveredFeatureLocked((d) => !d);
+              const id = event.target.values_.__geojson_internal_index__;
+              if (hoveredFeatureId === id && isHoveredFeatureLocked) {
+                setIsHoveredFeatureLocked(false);
+                setHoveredFeatureId(null);
+              } else {
+                setIsHoveredFeatureLocked(true);
+                setHoveredFeatureId(id);
+              }
             }}
           >
             <RStyle.RStyle
