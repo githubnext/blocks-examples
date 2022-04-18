@@ -285,7 +285,6 @@ const EditableText = ({
   const inputElement = useRef<HTMLInputElement>(null);
   useEffect(() => {
     if (isEditing) {
-      inputElement.current?.focus();
       inputElement.current?.select();
     }
   }, [isEditing]);
@@ -294,7 +293,6 @@ const EditableText = ({
     <div className="">
       {isEditing && (
         <form
-          className=""
           onSubmit={(e) => {
             e.preventDefault();
             onChange(inputValue);
@@ -302,6 +300,7 @@ const EditableText = ({
           }}
         >
           <input
+            autoFocus
             ref={inputElement}
             className="w-full py-1 px-2"
             type="text"
@@ -320,7 +319,7 @@ const EditableText = ({
         </form>
       )}
       {!isEditing && (
-        <div
+        <button
           className="py-1 px-2 hover:bg-gray-100"
           onClick={() => {
             setIsEditing(true);
@@ -328,7 +327,7 @@ const EditableText = ({
           }}
         >
           {value}
-        </div>
+        </button>
       )}
     </div>
   );
