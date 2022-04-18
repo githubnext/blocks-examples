@@ -162,6 +162,7 @@ function BlockInner(props: FileBlockProps) {
                       >
                         <ExplanationComponent
                           onCommit={(data) => handleCommit(explanation, data)}
+                          language={language}
                           explanation={explanation}
                         />
                       </div>

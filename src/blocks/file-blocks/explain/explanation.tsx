@@ -2,11 +2,11 @@ import axios from "axios";
 import { useQuery } from "react-query";
 import type { Explanation } from ".";
 
-const fetchExplanation = async (code: string) => {
+const fetchExplanation = async (code: string, language: string) => {
   // TODO: Use Blocks API
   const res = await axios.post(`/api/explain`, {
     code,
-    language: "javascript",
+    language,
   });
   return res.data;
 };
@@ -14,11 +14,12 @@ const fetchExplanation = async (code: string) => {
 export function ExplanationComponent(props: {
   explanation: Explanation;
   onCommit: (data: string) => void;
+  language: string;
 }) {
   const { explanation } = props;
   const { data, status } = useQuery(
     ["explanation", props.explanation.code],
-    () => fetchExplanation(props.explanation.code),
+    () => fetchExplanation(props.explanation.code, props.language),
     { refetchOnWindowFocus: false }
   );
 
