@@ -4,7 +4,7 @@ import type { Explanation } from ".";
 
 const fetchExplanation = async (code: string) => {
   // TODO: Use Blocks API
-  const res = await axios.post(`http://localhost:3000/api/explain`, {
+  const res = await axios.post(`/api/explain`, {
     code,
     language: "javascript",
   });
