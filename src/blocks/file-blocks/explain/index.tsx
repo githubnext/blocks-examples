@@ -27,15 +27,14 @@ async function highlightCode(code: string, language: string) {
 
 function BlockInner(props: FileBlockProps) {
   const { context, content } = props;
-  const [localContent, setLocalContent] = useState(content);
 
   const language = Boolean(context.path)
     ? getLanguageFromFilename(context.path)
     : "N/A";
 
   const { data, status } = useQuery(
-    ["code", context.file, localContent],
-    () => highlightCode(localContent, language),
+    ["code", context.file, content],
+    () => highlightCode(content, language),
     {
       refetchOnWindowFocus: false,
     }
