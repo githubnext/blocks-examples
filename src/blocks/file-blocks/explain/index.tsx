@@ -149,7 +149,10 @@ function BlockInner(props: FileBlockProps) {
                 {content}
               </SyntaxHighlighter>
             </div>
-            <div className="basis-52 flex-grow-0 flex-shrink-0 relative">
+            <div
+              className="flex-grow-0 flex-shrink-0 relative"
+              style={{ flexBasis: 260 }}
+            >
               {Object.entries(explanations).map(([line, explanation]) => {
                 return (
                   <div
