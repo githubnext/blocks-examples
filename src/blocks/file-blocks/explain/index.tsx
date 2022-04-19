@@ -10,6 +10,8 @@ import { LineMenu } from "./line-menu";
 const syntaxHighlighterLanguageMap = {
   JavaScript: "javascript",
   TypeScript: "typescript",
+  Ruby: "ruby",
+  Python: "python",
 } as Record<string, string>;
 
 export interface Explanation {
