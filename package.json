@@ -356,6 +356,15 @@
       "sandbox": false,
       "entry": "/src/blocks/folder-blocks/code-tour/index.tsx",
       "example_path": "https://github.com/githubnext/blocks-tutorial"
+    },
+    {
+      "type": "folder",
+      "id": "infinite-canvas-block",
+      "title": "Infinite Canvas",
+      "description": "View and annotate your files in an infinite canvas",
+      "sandbox": false,
+      "entry": "/src/blocks/folder-blocks/infinite-canvas/index.tsx",
+      "example_path": "https://github.com/githubnext/blocks-tutorial"
     }
   ],
   "dependencies": {
