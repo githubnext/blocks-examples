@@ -307,13 +307,17 @@
         "js",
         "ts",
         "tsx",
-        "jsx"
+        "jsx",
+        "rb",
+        "py"
       ],
       "matches": [
         "*.js",
         "*.ts",
         "*.tsx",
-        "*.jsx"
+        "*.jsx",
+        "*.rb",
+        "*.py"
       ],
       "example_path": "https://github.com/mattdesl/canvas-sketch/blob/master/lib/save.js"
     },
