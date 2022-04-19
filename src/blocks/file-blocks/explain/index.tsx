@@ -143,12 +143,12 @@ function BlockInner(props: FileBlockProps) {
             >
               {content}
             </SyntaxHighlighter>
-            <div className="min-w-[200px] relative">
+            <div className="basis-48 flex-grow-0 flex-shrink-0 relative">
               {Object.entries(explanations).map(([line, explanation]) => {
                 return (
                   <div
                     key={line}
-                    className="px-3 overflow-y-auto absolute bg-white"
+                    className="px-3 overflow-y-auto break-all absolute left-0 w-full bg-white"
                     style={{
                       top: (explanation.start - 1) * 21 - 2,
                       height: (explanation.end - explanation.start + 1) * 21,

@@ -133,3 +133,8 @@
 .comment:hover {
   color: rgba(0, 0, 0, 0.5);
 }
+
+code,
+code span {
+  font-size: 14px !important;
+}
