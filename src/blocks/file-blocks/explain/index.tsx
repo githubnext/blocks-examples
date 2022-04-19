@@ -118,32 +118,38 @@ function BlockInner(props: FileBlockProps) {
               />
             </div>
           )}
-          <div className="flex">
-            <SyntaxHighlighter
-              language={syntaxHighlighterLanguageMap[language] || "javascript"}
-              useInlineStyles={false}
-              wrapLines
-              className="!bg-transparent syntax-highlighter-block overflow-auto"
-              lineProps={(lineNumber) => {
-                const isHighlighted =
-                  start && end && lineNumber >= start && lineNumber <= end;
-                return {
-                  "data-highlighted": isHighlighted,
-                  onClick: (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
-                    let clicked = e.target as HTMLElement;
-                    if (!clicked.classList.contains("comment")) return;
-                    handleLineClick(lineNumber, e.shiftKey);
-                  },
-                  style: {
-                    display: "block",
-                  },
-                };
-              }}
-              showLineNumbers
-            >
-              {content}
-            </SyntaxHighlighter>
-            <div className="basis-48 flex-grow-0 flex-shrink-0 relative">
+          <div className="flex w-full">
+            <div className="flex-1">
+              <SyntaxHighlighter
+                language={
+                  syntaxHighlighterLanguageMap[language] || "javascript"
+                }
+                useInlineStyles={false}
+                wrapLines
+                className="!bg-transparent syntax-highlighter-block overflow-auto"
+                lineProps={(lineNumber) => {
+                  const isHighlighted =
+                    start && end && lineNumber >= start && lineNumber <= end;
+                  return {
+                    "data-highlighted": isHighlighted,
+                    onClick: (
+                      e: React.MouseEvent<HTMLLIElement, MouseEvent>
+                    ) => {
+                      let clicked = e.target as HTMLElement;
+                      if (!clicked.classList.contains("comment")) return;
+                      handleLineClick(lineNumber, e.shiftKey);
+                    },
+                    style: {
+                      display: "block",
+                    },
+                  };
+                }}
+                showLineNumbers
+              >
+                {content}
+              </SyntaxHighlighter>
+            </div>
+            <div className="basis-52 flex-grow-0 flex-shrink-0 relative">
               {Object.entries(explanations).map(([line, explanation]) => {
                 return (
                   <div
