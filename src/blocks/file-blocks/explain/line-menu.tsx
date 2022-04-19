@@ -1,8 +1,15 @@
 import { KebabHorizontalIcon } from "@primer/octicons-react";
 import { ActionList, ActionMenu, IconButton } from "@primer/react";
 
-export function LineMenu(props: { onExplain: () => void }) {
-  const { onExplain } = props;
+export function LineMenu(props: {
+  onExplain: () => void;
+  start: number;
+  end: number;
+  onCopy: () => void;
+}) {
+  const { onExplain, onCopy, start, end } = props;
+  const lineNoun = start === end ? "line" : "lines";
+
   return (
     <ActionMenu>
       <ActionMenu.Anchor>
@@ -16,7 +23,7 @@ export function LineMenu(props: { onExplain: () => void }) {
 
       <ActionMenu.Overlay>
         <ActionList>
-          <ActionList.Item disabled>Copy Line</ActionList.Item>
+          <ActionList.Item onSelect={onCopy}>Copy {lineNoun}</ActionList.Item>
           <ActionList.Item disabled>Copy Permalink</ActionList.Item>
           <ActionList.Item disabled>View git blame</ActionList.Item>
           <ActionList.Divider />

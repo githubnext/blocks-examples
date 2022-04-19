@@ -4,6 +4,7 @@ import { useCallback, useState } from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { ExplanationComponent } from "./explanation";
+import { useCopyToClipboard } from "react-use";
 import "./index.css";
 import { LineMenu } from "./line-menu";
 
@@ -21,6 +22,7 @@ export interface Explanation {
 }
 
 function BlockInner(props: FileBlockProps) {
+  const [value, copy] = useCopyToClipboard();
   const { context, content } = props;
 
   const language = Boolean(context.path)
@@ -76,6 +78,19 @@ function BlockInner(props: FileBlockProps) {
     setEnd(undefined);
   }, [start, end, setExplanations, content, setStart, setEnd]);
 
+  const handleCopy = useCallback(() => {
+    if (!start) return;
+    let startIdx = start;
+    let endIdx = end || startIdx;
+
+    const lineContent = content
+      .split("\n")
+      .slice(startIdx - 1, endIdx)
+      .join("\n");
+
+    copy(lineContent);
+  }, [content, start, end]);
+
   return (
     <div className="py-4">
       <div className="max-w-6xl px-8 mx-auto overflow-hidden">
@@ -85,7 +100,12 @@ function BlockInner(props: FileBlockProps) {
               className="z-20 absolute"
               style={{ top: (start - 1) * 21 - 2, left: -20 }}
             >
-              <LineMenu onExplain={handleExplain} />
+              <LineMenu
+                onCopy={handleCopy}
+                start={start}
+                end={end}
+                onExplain={handleExplain}
+              />
             </div>
           )}
           <div className="flex">
