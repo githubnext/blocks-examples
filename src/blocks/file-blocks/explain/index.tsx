@@ -101,7 +101,7 @@ function BlockInner(props: FileBlockProps) {
   }, [content, context, start, end]);
 
   return (
-    <div className="py-4 h-full">
+    <div className="py-4 h-full explain-block">
       <div className="max-w-6xl h-full px-4 mx-auto overflow-hidden">
         <div className="border relative h-full">
           {start && end && (

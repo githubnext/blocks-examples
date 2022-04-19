@@ -113,28 +113,28 @@
   /* purposely ignored */
 }
 
-.syntax-highlighter-block .comment {
+.explain-block .syntax-highlighter-block .comment {
   cursor: pointer;
 }
 
-[data-highlighted="true"] {
+.explain-block [data-highlighted="true"] {
   background: #fff8c5;
 }
-[data-highlighted="true"] .comment {
+.explain-block [data-highlighted="true"] .comment {
   box-shadow: inset -2px 0 0 rgba(212, 167, 44, 0.4);
 }
 
-.comment {
+.explain-block .comment {
   background: white !important;
 
   color: #222;
 }
 
-.comment:hover {
+.explain-block .comment:hover {
   color: rgba(0, 0, 0, 0.5);
 }
 
-code,
-code span {
+.explain-block code,
+.explain-block code span {
   font-size: 14px !important;
 }
