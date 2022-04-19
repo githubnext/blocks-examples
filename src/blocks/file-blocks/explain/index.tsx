@@ -101,7 +101,7 @@ function BlockInner(props: FileBlockProps) {
   }, [content, context, start, end]);
 
   return (
-    <div className="h-full explain-block pl-6 relative">
+    <div className="h-full explain-block overflow-auto pl-6 relative">
       {start && end && (
         <div
           className="z-20 absolute"
@@ -116,61 +116,48 @@ function BlockInner(props: FileBlockProps) {
           />
         </div>
       )}
-
-      <div className="flex overflow-auto h-full w-full">
-        <div className="max-w-3xl overflow-auto">
-          <SyntaxHighlighter
-            language={syntaxHighlighterLanguageMap[language] || "javascript"}
-            useInlineStyles={false}
-            wrapLines
-            className="!bg-transparent syntax-highlighter-block"
-            lineProps={(lineNumber) => {
-              const isHighlighted =
-                start && end && lineNumber >= start && lineNumber <= end;
-              return {
-                "data-highlighted": isHighlighted,
-                onClick: (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
-                  let clicked = e.target as HTMLElement;
-                  if (!clicked.classList.contains("comment")) return;
-                  handleLineClick(lineNumber, e.shiftKey);
-                },
-                style: {
-                  display: "block",
-                },
-              };
+      <SyntaxHighlighter
+        language={syntaxHighlighterLanguageMap[language] || "javascript"}
+        useInlineStyles={false}
+        wrapLines
+        className="!bg-transparent syntax-highlighter-block"
+        lineProps={(lineNumber) => {
+          const isHighlighted =
+            start && end && lineNumber >= start && lineNumber <= end;
+          return {
+            "data-highlighted": isHighlighted,
+            onClick: (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
+              let clicked = e.target as HTMLElement;
+              if (!clicked.classList.contains("comment")) return;
+              handleLineClick(lineNumber, e.shiftKey);
+            },
+            style: {
+              display: "block",
+            },
+          };
+        }}
+        showLineNumbers
+      >
+        {content}
+      </SyntaxHighlighter>
+      {Object.entries(explanations).map(([line, explanation]) => {
+        return (
+          <div
+            key={line}
+            className="px-3 overflow-y-auto break-words absolute bg-white w-[260px] -right-6"
+            style={{
+              top: (explanation.start - 1) * 18 - 2,
+              height: (explanation.end - explanation.start + 1) * 18,
+              boxShadow: `-2px 0 0 0 #539bf5, inset 1px 0 0 0 #539bf5, -24px 0px 16px -11px rgba(0,0,0,0.05)`,
             }}
-            showLineNumbers
           >
-            {content}
-          </SyntaxHighlighter>
-        </div>
-        <div
-          className="flex-grow-0 flex-shrink-0 relative"
-          style={{ flexBasis: 260 }}
-        >
-          {Object.entries(explanations).map(([line, explanation]) => {
-            return (
-              <div
-                key={line}
-                className="px-3 overflow-y-auto break-words absolute left-0 w-full bg-white"
-                style={{
-                  top: (explanation.start - 1) * 18 - 2,
-                  height: (explanation.end - explanation.start + 1) * 18,
-                  right: 0,
-                  boxShadow: `-2px 0 0 0 #539bf5, inset 1px 0 0 0 #539bf5, -24px 0px 16px -11px rgba(0,0,0,0.05)`,
-                  gridColumn: 1,
-                  gridRow: `${explanation.start}/${explanation.end + 1}`,
-                }}
-              >
-                <ExplanationComponent
-                  language={language}
-                  explanation={explanation}
-                />
-              </div>
-            );
-          })}
-        </div>
-      </div>
+            <ExplanationComponent
+              language={language}
+              explanation={explanation}
+            />
+          </div>
+        );
+      })}
     </div>
   );
 }
