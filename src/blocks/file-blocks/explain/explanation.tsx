@@ -39,7 +39,7 @@ export function ExplanationComponent(props: {
         )}
         {status === "success" && data && (
           <div className="pb-2">
-            <p className="text-xs whitespace-pre font-mono">{data}</p>
+            <p className="text-xs whitespace-pre-line font-mono">{data}</p>
           </div>
         )}
       </div>
