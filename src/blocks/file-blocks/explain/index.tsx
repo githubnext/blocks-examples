@@ -91,6 +91,15 @@ function BlockInner(props: FileBlockProps) {
     copy(lineContent);
   }, [content, start, end]);
 
+  const handleCopyPermalink = useCallback(() => {
+    if (!start) return;
+    let startIdx = start;
+    let endIdx = end || startIdx;
+    copy(
+      `https://github.com/${context.owner}/${context.repo}/blob/${context.sha}/${context.path}#L${startIdx}-L${endIdx}`
+    );
+  }, [content, context, start, end]);
+
   return (
     <div className="py-4">
       <div className="max-w-6xl px-8 mx-auto overflow-hidden">
@@ -101,9 +110,10 @@ function BlockInner(props: FileBlockProps) {
               style={{ top: (start - 1) * 21 - 2, left: -20 }}
             >
               <LineMenu
-                onCopy={handleCopy}
                 start={start}
                 end={end}
+                onCopy={handleCopy}
+                onCopyPermalink={handleCopyPermalink}
                 onExplain={handleExplain}
               />
             </div>

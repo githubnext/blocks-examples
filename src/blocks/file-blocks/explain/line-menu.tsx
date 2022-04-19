@@ -6,8 +6,9 @@ export function LineMenu(props: {
   start: number;
   end: number;
   onCopy: () => void;
+  onCopyPermalink: () => void;
 }) {
-  const { onExplain, onCopy, start, end } = props;
+  const { onExplain, onCopy, start, end, onCopyPermalink } = props;
   const lineNoun = start === end ? "line" : "lines";
 
   return (
@@ -24,7 +25,9 @@ export function LineMenu(props: {
       <ActionMenu.Overlay>
         <ActionList>
           <ActionList.Item onSelect={onCopy}>Copy {lineNoun}</ActionList.Item>
-          <ActionList.Item disabled>Copy Permalink</ActionList.Item>
+          <ActionList.Item onSelect={onCopyPermalink}>
+            Copy Permalink
+          </ActionList.Item>
           <ActionList.Item disabled>View git blame</ActionList.Item>
           <ActionList.Divider />
           <ActionList.Item onSelect={onExplain}>Explain Code</ActionList.Item>
