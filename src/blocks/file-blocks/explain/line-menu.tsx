@@ -28,7 +28,6 @@ export function LineMenu(props: {
           <ActionList.Item onSelect={onCopyPermalink}>
             Copy Permalink
           </ActionList.Item>
-          <ActionList.Item disabled>View git blame</ActionList.Item>
           <ActionList.Divider />
           <ActionList.Item onSelect={onExplain}>Explain Code</ActionList.Item>
         </ActionList>

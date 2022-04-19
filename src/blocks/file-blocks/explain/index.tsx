@@ -101,7 +101,7 @@ function BlockInner(props: FileBlockProps) {
   }, [content, context, start, end]);
 
   return (
-    <div className="h-full explain-block overflow-auto pl-6 relative">
+    <div className="h-full explain-block overflow-auto pl-7 relative">
       {start && end && (
         <div
           className="z-20 absolute"
@@ -144,7 +144,7 @@ function BlockInner(props: FileBlockProps) {
         return (
           <div
             key={line}
-            className="px-3 overflow-y-auto break-words absolute bg-white w-[260px] -right-6"
+            className="px-3 overflow-y-auto break-words absolute bg-white w-[260px] -right-7"
             style={{
               top: (explanation.start - 1) * 18 - 2,
               height: (explanation.end - explanation.start + 1) * 18,
