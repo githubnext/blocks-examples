@@ -23,7 +23,7 @@ export function ExplanationComponent(props: {
 
   return (
     <>
-      <div className="sticky top-0 z-10 pb-2">
+      <div className="sticky top-0 z-10 pb-2 bg-white">
         <p className="text-xs font-mono">
           Explanation for{" "}
           <span className="font-bold">
@@ -33,12 +33,12 @@ export function ExplanationComponent(props: {
         </p>
       </div>
 
-      <div className=" relative">
+      <div className="relative">
         {status === "loading" && (
           <p className="text-xs  font-mono animate-pulse">Loading...</p>
         )}
         {status === "success" && data && (
-          <div>
+          <div className="pb-2">
             <p className="text-xs  font-mono">{data}</p>
           </div>
         )}
