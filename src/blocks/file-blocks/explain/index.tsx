@@ -101,8 +101,26 @@ function BlockInner(props: FileBlockProps) {
   }, [content, context, start, end]);
 
   return (
-    <div className="relative h-full">
-      <div className="h-full explain-block overflow-auto pl-10">
+    <div className="relative">
+      {Object.entries(explanations).map(([line, explanation]) => {
+        return (
+          <div
+            key={line}
+            className="px-3 overflow-y-auto break-words absolute bg-white w-[260px] right-0 z-10"
+            style={{
+              top: (explanation.start - 1) * 18 - 2,
+              height: (explanation.end - explanation.start + 1) * 18,
+              boxShadow: `-2px 0 0 0 #539bf5, inset 1px 0 0 0 #539bf5, -24px 0px 16px -11px rgba(0,0,0,0.05)`,
+            }}
+          >
+            <ExplanationComponent
+              language={language}
+              explanation={explanation}
+            />
+          </div>
+        );
+      })}
+      <div className="h-full explain-block overflow-auto pl-10 relative">
         {start && end && (
           <div
             className="z-20 absolute"
@@ -141,24 +159,6 @@ function BlockInner(props: FileBlockProps) {
         >
           {content}
         </SyntaxHighlighter>
-        {Object.entries(explanations).map(([line, explanation]) => {
-          return (
-            <div
-              key={line}
-              className="px-3 overflow-y-auto break-words absolute bg-white w-[260px] right-0"
-              style={{
-                top: (explanation.start - 1) * 18 - 2,
-                height: (explanation.end - explanation.start + 1) * 18,
-                boxShadow: `-2px 0 0 0 #539bf5, inset 1px 0 0 0 #539bf5, -24px 0px 16px -11px rgba(0,0,0,0.05)`,
-              }}
-            >
-              <ExplanationComponent
-                language={language}
-                explanation={explanation}
-              />
-            </div>
-          );
-        })}
       </div>
     </div>
   );
