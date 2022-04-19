@@ -86,51 +86,55 @@ function BlockInner(props: FileBlockProps) {
               <LineMenu onExplain={handleExplain} />
             </div>
           )}
-          {Object.entries(explanations).map(([line, explanation]) => {
-            return (
-              <div
-                key={line}
-                className="px-3 overflow-y-auto absolute bg-white"
-                style={{
-                  top: (explanation.start - 1) * 21 - 2,
-                  height: (explanation.end - explanation.start + 1) * 21,
-                  right: 0,
-                  boxShadow: `-2px 0 0 0 #539bf5, inset 1px 0 0 0 #539bf5`,
-                  gridColumn: 1,
-                  gridRow: `${explanation.start}/${explanation.end + 1}`,
-                }}
-              >
-                <ExplanationComponent
-                  language={language}
-                  explanation={explanation}
-                />
-              </div>
-            );
-          })}
-          <SyntaxHighlighter
-            language={syntaxHighlighterLanguageMap[language] || "javascript"}
-            useInlineStyles={false}
-            wrapLines
-            className="!bg-transparent syntax-highlighter-block"
-            lineProps={(lineNumber) => {
-              const isHighlighted =
-                start && end && lineNumber >= start && lineNumber <= end;
-              return {
-                "data-highlighted": isHighlighted,
-                onClick: (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
-                  let clicked = e.target as HTMLElement;
-                  if (!clicked.classList.contains("comment")) return;
-                  handleLineClick(lineNumber, e.shiftKey);
-                },
-                style: {
-                  display: "block",
-                },
-              };
-            }}
-            showLineNumbers
-          >
-            {content}
-          </SyntaxHighlighter>
+          <div className="flex">
+            <SyntaxHighlighter
+              language={syntaxHighlighterLanguageMap[language] || "javascript"}
+              useInlineStyles={false}
+              wrapLines
+              className="!bg-transparent syntax-highlighter-block overflow-auto"
+              lineProps={(lineNumber) => {
+                const isHighlighted =
+                  start && end && lineNumber >= start && lineNumber <= end;
+                return {
+                  "data-highlighted": isHighlighted,
+                  onClick: (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
+                    let clicked = e.target as HTMLElement;
+                    if (!clicked.classList.contains("comment")) return;
+                    handleLineClick(lineNumber, e.shiftKey);
+                  },
+                  style: {
+                    display: "block",
+                  },
+                };
+              }}
+              showLineNumbers
+            >
+              {content}
+            </SyntaxHighlighter>
+            <div className="min-w-[200px] relative">
+              {Object.entries(explanations).map(([line, explanation]) => {
+                return (
+                  <div
+                    key={line}
+                    className="px-3 overflow-y-auto absolute bg-white"
+                    style={{
+                      top: (explanation.start - 1) * 21 - 2,
+                      height: (explanation.end - explanation.start + 1) * 21,
+                      right: 0,
+                      boxShadow: `-2px 0 0 0 #539bf5, inset 1px 0 0 0 #539bf5, -24px 0px 16px -11px rgba(0,0,0,0.05)`,
+                      gridColumn: 1,
+                      gridRow: `${explanation.start}/${explanation.end + 1}`,
+                    }}
+                  >
+                    <ExplanationComponent
+                      language={language}
+                      explanation={explanation}
+                    />
+                  </div>
+                );
+              })}
+            </div>
+          </div>
         </div>
       </div>
     </div>
