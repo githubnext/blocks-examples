@@ -126,7 +126,6 @@ const syntaxHighlighterLanguageMap = {
 } as Record<string, string>;
 
 const HunkComponent = ({ hunk, language }: { hunk: any; language: string }) => {
-  console.log(hunk);
   return (
     <pre className="px-5 py-3 text-left">
       {hunk.changes.map((change: Hunk["change"], i: number) => (
