@@ -2,6 +2,7 @@ import { useMemo, useRef, useState } from "react";
 import { useDrag } from "./useDrag";
 import { BlockPicker } from "./BlockPicker";
 import { ResizeButton } from "./ResizeButton";
+import pm from "picomatch";
 import { roundToInterval, Position, ItemType, Dimensions } from "./index";
 
 export const Item = ({
@@ -18,7 +19,6 @@ export const Item = ({
   BlockComponent,
   onDelete,
   onChange,
-  onDrag,
 }: ItemType & {
   contents?: string;
   blockOptions: any[];
@@ -46,11 +46,27 @@ export const Item = ({
     if (type !== "file") return null;
     const extension = path?.split(".").pop();
     return blockOptions.filter((block: any) => {
-      if (block.type !== "file") return false;
-      if (!block.extensions) return true;
-      if (block.extensions?.includes("*")) return true;
-      if (block.extensions?.includes(extension)) return true;
-      return false;
+      // don't include example Blocks
+      if (block.title === "Example File Block") {
+        return false;
+      }
+
+      if (block.type !== type) return false;
+
+      if (path === undefined) return true;
+
+      if (Boolean(block.matches)) {
+        return pm(block.matches, { bash: true, dot: true })(path);
+      }
+
+      if (block.extensions) {
+        const extension = path.split(".").pop();
+        return (
+          block.extensions.includes("*") || block.extensions.includes(extension)
+        );
+      }
+
+      return true;
     });
   }, [blockOptions, path, type]);
 
