@@ -322,6 +322,21 @@
       "example_path": "https://github.com/mattdesl/canvas-sketch/blob/master/lib/save.js"
     },
     {
+      "type": "file",
+      "id": "edit-block",
+      "title": "Edit code",
+      "description": "Edit code by prompting a Machine Learning model",
+      "sandbox": false,
+      "entry": "/src/blocks/file-blocks/edit/index.tsx",
+      "extensions": [
+        "*"
+      ],
+      "matches": [
+        "*"
+      ],
+      "example_path": "https://github.com/githubnext/blocks-tutorial/blob/main/processing-sketch.js"
+    },
+    {
       "type": "folder",
       "id": "minimap-block",
       "title": "Minimap",
@@ -424,6 +439,7 @@
     "p5": "^1.4.1",
     "papaparse": "^5.3.1",
     "react": "^17.0.0",
+    "react-diff-view": "^2.4.8",
     "react-dom": "^17.0.0",
     "react-error-boundary": "^3.1.4",
     "react-image-annotation": "^0.9.10",
@@ -436,7 +452,8 @@
     "recharts": "^2.1.6",
     "rlayers": "^1.3.2",
     "styled-components": "^5.3.3",
-    "three": "^0.134.0"
+    "three": "^0.134.0",
+    "unidiff": "^1.0.2"
   },
   "resolutions": {
     "react": "17.0.0",
