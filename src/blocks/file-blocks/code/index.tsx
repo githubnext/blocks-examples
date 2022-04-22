@@ -30,8 +30,6 @@ import interact from "@replit/codemirror-interact";
 
 const languageConf = new Compartment();
 
-let doc: string;
-
 const extensions = [
   lineNumbers(),
   highlightActiveLineGutter(),
@@ -75,11 +73,6 @@ const extensions = [
   ]),
 
   languageConf.of([]),
-
-  EditorView.updateListener.of((v) => {
-    if (!v.docChanged) return;
-    doc = v.state.doc.sliceString(0);
-  }),
 ];
 
 export default function (props: FileBlockProps) {
@@ -89,14 +82,35 @@ export default function (props: FileBlockProps) {
     onRequestUpdateContent,
   } = props;
 
-  doc = content;
   const editorRef = React.useRef<HTMLDivElement>(null);
 
+  const viewRef = React.useMemo<{ current: EditorView | null }>(
+    () => ({ current: null }),
+    []
+  );
+
+  if (viewRef.current) {
+    const view = viewRef.current;
+    const doc = view.state.doc.sliceString(0);
+    if (doc !== content) {
+      view.dispatch({
+        changes: { from: 0, to: doc.length, insert: content },
+      });
+    }
+  }
+
   React.useEffect(() => {
-    if (!editorRef.current) return;
+    if (viewRef.current || !editorRef.current) return;
+
     const state = EditorState.create({
       doc: content,
-      extensions,
+      extensions: [
+        extensions,
+        EditorView.updateListener.of((v) => {
+          if (!v.docChanged) return;
+          onRequestUpdateContent(v.state.doc.sliceString(0));
+        }),
+      ],
     });
     const view = new EditorView({
       state,
@@ -112,22 +126,15 @@ export default function (props: FileBlockProps) {
         });
       });
     }
+
+    viewRef.current = view;
   }, []);
 
   return (
-    <div className="position-relative height-full">
-      <div
-        className="width-full height-full overflow-auto"
-        key={content}
-        ref={editorRef}
-      />
-      <button
-        className="btn btn-primary position-absolute right-4 top-4 z-10"
-        style={{ zIndex: 1 }}
-        onClick={() => onRequestUpdateContent(doc)}
-      >
-        Save Changes
-      </button>
-    </div>
+    <div
+      className="position-relative width-full height-full overflow-auto height-full"
+      key={path}
+      ref={editorRef}
+    />
   );
 }

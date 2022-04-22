@@ -1,31 +1,20 @@
 import { FileBlockProps } from "@githubnext/utils";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import ReactJson from "react-json-view";
 import jsYaml from "js-yaml";
 
 export default function (props: FileBlockProps) {
   const { content, context, onRequestUpdateContent } = props;
 
-  const [modifiedContent, setModifiedContent] = useState(content);
-
-  useEffect(() => {
-    setModifiedContent(content);
-  }, [content]);
-
-  const normalizeContent = (str: string) => {
-    try {
-      return JSON.stringify(JSON.parse(str));
-    } catch (e) {
-      return str;
-    }
-  };
-
-  const isDirty = useMemo(() => {
-    return normalizeContent(modifiedContent) !== normalizeContent(content);
-  }, [modifiedContent, content]);
-
   const extension = context.path.split(".").pop() || "";
   const isYaml = ["yaml", "yml"].includes(extension);
+
+  const setModifiedContent = (data: string) => {
+    const contentString = isYaml
+      ? jsYaml.dump(data)
+      : JSON.stringify(data, null, 2);
+    onRequestUpdateContent(contentString);
+  };
 
   const data = useMemo(() => {
     try {
@@ -85,30 +74,6 @@ export default function (props: FileBlockProps) {
               setModifiedContent(e.updated_src);
             }}
           />
-          {isDirty && (
-            <button
-              style={{
-                position: "absolute",
-                top: "2em",
-                right: "2em",
-                padding: "0.6em 1.2em",
-                fontSize: "1em",
-                backgroundColor: "#6366f1",
-                color: "#fff",
-                border: "none",
-                borderRadius: "2em",
-                cursor: "pointer",
-              }}
-              onClick={() => {
-                const contentString = isYaml
-                  ? jsYaml.dump(data)
-                  : JSON.stringify(data, null, 2);
-                onRequestUpdateContent(contentString);
-              }}
-            >
-              Save changes
-            </button>
-          )}
         </>
       ) : (
         <div

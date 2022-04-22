@@ -19,8 +19,6 @@ export default function (props: FileBlockProps) {
   const [hoveredFeatureId, setHoveredFeatureId] =
     useState<Feature<Geometry> | null>(null);
   const [isHoveredFeatureLocked, setIsHoveredFeatureLocked] = useState(false);
-  const [isDirty, setIsDirty] = useState(false);
-  const [modifiedContent, setModifiedContent] = useState(content);
   const [lastExtent, setLastExtent] = useState<
     [number, number, number, number] | null
   >([0, 0, 0, 0]);
@@ -32,12 +30,11 @@ export default function (props: FileBlockProps) {
     setTimeout(() => {
       setIsMounted(true);
     });
-    setModifiedContent(content);
   }, [content]);
 
   const geojson = useMemo(() => {
     try {
-      let geojsonObject = JSON.parse(modifiedContent);
+      let geojsonObject = JSON.parse(content);
       if (!geojsonObject.features) {
         geojsonObject = {
           type: "FeatureCollection",
@@ -55,7 +52,7 @@ export default function (props: FileBlockProps) {
     } catch (e) {
       return {};
     }
-  }, [modifiedContent]);
+  }, [content]);
 
   const features = useMemo(() => parseGeoJSON(geojson), [geojson]);
 
@@ -200,7 +197,7 @@ export default function (props: FileBlockProps) {
                               );
                               if (index === -1) return;
 
-                              let newGeojson = JSON.parse(modifiedContent);
+                              let newGeojson = JSON.parse(content);
                               const isCollection =
                                 newGeojson.type === "FeatureCollection";
                               if (isCollection) {
@@ -226,8 +223,9 @@ export default function (props: FileBlockProps) {
                                   [key]: value,
                                 };
                               }
-                              setModifiedContent(JSON.stringify(newGeojson));
-                              setIsDirty(true);
+                              onRequestUpdateContent(
+                                JSON.stringify(newGeojson)
+                              );
                             }}
                           />
                         ) : (
@@ -242,18 +240,6 @@ export default function (props: FileBlockProps) {
               )}
           </div>
         </div>
-      )}
-
-      {isDirty && (
-        <button
-          className="position-absolute d-block top-2 right-2 btn btn-primary"
-          onClick={() => {
-            const contentString = modifiedContent;
-            onRequestUpdateContent(contentString);
-          }}
-        >
-          Save changes
-        </button>
       )}
     </div>
   );

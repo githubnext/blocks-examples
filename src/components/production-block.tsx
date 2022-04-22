@@ -20,7 +20,7 @@ type Block = {
 };
 interface ProductionBlockProps {
   block: Block;
-  contents?: string;
+  content?: string;
   tree?: RepoFiles;
   metadata?: any;
   context: FileContext | FolderContext;
@@ -30,7 +30,14 @@ interface BundleCode {
   content: string;
 }
 export const ProductionBlock = (props: ProductionBlockProps) => {
-  const { block, contents, tree, metadata = {}, context } = props;
+  const {
+    block,
+    content: originalContent,
+    tree,
+    metadata = {},
+    context,
+  } = props;
+  const [content, setContent] = useState<string>(originalContent || "");
 
   const [bundleCode, setBundleCode] = useState<BundleCode[]>([]);
   const id = useRef(uniqueId("sandboxed-block-"));
@@ -92,6 +99,8 @@ export const ProductionBlock = (props: ProductionBlockProps) => {
                 origin
               );
             });
+        } else if (data.type === "update-file") {
+          setContent(data.content);
         }
       }
     };
@@ -108,7 +117,7 @@ export const ProductionBlock = (props: ProductionBlockProps) => {
     bundleCode,
     context,
     id: id.current,
-    contents,
+    contents: content,
     tree,
     metadata,
   });
