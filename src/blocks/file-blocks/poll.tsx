@@ -1,19 +1,5 @@
 import { tw } from "twind";
-import { useMemo, useState } from "react";
-// import { useUpdateFileContents, useFileContent } from "hooks";
-// import { BlockProps } from ".";
-
 import { FileBlockProps } from "@githubnext/utils"; // to import tailwind css
-
-interface PollOptions {
-  text: string;
-  votes: number;
-}
-
-type Poll = {
-  poll: string; // title
-  options: PollOptions[];
-};
 
 export default function (props: FileBlockProps) {
   const { content, isEditable, onUpdateContent } = props;
