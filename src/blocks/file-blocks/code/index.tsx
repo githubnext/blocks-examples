@@ -131,9 +131,7 @@ export default function (props: FileBlockProps) {
 
   return (
     <div
-      className={tw(
-        `position-relative width-full height-full overflow-auto height-full`
-      )}
+      className={tw(`relative w-full h-full overflow-auto`)}
       key={path}
       ref={editorRef}
     />
