@@ -103,7 +103,8 @@ export const LocalBlock = (props: LocalBlockProps) => {
       metadata={metadata}
       onUpdateMetadata={onUpdateMetadata}
       onNavigateToPath={onNavigateToPath}
-      onRequestUpdateContent={setContent}
+      onUpdateContent={setContent}
+      onRequestUpdateContent={setContent} // for backward compatibility
       onRequestGitHubData={onRequestGitHubData}
     />
   );

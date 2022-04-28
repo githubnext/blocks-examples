@@ -9,7 +9,7 @@ import { diffAsText } from "unidiff";
 import "./index.css";
 
 export default function (props: FileBlockProps) {
-  const { content, context, onRequestUpdateContent } = props;
+  const { content, context, onUpdateContent } = props;
 
   const [instruction, setInstruction] = useState<string>("");
   const [newContent, setNewContent] = useState<string>("");
@@ -80,7 +80,7 @@ export default function (props: FileBlockProps) {
             <button
               className="btn btn-primary"
               onClick={() => {
-                onRequestUpdateContent(newContent);
+                onUpdateContent(newContent);
               }}
             >
               Save changes

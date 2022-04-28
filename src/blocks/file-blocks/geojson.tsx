@@ -14,7 +14,7 @@ import { Geometry } from "ol/geom";
 import "ol/ol.css";
 
 export default function (props: FileBlockProps) {
-  const { content, onRequestUpdateContent } = props;
+  const { content, isEditable, onUpdateContent } = props;
 
   const [hoveredFeatureId, setHoveredFeatureId] =
     useState<Feature<Geometry> | null>(null);
@@ -185,7 +185,7 @@ export default function (props: FileBlockProps) {
                         className="flex-1 text-xs text-gray-900 font-mono max-w-[20em] truncate min-w-[10em]"
                         title={currentValue}
                       >
-                        {typeof currentValue === "string" ? (
+                        {isEditable && typeof currentValue === "string" ? (
                           <EditableText
                             value={currentValue}
                             onChange={(value) => {
@@ -223,9 +223,7 @@ export default function (props: FileBlockProps) {
                                   [key]: value,
                                 };
                               }
-                              onRequestUpdateContent(
-                                JSON.stringify(newGeojson)
-                              );
+                              onUpdateContent(JSON.stringify(newGeojson));
                             }}
                           />
                         ) : (

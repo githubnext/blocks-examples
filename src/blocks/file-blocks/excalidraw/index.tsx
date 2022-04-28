@@ -13,7 +13,7 @@ if (typeof window !== "undefined") {
   }
 }
 export default function (props: FileBlockProps) {
-  const { context, content, onRequestUpdateContent } = props;
+  const { context, content, isEditable, onUpdateContent } = props;
   const [excalModule, setExcalModule] = useState<any>(null);
 
   useEffect(() => {
@@ -28,7 +28,7 @@ export default function (props: FileBlockProps) {
       return;
     }
     const serialized = excalModule.serializeAsJSON(elements, appState);
-    onRequestUpdateContent(serialized);
+    onUpdateContent(serialized);
   };
 
   const ExcalidrawComponent = excalModule ? excalModule.default : null;
@@ -37,6 +37,7 @@ export default function (props: FileBlockProps) {
     <div className="width-full" key={context.path} style={{ height: "100vh" }}>
       {ExcalidrawComponent && (
         <ExcalidrawComponent
+          viewModeEnabled={!isEditable}
           initialData={JSON.parse(content)}
           onChange={handleChange}
         />
