@@ -1,6 +1,5 @@
 import { tw } from "twind";
 import { FileBlockProps, getLanguageFromFilename } from "@githubnext/utils";
-import { ThemeProvider } from "@primer/react";
 import { useCallback, useState } from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import SyntaxHighlighter from "react-syntax-highlighter";
@@ -171,9 +170,7 @@ export default function (props: FileBlockProps) {
   const queryClient = new QueryClient();
   return (
     <QueryClientProvider client={queryClient}>
-      <ThemeProvider>
-        <BlockInner {...props} />
-      </ThemeProvider>
+      <BlockInner {...props} />
     </QueryClientProvider>
   );
 }

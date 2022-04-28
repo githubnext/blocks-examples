@@ -8,6 +8,7 @@ import "react-diff-view/style/index.css";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { diffAsText } from "unidiff";
 import "./index.css";
+import { Button, FormControl, TextInput } from "@primer/react";
 
 export default function (props: FileBlockProps) {
   const { content, context, onUpdateContent } = props;
@@ -54,25 +55,29 @@ export default function (props: FileBlockProps) {
           setIsLoading(false);
         }}
       >
-        <label className={tw(`font-normal`)}>
-          How would you like to edit this code?
-        </label>
-        <div className={tw(`flex items-center mt-1`)}>
-          <input
-            className={tw(`w-full p-2 form-control`)}
-            type="text"
-            value={instruction}
-            disabled={isLoading}
-            onChange={(e) => {
-              setInstruction(e.target.value);
-            }}
-          />
-          <button disabled={isLoading} className={tw(`btn ml-1 self-stretch`)}>
-            {newContent ? "Re-generate modified code" : "Get modified code"}
-            <span className={tw(`ml-2`)}>
-              <RocketIcon />
-            </span>
-          </button>
+        <div className={tw(`flex items-end mt-1`)}>
+          <FormControl>
+            <FormControl.Label>
+              How would you like to edit the code?
+            </FormControl.Label>
+            <TextInput
+              value={instruction}
+              disabled={isLoading}
+              onChange={(e) => {
+                setInstruction(e.target.value);
+              }}
+            />
+          </FormControl>
+
+          <div>
+            <Button
+              trailingIcon={RocketIcon}
+              disabled={isLoading}
+              className={tw(`btn ml-1 self-stretch`)}
+            >
+              {newContent ? "Re-generate modified code" : "Get modified code"}
+            </Button>
+          </div>
         </div>
       </form>
 
