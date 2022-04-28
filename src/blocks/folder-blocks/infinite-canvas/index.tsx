@@ -7,6 +7,7 @@ import { useDrag } from "./useDrag";
 import { Item } from "./Item";
 import flatten from "lodash.flatten";
 import "./index.css";
+import { Button } from "@primer/react";
 
 const width = 5000;
 const height = 5000;
@@ -123,14 +124,9 @@ export default function (
   return (
     <div className={tw(`wrapper`)}>
       {/* add new item buttons */}
-      <div
-        className={tw(
-          `position-absolute top-2 left-2 z-10 flex flex-col space-y-2`
-        )}
-      >
+      <div className={tw(`absolute top-2 left-2 z-10 flex flex-col space-y-2`)}>
         {/* add text */}
-        <button
-          className={tw(`btn`)}
+        <Button
           onClick={() => {
             const newItems: ItemType[] = [
               ...items,
@@ -149,7 +145,7 @@ export default function (
           }}
         >
           + Add text
-        </button>
+        </Button>
 
         {/* add new file */}
         <FilePicker
@@ -237,8 +233,9 @@ export default function (
 
       {/* save button */}
       {isDirty && (
-        <button
-          className={tw(`btn btn-primary position-absolute top-2 right-2`)}
+        <Button
+          variant="primary"
+          className={tw(`absolute top-2 right-2`)}
           onClick={() => {
             onUpdateMetadata({
               items,
@@ -247,7 +244,7 @@ export default function (
           }}
         >
           Save changes
-        </button>
+        </Button>
       )}
     </div>
   );
