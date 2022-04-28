@@ -1,3 +1,4 @@
+import { tw } from "twind";
 import { FileBlockProps } from "@githubnext/utils";
 import { parse } from "papaparse";
 import { useEffect, useMemo, useState } from "react";
@@ -45,8 +46,8 @@ export default function (props: FileBlockProps) {
   }, [keys.join(","), savedChartConfigs.join(",")]);
 
   return (
-    <div className="w-full h-full">
-      <div className="d-flex p-3">
+    <div className={tw(`w-full h-full`)}>
+      <div className={tw(`d-flex p-3`)}>
         <Select
           label="saved charts"
           value={activeChartConfig}
@@ -55,7 +56,7 @@ export default function (props: FileBlockProps) {
         />
         {activeChartConfigIndex !== -1 ? (
           <button
-            className="btn ml-2 btn-danger"
+            className={tw(`btn ml-2 btn-danger`)}
             onClick={() => {
               const newMetadata = {
                 configs: savedChartConfigs.filter(
@@ -69,7 +70,7 @@ export default function (props: FileBlockProps) {
           </button>
         ) : (
           <button
-            className="btn ml-2"
+            className={tw(`btn ml-2`)}
             onClick={() => {
               const newMetadata = {
                 configs: [...savedChartConfigs, activeChartConfig],
@@ -80,8 +81,8 @@ export default function (props: FileBlockProps) {
             Save config
           </button>
         )}
-        <div className="ml-auto flex items-center flex-wrap">
-          <div className="mr-2">
+        <div className={tw(`ml-auto flex items-center flex-wrap`)}>
+          <div className={tw(`mr-2`)}>
             <Select
               label="x metric"
               value={xMetric}
@@ -89,7 +90,7 @@ export default function (props: FileBlockProps) {
               options={keys}
             />
           </div>
-          <div className="mr-2">
+          <div className={tw(`mr-2`)}>
             <Select
               label="y metric"
               value={yMetric}
@@ -106,7 +107,7 @@ export default function (props: FileBlockProps) {
         </div>
       </div>
 
-      <div className="w-full">
+      <div className={tw(`w-full`)}>
         <ErrorBoundary>
           <Chart
             data={data}
@@ -136,23 +137,27 @@ const Select = ({
   onChange: (value: string) => void;
 }) => {
   return (
-    <details className="dropdown details-reset details-overlay d-inline-block">
-      <summary className="btn" aria-haspopup="true">
+    <details
+      className={tw(`dropdown details-reset details-overlay d-inline-block`)}
+    >
+      <summary className={tw(`btn`)} aria-haspopup="true">
         {label}: {value}
-        <span className="dropdown-caret border-black"></span>
+        <span className={tw(`dropdown-caret border-black`)}></span>
       </summary>
-      <div className="SelectMenu">
-        <div className="SelectMenu-modal">
-          <div className="SelectMenu-list">
+      <div className={tw(`SelectMenu`)}>
+        <div className={tw(`SelectMenu-modal`)}>
+          <div className={tw(`SelectMenu-list`)}>
             {canBeEmpty && (
               <button
-                className="SelectMenu-item"
+                className={tw(`SelectMenu-item`)}
                 role="menuitemcheckbox"
                 aria-checked={!value}
                 onClick={(e) => onChange("")}
               >
                 <svg
-                  className="SelectMenu-icon SelectMenu-icon--check octicon octicon-check"
+                  className={tw(
+                    `SelectMenu-icon SelectMenu-icon--check octicon octicon-check`
+                  )}
                   viewBox="0 0 16 16"
                   width="16"
                   height="16"
@@ -170,12 +175,14 @@ const Select = ({
             {options.map((option) => (
               <button
                 aria-checked={option === value}
-                className="SelectMenu-item"
+                className={tw(`SelectMenu-item`)}
                 role="menuitemcheckbox"
                 onClick={(e) => onChange(option)}
               >
                 <svg
-                  className="SelectMenu-icon SelectMenu-icon--check octicon octicon-check"
+                  className={tw(
+                    `SelectMenu-icon SelectMenu-icon--check octicon octicon-check`
+                  )}
                   viewBox="0 0 16 16"
                   width="16"
                   height="16"

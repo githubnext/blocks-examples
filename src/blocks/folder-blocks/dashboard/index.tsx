@@ -1,3 +1,4 @@
+import { tw } from "twind";
 import { useEffect, useMemo, useState } from "react";
 import { FolderBlockProps } from "@githubnext/utils";
 import Select from "react-select";
@@ -71,7 +72,7 @@ export default function (props: FolderBlockProps) {
     >
       {blocks.map((block: any, index: number) => (
         <div
-          className="Box"
+          className={tw(`Box`)}
           style={{
             margin: "0.5em",
             flex: "1",
@@ -81,7 +82,7 @@ export default function (props: FolderBlockProps) {
             overflow: "hidden",
           }}
         >
-          <div key={index} className="Box-header d-flex py-2">
+          <div key={index} className={tw(`Box-header d-flex py-2`)}>
             <div>
               <Select
                 options={pathOptions}
@@ -122,7 +123,9 @@ export default function (props: FolderBlockProps) {
               />
             </div>
             <button
-              className="btn btn-danger d-flex flex-items-center mx-1 flex-self-stretch "
+              className={tw(
+                `btn btn-danger d-flex flex-items-center mx-1 flex-self-stretch `
+              )}
               style={{
                 flex: "none",
               }}
@@ -136,7 +139,7 @@ export default function (props: FolderBlockProps) {
                 width="1em"
                 height="1em"
                 viewBox="0 0 16 16"
-                className="bi bi-trash"
+                className={tw(`bi bi-trash`)}
                 fill="currentColor"
                 xmlns="http://www.w3.org/2000/svg"
               >
@@ -179,7 +182,7 @@ export default function (props: FolderBlockProps) {
         </div>
       ))}
       <button
-        className="btn"
+        className={tw(`btn`)}
         style={{
           display: "flex",
           alignItems: "center",
@@ -202,7 +205,7 @@ export default function (props: FolderBlockProps) {
           width="1.3em"
           height="1.3em"
           viewBox="0 0 16 16"
-          className="bi bi-plus"
+          className={tw(`bi bi-plus`)}
           fill="currentColor"
           xmlns="http://www.w3.org/2000/svg"
         >

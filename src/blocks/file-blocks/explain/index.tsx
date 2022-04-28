@@ -1,3 +1,4 @@
+import { tw } from "twind";
 import { FileBlockProps, getLanguageFromFilename } from "@githubnext/utils";
 import { ThemeProvider } from "@primer/react";
 import { useCallback, useState } from "react";
@@ -101,12 +102,14 @@ function BlockInner(props: FileBlockProps) {
   }, [content, context, start, end]);
 
   return (
-    <div className="relative">
+    <div className={tw(`relative`)}>
       {Object.entries(explanations).map(([line, explanation]) => {
         return (
           <div
             key={line}
-            className="px-3 overflow-y-auto break-words absolute bg-white w-[260px] right-0 z-10"
+            className={tw(
+              `px-3 overflow-y-auto break-words absolute bg-white w-[260px] right-0 z-10`
+            )}
             style={{
               top: (explanation.start - 1) * 18 - 2,
               height: (explanation.end - explanation.start + 1) * 18,
@@ -120,10 +123,10 @@ function BlockInner(props: FileBlockProps) {
           </div>
         );
       })}
-      <div className="h-full explain-block overflow-auto pl-10 relative">
+      <div className={tw(`h-full explain-block overflow-auto pl-10 relative`)}>
         {start && end && (
           <div
-            className="z-20 absolute"
+            className={tw(`z-20 absolute`)}
             style={{ top: (start - 1) * 18 - 4, left: 0 }}
           >
             <LineMenu
@@ -139,7 +142,7 @@ function BlockInner(props: FileBlockProps) {
           language={syntaxHighlighterLanguageMap[language] || "javascript"}
           useInlineStyles={false}
           wrapLines
-          className="!bg-transparent syntax-highlighter-block"
+          className={tw(`!bg-transparent syntax-highlighter-block`)}
           lineProps={(lineNumber) => {
             const isHighlighted =
               start && end && lineNumber >= start && lineNumber <= end;

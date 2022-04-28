@@ -1,3 +1,4 @@
+import { tw } from "twind";
 import { FileBlockProps, getLanguageFromFilename } from "@githubnext/utils";
 import { RocketIcon } from "@primer/octicons-react";
 import axios from "axios";
@@ -34,7 +35,9 @@ export default function (props: FileBlockProps) {
   return (
     <div
       id="example-block-summarize-block"
-      className="h-full w-full relative grid grid-cols-2 gap-2 grid-rows-[7em,1fr]"
+      className={tw(
+        `h-full w-full relative grid grid-cols-2 gap-2 grid-rows-[7em,1fr]`
+      )}
     >
       <form
         className={`relative px-5 py-2 flex flex-col justify-end ${
@@ -51,12 +54,12 @@ export default function (props: FileBlockProps) {
           setIsLoading(false);
         }}
       >
-        <label className="font-normal">
+        <label className={tw(`font-normal`)}>
           How would you like to edit this code?
         </label>
-        <div className="flex items-center mt-1">
+        <div className={tw(`flex items-center mt-1`)}>
           <input
-            className="w-full p-2 form-control"
+            className={tw(`w-full p-2 form-control`)}
             type="text"
             value={instruction}
             disabled={isLoading}
@@ -64,21 +67,21 @@ export default function (props: FileBlockProps) {
               setInstruction(e.target.value);
             }}
           />
-          <button disabled={isLoading} className="btn ml-1 self-stretch">
+          <button disabled={isLoading} className={tw(`btn ml-1 self-stretch`)}>
             {newContent ? "Re-generate modified code" : "Get modified code"}
-            <span className="ml-2">
+            <span className={tw(`ml-2`)}>
               <RocketIcon />
             </span>
           </button>
         </div>
       </form>
 
-      <div className="flex items-end px-5 py-2">
+      <div className={tw(`flex items-end px-5 py-2`)}>
         {newContent && (
-          <div className="w-full flex justify-between">
-            <div className="text-gray-500">Proposed code</div>
+          <div className={tw(`w-full flex justify-between`)}>
+            <div className={tw(`text-gray-500`)}>Proposed code</div>
             <button
-              className="btn btn-primary"
+              className={tw(`btn btn-primary`)}
               onClick={() => {
                 onUpdateContent(newContent);
               }}
@@ -90,8 +93,8 @@ export default function (props: FileBlockProps) {
       </div>
 
       {newContent ? (
-        <div className="col-span-2">
-          <div className="w-full">
+        <div className={tw(`col-span-2`)}>
+          <div className={tw(`w-full`)}>
             {hunks?.[0]?.hunks?.map((hunk: Hunk) => (
               <HunkComponent
                 key={hunk.content}
@@ -102,13 +105,13 @@ export default function (props: FileBlockProps) {
           </div>
         </div>
       ) : (
-        <pre className="px-5 py-3 text-left">
+        <pre className={tw(`px-5 py-3 text-left`)}>
           <SyntaxHighlighter
             language={syntaxHighlighterLanguageMap[language] || "javascript"}
             useInlineStyles={false}
             showLineNumbers={false}
             lineNumberStyle={{ opacity: 0.45 }}
-            className="!bg-transparent"
+            className={tw(`!bg-transparent`)}
             wrapLines
             wrapLongLines
           >
@@ -127,7 +130,7 @@ const syntaxHighlighterLanguageMap = {
 
 const HunkComponent = ({ hunk, language }: { hunk: any; language: string }) => {
   return (
-    <pre className="px-5 py-3 text-left">
+    <pre className={tw(`px-5 py-3 text-left`)}>
       {hunk.changes.map((change: Hunk["change"], i: number) => (
         <Change key={i} change={change} language={language} />
       ))}
@@ -137,7 +140,7 @@ const HunkComponent = ({ hunk, language }: { hunk: any; language: string }) => {
 
 const Change = ({ change, language }: { change: Hunk; language: string }) => {
   return (
-    <div className="grid grid-cols-2">
+    <div className={tw(`grid grid-cols-2`)}>
       <SyntaxHighlighter
         language={syntaxHighlighterLanguageMap[language] || "javascript"}
         useInlineStyles={false}

@@ -1,3 +1,4 @@
+import { tw } from "twind";
 import "./style.css";
 import React from "react";
 import { FileBlockProps } from "@githubnext/utils";
@@ -130,7 +131,9 @@ export default function (props: FileBlockProps) {
 
   return (
     <div
-      className="position-relative width-full height-full overflow-auto height-full"
+      className={tw(
+        `position-relative width-full height-full overflow-auto height-full`
+      )}
       key={path}
       ref={editorRef}
     />

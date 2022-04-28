@@ -1,3 +1,4 @@
+import { tw } from "twind";
 import { useRef } from "react";
 import { useDrag } from "./useDrag";
 import { Position } from "./index";
@@ -17,7 +18,9 @@ export const ResizeButton = ({
 
   return (
     <button
-      className="position-absolute bottom-0 right-0 w-5 h-5 bg-gray-200 z-10"
+      className={tw(
+        `position-absolute bottom-0 right-0 w-5 h-5 bg-gray-200 z-10`
+      )}
       style={{
         cursor: "nwse-resize",
       }}

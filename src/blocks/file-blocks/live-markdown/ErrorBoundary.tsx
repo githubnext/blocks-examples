@@ -1,4 +1,5 @@
 import React from "react";
+import { tw } from "twind";
 
 export class ErrorBoundary extends React.Component {
   // @ts-ignore
@@ -21,7 +22,7 @@ export class ErrorBoundary extends React.Component {
     // @ts-ignore
     if (this.state.hasError) {
       return (
-        <div className="flex flex-col">
+        <div className={tw(`flex flex-col`)}>
           <h1>Something went wrong.</h1>
           <p>
             {/* @ts-ignore */}

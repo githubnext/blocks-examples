@@ -1,3 +1,4 @@
+import { tw } from "twind";
 import { useState } from "react";
 import { Files, File } from "./index";
 
@@ -13,24 +14,28 @@ export const FilePicker = ({
 
   return (
     <details
-      className="dropdown details-reset details-overlay d-inline-block"
+      className={tw(`dropdown details-reset details-overlay d-inline-block`)}
       key={iteration}
     >
-      <summary className="btn" aria-haspopup="true">
+      <summary className={tw(`btn`)} aria-haspopup="true">
         + File
-        <div className="dropdown-caret"></div>
+        <div className={tw(`dropdown-caret`)}></div>
       </summary>
 
-      <ul className="dropdown-menu dropdown-menu-se w-full min-w-[16em] max-h-[calc(100vh-16em)] overflow-auto">
+      <ul
+        className={tw(
+          `dropdown-menu dropdown-menu-se w-full min-w-[16em] max-h-[calc(100vh-16em)] overflow-auto`
+        )}
+      >
         {files.map((file) => {
           return (
-            <li key={file.path} className="dropdown-item text-sm w-full">
+            <li key={file.path} className={tw(`dropdown-item text-sm w-full`)}>
               <button
                 onClick={() => {
                   onFileSelected(file);
                   setIteration(iteration + 1);
                 }}
-                className="truncate w-full text-left !overflow-hidden"
+                className={tw(`truncate w-full text-left !overflow-hidden`)}
               >
                 {file.path}
               </button>

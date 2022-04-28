@@ -1,3 +1,4 @@
+import { tw } from "twind";
 import { FileBlockProps } from "@githubnext/utils";
 import { Grid } from "@githubocto/flat-ui";
 import { csvFormat, csvParseRows } from "d3";
@@ -29,7 +30,7 @@ export default function (props: FileBlockProps) {
   );
 
   return (
-    <div className="height-full d-flex flex-column flex-1">
+    <div className={tw(`height-full d-flex flex-column flex-1`)}>
       <Grid
         data={data}
         diffData={originalData}

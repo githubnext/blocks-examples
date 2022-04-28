@@ -1,4 +1,5 @@
 // @ts-ignore
+import { tw } from "twind";
 import { FileBlockProps } from "@githubnext/utils";
 import { Fragment, useState } from "react";
 // @ts-ignore
@@ -43,8 +44,8 @@ ReactDOM.render(
 `;
 
   return (
-    <div className="relative w-full flex h-full">
-      <div className="flex flex-col flex-1 h-full max-w-[80em]">
+    <div className={tw(`relative w-full flex h-full`)}>
+      <div className={tw(`flex flex-col flex-1 h-full max-w-[80em]`)}>
         <Annotator
           annotations={annotations}
           // @ts-ignore
@@ -124,30 +125,30 @@ const Annotator = ({
   };
 
   return (
-    <div className="flex w-full h-full">
-      <div className="flex-1 w-full h-full p-5 pt-0 z-10">
-        <div className="flex w-full items-center pb-1">
+    <div className={tw(`flex w-full h-full`)}>
+      <div className={tw(`flex-1 w-full h-full p-5 pt-0 z-10`)}>
+        <div className={tw(`flex w-full items-center pb-1`)}>
           <label htmlFor="name">Annotation type</label>
 
-          <div className="radio-group ml-2">
+          <div className={tw(`radio-group ml-2`)}>
             {annotationTypes.map(({ id, name }) => (
               <Fragment key={id}>
                 <input
-                  className="radio-input"
+                  className={tw(`radio-input`)}
                   id={id}
                   type="radio"
                   name="annotations"
                   checked={annotationType === id}
                   onChange={() => setAnnotationType(id)}
                 />
-                <label className="radio-label" htmlFor={id}>
+                <label className={tw(`radio-label`)} htmlFor={id}>
                   {name}
                 </label>
               </Fragment>
             ))}
           </div>
         </div>
-        <div className="h-full">
+        <div className={tw(`h-full`)}>
           <Annotation
             annotations={annotations}
             type={annotationType}
@@ -155,7 +156,9 @@ const Annotator = ({
             onChange={setAnnotation}
             onSubmit={onAddAnnotation}
           >
-            <div className="relative w-full h-full z-[-1]">{children}</div>
+            <div className={tw(`relative w-full h-full z-[-1]`)}>
+              {children}
+            </div>
           </Annotation>
         </div>
       </div>
@@ -191,9 +194,9 @@ const AnnotationSetList = ({
   );
 
   return (
-    <div className="w-80 h-full flex flex-col divide-y divide-gray-200">
+    <div className={tw(`w-80 h-full flex flex-col divide-y divide-gray-200`)}>
       <form
-        className="px-5 pt-5 pb-2"
+        className={tw(`px-5 pt-5 pb-2`)}
         onSubmit={(e) => {
           e.preventDefault();
           if (!canSubmitForm) return;
@@ -210,17 +213,17 @@ const AnnotationSetList = ({
           onUpdateMetadata(newMetadata);
         }}
       >
-        <label className="mt-8 pb-4">Annotation set title</label>
+        <label className={tw(`mt-8 pb-4`)}>Annotation set title</label>
         <input
           type="text"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          className="form-control w-full mb-2"
+          className={tw(`form-control w-full mb-2`)}
         />
-        <label className="">Component definition</label>
-        <p className="note">You can specify the props and children</p>
+        <label className={tw(``)}>Component definition</label>
+        <p className={tw(`note`)}>You can specify the props and children</p>
         <textarea
-          className="w-full mb-3 form-control"
+          className={tw(`w-full mb-3 form-control`)}
           value={componentDefinition}
           onChange={(e) => {
             const value = e.target.value;
@@ -236,10 +239,10 @@ const AnnotationSetList = ({
           Save new annotation set
         </button>
       </form>
-      <div className="flex-1 px-5 py-3 flex flex-col h-full w-full mt-3">
-        <div className="font-semibold">Saved annotation sets</div>
+      <div className={tw(`flex-1 px-5 py-3 flex flex-col h-full w-full mt-3`)}>
+        <div className={tw(`font-semibold`)}>Saved annotation sets</div>
         <ul
-          className="ActionList pl-0"
+          className={tw(`ActionList pl-0`)}
           role="listbox"
           aria-label="Select an option"
         >
@@ -248,24 +251,28 @@ const AnnotationSetList = ({
             return (
               <li
                 key={index}
-                className="ActionList-item"
+                className={tw(`ActionList-item`)}
                 role="option"
                 aria-selected={isSelected ? "true" : "false"}
               >
                 <button
-                  className="group w-full ActionList-content"
+                  className={tw(`group w-full ActionList-content`)}
                   onClick={() => {
                     setAnnotations(annotationSet.annotations);
                     setComponentDefinition(annotationSet.componentDefinition);
                     setTitle(annotationSet.title);
                   }}
                 >
-                  <span className="ActionList-item-action ActionList-item-action--leading">
+                  <span
+                    className={tw(
+                      `ActionList-item-action ActionList-item-action--leading`
+                    )}
+                  >
                     <svg
                       viewBox="0 0 16 16"
                       width="16"
                       height="16"
-                      className="ActionList-item-singleSelectCheckmark"
+                      className={tw(`ActionList-item-singleSelectCheckmark`)}
                     >
                       <path
                         fill-rule="evenodd"
@@ -273,16 +280,22 @@ const AnnotationSetList = ({
                       ></path>
                     </svg>
                   </span>
-                  <span className="ActionList-item-label flex-1 flex flex-col justify-start items-start">
+                  <span
+                    className={tw(
+                      `ActionList-item-label flex-1 flex flex-col justify-start items-start`
+                    )}
+                  >
                     {annotationSet.title}
-                    <span className="note">
+                    <span className={tw(`note`)}>
                       {annotationSet.annotations.length} annotation
                       {annotationSet.annotations.length > 1 ? "s" : ""}
                     </span>
                   </span>
 
                   <button
-                    className="absolute top-1/2 right-2 h-10 w-10 transform -translate-y-1/2 cursor-pointer flex items-center justify-center transition-opacity opacity-0 group-hover:opacity-100 focus:opacity-100"
+                    className={tw(
+                      `absolute top-1/2 right-2 h-10 w-10 transform -translate-y-1/2 cursor-pointer flex items-center justify-center transition-opacity opacity-0 group-hover:opacity-100 focus:opacity-100`
+                    )}
                     onClick={(e) => {
                       e.stopPropagation();
                       const newSaved = saved.filter((_, i) => i !== index);
@@ -290,7 +303,7 @@ const AnnotationSetList = ({
                     }}
                   >
                     <svg
-                      className="h-5 w-5"
+                      className={tw(`h-5 w-5`)}
                       viewBox="0 0 20 20"
                       fill="currentColor"
                     >
@@ -307,7 +320,7 @@ const AnnotationSetList = ({
           })}
         </ul>
         <button
-          className="group relative w-full btn"
+          className={tw(`group relative w-full btn`)}
           onClick={() => {
             setAnnotations([]);
             setComponentDefinition("");
@@ -315,7 +328,7 @@ const AnnotationSetList = ({
           }}
         >
           <svg
-            className="h-4 w-4 octicon mr-1"
+            className={tw(`h-4 w-4 octicon mr-1`)}
             viewBox="0 0 20 20"
             fill="currentColor"
           >

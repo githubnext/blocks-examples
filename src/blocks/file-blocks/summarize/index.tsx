@@ -1,3 +1,4 @@
+import { tw } from "twind";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import SyntaxHighlighter from "react-syntax-highlighter";
@@ -50,9 +51,11 @@ export default function (props: FileBlockProps) {
   }, [content]);
 
   return (
-    <div className="h-full w-full relative">
+    <div className={tw(`h-full w-full relative`)}>
       <button
-        className="btn flex items-center position-absolute top-2 right-2 z-10"
+        className={tw(
+          `btn flex items-center position-absolute top-2 right-2 z-10`
+        )}
         onClick={() => {
           setIsCollapsed(!isCollapsed);
         }}
@@ -60,7 +63,7 @@ export default function (props: FileBlockProps) {
         {isCollapsed ? (
           <>
             <svg
-              className="inline-block mr-1 -ml-1"
+              className={tw(`inline-block mr-1 -ml-1`)}
               viewBox="0 0 16 16"
               width="16"
               height="16"
@@ -72,7 +75,7 @@ export default function (props: FileBlockProps) {
         ) : (
           <>
             <svg
-              className="inline-block mr-1 -ml-1"
+              className={tw(`inline-block mr-1 -ml-1`)}
               viewBox="0 0 16 16"
               width="16"
               height="16"
@@ -83,13 +86,17 @@ export default function (props: FileBlockProps) {
           </>
         )}
       </button>
-      <div className="h-full w-full d-flex flex-column bg-gray-50 overflow-auto">
+      <div
+        className={tw(
+          `h-full w-full d-flex flex-column bg-gray-50 overflow-auto`
+        )}
+      >
         {/* <p className={`px-6 pt-3 whitespace-pre-wrap ${fileSummary ? "" : "text-gray-400"}`}>
         Briefly, this code will {fileSummary || "..."}
         </p> */}
-        <pre className="divide-y divide-gray-200 text-left">
+        <pre className={tw(`divide-y divide-gray-200 text-left`)}>
           {!sections.length && (
-            <div className="text-center text-gray-500 italic py-10">
+            <div className={tw(`text-center text-gray-500 italic py-10`)}>
               Loading...
             </div>
           )}
@@ -149,7 +156,7 @@ const Section = ({
         setIsCollapsedLocally(!isCollapsedLocally);
       }}
     >
-      <div className="relative overflow-hidden border-r border-gray-200">
+      <div className={tw(`relative overflow-hidden border-r border-gray-200`)}>
         <div
           className={`px-5 py-3 text-base overflow-x-auto !bg-transparent top-0 ${
             isCollapsedLocally ? "absolute" : ""
@@ -160,7 +167,7 @@ const Section = ({
             useInlineStyles={false}
             showLineNumbers={false}
             lineNumberStyle={{ opacity: 0.45 }}
-            className="!bg-transparent"
+            className={tw(`!bg-transparent`)}
             wrapLines
             wrapLongLines
           >
@@ -169,19 +176,27 @@ const Section = ({
         </div>
         {isCollapsedLocally && (
           // fade out to bottom
-          <div className="absolute bottom-0 left-0 right-0 h-[3em] bg-gradient-to-b from-transparent to-gray-50 hover:to-white z-10" />
+          <div
+            className={tw(
+              `absolute bottom-0 left-0 right-0 h-[3em] bg-gradient-to-b from-transparent to-gray-50 hover:to-white z-10`
+            )}
+          />
         )}
       </div>
-      <div className="px-5 py-3 text-gray-800 text-sm font-sans min-h-[5em]">
+      <div
+        className={tw(`px-5 py-3 text-gray-800 text-sm font-sans min-h-[5em]`)}
+      >
         {hasValidName && (
-          <div className="font-mono text-xs font-medium mb-1 text-gray-500">
+          <div
+            className={tw(`font-mono text-xs font-medium mb-1 text-gray-500`)}
+          >
             {name}
           </div>
         )}
         {explanation === undefined ? (
-          <div className="text-gray-300 italic">Loading...</div>
+          <div className={tw(`text-gray-300 italic`)}>Loading...</div>
         ) : (
-          <div className="">{explanation || ""}</div>
+          <div className={tw(``)}>{explanation || ""}</div>
         )}
       </div>
     </div>

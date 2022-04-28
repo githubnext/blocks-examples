@@ -1,3 +1,4 @@
+import { tw } from "twind";
 import { useMemo, useRef, useState } from "react";
 import { useDrag } from "./useDrag";
 import { BlockPicker } from "./BlockPicker";
@@ -97,10 +98,12 @@ export const Item = ({
         ref={headerElement}
       />
 
-      <div className="px-3 py-2 w-full overflow-auto">
+      <div className={tw(`px-3 py-2 w-full overflow-auto`)}>
         {type === "text" ? (
           <div
-            className="Text focus:outline-none cursor-text w-full h-full text-sm"
+            className={tw(
+              `Text focus:outline-none cursor-text w-full h-full text-sm`
+            )}
             contentEditable
             suppressContentEditableWarning
             onInput={(e) => onChange({ text: e.target?.innerText || "" })}
@@ -111,14 +114,18 @@ export const Item = ({
             {textBuffer}
           </div>
         ) : type === "file" ? (
-          <div className="File h-full w-full flex flex-col">
-            <div className="flex-none flex items-center pb-1 w-full justify-between">
-              <div className="flex items-center pr-2 text-sm">
+          <div className={tw(`File h-full w-full flex flex-col`)}>
+            <div
+              className={tw(
+                `flex-none flex items-center pb-1 w-full justify-between`
+              )}
+            >
+              <div className={tw(`flex items-center pr-2 text-sm`)}>
                 <svg
                   viewBox="0 0 16 16"
                   width="16"
                   height="16"
-                  className="text-gray-500 fill-current mr-1"
+                  className={tw(`text-gray-500 fill-current mr-1`)}
                 >
                   <path d="M3.75 1.5a.25.25 0 00-.25.25v11.5c0 .138.112.25.25.25h8.5a.25.25 0 00.25-.25V6H9.75A1.75 1.75 0 018 4.25V1.5H3.75zm5.75.56v2.19c0 .138.112.25.25.25h2.19L9.5 2.06zM2 1.75C2 .784 2.784 0 3.75 0h5.086c.464 0 .909.184 1.237.513l3.414 3.414c.329.328.513.773.513 1.237v8.086A1.75 1.75 0 0112.25 15h-8.5A1.75 1.75 0 012 13.25V1.75z"></path>
                 </svg>
@@ -133,8 +140,8 @@ export const Item = ({
               />
             </div>
             {BlockComponent && block ? (
-              <div className="w-full flex-1">
-                <div className="scaled-down">
+              <div className={tw(`w-full flex-1`)}>
+                <div className={tw(`scaled-down`)}>
                   <BlockComponent
                     {...(blockProps || {})}
                     block={block}
@@ -152,7 +159,11 @@ export const Item = ({
                 </div>
               </div>
             ) : (
-              <pre className="text-xs pl-[1.7em] overflow-auto py-1 text-gray-500">
+              <pre
+                className={tw(
+                  `text-xs pl-[1.7em] overflow-auto py-1 text-gray-500`
+                )}
+              >
                 {contents}
               </pre>
             )}
@@ -162,7 +173,9 @@ export const Item = ({
 
       {/* close button */}
       <button
-        className="position-absolute top-1 right-1 text-gray-500 opacity-0 group-hover:opacity-100"
+        className={tw(
+          `position-absolute top-1 right-1 text-gray-500 opacity-0 group-hover:opacity-100`
+        )}
         onClick={onDelete}
       >
         <svg viewBox="0 0 16 16" width="1em" height="1em" fill="currentColor">

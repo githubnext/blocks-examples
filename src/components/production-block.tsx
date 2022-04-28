@@ -160,7 +160,6 @@ export const ProductionBlock = (props: ProductionBlockProps) => {
       }}
     >
       <SandpackProvider
-        externalResources={["https://cdn.tailwindcss.com"]}
         template="react"
         customSetup={{
           dependencies: {},

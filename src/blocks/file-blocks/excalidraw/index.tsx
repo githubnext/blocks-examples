@@ -1,3 +1,4 @@
+import { tw } from "twind";
 import { FileBlockProps } from "@githubnext/utils";
 import { useEffect, useState } from "react";
 import "./style.css";
@@ -34,7 +35,11 @@ export default function (props: FileBlockProps) {
   const ExcalidrawComponent = excalModule ? excalModule.default : null;
 
   return (
-    <div className="width-full" key={context.path} style={{ height: "100vh" }}>
+    <div
+      className={tw(`width-full`)}
+      key={context.path}
+      style={{ height: "100vh" }}
+    >
       {ExcalidrawComponent && (
         <ExcalidrawComponent
           viewModeEnabled={!isEditable}

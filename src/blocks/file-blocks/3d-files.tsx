@@ -1,4 +1,5 @@
 import { Suspense, useRef, useState, useEffect } from "react";
+import { tw } from "twind";
 import { PerspectiveCamera, useGLTF } from "@react-three/drei";
 import { Canvas, useLoader, useStore } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
