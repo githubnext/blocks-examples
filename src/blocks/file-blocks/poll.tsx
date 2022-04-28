@@ -18,18 +18,12 @@ export default function (props: FileBlockProps) {
   const { content, isEditable, onUpdateContent } = props;
   const poll = JSON.parse(content);
 
-  const onVote = (index: number) => {
+  const onClick = (index: number) => {
+    if (!isEditable) return;
     const newPoll = { ...poll };
     newPoll.options[index].votes += 1;
     onUpdateContent(JSON.stringify(newPoll));
   };
-
-  const onClick = (index: number) =>
-    isEditable
-      ? () => {
-          onVote(index);
-        }
-      : () => {};
 
   if (!poll || !poll.options)
     return (
