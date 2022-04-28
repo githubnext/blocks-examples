@@ -1,7 +1,7 @@
 // @ts-ignore
 import { tw } from "twind";
 import { FileBlockProps } from "@githubnext/utils";
-import { Fragment, useState } from "react";
+import { useState } from "react";
 // @ts-ignore
 import Annotation from "react-image-annotation";
 import {
@@ -12,6 +12,16 @@ import {
 } from "react-image-annotation/lib/selectors";
 // @ts-ignore
 import { CodeSandbox } from "./CodeSandbox.tsx";
+import {
+  Button,
+  FormControl,
+  Radio,
+  RadioGroup,
+  Textarea,
+  TextInput,
+  ActionList,
+} from "@primer/react";
+import { PlusIcon } from "@primer/octicons-react";
 
 export default function ({
   content,
@@ -127,27 +137,20 @@ const Annotator = ({
   return (
     <div className={tw(`flex w-full h-full`)}>
       <div className={tw(`flex-1 w-full h-full p-5 pt-0 z-10`)}>
-        <div className={tw(`flex w-full items-center pb-1`)}>
-          <label htmlFor="name">Annotation type</label>
+        <RadioGroup name="annotationType">
+          <RadioGroup.Label>Annotation Type</RadioGroup.Label>
+          {annotationTypes.map(({ id, name }) => (
+            <FormControl key={id}>
+              <Radio
+                checked={annotationType === id}
+                onChange={() => setAnnotationType(id)}
+                value={id}
+              />
+              <FormControl.Label>{name}</FormControl.Label>
+            </FormControl>
+          ))}
+        </RadioGroup>
 
-          <div className={tw(`radio-group ml-2`)}>
-            {annotationTypes.map(({ id, name }) => (
-              <Fragment key={id}>
-                <input
-                  className={tw(`radio-input`)}
-                  id={id}
-                  type="radio"
-                  name="annotations"
-                  checked={annotationType === id}
-                  onChange={() => setAnnotationType(id)}
-                />
-                <label className={tw(`radio-label`)} htmlFor={id}>
-                  {name}
-                </label>
-              </Fragment>
-            ))}
-          </div>
-        </div>
         <div className={tw(`h-full`)}>
           <Annotation
             annotations={annotations}
@@ -213,133 +216,120 @@ const AnnotationSetList = ({
           onUpdateMetadata(newMetadata);
         }}
       >
-        <label className={tw(`mt-8 pb-4`)}>Annotation set title</label>
-        <input
-          type="text"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          className={tw(`form-control w-full mb-2`)}
-        />
-        <label className={tw(``)}>Component definition</label>
-        <p className={tw(`note`)}>You can specify the props and children</p>
-        <textarea
-          className={tw(`w-full mb-3 form-control`)}
-          value={componentDefinition}
-          onChange={(e) => {
-            const value = e.target.value;
-            if (!value) return;
-            setComponentDefinition(value);
-          }}
-        />
-        <button
-          className={`btn btn-primary w-full`}
+        <div className={tw(`mb-3`)}>
+          <FormControl>
+            <FormControl.Label>Annotation Set Title</FormControl.Label>
+            <TextInput
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+          </FormControl>
+        </div>
+        <div className={tw(`mb-3`)}>
+          <FormControl>
+            <FormControl.Label>Component Definition</FormControl.Label>
+            <FormControl.Caption>
+              You can specify the props and children
+            </FormControl.Caption>
+            <Textarea
+              rows={3}
+              value={componentDefinition}
+              onChange={(e) => {
+                const value = e.target.value;
+                if (!value) return;
+                setComponentDefinition(value);
+              }}
+            />
+          </FormControl>
+        </div>
+
+        <Button
+          className={tw(`w-full`)}
+          variant="primary"
           aria-disabled={!canSubmitForm ? "true" : undefined}
           type="submit"
         >
           Save new annotation set
-        </button>
+        </Button>
       </form>
       <div className={tw(`flex-1 px-5 py-3 flex flex-col h-full w-full mt-3`)}>
         <div className={tw(`font-semibold`)}>Saved annotation sets</div>
-        <ul
-          className={tw(`ActionList pl-0`)}
-          role="listbox"
-          aria-label="Select an option"
-        >
+        <ActionList>
           {saved.map((annotationSet, index) => {
             const isSelected = selectedAnnotationSetIndex === index;
             return (
-              <li
+              <ActionList.Item
+                selected={isSelected}
                 key={index}
-                className={tw(`ActionList-item`)}
-                role="option"
-                aria-selected={isSelected ? "true" : "false"}
+                onSelect={() => {
+                  setAnnotations(annotationSet.annotations);
+                  setComponentDefinition(annotationSet.componentDefinition);
+                  setTitle(annotationSet.title);
+                }}
               >
+                <ActionList.LeadingVisual>
+                  <svg
+                    viewBox="0 0 16 16"
+                    width="16"
+                    height="16"
+                    className={tw(`ActionList-item-singleSelectCheckmark`)}
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z"
+                    ></path>
+                  </svg>
+                </ActionList.LeadingVisual>
+
+                <span
+                  className={tw(
+                    `flex-1 flex flex-col justify-start items-start`
+                  )}
+                >
+                  {annotationSet.title}
+                  <span className={tw(`note`)}>
+                    {annotationSet.annotations.length} annotation
+                    {annotationSet.annotations.length > 1 ? "s" : ""}
+                  </span>
+                </span>
+
                 <button
-                  className={tw(`group w-full ActionList-content`)}
-                  onClick={() => {
-                    setAnnotations(annotationSet.annotations);
-                    setComponentDefinition(annotationSet.componentDefinition);
-                    setTitle(annotationSet.title);
+                  className={tw(
+                    `absolute top-1/2 right-2 h-10 w-10 transform -translate-y-1/2 cursor-pointer flex items-center justify-center transition-opacity opacity-0 group-hover:opacity-100 focus:opacity-100`
+                  )}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    const newSaved = saved.filter((_, i) => i !== index);
+                    onUpdateMetadata({ saved: newSaved });
                   }}
                 >
-                  <span
-                    className={tw(
-                      `ActionList-item-action ActionList-item-action--leading`
-                    )}
+                  <svg
+                    className={tw(`h-5 w-5`)}
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
                   >
-                    <svg
-                      viewBox="0 0 16 16"
-                      width="16"
-                      height="16"
-                      className={tw(`ActionList-item-singleSelectCheckmark`)}
-                    >
-                      <path
-                        fill-rule="evenodd"
-                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z"
-                      ></path>
-                    </svg>
-                  </span>
-                  <span
-                    className={tw(
-                      `ActionList-item-label flex-1 flex flex-col justify-start items-start`
-                    )}
-                  >
-                    {annotationSet.title}
-                    <span className={tw(`note`)}>
-                      {annotationSet.annotations.length} annotation
-                      {annotationSet.annotations.length > 1 ? "s" : ""}
-                    </span>
-                  </span>
-
-                  <button
-                    className={tw(
-                      `absolute top-1/2 right-2 h-10 w-10 transform -translate-y-1/2 cursor-pointer flex items-center justify-center transition-opacity opacity-0 group-hover:opacity-100 focus:opacity-100`
-                    )}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      const newSaved = saved.filter((_, i) => i !== index);
-                      onUpdateMetadata({ saved: newSaved });
-                    }}
-                  >
-                    <svg
-                      className={tw(`h-5 w-5`)}
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  </button>
+                    <path
+                      fillRule="evenodd"
+                      d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
                 </button>
-              </li>
+              </ActionList.Item>
             );
           })}
-        </ul>
-        <button
-          className={tw(`group relative w-full btn`)}
+        </ActionList>
+        <Button
+          className={tw(`w-full`)}
           onClick={() => {
             setAnnotations([]);
             setComponentDefinition("");
             setTitle("");
           }}
+          leadingIcon={PlusIcon}
         >
-          <svg
-            className={tw(`h-4 w-4 octicon mr-1`)}
-            viewBox="0 0 20 20"
-            fill="currentColor"
-          >
-            <path
-              fillRule="evenodd"
-              d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
-              clipRule="evenodd"
-            />
-          </svg>
           Create a new annotation set
-        </button>
+        </Button>
       </div>
     </div>
   );
