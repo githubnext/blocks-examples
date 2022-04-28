@@ -73,7 +73,7 @@ export default function (props: FileBlockProps) {
             <Button
               trailingIcon={RocketIcon}
               disabled={isLoading}
-              className={tw(`btn ml-1 self-stretch`)}
+              className={tw(`ml-1 self-stretch`)}
             >
               {newContent ? "Re-generate modified code" : "Get modified code"}
             </Button>
@@ -85,14 +85,14 @@ export default function (props: FileBlockProps) {
         {newContent && (
           <div className={tw(`w-full flex justify-between`)}>
             <div className={tw(`text-gray-500`)}>Proposed code</div>
-            <button
-              className={tw(`btn btn-primary`)}
+            <Button
+              variant="primary"
               onClick={() => {
                 onUpdateContent(newContent);
               }}
             >
               Save changes
-            </button>
+            </Button>
           </div>
         )}
       </div>

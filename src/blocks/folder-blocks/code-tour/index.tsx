@@ -106,14 +106,14 @@ export default function (props: FolderBlockProps) {
                 placeholder="Select tour"
               />
             </div>
-            <button
-              className={tw(`btn px-2`)}
+            <Button
+              className={tw(`px-2`)}
               onClick={() => {
                 setSelectedTourIndex(-1);
               }}
             >
               +
-            </button>
+            </Button>
           </div>
 
           <div
@@ -203,16 +203,18 @@ const TourControls = ({
             onChange={(e) => setName(e.target.value)}
           />
           <div className={tw(`mt-1 grid grid-cols-2 gap-2`)}>
-            <button
-              className={tw(`btn w-full`)}
+            <Button
+              className={tw(`w-full`)}
               onClick={() => {
                 setIsSaving(false);
               }}
               type="button"
             >
               Cancel
-            </button>
-            <button className={tw(`btn btn-primary w-full`)}>Save</button>
+            </Button>
+            <Button variant="primary" className={tw(`w-full`)}>
+              Save
+            </Button>
           </div>
         </form>
       ) : (
@@ -300,9 +302,10 @@ const Step = ({
         {step.path}
       </div>
       {!!onDelete && (
-        <button
+        <Button
+          variant="danger"
           className={tw(
-            `!absolute top-1/2 right-0 px-2 flex items-center justify-center btn btn-danger transform -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 focus:opacity-100`
+            `!absolute top-1/2 right-0 px-2 flex items-center justify-center transform -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 focus:opacity-100`
           )}
           onClick={(e) => {
             e.stopPropagation();
@@ -320,7 +323,7 @@ const Step = ({
               clipRule="evenodd"
             />
           </svg>
-        </button>
+        </Button>
       )}
     </button>
   );

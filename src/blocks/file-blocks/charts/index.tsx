@@ -6,6 +6,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Chart } from "./Chart.tsx";
 // @ts-ignore: we need to specify the file extension
 import { ErrorBoundary } from "./ErrorBoundary.tsx";
+import { Button } from "@primer/react";
 
 export default function (props: FileBlockProps) {
   const { content, metadata, onUpdateMetadata } = props;
@@ -55,8 +56,9 @@ export default function (props: FileBlockProps) {
           options={savedChartConfigs}
         />
         {activeChartConfigIndex !== -1 ? (
-          <button
-            className={tw(`btn ml-2 btn-danger`)}
+          <Button
+            variant="danger"
+            className={tw(`ml-2`)}
             onClick={() => {
               const newMetadata = {
                 configs: savedChartConfigs.filter(
@@ -67,10 +69,10 @@ export default function (props: FileBlockProps) {
             }}
           >
             Delete config
-          </button>
+          </Button>
         ) : (
-          <button
-            className={tw(`btn ml-2`)}
+          <Button
+            className={tw(`ml-2`)}
             onClick={() => {
               const newMetadata = {
                 configs: [...savedChartConfigs, activeChartConfig],
@@ -79,7 +81,7 @@ export default function (props: FileBlockProps) {
             }}
           >
             Save config
-          </button>
+          </Button>
         )}
         <div className={tw(`ml-auto flex items-center flex-wrap`)}>
           <div className={tw(`mr-2`)}>
