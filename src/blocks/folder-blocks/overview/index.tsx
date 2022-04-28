@@ -3,6 +3,7 @@ import { useCallback, useEffect, useState } from "react";
 import { FolderBlockProps } from "@githubnext/utils";
 import { Endpoints } from "@octokit/types";
 import { getRelativeTime } from "./utils";
+import { Heading, Link, Text, Label } from "@primer/react";
 
 // Note: We're using a BlockComponent prop here to create nested Blocks.
 // This is only implemented for our own example Blocks, to showcase the concept.
@@ -73,19 +74,23 @@ export default function (props: FolderBlockProps) {
     <div className={tw(`w-full`)}>
       <div className={tw(`p-3 flex-none`)}>
         {!isRoot ? null : !hasLoadedActivity ? (
-          <div
-            className={tw(
-              `px-3 py-10 w-full text-center color-fg-muted italic`
-            )}
-          >
-            Loading...
+          <div className={tw(`px-3 py-10 w-full text-center`)}>
+            <Text color="fg.muted" sx={{ fontStyle: "italic" }}>
+              Loading...
+            </Text>
           </div>
         ) : (
           <div className={tw(`flex w-full`)}>
             <div className={tw(`flex-1 p-2`)}>
-              <h2 className={tw(`h2 px-3 py-1`)}>Issues</h2>
+              <Heading sx={{ fontSize: 4 }} className={tw(`px-3 py-1`)}>
+                Issues
+              </Heading>
               {!issues.length && (
-                <div className={tw(`p-3 color-fg-muted italic`)}>No issues</div>
+                <div className={tw(`p-3`)}>
+                  <Text color="fg.muted" sx={{ fontStyle: "italic" }}>
+                    No issues
+                  </Text>
+                </div>
               )}
               {issues.slice(0, maxItems).map((issue: IssueType) => (
                 <Issue issue={issue} />
@@ -100,10 +105,14 @@ export default function (props: FolderBlockProps) {
               )}
             </div>
             <div className={tw(`flex-1 p-2`)}>
-              <h2 className={tw(`h2 px-3 py-1`)}>PRs</h2>
+              <Heading sx={{ fontSize: 4 }} className={tw(`px-3 py-1`)}>
+                PRs
+              </Heading>
               {!pulls.length && (
-                <div className={tw(`p-3 color-fg-muted italic`)}>
-                  No open Pull Requests
+                <div className={tw(`p-3`)}>
+                  <Text color="fg.muted" sx={{ fontStyle: "italic" }}>
+                    No open Pull Requests
+                  </Text>
                 </div>
               )}
               {pulls.slice(0, maxItems).map((pull: PullType) => (
@@ -154,42 +163,63 @@ export default function (props: FolderBlockProps) {
 const Issue = ({ issue }: { issue: IssueType }) => {
   return (
     <div className={tw(`p-3`)}>
-      <h4 className={tw(`h4`)}>
-        <a href={issue.html_url} className={tw(`inline-block mr-1`)}>
+      <Heading as="h4" sx={{ fontSize: 2, mb: 2 }}>
+        <Link href={issue.html_url} className={tw(`mr-1`)}>
           #{issue.number}
-        </a>
+        </Link>
         {issue.title}
-      </h4>
-      <p className={tw(`mt-1 mb-1 f5 color-fg-muted`)}>
-        <span className={`Label mr-1 Label--${issue.state} leading-none`}>
+      </Heading>
+      <p className={tw(`mt-1 mb-1 f5`)}>
+        <Label
+          variant={issue.state === "open" ? "success" : "danger"}
+          className={`mr-1`}
+        >
           {issue.state}
-        </span>
-        <time dateTime={issue.updated_at}>
+        </Label>
+        <Text
+          sx={{ fontSize: 1 }}
+          color="fg.muted"
+          as="time"
+          dateTime={issue.updated_at}
+        >
           {getRelativeTime(new Date(issue.updated_at))}
-        </time>
+        </Text>
       </p>
-      <p className={tw(`f5`)}>{(issue.body || "").slice(0, 130)}</p>
+      <Text color="fg.muted" as="p">
+        {(issue.body || "").slice(0, 130)}
+      </Text>
     </div>
   );
 };
 const Pull = ({ pull }: { pull: PullType }) => {
   return (
     <div className={tw(`p-3`)}>
-      <h4 className={tw(`h4`)}>
-        <a href={pull.html_url} className={tw(`inline-block mr-1`)}>
+      <Heading as="h1" sx={{ fontSize: 2, mb: 2 }}>
+        <Link href={pull.html_url} className={tw(`mr-1`)}>
           #{pull.number}
-        </a>
+        </Link>
         {pull.title}
-      </h4>
+      </Heading>
+
       <p className={tw(`mt-1 mb-1 f5 color-fg-muted`)}>
-        <span className={`Label mr-1 Label--${pull.state} leading-none`}>
+        <Label
+          variant={pull.state === "open" ? "success" : "danger"}
+          className={`mr-1`}
+        >
           {pull.state}
-        </span>
-        <time dateTime={pull.updated_at}>
+        </Label>
+        <Text
+          sx={{ fontSize: 1 }}
+          color="fg.muted"
+          as="time"
+          dateTime={pull.updated_at}
+        >
           {getRelativeTime(new Date(pull.updated_at))}
-        </time>
+        </Text>
       </p>
-      <p className={tw(`f5`)}>{(pull.body || "").slice(0, 130)}</p>
+      <Text color="fg.muted" as="p">
+        {(pull.body || "").slice(0, 130)}
+      </Text>
     </div>
   );
 };
