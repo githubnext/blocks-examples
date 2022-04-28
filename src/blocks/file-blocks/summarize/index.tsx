@@ -88,9 +88,7 @@ export default function (props: FileBlockProps) {
       </div>
 
       <div
-        className={tw(
-          `h-full w-full d-flex flex-column bg-gray-50 overflow-auto`
-        )}
+        className={tw(`h-full w-full flex flex-col bg-gray-50 overflow-auto`)}
       >
         {/* <p className={`px-6 pt-3 whitespace-pre-wrap ${fileSummary ? "" : "text-gray-400"}`}>
         Briefly, this code will {fileSummary || "..."}
