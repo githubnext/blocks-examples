@@ -30,7 +30,7 @@ export default function (props: FileBlockProps) {
   );
 
   return (
-    <div className={tw(`height-full d-flex flex-column flex-1`)}>
+    <div className={tw(`h-full flex flex-col flex-1`)}>
       <Grid
         data={data}
         diffData={originalData}
