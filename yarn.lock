@@ -1171,29 +1171,6 @@
   resolved "https://registry.yarnpkg.com/@primer/behaviors/-/behaviors-1.1.1.tgz#51e2f02ebfe297c4c05f503cdc52ae8b4ce5794c"
   integrity sha512-wvF1PYjyxKNTr6+5w4uR5Gkz53t1fsRDgKjWxDKk7wmlh0cwiILBo4dDFjjVhWRF1mBSjaIxxJGB4WGaP7ct2Q==
 
-"@primer/components@^31.1.0":
-  version "31.2.0"
-  resolved "https://registry.yarnpkg.com/@primer/components/-/components-31.2.0.tgz#6a421bd252f8b2e35b888a22ea77779dc6895762"
-  integrity sha512-4ICaA+Fp0JdGAisKiIYYeo2gfqu5tZpF0y4S9kRdc0U72YZ/MVBpZee5xYDfcVig5MV3Dh3Lfo48KWWMQIyd+g==
-  dependencies:
-    "@primer/octicons-react" "^16.1.0"
-    "@primer/primitives" "6.1.0"
-    "@radix-ui/react-polymorphic" "0.0.14"
-    "@react-aria/ssr" "3.1.0"
-    "@styled-system/css" "5.1.5"
-    "@styled-system/props" "5.1.5"
-    "@styled-system/theme-get" "5.1.2"
-    "@types/history" "4.7.8"
-    "@types/styled-components" "5.1.11"
-    "@types/styled-system" "5.1.12"
-    "@types/styled-system__css" "5.0.16"
-    "@types/styled-system__theme-get" "5.0.1"
-    classnames "2.3.1"
-    color2k "1.2.4"
-    deepmerge "4.2.2"
-    focus-visible "5.2.0"
-    styled-system "5.1.5"
-
 "@primer/octicons-react@16.1.1":
   version "16.1.1"
   resolved "https://registry.yarnpkg.com/@primer/octicons-react/-/octicons-react-16.1.1.tgz#6a9eaffbbf46cb44d344a37a5ff2384973b82d3f"
@@ -1204,15 +1181,10 @@
   resolved "https://registry.yarnpkg.com/@primer/octicons-react/-/octicons-react-12.1.0.tgz#7556450199e0c10e72e99dd02c59f1ac33544767"
   integrity sha512-eb/5Obsp6/pVkyzzGhobK6aPAkKqx6VleF/7HYeihGTYm3rGZc+prL/jhxD5Mo1P6U343YEkHjc2gKuvtENn1g==
 
-"@primer/octicons-react@^16.0.0", "@primer/octicons-react@^16.1.0":
+"@primer/octicons-react@^16.0.0":
   version "16.3.1"
   resolved "https://registry.yarnpkg.com/@primer/octicons-react/-/octicons-react-16.3.1.tgz#86982fe1001eee138d5ee46accbcdf62d51d11c5"
   integrity sha512-uzTs8/CvLiW1/47cgMRkIK9bKWpnw+UonCbgczXErwSSLqMDHfiiTpobW1trvRuoiMgLwsPo0l7kBBdKBnmq3g==
-
-"@primer/primitives@6.1.0":
-  version "6.1.0"
-  resolved "https://registry.yarnpkg.com/@primer/primitives/-/primitives-6.1.0.tgz#9fe385913b922b4e48cac19fe5e560e4ae9e284d"
-  integrity sha512-gwSVf5rVf2CMa/bU3/47LZosDHNfODMRJfKi7uJOqHWABVNl6Lf+thDM7Jb8tS9sEQQsUnrLDiGNjCScS81IXA==
 
 "@primer/primitives@7.6.0":
   version "7.6.0"
@@ -2089,11 +2061,6 @@
   integrity sha512-wLEm0QvaoawEDoTRwzTXp4b4jpwiJDvR5KMnFnVodm3scufTlBOWRD6N1OBf9TZMhjlNsSfcO5V+7AF4+Vy+9g==
   dependencies:
     "@types/unist" "*"
-
-"@types/history@4.7.8":
-  version "4.7.8"
-  resolved "https://registry.yarnpkg.com/@types/history/-/history-4.7.8.tgz#49348387983075705fe8f4e02fb67f7daaec4934"
-  integrity sha512-S78QIYirQcUoo6UJZx9CSP0O2ix9IaeAXwQi26Rhr/+mg7qqPy8TzaxHSUut7eGjL8WmLccT7/MXf304WjqHcA==
 
 "@types/hoist-non-react-statics@*":
   version "3.3.1"

@@ -2,7 +2,7 @@ import { tw } from "twind";
 import { FileBlockProps } from "@githubnext/utils";
 // @ts-ignore
 import MDX from "@mdx-js/runtime";
-import { Avatar, Box, StateLabel } from "@primer/components";
+import { Avatar, Box, StateLabel } from "@primer/react";
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { CodeSandbox } from "./CodeSandbox";
