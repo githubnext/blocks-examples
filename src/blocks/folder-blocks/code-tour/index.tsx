@@ -6,6 +6,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Select from "react-select";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import "./style.css";
+import { Button, FormControl, TextInput } from "@primer/react";
 
 export default function (props: FolderBlockProps) {
   const {
@@ -216,21 +217,22 @@ const TourControls = ({
         </form>
       ) : (
         <div className={tw(`grid grid-cols-2 gap-2`)}>
-          <button
-            className={tw(`mt-3 btn w-full`)}
+          <Button
+            className={tw(`mt-3 w-full`)}
             onClick={() => {
               setSteps([...steps, newStep]);
               setSelectedStepIndex(steps.length);
             }}
           >
             + Add Step
-          </button>
-          <button
-            className={tw(`mt-3 btn btn-primary w-full`)}
+          </Button>
+          <Button
+            className={tw(`mt-3 w-full`)}
+            variant="primary"
             onClick={() => setIsSaving(true)}
           >
             Save tour
-          </button>
+          </Button>
         </div>
       )}
     </>
@@ -424,34 +426,38 @@ const StepContent = ({
     <div className={tw(`h-full flex flex-col`)}>
       {isEditing ? (
         <div className={tw(`w-full`)}>
-          <label className={tw(``)}>Step name</label>
-          <input
-            className={tw(`form-control py-2 w-full`)}
-            value={step.name}
-            onChange={(e) => onChange({ ...step, name: e.target.value })}
-          />
-          {/* <textarea value={step.description} onChange={(e) => onChange({ ...step, description: e.target.value })} className={tw(`w-full h-40 py-3 px-5  border border-gray-300 rounded`)} /> */}
+          <FormControl>
+            <FormControl.Label>Step name</FormControl.Label>
+            <TextInput
+              className={tw(`w-full`)}
+              value={step.name}
+              onChange={(e) => onChange({ ...step, name: e.target.value })}
+            />
+          </FormControl>
 
           <div className={tw(`flex mt-2`)}>
             <div className={tw(`flex-1 min-w-0`)}>
-              <label className={tw(``)}>Path</label>
-              <Select
-                options={pathOptions}
-                value={pathOptions.find((d) => d.value === step.path)}
-                styles={selectStyles}
-                onChange={(newValue: any) => {
-                  const path = newValue.value;
-                  onChange({ ...step, path });
-                }}
-              />
+              <FormControl>
+                <FormControl.Label>Path</FormControl.Label>
+                <Select
+                  options={pathOptions}
+                  value={pathOptions.find((d) => d.value === step.path)}
+                  styles={selectStyles}
+                  onChange={(newValue: any) => {
+                    const path = newValue.value;
+                    onChange({ ...step, path });
+                  }}
+                />
+              </FormControl>
             </div>
             <div className={tw(`flex-none min-w-0 w-40 ml-1`)}>
-              <label className={tw(``)}>Query</label>
-              <input
-                className={tw(`form-control py-2`)}
-                value={localQuery}
-                onChange={(e) => setLocalQuery(e.target.value)}
-              />
+              <FormControl>
+                <FormControl.Label>Query</FormControl.Label>
+                <TextInput
+                  value={localQuery}
+                  onChange={(e) => setLocalQuery(e.target.value)}
+                />
+              </FormControl>
             </div>
           </div>
         </div>
