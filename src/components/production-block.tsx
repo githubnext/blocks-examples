@@ -162,11 +162,7 @@ export const ProductionBlock = (props: ProductionBlockProps) => {
       <SandpackProvider
         template="react"
         customSetup={{
-          dependencies: {
-            "@primer/react": "^35.2.0",
-            // https://github.com/primer/react/blob/main/package.json#L188
-            "styled-components": "4.x",
-          },
+          dependencies: {},
           files,
         }}
         autorun
