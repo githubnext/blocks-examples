@@ -20,9 +20,11 @@ export default function (props: FileBlockProps) {
 
   const onClick = (index: number) => {
     if (!isEditable) return;
-    const newPoll = { ...poll };
-    newPoll.options[index].votes += 1;
-    onUpdateContent(JSON.stringify(newPoll));
+    return () => {
+      const newPoll = { ...poll };
+      newPoll.options[index].votes += 1;
+      onUpdateContent(JSON.stringify(newPoll));
+    };
   };
 
   if (!poll || !poll.options)
