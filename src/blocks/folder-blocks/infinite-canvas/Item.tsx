@@ -5,6 +5,7 @@ import { BlockPicker } from "./BlockPicker";
 import { ResizeButton } from "./ResizeButton";
 import pm from "picomatch";
 import { roundToInterval, Position, ItemType, Dimensions } from "./index";
+import { Box } from "@primer/react";
 
 export const Item = ({
   type,
@@ -81,8 +82,11 @@ export const Item = ({
   }[type];
 
   return (
-    <div
-      className={`item group Box shadow ${zIndex}`}
+    <Box
+      borderColor="border.default"
+      borderWidth={1}
+      borderStyle="solid"
+      className={`item group shadow ${zIndex}`}
       style={{
         width: dimensions[0],
         height: dimensions[1],
@@ -189,6 +193,6 @@ export const Item = ({
         }}
         dimensions={dimensions}
       />
-    </div>
+    </Box>
   );
 };
