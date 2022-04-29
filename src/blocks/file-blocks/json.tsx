@@ -1,19 +1,20 @@
 import { FileBlockProps } from "@githubnext/utils";
 import { useMemo } from "react";
 import ReactJson from "react-json-view";
+import type { InteractionProps } from "react-json-view";
 import jsYaml from "js-yaml";
 
 export default function (props: FileBlockProps) {
-  const { content, context, onRequestUpdateContent } = props;
+  const { content, context, isEditable, onUpdateContent } = props;
 
   const extension = context.path.split(".").pop() || "";
   const isYaml = ["yaml", "yml"].includes(extension);
 
-  const setModifiedContent = (data: string) => {
+  const setModifiedContent = (data: unknown) => {
     const contentString = isYaml
       ? jsYaml.dump(data)
       : JSON.stringify(data, null, 2);
-    onRequestUpdateContent(contentString);
+    onUpdateContent(contentString);
   };
 
   const data = useMemo(() => {
@@ -28,6 +29,10 @@ export default function (props: FileBlockProps) {
       return null;
     }
   }, [content]);
+
+  const onChange = isEditable
+    ? (e: InteractionProps) => setModifiedContent(e.updated_src)
+    : undefined;
 
   return (
     <div
@@ -61,18 +66,9 @@ export default function (props: FileBlockProps) {
               backgroundColor: "transparent",
               color: "#333",
             }}
-            onEdit={(e) => {
-              // @ts-ignore
-              setModifiedContent(e.updated_src);
-            }}
-            onAdd={(e) => {
-              // @ts-ignore
-              setModifiedContent(e.updated_src);
-            }}
-            onDelete={(e) => {
-              // @ts-ignore
-              setModifiedContent(e.updated_src);
-            }}
+            onEdit={onChange}
+            onAdd={onChange}
+            onDelete={onChange}
           />
         </>
       ) : (

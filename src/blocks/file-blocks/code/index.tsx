@@ -79,16 +79,11 @@ export default function (props: FileBlockProps) {
   const {
     content,
     context: { path },
-    onRequestUpdateContent,
+    isEditable,
+    onUpdateContent,
   } = props;
 
   const editorRef = React.useRef<HTMLDivElement>(null);
-
-  // track `onRequestUpdateContent` so the `updateListener` callback gets the latest one.
-  const onRequestUpdateContentRef =
-    React.useRef<typeof onRequestUpdateContent>();
-  onRequestUpdateContentRef.current = onRequestUpdateContent;
-
   const viewRef = React.useRef<EditorView>();
 
   if (viewRef.current) {
@@ -108,10 +103,10 @@ export default function (props: FileBlockProps) {
       doc: content,
       extensions: [
         extensions,
+        EditorView.editable.of(isEditable),
         EditorView.updateListener.of((v) => {
           if (!v.docChanged) return;
-          if (!onRequestUpdateContentRef.current) return;
-          onRequestUpdateContentRef.current(v.state.doc.sliceString(0));
+          onUpdateContent(v.state.doc.sliceString(0));
         }),
       ],
     });

@@ -15,13 +15,14 @@ type Poll = {
 };
 
 export default function (props: FileBlockProps) {
-  const { content } = props;
+  const { content, isEditable, onUpdateContent } = props;
   const poll = JSON.parse(content);
 
-  const onVote = (index: number) => {
+  const onClick = (index: number) => {
+    if (!isEditable) return;
     const newPoll = { ...poll };
     newPoll.options[index].votes += 1;
-    props.onRequestUpdateContent(JSON.stringify(newPoll));
+    onUpdateContent(JSON.stringify(newPoll));
   };
 
   if (!poll || !poll.options)
@@ -51,10 +52,12 @@ export default function (props: FileBlockProps) {
               <span className="mr-2">{percent}%</span>
               <span className="font-light mr-2">{option.votes} votes</span>
               <button
-                className="bg-transparent hover:bg-blue-500 text-blue-400 hover:text-white px-2 border border-blue-500 hover:border-transparent rounded"
-                onClick={() => {
-                  onVote(index);
-                }}
+                disabled={!isEditable}
+                className={
+                  "bg-transparent hover:bg-blue-500 text-blue-400 hover:text-white px-2 border border-blue-500 hover:border-transparent rounded" +
+                  (!isEditable ? " pointer-events-none" : "")
+                }
+                onClick={onClick(index)}
               >
                 Vote
               </button>
