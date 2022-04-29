@@ -8,6 +8,7 @@ import { Chart } from "./Chart.tsx";
 // @ts-ignore: we need to specify the file extension
 import { ErrorBoundary } from "./ErrorBoundary.tsx";
 import { Button } from "@primer/react";
+import { CheckIcon } from "@primer/octicons-react";
 
 export default function (props: FileBlockProps) {
   const { content, metadata, onUpdateMetadata } = props;
@@ -146,7 +147,9 @@ const Select = ({
         <ActionList>
           {options.map((option) => (
             <ActionList.Item key={option} onSelect={() => onChange(option)}>
-              {/* OcticonCheck */}
+              <ActionList.LeadingVisual>
+                {option === value ? <CheckIcon /> : null}
+              </ActionList.LeadingVisual>
               {option}
             </ActionList.Item>
           ))}
