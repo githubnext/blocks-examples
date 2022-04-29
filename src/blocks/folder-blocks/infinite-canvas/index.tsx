@@ -187,7 +187,7 @@ export default function (
         {/* our scrolling & panning listener */}
         <div
           className={tw(
-            `position-absolute top-[-50%] right-[-50%] bottom-[-50%] left-[-50%] pan`
+            `absolute top-[-50%] right-[-50%] bottom-[-50%] left-[-50%] pan`
           )}
           ref={wrapperElement}
           style={{
