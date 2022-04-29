@@ -816,10 +816,10 @@
     unist-util-visit "^1.0.0"
     uuid "^3.3.2"
 
-"@githubnext/utils@^0.20.0":
-  version "0.20.0"
-  resolved "https://registry.yarnpkg.com/@githubnext/utils/-/utils-0.20.0.tgz#69d245ac9806e1575177a99d0e6c906a8412b603"
-  integrity sha512-M7CbTe/sasvZbzvbNJ8q+NqMda+hUZpTYgWH0qmnvcY1sHjiBd+abFGiq9PG1RwRoMKeMRDfHjfeMkVakC+Utg==
+"@githubnext/utils@^0.21.0":
+  version "0.21.0"
+  resolved "https://registry.yarnpkg.com/@githubnext/utils/-/utils-0.21.0.tgz#d564718803e68e53258382766212585831bb48fa"
+  integrity sha512-gRRasLrE3l4R7J73wdMlVko6N+/rh1GjCm5wPlaSaUkcAL8corlBz1mJQ7TyvD9/LJMUy1X9X7pnqNEjVZsHyA==
   dependencies:
     "@types/lodash.uniqueid" "^4.0.6"
     lodash.uniqueid "^4.0.1"
