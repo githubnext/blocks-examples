@@ -8,7 +8,13 @@ export default function (props: FileBlockProps) {
   const { content } = props;
 
   const { tree, flattenedRules, widelyApplicableAttributes } = useMemo(() => {
-    const tree = toJSON(content);
+    console.log(content);
+    let tree = { children: [] };
+    try {
+      tree = toJSON(content);
+    } catch (e) {
+      console.log(e);
+    }
     // const rules = getRulesFromTreeItem(tree)
     let flattenedRules = {} as any;
     Object.keys(tree.children).forEach((key) => {

@@ -70,6 +70,7 @@ ReactDOM.render(
         saved={metadata.saved || []}
         onUpdateMetadata={onUpdateMetadata}
         annotations={annotations}
+        componentName={componentName || ""}
         // @ts-ignore
         setAnnotations={setAnnotations}
         componentDefinition={componentDefinition}
@@ -136,22 +137,24 @@ const Annotator = ({
 
   return (
     <div className={tw(`flex w-full h-full`)}>
-      <div className={tw(`flex-1 w-full h-full p-5 pt-0 z-10`)}>
-        <RadioGroup name="annotationType">
-          <RadioGroup.Label>Annotation Type</RadioGroup.Label>
-          {annotationTypes.map(({ id, name }) => (
-            <FormControl key={id}>
-              <Radio
-                checked={annotationType === id}
-                onChange={() => setAnnotationType(id)}
-                value={id}
-              />
-              <FormControl.Label>{name}</FormControl.Label>
-            </FormControl>
-          ))}
-        </RadioGroup>
+      <div className={tw(`flex-1 w-full h-full p-5 z-10`)}>
+        <div className={tw(`p-3`)}>
+          <RadioGroup name="annotationType">
+            <RadioGroup.Label>Annotation Type</RadioGroup.Label>
+            {annotationTypes.map(({ id, name }) => (
+              <FormControl key={id}>
+                <Radio
+                  checked={annotationType === id}
+                  onChange={() => setAnnotationType(id)}
+                  value={id}
+                />
+                <FormControl.Label>{name}</FormControl.Label>
+              </FormControl>
+            ))}
+          </RadioGroup>
+        </div>
 
-        <div className={tw(`h-full`)}>
+        <div className={tw(`h-full w-full`)}>
           <Annotation
             annotations={annotations}
             type={annotationType}
@@ -174,19 +177,21 @@ const AnnotationSetList = ({
   onUpdateMetadata,
   annotations,
   setAnnotations,
+  componentName,
   componentDefinition,
   setComponentDefinition,
 }: {
   saved: AnnotationSet[];
   onUpdateMetadata: (metadata: any) => void;
   annotations: AnnotationType[];
+  componentName: string;
   setAnnotations: (annotations: AnnotationType[]) => void;
   componentDefinition: string;
   setComponentDefinition: (componentDefinition: string) => void;
 }) => {
   const [title, setTitle] = useState("");
 
-  const canSubmitForm = annotations.length && title.length;
+  const canSubmitForm = !!annotations.length && title.length;
   const selectedAnnotationSetString = annotationSetToString({
     title,
     componentDefinition,
@@ -254,7 +259,7 @@ const AnnotationSetList = ({
       </form>
       <div className={tw(`flex-1 px-5 py-3 flex flex-col h-full w-full mt-3`)}>
         <div className={tw(`font-semibold`)}>Saved annotation sets</div>
-        <ActionList>
+        <ActionList selectionVariant="single">
           {saved.map((annotationSet, index) => {
             const isSelected = selectedAnnotationSetIndex === index;
             return (
@@ -267,10 +272,6 @@ const AnnotationSetList = ({
                   setTitle(annotationSet.title);
                 }}
               >
-                <ActionList.LeadingVisual>
-                  <CheckIcon />
-                </ActionList.LeadingVisual>
-
                 <span
                   className={tw(
                     `flex-1 flex flex-col justify-start items-start`
@@ -303,7 +304,7 @@ const AnnotationSetList = ({
           className={tw(`w-full`)}
           onClick={() => {
             setAnnotations([]);
-            setComponentDefinition("");
+            setComponentDefinition(`<${componentName}>\n</${componentName}>`);
             setTitle("");
           }}
           leadingIcon={PlusIcon}

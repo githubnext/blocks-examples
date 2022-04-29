@@ -163,7 +163,7 @@ export default function (props: FolderBlockProps) {
 const Issue = ({ issue }: { issue: IssueType }) => {
   return (
     <div className={tw(`p-3`)}>
-      <Heading as="h4" sx={{ fontSize: 2, mb: 2 }}>
+      <Heading as="h3" sx={{ fontSize: 2, mb: 2 }}>
         <Link href={issue.html_url} className={tw(`mr-1`)}>
           #{issue.number}
         </Link>
@@ -187,6 +187,7 @@ const Issue = ({ issue }: { issue: IssueType }) => {
       </p>
       <Text color="fg.muted" as="p">
         {(issue.body || "").slice(0, 130)}
+        {issue?.body?.length && issue.body.length > 130 ? "..." : ""}
       </Text>
     </div>
   );
@@ -194,7 +195,7 @@ const Issue = ({ issue }: { issue: IssueType }) => {
 const Pull = ({ pull }: { pull: PullType }) => {
   return (
     <div className={tw(`p-3`)}>
-      <Heading as="h1" sx={{ fontSize: 2, mb: 2 }}>
+      <Heading as="h3" sx={{ fontSize: 2, mb: 2 }}>
         <Link href={pull.html_url} className={tw(`mr-1`)}>
           #{pull.number}
         </Link>
@@ -219,6 +220,7 @@ const Pull = ({ pull }: { pull: PullType }) => {
       </p>
       <Text color="fg.muted" as="p">
         {(pull.body || "").slice(0, 130)}
+        {pull?.body?.length && pull.body.length > 130 ? "..." : ""}
       </Text>
     </div>
   );

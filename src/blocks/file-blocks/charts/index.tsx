@@ -1,6 +1,6 @@
 import { tw } from "twind";
 import { FileBlockProps } from "@githubnext/utils";
-import { ActionList, ActionMenu } from "@primer/react";
+import { ActionList, ActionMenu, Text } from "@primer/react";
 import { parse } from "papaparse";
 import { useEffect, useMemo, useState } from "react";
 // @ts-ignore: we need to specify the file extension
@@ -144,16 +144,29 @@ const Select = ({
         {label}: {value}
       </ActionMenu.Button>
       <ActionMenu.Overlay>
-        <ActionList>
-          {options.map((option) => (
-            <ActionList.Item key={option} onSelect={() => onChange(option)}>
-              <ActionList.LeadingVisual>
-                {option === value ? <CheckIcon /> : null}
-              </ActionList.LeadingVisual>
-              {option}
-            </ActionList.Item>
-          ))}
-        </ActionList>
+        {options.length ? (
+          <ActionList>
+            {options.map((option) => (
+              <ActionList.Item key={option} onSelect={() => onChange(option)}>
+                <ActionList.LeadingVisual>
+                  {option === value ? <CheckIcon /> : null}
+                </ActionList.LeadingVisual>
+                {option}
+              </ActionList.Item>
+            ))}
+          </ActionList>
+        ) : (
+          <Text
+            color="fg.muted"
+            textAlign="center"
+            fontStyle="italic"
+            display="block"
+            mx="auto"
+            my="2"
+          >
+            No options
+          </Text>
+        )}
       </ActionMenu.Overlay>
     </ActionMenu>
   );

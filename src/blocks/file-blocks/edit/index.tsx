@@ -35,10 +35,9 @@ export default function (props: FileBlockProps) {
 
   return (
     <div
-      id="example-block-summarize-block"
-      className={tw(
-        `h-full w-full relative grid grid-cols-2 gap-2 grid-rows-[7em,1fr]`
-      )}
+      className={
+        "wrapper" + tw(`h-full w-full relative grid grid-cols-2 gap-2`)
+      }
     >
       <form
         className={`relative px-5 py-2 flex flex-col justify-end ${
