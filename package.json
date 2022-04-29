@@ -399,7 +399,7 @@
     "@codemirror/search": "^0.19.9",
     "@codemirror/state": "^0.19.9",
     "@codemirror/view": "^0.19.48",
-    "@codesandbox/sandpack-react": "^0.13.13",
+    "@codesandbox/sandpack-react": "^0.19.3",
     "@excalidraw/excalidraw": "^0.10.0",
     "@fullstackio/cq": "^6.0.9",
     "@fullstackio/remark-cq": "^6.1.2",
