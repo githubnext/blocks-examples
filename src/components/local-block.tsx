@@ -99,6 +99,8 @@ export const LocalBlock = (props: LocalBlockProps) => {
     <Block
       context={context}
       content={content}
+      originalContent={originalContent}
+      isEditable={true}
       tree={tree}
       metadata={metadata}
       onUpdateMetadata={onUpdateMetadata}
