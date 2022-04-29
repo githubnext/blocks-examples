@@ -21,7 +21,7 @@ import {
   TextInput,
   ActionList,
 } from "@primer/react";
-import { PlusIcon } from "@primer/octicons-react";
+import { CheckIcon, PlusIcon, TrashIcon } from "@primer/octicons-react";
 
 export default function ({
   content,
@@ -268,17 +268,7 @@ const AnnotationSetList = ({
                 }}
               >
                 <ActionList.LeadingVisual>
-                  <svg
-                    viewBox="0 0 16 16"
-                    width="16"
-                    height="16"
-                    className={tw(`ActionList-item-singleSelectCheckmark`)}
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z"
-                    ></path>
-                  </svg>
+                  <CheckIcon />
                 </ActionList.LeadingVisual>
 
                 <span
@@ -303,17 +293,7 @@ const AnnotationSetList = ({
                     onUpdateMetadata({ saved: newSaved });
                   }}
                 >
-                  <svg
-                    className={tw(`h-5 w-5`)}
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
+                  <TrashIcon />
                 </button>
               </ActionList.Item>
             );
