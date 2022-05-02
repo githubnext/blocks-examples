@@ -1,3 +1,4 @@
+import { tw } from "twind";
 import { FileBlockProps, getLanguageFromFilename } from "@githubnext/utils";
 import { RocketIcon } from "@primer/octicons-react";
 import axios from "axios";
@@ -7,6 +8,7 @@ import "react-diff-view/style/index.css";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { diffAsText } from "unidiff";
 import "./index.css";
+import { Button, FormControl, TextInput } from "@primer/react";
 
 export default function (props: FileBlockProps) {
   const { content, context, onUpdateContent } = props;
@@ -33,8 +35,9 @@ export default function (props: FileBlockProps) {
 
   return (
     <div
-      id="example-block-summarize-block"
-      className="h-full w-full relative grid grid-cols-2 gap-2 grid-rows-[7em,1fr]"
+      className={
+        "wrapper" + tw(`h-full w-full relative grid grid-cols-2 gap-2`)
+      }
     >
       <form
         className={`relative px-5 py-2 flex flex-col justify-end ${
@@ -51,47 +54,51 @@ export default function (props: FileBlockProps) {
           setIsLoading(false);
         }}
       >
-        <label className="font-normal">
-          How would you like to edit this code?
-        </label>
-        <div className="flex items-center mt-1">
-          <input
-            className="w-full p-2 form-control"
-            type="text"
-            value={instruction}
-            disabled={isLoading}
-            onChange={(e) => {
-              setInstruction(e.target.value);
-            }}
-          />
-          <button disabled={isLoading} className="btn ml-1 self-stretch">
-            {newContent ? "Re-generate modified code" : "Get modified code"}
-            <span className="ml-2">
-              <RocketIcon />
-            </span>
-          </button>
+        <div className={tw(`flex items-end mt-1`)}>
+          <FormControl>
+            <FormControl.Label>
+              How would you like to edit the code?
+            </FormControl.Label>
+            <TextInput
+              value={instruction}
+              disabled={isLoading}
+              onChange={(e) => {
+                setInstruction(e.target.value);
+              }}
+            />
+          </FormControl>
+
+          <div>
+            <Button
+              trailingIcon={RocketIcon}
+              disabled={isLoading}
+              className={tw(`ml-1 self-stretch`)}
+            >
+              {newContent ? "Re-generate modified code" : "Get modified code"}
+            </Button>
+          </div>
         </div>
       </form>
 
-      <div className="flex items-end px-5 py-2">
+      <div className={tw(`flex items-end px-5 py-2`)}>
         {newContent && (
-          <div className="w-full flex justify-between">
-            <div className="text-gray-500">Proposed code</div>
-            <button
-              className="btn btn-primary"
+          <div className={tw(`w-full flex justify-between`)}>
+            <div className={tw(`text-gray-500`)}>Proposed code</div>
+            <Button
+              variant="primary"
               onClick={() => {
                 onUpdateContent(newContent);
               }}
             >
               Save changes
-            </button>
+            </Button>
           </div>
         )}
       </div>
 
       {newContent ? (
-        <div className="col-span-2">
-          <div className="w-full">
+        <div className={tw(`col-span-2`)}>
+          <div className={tw(`w-full`)}>
             {hunks?.[0]?.hunks?.map((hunk: Hunk) => (
               <HunkComponent
                 key={hunk.content}
@@ -102,13 +109,13 @@ export default function (props: FileBlockProps) {
           </div>
         </div>
       ) : (
-        <pre className="px-5 py-3 text-left">
+        <pre className={tw(`px-5 py-3 text-left`)}>
           <SyntaxHighlighter
             language={syntaxHighlighterLanguageMap[language] || "javascript"}
             useInlineStyles={false}
             showLineNumbers={false}
             lineNumberStyle={{ opacity: 0.45 }}
-            className="!bg-transparent"
+            className={tw(`!bg-transparent`)}
             wrapLines
             wrapLongLines
           >
@@ -127,7 +134,7 @@ const syntaxHighlighterLanguageMap = {
 
 const HunkComponent = ({ hunk, language }: { hunk: any; language: string }) => {
   return (
-    <pre className="px-5 py-3 text-left">
+    <pre className={tw(`px-5 py-3 text-left`)}>
       {hunk.changes.map((change: Hunk["change"], i: number) => (
         <Change key={i} change={change} language={language} />
       ))}
@@ -137,7 +144,7 @@ const HunkComponent = ({ hunk, language }: { hunk: any; language: string }) => {
 
 const Change = ({ change, language }: { change: Hunk; language: string }) => {
   return (
-    <div className="grid grid-cols-2">
+    <div className={tw(`grid grid-cols-2`)}>
       <SyntaxHighlighter
         language={syntaxHighlighterLanguageMap[language] || "javascript"}
         useInlineStyles={false}

@@ -1,3 +1,4 @@
+import { tw } from "twind";
 import {
   Area,
   AreaChart,
@@ -52,7 +53,7 @@ export function Chart({
   if (!ChartComponent) return null;
 
   return (
-    <div className="w-full h-full">
+    <div className={tw(`w-full h-full`)}>
       <ChartComponent
         data={sortedData}
         xMetric={parsedXMetric}

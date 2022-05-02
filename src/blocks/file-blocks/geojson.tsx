@@ -1,3 +1,4 @@
+import { tw } from "twind";
 import { FileBlockProps } from "@githubnext/utils";
 import {
   Fragment,
@@ -61,10 +62,10 @@ export default function (props: FileBlockProps) {
   );
 
   return (
-    <div className="relative w-full h-full overflow-auto">
+    <div className={tw(`relative w-full h-full overflow-auto`)}>
       {isMounted && (
         <RMap
-          className="w-full h-full min-h-[10em] min-w-[10em]"
+          className={tw(`w-full h-full min-h-[10em] min-w-[10em]`)}
           initial={{
             center: [0, 0],
             zoom: 1,
@@ -165,8 +166,12 @@ export default function (props: FileBlockProps) {
       )}
 
       {hoveredFeature && (
-        <div className="absolute top-2 left-2 max-h-[85%] shadow-xl overflow-auto p-4 bg-white border border-gray-200">
-          <div className="grid grid-cols-[6em,1fr]">
+        <div
+          className={tw(
+            `absolute top-2 left-2 max-h-[85%] shadow-xl overflow-auto p-4 bg-white border border-gray-200`
+          )}
+        >
+          <div className={tw(`grid grid-cols-[6em,1fr]`)}>
             {hoveredFeature.values_ &&
               Object.keys(hoveredFeature.values_).map(
                 (key: string, i: number) => {
@@ -176,13 +181,17 @@ export default function (props: FileBlockProps) {
                   return (
                     <Fragment key={i}>
                       <div
-                        className="flex-none text-xs text-gray-600 max-w-[15em] truncate mr-1 min-w-[5em]"
+                        className={tw(
+                          `flex-none text-xs text-gray-600 max-w-[15em] truncate mr-1 min-w-[5em]`
+                        )}
                         title={key}
                       >
                         {key}
                       </div>
                       <div
-                        className="flex-1 text-xs text-gray-900 font-mono max-w-[20em] truncate min-w-[10em]"
+                        className={tw(
+                          `flex-1 text-xs text-gray-900 font-mono max-w-[20em] truncate min-w-[10em]`
+                        )}
                         title={currentValue}
                       >
                         {isEditable && typeof currentValue === "string" ? (
@@ -227,7 +236,7 @@ export default function (props: FileBlockProps) {
                             }}
                           />
                         ) : (
-                          <div className="py-1 px-2">
+                          <div className={tw(`py-1 px-2`)}>
                             {JSON.stringify(hoveredFeature.values_[key])}
                           </div>
                         )}
@@ -274,7 +283,7 @@ const EditableText = ({
   }, [isEditing]);
 
   return (
-    <div className="">
+    <div className={tw(``)}>
       {isEditing && (
         <form
           onSubmit={(e) => {
@@ -286,7 +295,7 @@ const EditableText = ({
           <input
             autoFocus
             ref={inputElement}
-            className="w-full py-1 px-2"
+            className={tw(`w-full py-1 px-2`)}
             type="text"
             value={inputValue}
             onChange={onChangeInput}
@@ -304,7 +313,7 @@ const EditableText = ({
       )}
       {!isEditing && (
         <button
-          className="py-1 px-2 hover:bg-gray-100"
+          className={tw(`py-1 px-2 hover:bg-gray-100`)}
           onClick={() => {
             setIsEditing(true);
             setInputValue(value);

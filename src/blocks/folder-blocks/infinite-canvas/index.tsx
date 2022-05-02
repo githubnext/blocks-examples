@@ -1,3 +1,4 @@
+import { tw } from "twind";
 import { FolderBlockProps, getNestedFileTree } from "@githubnext/utils";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Buffer } from "buffer";
@@ -6,6 +7,7 @@ import { useDrag } from "./useDrag";
 import { Item } from "./Item";
 import flatten from "lodash.flatten";
 import "./index.css";
+import { Button } from "@primer/react";
 
 const width = 5000;
 const height = 5000;
@@ -120,12 +122,11 @@ export default function (
   }, []);
 
   return (
-    <div className="wrapper">
+    <div className={tw(`wrapper`)}>
       {/* add new item buttons */}
-      <div className="position-absolute top-2 left-2 z-10 flex flex-col space-y-2">
+      <div className={tw(`absolute top-2 left-2 z-10 flex flex-col space-y-2`)}>
         {/* add text */}
-        <button
-          className="btn"
+        <Button
           onClick={() => {
             const newItems: ItemType[] = [
               ...items,
@@ -144,7 +145,7 @@ export default function (
           }}
         >
           + Add text
-        </button>
+        </Button>
 
         {/* add new file */}
         <FilePicker
@@ -176,7 +177,7 @@ export default function (
 
       {/* our canvas! */}
       <div
-        className="canvas"
+        className={tw(`canvas`)}
         style={{
           width: width,
           height: height,
@@ -185,7 +186,9 @@ export default function (
       >
         {/* our scrolling & panning listener */}
         <div
-          className="position-absolute top-[-50%] right-[-50%] bottom-[-50%] left-[-50%] pan"
+          className={tw(
+            `absolute top-[-50%] right-[-50%] bottom-[-50%] left-[-50%] pan`
+          )}
           ref={wrapperElement}
           style={{
             cursor: isDragging ? "grabbing" : "grab",
@@ -230,8 +233,9 @@ export default function (
 
       {/* save button */}
       {isDirty && (
-        <button
-          className="btn btn-primary position-absolute top-2 right-2"
+        <Button
+          variant="primary"
+          className={tw(`absolute top-2 right-2`)}
           onClick={() => {
             onUpdateMetadata({
               items,
@@ -240,7 +244,7 @@ export default function (
           }}
         >
           Save changes
-        </button>
+        </Button>
       )}
     </div>
   );

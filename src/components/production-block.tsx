@@ -1,5 +1,5 @@
 import { SandpackProvider, SandpackPreview } from "@codesandbox/sandpack-react";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 // @ts-ignore
 import {
   FileContext,
@@ -160,10 +160,12 @@ export const ProductionBlock = (props: ProductionBlockProps) => {
       }}
     >
       <SandpackProvider
-        externalResources={["https://cdn.tailwindcss.com"]}
         template="react"
         customSetup={{
-          dependencies: {},
+          dependencies: {
+            "styled-components": "^5.3.3",
+            "@primer/react": "^35.2.0",
+          },
           files,
         }}
         autorun

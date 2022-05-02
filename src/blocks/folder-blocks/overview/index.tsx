@@ -1,7 +1,9 @@
+import { tw } from "twind";
 import { useCallback, useEffect, useState } from "react";
 import { FolderBlockProps } from "@githubnext/utils";
 import { Endpoints } from "@octokit/types";
 import { getRelativeTime } from "./utils";
+import { Heading, Link, Text, Label } from "@primer/react";
 
 // Note: We're using a BlockComponent prop here to create nested Blocks.
 // This is only implemented for our own example Blocks, to showcase the concept.
@@ -69,18 +71,26 @@ export default function (props: FolderBlockProps) {
   }, []);
 
   return (
-    <div className="w-full">
-      <div className="p-3 flex-none">
+    <div className={tw(`w-full`)}>
+      <div className={tw(`p-3 flex-none`)}>
         {!isRoot ? null : !hasLoadedActivity ? (
-          <div className="px-3 py-10 w-full text-center color-fg-muted italic">
-            Loading...
+          <div className={tw(`px-3 py-10 w-full text-center`)}>
+            <Text color="fg.muted" sx={{ fontStyle: "italic" }}>
+              Loading...
+            </Text>
           </div>
         ) : (
-          <div className="flex w-full">
-            <div className="flex-1 p-2">
-              <h2 className="h2 px-3 py-1">Issues</h2>
+          <div className={tw(`flex w-full`)}>
+            <div className={tw(`flex-1 p-2`)}>
+              <Heading sx={{ fontSize: 4 }} className={tw(`px-3 py-1`)}>
+                Issues
+              </Heading>
               {!issues.length && (
-                <div className="p-3 color-fg-muted italic">No issues</div>
+                <div className={tw(`p-3`)}>
+                  <Text color="fg.muted" sx={{ fontStyle: "italic" }}>
+                    No issues
+                  </Text>
+                </div>
               )}
               {issues.slice(0, maxItems).map((issue: IssueType) => (
                 <Issue issue={issue} />
@@ -88,17 +98,21 @@ export default function (props: FolderBlockProps) {
               {issues.length > maxItems && (
                 <a
                   href={`https://github.com/${context.owner}/${context.repo}/issues`}
-                  className="block px-3 py-2"
+                  className={tw(`block px-3 py-2`)}
                 >
                   + {issues.length - maxItems} more
                 </a>
               )}
             </div>
-            <div className="flex-1 p-2">
-              <h2 className="h2 px-3 py-1">PRs</h2>
+            <div className={tw(`flex-1 p-2`)}>
+              <Heading sx={{ fontSize: 4 }} className={tw(`px-3 py-1`)}>
+                PRs
+              </Heading>
               {!pulls.length && (
-                <div className="p-3 color-fg-muted italic">
-                  No open Pull Requests
+                <div className={tw(`p-3`)}>
+                  <Text color="fg.muted" sx={{ fontStyle: "italic" }}>
+                    No open Pull Requests
+                  </Text>
                 </div>
               )}
               {pulls.slice(0, maxItems).map((pull: PullType) => (
@@ -107,7 +121,7 @@ export default function (props: FolderBlockProps) {
               {pulls.length > maxItems && (
                 <a
                   href={`https://github.com/${context.owner}/${context.repo}/pulls`}
-                  className="block px-3 py-2"
+                  className={tw(`block px-3 py-2`)}
                 >
                   + {pulls.length - maxItems} more
                 </a>
@@ -117,7 +131,7 @@ export default function (props: FolderBlockProps) {
         )}
       </div>
       {hasLoadedReadme && (
-        <div className="w-full">
+        <div className={tw(`w-full`)}>
           {!BlockComponent ? (
             "No BlockComponent"
           ) : doesHaveReadme ? (
@@ -126,7 +140,7 @@ export default function (props: FolderBlockProps) {
             // so we have to guess its height
             // thankfully, if it's taller, the main page will scroll, but we'd rather avoid that in most cases
             // because it feels funky to have two full-width scrolling elements
-            <div className="h-[150em]">
+            <div className={tw(`h-[150em]`)}>
               <BlockComponent
                 {...props}
                 block={readmeBlock}
@@ -148,43 +162,66 @@ export default function (props: FolderBlockProps) {
 
 const Issue = ({ issue }: { issue: IssueType }) => {
   return (
-    <div className="p-3">
-      <h4 className="h4">
-        <a href={issue.html_url} className="inline-block mr-1">
+    <div className={tw(`p-3`)}>
+      <Heading as="h3" sx={{ fontSize: 2, mb: 2 }}>
+        <Link href={issue.html_url} className={tw(`mr-1`)}>
           #{issue.number}
-        </a>
+        </Link>
         {issue.title}
-      </h4>
-      <p className="mt-1 mb-1 f5 color-fg-muted">
-        <span className={`Label mr-1 Label--${issue.state} leading-none`}>
+      </Heading>
+      <p className={tw(`mt-1 mb-1 f5`)}>
+        <Label
+          variant={issue.state === "open" ? "success" : "danger"}
+          className={`mr-1`}
+        >
           {issue.state}
-        </span>
-        <time dateTime={issue.updated_at}>
+        </Label>
+        <Text
+          sx={{ fontSize: 1 }}
+          color="fg.muted"
+          as="time"
+          dateTime={issue.updated_at}
+        >
           {getRelativeTime(new Date(issue.updated_at))}
-        </time>
+        </Text>
       </p>
-      <p className="f5">{(issue.body || "").slice(0, 130)}</p>
+      <Text color="fg.muted" as="p">
+        {(issue.body || "").slice(0, 130)}
+        {issue?.body?.length && issue.body.length > 130 ? "..." : ""}
+      </Text>
     </div>
   );
 };
 const Pull = ({ pull }: { pull: PullType }) => {
   return (
-    <div className="p-3">
-      <h4 className="h4">
-        <a href={pull.html_url} className="inline-block mr-1">
+    <div className={tw(`p-3`)}>
+      <Heading as="h3" sx={{ fontSize: 2, mb: 2 }}>
+        <Link href={pull.html_url} className={tw(`mr-1`)}>
           #{pull.number}
-        </a>
+        </Link>
         {pull.title}
-      </h4>
-      <p className="mt-1 mb-1 f5 color-fg-muted">
-        <span className={`Label mr-1 Label--${pull.state} leading-none`}>
+      </Heading>
+
+      <p className={tw(`mt-1 mb-1 f5 color-fg-muted`)}>
+        <Label
+          variant={pull.state === "open" ? "success" : "danger"}
+          className={`mr-1`}
+        >
           {pull.state}
-        </span>
-        <time dateTime={pull.updated_at}>
+        </Label>
+        <Text
+          sx={{ fontSize: 1 }}
+          color="fg.muted"
+          as="time"
+          dateTime={pull.updated_at}
+        >
           {getRelativeTime(new Date(pull.updated_at))}
-        </time>
+        </Text>
       </p>
-      <p className="f5">{(pull.body || "").slice(0, 130)}</p>
+      <Text color="fg.muted" as="p">
+        {(pull.body || "").slice(0, 130)}
+        {pull?.body?.length && pull.body.length > 130 ? "..." : ""}
+      </Text>
     </div>
   );
 };

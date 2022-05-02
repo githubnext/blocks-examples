@@ -1,3 +1,4 @@
+import { tw } from "twind";
 import { ReactNode, useEffect, useState } from "react";
 import LZString from "lz-string";
 
@@ -55,10 +56,10 @@ export const CodeSandbox = ({
   }, []);
 
   return (
-    <div className="w-full h-full mt-3 mb-10">
+    <div className={tw(`w-full h-full mt-3 mb-10`)}>
       {!!url && (
         <iframe
-          className="w-full outline-none"
+          className={tw(`w-full outline-none`)}
           style={{
             height,
           }}

@@ -1,3 +1,7 @@
+.wrapper {
+  grid-rows: 7em 1fr;
+}
+
 .hljs {
   color: #24292e;
   background: #ffffff;

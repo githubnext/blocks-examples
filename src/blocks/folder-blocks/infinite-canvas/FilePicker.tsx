@@ -1,3 +1,6 @@
+import { tw } from "twind";
+import { ActionList, ActionMenu } from "@primer/react";
+
 import { useState } from "react";
 import { Files, File } from "./index";
 
@@ -12,32 +15,27 @@ export const FilePicker = ({
   const [iteration, setIteration] = useState(0);
 
   return (
-    <details
-      className="dropdown details-reset details-overlay d-inline-block"
-      key={iteration}
-    >
-      <summary className="btn" aria-haspopup="true">
-        + File
-        <div className="dropdown-caret"></div>
-      </summary>
+    <ActionMenu>
+      <ActionMenu.Button>+ File</ActionMenu.Button>
 
-      <ul className="dropdown-menu dropdown-menu-se w-full min-w-[16em] max-h-[calc(100vh-16em)] overflow-auto">
-        {files.map((file) => {
-          return (
-            <li key={file.path} className="dropdown-item text-sm w-full">
-              <button
-                onClick={() => {
+      <ActionMenu.Overlay>
+        <ActionList>
+          {files.map((file) => {
+            return (
+              <ActionList.Item
+                onSelect={() => {
                   onFileSelected(file);
                   setIteration(iteration + 1);
                 }}
-                className="truncate w-full text-left !overflow-hidden"
+                key={file.path}
+                className={tw(`dropdown-item text-sm w-full`)}
               >
                 {file.path}
-              </button>
-            </li>
-          );
-        })}
-      </ul>
-    </details>
+              </ActionList.Item>
+            );
+          })}
+        </ActionList>
+      </ActionMenu.Overlay>
+    </ActionMenu>
   );
 };

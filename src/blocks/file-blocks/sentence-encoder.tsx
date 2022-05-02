@@ -1,3 +1,4 @@
+import { tw } from "twind";
 import "@tensorflow/tfjs";
 import { FileBlockProps } from "@githubnext/utils";
 import { useEffect, useState } from "react";
@@ -115,13 +116,15 @@ export default function (props: FileBlockProps) {
   return (
     <>
       {model ? (
-        <div className="m-4">
-          <div className="flex row mb-8">
-            <h2 className="text-lg text-gray-900 font-semibold mr-4">
+        <div className={tw(`m-4`)}>
+          <div className={tw(`flex row mb-8`)}>
+            <h2 className={tw(`text-lg text-gray-900 font-semibold mr-4`)}>
               Sentence Encoder
             </h2>
             <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded text-sm"
+              className={tw(
+                `bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded text-sm`
+              )}
               onClick={() => setEditView(!editView)}
             >
               {editView ? "Back to data results" : "Try your own question"}
@@ -130,15 +133,17 @@ export default function (props: FileBlockProps) {
 
           {editView ? (
             <div>
-              <div className="mb-3 pt-0">
+              <div className={tw(`mb-3 pt-0`)}>
                 <input
                   onChange={(e) => setCustomQuestion(e.target.value)}
                   type="text"
                   placeholder="Question"
-                  className="px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm border border-blueGray-300 outline-none focus:outline-none focus:ring w-full"
+                  className={tw(
+                    `px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm border border-blueGray-300 outline-none focus:outline-none focus:ring w-full`
+                  )}
                 />
               </div>
-              <div className="mb-3 pt-0">
+              <div className={tw(`mb-3 pt-0`)}>
                 <input
                   onChange={(e) => {
                     customAnswers[0] = e.target.value;
@@ -146,10 +151,12 @@ export default function (props: FileBlockProps) {
                   }}
                   type="text"
                   placeholder="Answer 1"
-                  className="px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm border border-blueGray-300 outline-none focus:outline-none focus:ring w-full"
+                  className={tw(
+                    `px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm border border-blueGray-300 outline-none focus:outline-none focus:ring w-full`
+                  )}
                 />
               </div>
-              <div className="mb-3 pt-0">
+              <div className={tw(`mb-3 pt-0`)}>
                 <input
                   onChange={(e) => {
                     customAnswers[1] = e.target.value;
@@ -157,10 +164,12 @@ export default function (props: FileBlockProps) {
                   }}
                   type="text"
                   placeholder="Answer 2"
-                  className="px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm border border-blueGray-300 outline-none focus:outline-none focus:ring w-full"
+                  className={tw(
+                    `px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm border border-blueGray-300 outline-none focus:outline-none focus:ring w-full`
+                  )}
                 />
               </div>
-              <div className="mb-3 pt-0">
+              <div className={tw(`mb-3 pt-0`)}>
                 <input
                   onChange={(e) => {
                     customAnswers[2] = e.target.value;
@@ -168,16 +177,20 @@ export default function (props: FileBlockProps) {
                   }}
                   type="text"
                   placeholder="Answer 3"
-                  className="px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm border border-blueGray-300 outline-none focus:outline-none focus:ring w-full"
+                  className={tw(
+                    `px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm border border-blueGray-300 outline-none focus:outline-none focus:ring w-full`
+                  )}
                 />
               </div>
               {computedQuery ? (
-                <div className="mb-3">
+                <div className={tw(`mb-3`)}>
                   <Table query={computedQuery}></Table>
                 </div>
               ) : null}
               <button
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                className={tw(
+                  `bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded`
+                )}
                 onClick={computeScore}
               >
                 Compute score
@@ -197,7 +210,7 @@ export default function (props: FileBlockProps) {
           )}
         </div>
       ) : (
-        <div className="m-4">Loading...</div>
+        <div className={tw(`m-4`)}>Loading...</div>
       )}
     </>
   );
@@ -211,12 +224,12 @@ function Table(props: TableProps) {
   const query = props.query;
 
   return (
-    <table className="table-auto">
+    <table className={tw(`table-auto`)}>
       <thead>
         <tr>
-          <th className="px-4 py-2 text-gray-700">Question</th>
-          <th className="px-4 py-2 text-gray-700">Answer</th>
-          <th className="px-4 py-2 text-gray-700">Score</th>
+          <th className={tw(`px-4 py-2 text-gray-700`)}>Question</th>
+          <th className={tw(`px-4 py-2 text-gray-700`)}>Answer</th>
+          <th className={tw(`px-4 py-2 text-gray-700`)}>Score</th>
         </tr>
       </thead>
       <tbody>
@@ -229,10 +242,18 @@ function Table(props: TableProps) {
             >
               {query.query}
             </td>
-            <td className="border border-gray-500 px-4 py-2 text-gray-700 font-medium">
+            <td
+              className={tw(
+                `border border-gray-500 px-4 py-2 text-gray-700 font-medium`
+              )}
+            >
               {response.response}
             </td>
-            <td className="border border-gray-500 px-4 py-2 text-gray-700 font-medium">
+            <td
+              className={tw(
+                `border border-gray-500 px-4 py-2 text-gray-700 font-medium`
+              )}
+            >
               {response.score.toFixed(2)}
             </td>
           </tr>

@@ -7,6 +7,7 @@ import {
   RepoFiles,
   onRequestGitHubData as onRequestGitHubDataFetch,
 } from "@githubnext/utils";
+import { ThemeProvider } from "@primer/react";
 
 interface Block {
   id: string;
@@ -96,17 +97,19 @@ export const LocalBlock = (props: LocalBlockProps) => {
 
   if (!Block) return null;
   return (
-    <Block
-      context={context}
-      content={content}
-      originalContent={originalContent}
-      isEditable={true}
-      tree={tree}
-      metadata={metadata}
-      onUpdateMetadata={onUpdateMetadata}
-      onNavigateToPath={onNavigateToPath}
-      onUpdateContent={setContent}
-      onRequestGitHubData={onRequestGitHubData}
-    />
+    <ThemeProvider>
+      <Block
+        context={context}
+        content={content}
+        originalContent={originalContent}
+        isEditable={true}
+        tree={tree}
+        metadata={metadata}
+        onUpdateMetadata={onUpdateMetadata}
+        onNavigateToPath={onNavigateToPath}
+        onUpdateContent={setContent}
+        onRequestGitHubData={onRequestGitHubData}
+      />
+    </ThemeProvider>
   );
 };

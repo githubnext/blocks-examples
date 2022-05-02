@@ -1,3 +1,4 @@
+import { tw } from "twind";
 import cq from "@fullstackio/cq";
 import { FolderBlockProps, getLanguageFromFilename } from "@githubnext/utils";
 import debounce from "lodash/debounce";
@@ -5,6 +6,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Select from "react-select";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import "./style.css";
+import { Button, FormControl, TextInput } from "@primer/react";
 
 export default function (props: FolderBlockProps) {
   const {
@@ -68,9 +70,9 @@ export default function (props: FolderBlockProps) {
   }, [usedPaths.join(",")]);
 
   return (
-    <div className="w-full h-full" id="example-block-code-block">
-      <div className="flex w-full h-full overflow-x-hidden">
-        <div className="flex-1 h-full min-w-0 p-5 pb-0">
+    <div className={tw(`w-full h-full`)} id="example-block-code-block">
+      <div className={tw(`flex w-full h-full overflow-x-hidden`)}>
+        <div className={tw(`flex-1 h-full min-w-0 p-5 pb-0`)}>
           {!!steps[selectedStepIndex] && (
             <StepContent
               index={selectedStepIndex}
@@ -87,12 +89,16 @@ export default function (props: FolderBlockProps) {
           )}
         </div>
 
-        <div className="w-80 h-full overflow-y-auto p-5 pl-0">
-          <div className="uppercase mb-1 text-sm text-gray-600 tracking-widest">
+        <div className={tw(`w-80 h-full overflow-y-auto p-5 pl-0`)}>
+          <div
+            className={tw(
+              `uppercase mb-1 text-sm text-gray-600 tracking-widest`
+            )}
+          >
             Code Tour
           </div>
-          <div className="grid grid-cols-7 gap-2 mb-4">
-            <div className="col-span-6">
+          <div className={tw(`grid grid-cols-7 gap-2 mb-4`)}>
+            <div className={tw(`col-span-6`)}>
               <Select
                 options={tourOptions}
                 value={tourOptions[selectedTourIndex] || null}
@@ -100,17 +106,21 @@ export default function (props: FolderBlockProps) {
                 placeholder="Select tour"
               />
             </div>
-            <button
-              className="btn px-2"
+            <Button
+              className={tw(`px-2`)}
               onClick={() => {
                 setSelectedTourIndex(-1);
               }}
             >
               +
-            </button>
+            </Button>
           </div>
 
-          <div className="uppercase mb-1 text-sm text-gray-600 tracking-widest">
+          <div
+            className={tw(
+              `uppercase mb-1 text-sm text-gray-600 tracking-widest`
+            )}
+          >
             Steps
           </div>
           <TourSteps
@@ -176,50 +186,55 @@ const TourControls = ({
     <>
       {isSaving ? (
         <form
-          className="mt-2"
+          className={tw(`mt-2`)}
           onSubmit={(e) => {
             e.preventDefault();
             onSave(name);
           }}
         >
-          <label className="">Tour name</label>
+          <label className={tw(``)}>Tour name</label>
           <input
-            className="flex-1 w-full py-2 px-3 border border-gray-400 rounded-md"
+            className={tw(
+              `flex-1 w-full py-2 px-3 border border-gray-400 rounded-md`
+            )}
             type="text"
             autoFocus
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
-          <div className="mt-1 grid grid-cols-2 gap-2">
-            <button
-              className="btn w-full"
+          <div className={tw(`mt-1 grid grid-cols-2 gap-2`)}>
+            <Button
+              className={tw(`w-full`)}
               onClick={() => {
                 setIsSaving(false);
               }}
               type="button"
             >
               Cancel
-            </button>
-            <button className="btn btn-primary w-full">Save</button>
+            </Button>
+            <Button variant="primary" className={tw(`w-full`)}>
+              Save
+            </Button>
           </div>
         </form>
       ) : (
-        <div className="grid grid-cols-2 gap-2">
-          <button
-            className="mt-3 btn w-full"
+        <div className={tw(`grid grid-cols-2 gap-2`)}>
+          <Button
+            className={tw(`mt-3 w-full`)}
             onClick={() => {
               setSteps([...steps, newStep]);
               setSelectedStepIndex(steps.length);
             }}
           >
             + Add Step
-          </button>
-          <button
-            className="mt-3 btn btn-primary w-full"
+          </Button>
+          <Button
+            className={tw(`mt-3 w-full`)}
+            variant="primary"
             onClick={() => setIsSaving(true)}
           >
             Save tour
-          </button>
+          </Button>
         </div>
       )}
     </>
@@ -240,8 +255,8 @@ const TourSteps = ({
   isEditing: boolean;
 }) => {
   return (
-    <div className="w-full">
-      <div className="divide-y divide-gray-200">
+    <div className={tw(`w-full`)}>
+      <div className={tw(`divide-y divide-gray-200`)}>
         {steps.map((step, index) => (
           <Step
             key={index}
@@ -282,24 +297,33 @@ const Step = ({
       }`}
       onClick={onSelect}
     >
-      <div className="font-semibold mb-1">{step.name}</div>
-      <div className="opacity-60 font-mono text-xs truncate">{step.path}</div>
+      <div className={tw(`font-semibold mb-1`)}>{step.name}</div>
+      <div className={tw(`opacity-60 font-mono text-xs truncate`)}>
+        {step.path}
+      </div>
       {!!onDelete && (
-        <button
-          className="!absolute top-1/2 right-0 px-2 flex items-center justify-center btn btn-danger transform -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 focus:opacity-100"
+        <Button
+          variant="danger"
+          className={tw(
+            `!absolute top-1/2 right-0 px-2 flex items-center justify-center transform -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 focus:opacity-100`
+          )}
           onClick={(e) => {
             e.stopPropagation();
             onDelete();
           }}
         >
-          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+          <svg
+            className={tw(`w-4 h-4`)}
+            fill="currentColor"
+            viewBox="0 0 20 20"
+          >
             <path
               fillRule="evenodd"
               d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
               clipRule="evenodd"
             />
           </svg>
-        </button>
+        </Button>
       )}
     </button>
   );
@@ -402,52 +426,58 @@ const StepContent = ({
   }, [index]);
 
   return (
-    <div className="h-full flex flex-col">
+    <div className={tw(`h-full flex flex-col`)}>
       {isEditing ? (
-        <div className="w-full">
-          <label className="">Step name</label>
-          <input
-            className="form-control py-2 w-full"
-            value={step.name}
-            onChange={(e) => onChange({ ...step, name: e.target.value })}
-          />
-          {/* <textarea value={step.description} onChange={(e) => onChange({ ...step, description: e.target.value })} className="w-full h-40 py-3 px-5  border border-gray-300 rounded" /> */}
+        <div className={tw(`w-full`)}>
+          <FormControl>
+            <FormControl.Label>Step name</FormControl.Label>
+            <TextInput
+              className={tw(`w-full`)}
+              value={step.name}
+              onChange={(e) => onChange({ ...step, name: e.target.value })}
+            />
+          </FormControl>
 
-          <div className="flex mt-2">
-            <div className="flex-1 min-w-0">
-              <label className="">Path</label>
-              <Select
-                options={pathOptions}
-                value={pathOptions.find((d) => d.value === step.path)}
-                styles={selectStyles}
-                onChange={(newValue: any) => {
-                  const path = newValue.value;
-                  onChange({ ...step, path });
-                }}
-              />
+          <div className={tw(`flex mt-2`)}>
+            <div className={tw(`flex-1 min-w-0`)}>
+              <FormControl>
+                <FormControl.Label>Path</FormControl.Label>
+                <Select
+                  options={pathOptions}
+                  value={pathOptions.find((d) => d.value === step.path)}
+                  styles={selectStyles}
+                  onChange={(newValue: any) => {
+                    const path = newValue.value;
+                    onChange({ ...step, path });
+                  }}
+                />
+              </FormControl>
             </div>
-            <div className="flex-none min-w-0 w-40 ml-1">
-              <label className="">Query</label>
-              <input
-                className="form-control py-2"
-                value={localQuery}
-                onChange={(e) => setLocalQuery(e.target.value)}
-              />
+            <div className={tw(`flex-none min-w-0 w-40 ml-1`)}>
+              <FormControl>
+                <FormControl.Label>Query</FormControl.Label>
+                <TextInput
+                  value={localQuery}
+                  onChange={(e) => setLocalQuery(e.target.value)}
+                />
+              </FormControl>
             </div>
           </div>
         </div>
       ) : (
-        <div className="flex flex-col">
-          <div className="font-semibold text-lg mb-1">{step.name}</div>
-          <div className="opacity-60 font-mono text-xs truncate mb-2">
+        <div className={tw(`flex flex-col`)}>
+          <div className={tw(`font-semibold text-lg mb-1`)}>{step.name}</div>
+          <div className={tw(`opacity-60 font-mono text-xs truncate mb-2`)}>
             {step.path}
           </div>
         </div>
       )}
 
-      <div className="flex flex-1 overflow-y-auto mt-1">
+      <div className={tw(`flex flex-1 overflow-y-auto mt-1`)}>
         <div
-          className="flex-1 h-full flex flex-col overflow-y-auto overflow-x-hidden"
+          className={tw(
+            `flex-1 h-full flex flex-col overflow-y-auto overflow-x-hidden`
+          )}
           ref={codeContainer}
         >
           <Code
@@ -517,7 +547,7 @@ const Code = ({
   }, [highlightRangeStart, highlightRangeEnd]);
 
   return (
-    <div className="code text-sm w-full overflow-x-auto" ref={container}>
+    <div className={tw(`code text-sm w-full overflow-x-auto`)} ref={container}>
       <SyntaxHighlighter
         language={language}
         useInlineStyles={false}

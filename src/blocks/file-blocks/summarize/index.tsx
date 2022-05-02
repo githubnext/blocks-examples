@@ -1,7 +1,10 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
-import SyntaxHighlighter from "react-syntax-highlighter";
 import { FileBlockProps, getLanguageFromFilename } from "@githubnext/utils";
+import { FoldIcon, UnfoldIcon } from "@primer/octicons-react";
+import { Button } from "@primer/react";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import SyntaxHighlighter from "react-syntax-highlighter";
+import { tw } from "twind";
 import "./index.css";
 
 export default function (props: FileBlockProps) {
@@ -50,46 +53,36 @@ export default function (props: FileBlockProps) {
   }, [content]);
 
   return (
-    <div className="h-full w-full relative">
-      <button
-        className="btn flex items-center position-absolute top-2 right-2 z-10"
-        onClick={() => {
-          setIsCollapsed(!isCollapsed);
-        }}
+    <div className={tw(`h-full w-full relative`)}>
+      <div className={tw(`absolute top-2 right-2 z-10`)}>
+        <Button
+          onClick={() => {
+            setIsCollapsed(!isCollapsed);
+          }}
+        >
+          {isCollapsed ? (
+            <>
+              <UnfoldIcon className={tw(`inline-block mr-1 -ml-1`)} />
+              Expand sections
+            </>
+          ) : (
+            <>
+              <FoldIcon className={tw(`inline-block mr-1 -ml-1`)} />
+              Collapse sections
+            </>
+          )}
+        </Button>
+      </div>
+
+      <div
+        className={tw(`h-full w-full flex flex-col bg-gray-50 overflow-auto`)}
       >
-        {isCollapsed ? (
-          <>
-            <svg
-              className="inline-block mr-1 -ml-1"
-              viewBox="0 0 16 16"
-              width="16"
-              height="16"
-            >
-              <path d="M8.177.677l2.896 2.896a.25.25 0 01-.177.427H8.75v1.25a.75.75 0 01-1.5 0V4H5.104a.25.25 0 01-.177-.427L7.823.677a.25.25 0 01.354 0zM7.25 10.75a.75.75 0 011.5 0V12h2.146a.25.25 0 01.177.427l-2.896 2.896a.25.25 0 01-.354 0l-2.896-2.896A.25.25 0 015.104 12H7.25v-1.25zm-5-2a.75.75 0 000-1.5h-.5a.75.75 0 000 1.5h.5zM6 8a.75.75 0 01-.75.75h-.5a.75.75 0 010-1.5h.5A.75.75 0 016 8zm2.25.75a.75.75 0 000-1.5h-.5a.75.75 0 000 1.5h.5zM12 8a.75.75 0 01-.75.75h-.5a.75.75 0 010-1.5h.5A.75.75 0 0112 8zm2.25.75a.75.75 0 000-1.5h-.5a.75.75 0 000 1.5h.5z"></path>
-            </svg>
-            Expand sections
-          </>
-        ) : (
-          <>
-            <svg
-              className="inline-block mr-1 -ml-1"
-              viewBox="0 0 16 16"
-              width="16"
-              height="16"
-            >
-              <path d="M10.896 2H8.75V.75a.75.75 0 00-1.5 0V2H5.104a.25.25 0 00-.177.427l2.896 2.896a.25.25 0 00.354 0l2.896-2.896A.25.25 0 0010.896 2zM8.75 15.25a.75.75 0 01-1.5 0V14H5.104a.25.25 0 01-.177-.427l2.896-2.896a.25.25 0 01.354 0l2.896 2.896a.25.25 0 01-.177.427H8.75v1.25zm-6.5-6.5a.75.75 0 000-1.5h-.5a.75.75 0 000 1.5h.5zM6 8a.75.75 0 01-.75.75h-.5a.75.75 0 010-1.5h.5A.75.75 0 016 8zm2.25.75a.75.75 0 000-1.5h-.5a.75.75 0 000 1.5h.5zM12 8a.75.75 0 01-.75.75h-.5a.75.75 0 010-1.5h.5A.75.75 0 0112 8zm2.25.75a.75.75 0 000-1.5h-.5a.75.75 0 000 1.5h.5z"></path>
-            </svg>
-            Collapse sections
-          </>
-        )}
-      </button>
-      <div className="h-full w-full d-flex flex-column bg-gray-50 overflow-auto">
         {/* <p className={`px-6 pt-3 whitespace-pre-wrap ${fileSummary ? "" : "text-gray-400"}`}>
         Briefly, this code will {fileSummary || "..."}
         </p> */}
-        <pre className="divide-y divide-gray-200 text-left">
+        <pre className={tw(`divide-y divide-gray-200 text-left`)}>
           {!sections.length && (
-            <div className="text-center text-gray-500 italic py-10">
+            <div className={tw(`text-center text-gray-500 italic py-10`)}>
               Loading...
             </div>
           )}
@@ -149,7 +142,7 @@ const Section = ({
         setIsCollapsedLocally(!isCollapsedLocally);
       }}
     >
-      <div className="relative overflow-hidden border-r border-gray-200">
+      <div className={tw(`relative overflow-hidden border-r border-gray-200`)}>
         <div
           className={`px-5 py-3 text-base overflow-x-auto !bg-transparent top-0 ${
             isCollapsedLocally ? "absolute" : ""
@@ -160,7 +153,7 @@ const Section = ({
             useInlineStyles={false}
             showLineNumbers={false}
             lineNumberStyle={{ opacity: 0.45 }}
-            className="!bg-transparent"
+            className={tw(`!bg-transparent`)}
             wrapLines
             wrapLongLines
           >
@@ -169,19 +162,27 @@ const Section = ({
         </div>
         {isCollapsedLocally && (
           // fade out to bottom
-          <div className="absolute bottom-0 left-0 right-0 h-[3em] bg-gradient-to-b from-transparent to-gray-50 hover:to-white z-10" />
+          <div
+            className={tw(
+              `absolute bottom-0 left-0 right-0 h-[3em] bg-gradient-to-b from-transparent to-gray-50 hover:to-white z-10`
+            )}
+          />
         )}
       </div>
-      <div className="px-5 py-3 text-gray-800 text-sm font-sans min-h-[5em]">
+      <div
+        className={tw(`px-5 py-3 text-gray-800 text-sm font-sans min-h-[5em]`)}
+      >
         {hasValidName && (
-          <div className="font-mono text-xs font-medium mb-1 text-gray-500">
+          <div
+            className={tw(`font-mono text-xs font-medium mb-1 text-gray-500`)}
+          >
             {name}
           </div>
         )}
         {explanation === undefined ? (
-          <div className="text-gray-300 italic">Loading...</div>
+          <div className={tw(`text-gray-300 italic`)}>Loading...</div>
         ) : (
-          <div className="">{explanation || ""}</div>
+          <div className={tw(``)}>{explanation || ""}</div>
         )}
       </div>
     </div>

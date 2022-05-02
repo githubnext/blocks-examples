@@ -1,3 +1,4 @@
+import { tw } from "twind";
 import axios from "axios";
 import { useQuery } from "react-query";
 import type { Explanation } from ".";
@@ -23,23 +24,25 @@ export function ExplanationComponent(props: {
 
   return (
     <>
-      <div className="sticky top-0 z-10 pb-2 bg-white">
-        <p className="text-xs font-mono">
+      <div className={tw(`sticky top-0 z-10 pb-2 bg-white`)}>
+        <p className={tw(`text-xs font-mono`)}>
           Explanation for{" "}
-          <span className="font-bold">
+          <span className={tw(`font-bold`)}>
             L{explanation.start}:L
             {explanation.end}
           </span>
         </p>
       </div>
 
-      <div className="relative">
+      <div className={tw(`relative`)}>
         {status === "loading" && (
-          <p className="text-xs  font-mono animate-pulse">Loading...</p>
+          <p className={tw(`text-xs  font-mono animate-pulse`)}>Loading...</p>
         )}
         {status === "success" && data && (
-          <div className="pb-2">
-            <p className="text-xs whitespace-pre-line font-mono">{data}</p>
+          <div className={tw(`pb-2`)}>
+            <p className={tw(`text-xs whitespace-pre-line font-mono`)}>
+              {data}
+            </p>
           </div>
         )}
       </div>

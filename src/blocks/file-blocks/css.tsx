@@ -1,3 +1,4 @@
+import { tw } from "twind";
 import { useEffect, useMemo } from "react";
 // @ts-ignore: no types
 import { toJSON } from "cssjson";
@@ -7,7 +8,13 @@ export default function (props: FileBlockProps) {
   const { content } = props;
 
   const { tree, flattenedRules, widelyApplicableAttributes } = useMemo(() => {
-    const tree = toJSON(content);
+    console.log(content);
+    let tree = { children: [] };
+    try {
+      tree = toJSON(content);
+    } catch (e) {
+      console.log(e);
+    }
     // const rules = getRulesFromTreeItem(tree)
     let flattenedRules = {} as any;
     Object.keys(tree.children).forEach((key) => {
@@ -31,7 +38,7 @@ export default function (props: FileBlockProps) {
 
   return (
     <div
-      className="p-8"
+      className={tw(`p-8`)}
       style={{
         background:
           flattenedRules?.["body"]?.background ||
@@ -72,15 +79,15 @@ const TreeItem = ({
   }
 
   return (
-    <div className="py-3 flex">
-      <div className="font-mono w-40 sticky top-2 pt-2 h-8 flex-none">
+    <div className={tw(`py-3 flex`)}>
+      <div className={tw(`font-mono w-40 sticky top-2 pt-2 h-8 flex-none`)}>
         {selector}
       </div>
       <div>
         {cssVariableNames.map((variable) => {
           return (
-            <div className="flex items-center text-xs m-1" key={variable}>
-              <div className="font-mono flex-none w-60">{variable}</div>
+            <div className={tw(`flex items-center text-xs m-1`)} key={variable}>
+              <div className={tw(`font-mono flex-none w-60`)}>{variable}</div>
               <Attribute value={attributes[variable]} />
             </div>
           );
@@ -100,14 +107,14 @@ const Attribute = ({ value }: { value: string }) => {
   if (isColor)
     return (
       <div
-        className="h-6 w-6 rounded"
+        className={tw(`h-6 w-6 rounded`)}
         style={{
           backgroundColor: value,
         }}
       />
     );
   return (
-    <div className="p-1 bg-gray-100 rounded text-gray-800 font-mono">
+    <div className={tw(`p-1 bg-gray-100 rounded text-gray-800 font-mono`)}>
       {value}
     </div>
   );

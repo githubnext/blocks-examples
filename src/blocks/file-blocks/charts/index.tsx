@@ -1,10 +1,14 @@
+import { tw } from "twind";
 import { FileBlockProps } from "@githubnext/utils";
+import { ActionList, ActionMenu, Text } from "@primer/react";
 import { parse } from "papaparse";
 import { useEffect, useMemo, useState } from "react";
 // @ts-ignore: we need to specify the file extension
 import { Chart } from "./Chart.tsx";
 // @ts-ignore: we need to specify the file extension
 import { ErrorBoundary } from "./ErrorBoundary.tsx";
+import { Button } from "@primer/react";
+import { CheckIcon } from "@primer/octicons-react";
 
 export default function (props: FileBlockProps) {
   const { content, metadata, onUpdateMetadata } = props;
@@ -45,8 +49,8 @@ export default function (props: FileBlockProps) {
   }, [keys.join(","), savedChartConfigs.join(",")]);
 
   return (
-    <div className="w-full h-full">
-      <div className="d-flex p-3">
+    <div className={tw(`w-full h-full`)}>
+      <div className={tw(`flex p-3`)}>
         <Select
           label="saved charts"
           value={activeChartConfig}
@@ -54,8 +58,9 @@ export default function (props: FileBlockProps) {
           options={savedChartConfigs}
         />
         {activeChartConfigIndex !== -1 ? (
-          <button
-            className="btn ml-2 btn-danger"
+          <Button
+            variant="danger"
+            className={tw(`ml-2`)}
             onClick={() => {
               const newMetadata = {
                 configs: savedChartConfigs.filter(
@@ -66,10 +71,10 @@ export default function (props: FileBlockProps) {
             }}
           >
             Delete config
-          </button>
+          </Button>
         ) : (
-          <button
-            className="btn ml-2"
+          <Button
+            className={tw(`ml-2`)}
             onClick={() => {
               const newMetadata = {
                 configs: [...savedChartConfigs, activeChartConfig],
@@ -78,10 +83,10 @@ export default function (props: FileBlockProps) {
             }}
           >
             Save config
-          </button>
+          </Button>
         )}
-        <div className="ml-auto flex items-center flex-wrap">
-          <div className="mr-2">
+        <div className={tw(`ml-auto flex items-center flex-wrap`)}>
+          <div className={tw(`mr-2`)}>
             <Select
               label="x metric"
               value={xMetric}
@@ -89,7 +94,7 @@ export default function (props: FileBlockProps) {
               options={keys}
             />
           </div>
-          <div className="mr-2">
+          <div className={tw(`mr-2`)}>
             <Select
               label="y metric"
               value={yMetric}
@@ -106,7 +111,7 @@ export default function (props: FileBlockProps) {
         </div>
       </div>
 
-      <div className="w-full">
+      <div className={tw(`w-full`)}>
         <ErrorBoundary>
           <Chart
             data={data}
@@ -126,74 +131,44 @@ const Select = ({
   label,
   value,
   options,
-  canBeEmpty,
   onChange,
 }: {
   label: string;
   value: string;
   options: string[];
-  canBeEmpty?: boolean;
   onChange: (value: string) => void;
 }) => {
   return (
-    <details className="dropdown details-reset details-overlay d-inline-block">
-      <summary className="btn" aria-haspopup="true">
+    <ActionMenu>
+      <ActionMenu.Button>
         {label}: {value}
-        <span className="dropdown-caret border-black"></span>
-      </summary>
-      <div className="SelectMenu">
-        <div className="SelectMenu-modal">
-          <div className="SelectMenu-list">
-            {canBeEmpty && (
-              <button
-                className="SelectMenu-item"
-                role="menuitemcheckbox"
-                aria-checked={!value}
-                onClick={(e) => onChange("")}
-              >
-                <svg
-                  className="SelectMenu-icon SelectMenu-icon--check octicon octicon-check"
-                  viewBox="0 0 16 16"
-                  width="16"
-                  height="16"
-                >
-                  {" "}
-                  <path
-                    fillRule="evenodd"
-                    clipRule="evenodd"
-                    d="M13.78 4.22C13.9204 4.36062 13.9993 4.55125 13.9993 4.75C13.9993 4.94875 13.9204 5.13937 13.78 5.28L6.53 12.53C6.38937 12.6704 6.19875 12.7493 6 12.7493C5.80125 12.7493 5.61062 12.6704 5.47 12.53L2.22 9.28C2.08752 9.13782 2.0154 8.94978 2.01882 8.75547C2.02225 8.56117 2.10096 8.37579 2.23838 8.23837C2.37579 8.10096 2.56118 8.02225 2.75548 8.01882C2.94978 8.01539 3.13782 8.08752 3.28 8.22L6 10.94L12.72 4.22C12.8606 4.07955 13.0512 4.00066 13.25 4.00066C13.4487 4.00066 13.6394 4.07955 13.78 4.22Z"
-                  ></path>
-                </svg>
-                --
-              </button>
-            )}
+      </ActionMenu.Button>
+      <ActionMenu.Overlay>
+        {options.length ? (
+          <ActionList>
             {options.map((option) => (
-              <button
-                aria-checked={option === value}
-                className="SelectMenu-item"
-                role="menuitemcheckbox"
-                onClick={(e) => onChange(option)}
-              >
-                <svg
-                  className="SelectMenu-icon SelectMenu-icon--check octicon octicon-check"
-                  viewBox="0 0 16 16"
-                  width="16"
-                  height="16"
-                >
-                  {" "}
-                  <path
-                    fillRule="evenodd"
-                    clipRule="evenodd"
-                    d="M13.78 4.22C13.9204 4.36062 13.9993 4.55125 13.9993 4.75C13.9993 4.94875 13.9204 5.13937 13.78 5.28L6.53 12.53C6.38937 12.6704 6.19875 12.7493 6 12.7493C5.80125 12.7493 5.61062 12.6704 5.47 12.53L2.22 9.28C2.08752 9.13782 2.0154 8.94978 2.01882 8.75547C2.02225 8.56117 2.10096 8.37579 2.23838 8.23837C2.37579 8.10096 2.56118 8.02225 2.75548 8.01882C2.94978 8.01539 3.13782 8.08752 3.28 8.22L6 10.94L12.72 4.22C12.8606 4.07955 13.0512 4.00066 13.25 4.00066C13.4487 4.00066 13.6394 4.07955 13.78 4.22Z"
-                  ></path>
-                </svg>
+              <ActionList.Item key={option} onSelect={() => onChange(option)}>
+                <ActionList.LeadingVisual>
+                  {option === value ? <CheckIcon /> : null}
+                </ActionList.LeadingVisual>
                 {option}
-              </button>
+              </ActionList.Item>
             ))}
-          </div>
-        </div>
-      </div>
-    </details>
+          </ActionList>
+        ) : (
+          <Text
+            color="fg.muted"
+            textAlign="center"
+            fontStyle="italic"
+            display="block"
+            mx="auto"
+            my="2"
+          >
+            No options
+          </Text>
+        )}
+      </ActionMenu.Overlay>
+    </ActionMenu>
   );
 };
 
