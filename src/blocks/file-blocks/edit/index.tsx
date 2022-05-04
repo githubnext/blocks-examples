@@ -157,7 +157,7 @@ const Change = ({ change, language }: { change: Hunk; language: string }) => {
           color: change.type === "normal" ? "#6e7781" : "#24292f",
           background: change.type === "delete" ? "#FFD7D5" : "",
         }}
-        className={`${tw("!bg-transparent")} ${
+        className={`${tw("bg-transparent")} ${
           {
             delete: tw("!bg-[#FFEBE9]"),
             insert: tw("!bg-[#F5F6F8]"),
@@ -181,7 +181,7 @@ const Change = ({ change, language }: { change: Hunk; language: string }) => {
           color: change.type === "normal" ? "#6e7781" : "#24292f",
           background: change.type === "insert" ? "#CCFFD8" : "",
         }}
-        className={`${tw("!bg-transparent")} ${
+        className={`${tw("bg-transparent")} ${
           {
             delete: tw("!bg-[#F5F6F8]"),
             insert: tw("!bg-[#E6FFEC]"),
