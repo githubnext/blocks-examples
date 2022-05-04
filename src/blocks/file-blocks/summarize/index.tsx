@@ -144,9 +144,11 @@ const Section = ({
     >
       <div className={tw(`relative overflow-hidden border-r border-gray-200`)}>
         <div
-          className={`px-5 py-3 text-base overflow-x-auto !bg-transparent top-0 ${
-            isCollapsedLocally ? "absolute" : ""
-          }`}
+          className={tw(
+            `px-5 py-3 text-base overflow-x-auto !bg-transparent top-0 ${
+              isCollapsedLocally ? "absolute" : ""
+            }`
+          )}
         >
           <SyntaxHighlighter
             language={syntaxHighlighterLanguageMap[language] || "javascript"}
@@ -182,7 +184,7 @@ const Section = ({
         {explanation === undefined ? (
           <div className={tw(`text-gray-300 italic`)}>Loading...</div>
         ) : (
-          <div className={tw(``)}>{explanation || ""}</div>
+          <div>{explanation || ""}</div>
         )}
       </div>
     </div>

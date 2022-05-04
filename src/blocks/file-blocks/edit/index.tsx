@@ -157,10 +157,10 @@ const Change = ({ change, language }: { change: Hunk; language: string }) => {
           color: change.type === "normal" ? "#6e7781" : "#24292f",
           background: change.type === "delete" ? "#FFD7D5" : "",
         }}
-        className={`!bg-transparent ${
+        className={`${tw(!bg - transparent)} ${
           {
-            delete: "!bg-[#FFEBE9]",
-            insert: "!bg-[#F5F6F8]",
+            delete: tw("!bg-[#FFEBE9]"),
+            insert: tw("!bg-[#F5F6F8]"),
           }[change.type as string] || ""
         }`}
         wrapLines
@@ -181,10 +181,10 @@ const Change = ({ change, language }: { change: Hunk; language: string }) => {
           color: change.type === "normal" ? "#6e7781" : "#24292f",
           background: change.type === "insert" ? "#CCFFD8" : "",
         }}
-        className={`!bg-transparent ${
+        className={`${tw("!bg-transparent")} ${
           {
-            delete: "!bg-[#F5F6F8]",
-            insert: "!bg-[#E6FFEC]",
+            delete: tw("!bg-[#F5F6F8]"),
+            insert: tw("!bg-[#E6FFEC]"),
           }[change.type as string] || ""
         }`}
         wrapLines
