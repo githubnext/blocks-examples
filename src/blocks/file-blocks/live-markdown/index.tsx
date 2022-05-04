@@ -128,7 +128,7 @@ const issueStateToStatusMap = {
   open: "issueOpened",
 };
 function Issues({ num = 3 }) {
-  const { issues } = useContext(MarkdownContext);
+  const { issues = [] } = useContext(MarkdownContext);
   const filteredIssues = issues.slice(0, num);
 
   if (!filteredIssues.length) {
