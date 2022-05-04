@@ -129,7 +129,7 @@ const issueStateToStatusMap = {
 };
 function Issues({ num = 3 }) {
   const { issues = [] } = useContext(MarkdownContext);
-  const filteredIssues = issues.slice(0, num);
+  const filteredIssues = issues?.slice(0, num) || [];
 
   if (!filteredIssues.length) {
     return (
@@ -178,7 +178,7 @@ function Issues({ num = 3 }) {
 }
 function Releases({ num = 3 }) {
   const { releases = [] } = useContext(MarkdownContext);
-  const filteredReleases = releases.slice(0, num);
+  const filteredReleases = releases?.slice(0, num) || [];
 
   if (!filteredReleases.length) {
     return (
@@ -219,7 +219,7 @@ function Releases({ num = 3 }) {
 }
 function Commits({ num = 2 }) {
   const { commits = [] } = useContext(MarkdownContext);
-  const filteredCommits = commits.slice(0, num);
+  const filteredCommits = commits?.slice(0, num) || [];
 
   if (!filteredCommits.length) {
     return (
