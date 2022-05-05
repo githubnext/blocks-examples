@@ -825,10 +825,10 @@
     lodash.uniqueid "^4.0.1"
     zod "^3.11.6"
 
-"@githubocto/flat-ui@^0.13.4":
-  version "0.13.5"
-  resolved "https://registry.yarnpkg.com/@githubocto/flat-ui/-/flat-ui-0.13.5.tgz#65a03c07ab070c105b804917288ecbf5b9c3e894"
-  integrity sha512-3xFW2hNi5Mj0HuH+qoU8BvcBW6bmvG1e0sPw7pmITxKMNQhRQFEP3vOXwvHmEvqi5JNcjxe+W7NKA+53Ijx5+w==
+"@githubocto/flat-ui@^0.14.1":
+  version "0.14.1"
+  resolved "https://registry.yarnpkg.com/@githubocto/flat-ui/-/flat-ui-0.14.1.tgz#a9da075f3c0eacbb9fafd23f5e7311ff569193cc"
+  integrity sha512-+apbnpQx5sJNKzqFoIAcQeGmTEn7qDGAIx8IWg6VSOFOasW064wgbcwjRKCgDLRJ0P8asakQExp2MT8MBcFh2A==
   dependencies:
     "@emotion/react" "^11.4.0"
     "@primer/octicons-react" "^12.1.0"
