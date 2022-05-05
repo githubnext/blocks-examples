@@ -143,7 +143,7 @@ const Select = ({
       <ActionMenu.Button>
         {label}: {value}
       </ActionMenu.Button>
-      <ActionMenu.Overlay>
+      <ActionMenu.Overlay className={tw("max-h-[80vh]")}>
         {options.length ? (
           <ActionList>
             {options.map((option) => (
