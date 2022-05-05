@@ -86,7 +86,7 @@ export const Item = ({
       borderColor="border.default"
       borderWidth={1}
       borderStyle="solid"
-      className={`item group shadow ${zIndex}`}
+      className={tw(`item group shadow ${zIndex}`)}
       style={{
         width: dimensions[0],
         height: dimensions[1],
@@ -95,7 +95,7 @@ export const Item = ({
     >
       {/* grabby header */}
       <div
-        className={`${headerColor} h-full w-full flex-none`}
+        className={tw(`${headerColor} h-full w-full flex-none`)}
         style={{
           cursor: isDragging ? "grabbing" : "grab",
         }}

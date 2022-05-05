@@ -200,7 +200,7 @@ export default function (
           return (
             <Item
               {...item}
-              key={index}
+              key={item.id || index} // to re-render text when placeholder is replaced
               contents={
                 item.type === "file"
                   ? fileContents[item.path || ""] || "Loading file contents..."
@@ -252,6 +252,7 @@ export default function (
 
 const placeholderItems = [
   {
+    id: "placeholder",
     type: "text",
     text: "Start typing or grab a file",
     position: [
@@ -280,6 +281,7 @@ export type ItemType = {
   path?: string;
   text?: string;
   url?: string;
+  id?: string;
   block?: Block;
   position: Position;
   dimensions: Dimensions;
