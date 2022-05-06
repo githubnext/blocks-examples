@@ -535,7 +535,7 @@
     "@codemirror/legacy-modes" "^0.19.0"
     "@codemirror/stream-parser" "^0.19.0"
 
-"@codemirror/language@^0.19.0", "@codemirror/language@^0.19.10", "@codemirror/language@^0.19.7":
+"@codemirror/language@0.19.10", "@codemirror/language@^0.19.0", "@codemirror/language@^0.19.7":
   version "0.19.10"
   resolved "https://registry.yarnpkg.com/@codemirror/language/-/language-0.19.10.tgz#c3d1330fa5de778c6b6b5177af5572a3d9d596b5"
   integrity sha512-yA0DZ3RYn2CqAAGW62VrU8c4YxscMQn45y/I9sjBlqB1e2OTQLg4CCkMBuMSLXk4xaqjlsgazeOQWaJQOKfV8Q==
@@ -1190,6 +1190,11 @@
   version "7.6.0"
   resolved "https://registry.yarnpkg.com/@primer/primitives/-/primitives-7.6.0.tgz#942efe38b6e09bf6d0351c045436e628e32c3ddb"
   integrity sha512-cu28QLjectVf2rT4P7m6zS9v4g4yHtErRuPfsgEWEJhbXVIII6vDBm6elJzYixGpTNxpVtSUNezxUXv16l1ejQ==
+
+"@primer/primitives@^7.8.3":
+  version "7.8.3"
+  resolved "https://registry.yarnpkg.com/@primer/primitives/-/primitives-7.8.3.tgz#de7e03492cf977e99f2417490d76421db9715e9f"
+  integrity sha512-04ZwfJhpZ0QFwDrJfCuLX6iOh0BflWDTvuoRA80lQH9xk0RtIg16INbruwwtnbSgnKKXXRSykRRJ5BbxnqufRA==
 
 "@primer/react@^35.2.0":
   version "35.2.0"
