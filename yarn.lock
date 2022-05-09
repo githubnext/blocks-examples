@@ -535,7 +535,7 @@
     "@codemirror/legacy-modes" "^0.19.0"
     "@codemirror/stream-parser" "^0.19.0"
 
-"@codemirror/language@0.19.10", "@codemirror/language@^0.19.0", "@codemirror/language@^0.19.7":
+"@codemirror/language@^0.19.0", "@codemirror/language@^0.19.10", "@codemirror/language@^0.19.7":
   version "0.19.10"
   resolved "https://registry.yarnpkg.com/@codemirror/language/-/language-0.19.10.tgz#c3d1330fa5de778c6b6b5177af5572a3d9d596b5"
   integrity sha512-yA0DZ3RYn2CqAAGW62VrU8c4YxscMQn45y/I9sjBlqB1e2OTQLg4CCkMBuMSLXk4xaqjlsgazeOQWaJQOKfV8Q==

@@ -391,7 +391,7 @@
     "@codemirror/gutter": "^0.19.9",
     "@codemirror/highlight": "^0.19.8",
     "@codemirror/history": "^0.19.2",
-    "@codemirror/language": "0.19.10",
+    "@codemirror/language": "^0.19.10",
     "@codemirror/language-data": "^0.19.2",
     "@codemirror/lint": "^0.19.6",
     "@codemirror/matchbrackets": "^0.19.4",
