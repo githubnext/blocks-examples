@@ -23,11 +23,11 @@ import { highlightSelectionMatches, searchKeymap } from "@codemirror/search";
 import { autocompletion, completionKeymap } from "@codemirror/autocomplete";
 import { commentKeymap } from "@codemirror/comment";
 import { rectangularSelection } from "@codemirror/rectangular-selection";
-import { defaultHighlightStyle } from "@codemirror/highlight";
 import { lintKeymap } from "@codemirror/lint";
 import { LanguageDescription } from "@codemirror/language";
 import { languages } from "@codemirror/language-data";
 import interact from "@replit/codemirror-interact";
+import { theme } from "./theme";
 
 const languageConf = new Compartment();
 
@@ -41,7 +41,7 @@ const extensions = [
   dropCursor(),
   EditorState.allowMultipleSelections.of(true),
   indentOnInput(),
-  defaultHighlightStyle.fallback,
+  theme,
   bracketMatching(),
   closeBrackets(),
   autocompletion(),
