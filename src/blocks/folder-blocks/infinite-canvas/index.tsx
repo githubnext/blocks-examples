@@ -11,7 +11,7 @@ import { Button } from "@primer/react";
 
 const width = 5000;
 const height = 5000;
-const defaultDimensions: [number, number] = [200, 100];
+const defaultDimensions: Dimensions = [200, 100];
 export default function (
   props: FolderBlockProps & {
     metadata: { items: ItemType[] };
