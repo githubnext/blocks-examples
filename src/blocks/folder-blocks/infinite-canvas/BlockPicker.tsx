@@ -1,7 +1,7 @@
 import { tw } from "twind";
 import { ActionList, ActionMenu } from "@primer/react";
 import { useState } from "react";
-import { Block } from "./index";
+import { BlockWithKey as Block } from "./index";
 
 export const BlockPicker = ({
   value,
@@ -10,7 +10,7 @@ export const BlockPicker = ({
 }: {
   value: Block;
   onChange: (newBlock: Block) => void;
-  options: any[];
+  options: Block[];
 }) => {
   // needed to close the dropdown, which is an uncontrolled detail element
   const [iteration, setIteration] = useState(0);

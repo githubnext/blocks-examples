@@ -1,6 +1,6 @@
 import { tw } from "twind";
 import { useEffect, useMemo, useState } from "react";
-import { FolderBlockProps } from "@githubnext/utils";
+import { Block, FolderBlockProps } from "@githubnext/utils";
 import Select from "react-select";
 import { Box, Button, IconButton } from "@primer/react";
 import { TrashIcon } from "@primer/octicons-react";
@@ -9,8 +9,14 @@ import { TrashIcon } from "@primer/octicons-react";
 // This is only implemented for our own example Blocks, to showcase the concept.
 
 export default function (props: FolderBlockProps) {
-  const { tree, metadata = {}, onUpdateMetadata, BlockComponent } = props;
-  const [blockOptions, setBlockOptions] = useState<any>([]);
+  const {
+    tree,
+    metadata = {},
+    onUpdateMetadata,
+    BlockComponent,
+    onRequestBlocksRepos,
+  } = props;
+  const [blockOptions, setBlockOptions] = useState<Block[]>([]);
   const [blocks, setBlocks] = useState<any>(metadata?.blocks || defaultBlocks);
   useEffect(() => setBlocks(metadata?.blocks || blocks), [metadata]);
   const pathOptions = useMemo(
@@ -21,8 +27,8 @@ export default function (props: FolderBlockProps) {
     [tree]
   );
   const blockOptionsByType = {
-    folder: blockOptions.filter((d: any) => d.type === "folder"),
-    file: blockOptions.filter((d: any) => d.type === "file"),
+    folder: blockOptions.filter((block) => block.type === "folder"),
+    file: blockOptions.filter((block) => block.type === "file"),
   };
   const isDirty =
     JSON.stringify(blocks) !== JSON.stringify(metadata?.blocks || blocks);
@@ -44,13 +50,13 @@ export default function (props: FolderBlockProps) {
   };
 
   const getBlocks = async () => {
-    const url = "https://blocks-marketplace.githubnext.com/api/blocks";
-    const res = await fetch(url).then((res) => res.json());
+    const blocksRepos = await onRequestBlocksRepos();
     const exampleBlocks =
-      res.find((d: any) => d.full_name === "githubnext/blocks-examples")
-        ?.blocks || [];
+      blocksRepos.find(
+        (repo) => repo.full_name === "githubnext/blocks-examples"
+      )?.blocks || [];
     setBlockOptions(
-      exampleBlocks.map((block: any) => ({
+      exampleBlocks.map((block) => ({
         ...block,
         owner: "githubnext",
         repo: "blocks-examples",
