@@ -16,7 +16,6 @@ if (typeof window !== "undefined") {
 export default function (props: FileBlockProps) {
   const { context, content, isEditable, onUpdateContent } = props;
   const [excalModule, setExcalModule] = useState<any>(null);
-  console.log("excalModule", excalModule);
 
   useEffect(() => {
     import("@excalidraw/excalidraw").then((imp) => {
