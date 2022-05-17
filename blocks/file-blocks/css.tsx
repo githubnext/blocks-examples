@@ -8,7 +8,6 @@ export default function (props: FileBlockProps) {
   const { content } = props;
 
   const { tree, flattenedRules, widelyApplicableAttributes } = useMemo(() => {
-    console.log("content", content);
     let tree = { children: [] };
     try {
       tree = toJSON(content);

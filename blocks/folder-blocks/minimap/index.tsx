@@ -10,7 +10,6 @@ export default function (props: FolderBlockProps) {
     const nestedTree = getNestedFileTree(tree)[0];
     return nestedTree;
   }, [tree]);
-  console.log(tree);
 
   return (
     <div
