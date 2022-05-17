@@ -6,7 +6,6 @@
     "description": "A basic code block",
     "sandbox": false,
     "entry": "blocks/file-blocks/code/index.tsx",
-    "extensions": ["*"],
     "matches": ["*"],
     "example_path": "https://github.com/githubnext/blocks-tutorial/blob/main/Aside.jsx"
   },
@@ -17,7 +16,6 @@
     "description": "A whiteboard tool",
     "sandbox": false,
     "entry": "blocks/file-blocks/excalidraw/index.tsx",
-    "extensions": ["excalidraw"],
     "matches": ["*.excalidraw"],
     "example_path": "https://github.com/githubnext/blocks-tutorial/blob/main/drawing.excalidraw"
   },
@@ -28,7 +26,6 @@
     "description": "View HTML content",
     "sandbox": false,
     "entry": "blocks/file-blocks/html.tsx",
-    "extensions": ["html", "svelte"],
     "matches": ["*.html", "*.svelte"],
     "example_path": "https://github.com/githubnext/blocks-tutorial/blob/main/photos.html"
   },
@@ -39,7 +36,6 @@
     "description": "View selectors in a css file",
     "sandbox": false,
     "entry": "blocks/file-blocks/css.tsx",
-    "extensions": ["css"],
     "matches": ["*.css"],
     "example_path": "https://github.com/githubnext/blocks-tutorial/blob/main/global.css"
   },
@@ -50,7 +46,6 @@
     "description": "View images",
     "sandbox": false,
     "entry": "blocks/file-blocks/image.tsx",
-    "extensions": ["png", "jpg", "jpeg", "gif", "svg"],
     "matches": ["*.png", "*.jpg", "*.jpeg", "*.gif", "*.svg"],
     "example_path": "https://github.com/pmndrs/react-spring/blob/HEAD/assets/projects/aragon.png?raw=true"
   },
@@ -61,7 +56,6 @@
     "description": "An interactive view of JSON objects",
     "sandbox": false,
     "entry": "blocks/file-blocks/json.tsx",
-    "extensions": ["json", "webmanifest", "prettierrc", "yaml", "yml"],
     "matches": [
       "*.json",
       "*.webmanifest",
@@ -80,7 +74,6 @@
     "description": "View & edit GeoJSON data",
     "sandbox": false,
     "entry": "blocks/file-blocks/geojson.tsx",
-    "extensions": ["json", "geojson"],
     "matches": ["*.geo.json", "*.geojson"],
     "example_path": "https://github.com/d3/d3-geo/blob/main/package.json"
   },
@@ -91,7 +84,6 @@
     "description": "A block for 3d files",
     "sandbox": false,
     "entry": "blocks/file-blocks/3d-files.tsx",
-    "extensions": ["gltf", "glb"],
     "matches": ["*.gltf", "*.glb"],
     "example_path": "https://github.com/githubnext/blocks-tutorial/blob/main/avocado.glb"
   },
@@ -102,7 +94,6 @@
     "description": "A block for flat data files",
     "sandbox": false,
     "entry": "blocks/file-blocks/flat.tsx",
-    "extensions": ["csv"],
     "matches": ["*.csv"],
     "example_path": "https://github.com/githubnext/blocks-tutorial/blob/main/data.csv"
   },
@@ -113,7 +104,6 @@
     "description": "View simple polls beautifully",
     "sandbox": false,
     "entry": "blocks/file-blocks/poll.tsx",
-    "extensions": ["json"],
     "matches": ["*.json"],
     "example_path": "https://github.com/githubnext/blocks-tutorial/blob/main/poll.json"
   },
@@ -124,7 +114,6 @@
     "description": "An interactive chart block",
     "sandbox": false,
     "entry": "blocks/file-blocks/charts/index.tsx",
-    "extensions": ["csv"],
     "matches": ["*.csv"],
     "example_path": "https://github.com/the-pudding/data/blob/master/pockets/measurements.csv"
   },
@@ -135,7 +124,6 @@
     "description": "View markdown files. You can also view live repo info, using Issues, Releases, and Commits custom components, as well as live code examples with CodeSandbox.",
     "sandbox": true,
     "entry": "blocks/file-blocks/live-markdown/index.tsx",
-    "extensions": ["md", "mdx"],
     "matches": ["*.md", "*.mdx"],
     "example_path": "https://github.com/githubnext/blocks-tutorial/blob/main/README.md"
   },
@@ -146,7 +134,6 @@
     "description": "Give feedback on a React component",
     "sandbox": false,
     "entry": "blocks/file-blocks/annotate-react/index.tsx",
-    "extensions": ["jsx", "tsx"],
     "matches": ["*.jsx", "*.tsx"],
     "example_path": "https://github.com/githubnext/blocks-tutorial/blob/main/Aside.jsx"
   },
@@ -157,7 +144,6 @@
     "description": "Experiment with your sentence-encoder",
     "sandbox": false,
     "entry": "blocks/file-blocks/sentence-encoder.tsx",
-    "extensions": ["json"],
     "matches": ["*.json"],
     "example_path": "https://github.com/githubnext/blocks-tutorial/blob/main/queries.json"
   },
@@ -168,7 +154,6 @@
     "description": "Run your p5.js sketches",
     "sandbox": true,
     "entry": "blocks/file-blocks/processing.tsx",
-    "extensions": ["js"],
     "matches": ["*.js"],
     "example_path": "https://github.com/githubnext/blocks-tutorial/blob/main/processing-sketch.js"
   },
@@ -179,7 +164,6 @@
     "description": "Summarize parts of a file using ML",
     "sandbox": false,
     "entry": "blocks/file-blocks/summarize/index.tsx",
-    "extensions": ["js", "ts", "tsx", "jsx"],
     "matches": ["*.js", "*.ts", "*.tsx", "*.jsx"],
     "example_path": "https://github.com/mattdesl/canvas-sketch/blob/master/lib/save.js"
   },
@@ -190,7 +174,6 @@
     "description": "Explain parts of a file using ML",
     "sandbox": false,
     "entry": "blocks/file-blocks/explain/index.tsx",
-    "extensions": ["js", "ts", "tsx", "jsx", "rb", "py"],
     "matches": ["*.js", "*.ts", "*.tsx", "*.jsx", "*.rb", "*.py"],
     "example_path": "https://github.com/mattdesl/canvas-sketch/blob/master/lib/save.js"
   },
@@ -201,7 +184,6 @@
     "description": "Edit code by prompting a Machine Learning model",
     "sandbox": false,
     "entry": "blocks/file-blocks/edit/index.tsx",
-    "extensions": ["*"],
     "matches": ["*"],
     "example_path": "https://github.com/githubnext/blocks-tutorial/blob/main/processing-sketch.js"
   },
