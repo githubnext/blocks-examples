@@ -16,10 +16,16 @@ if (typeof window !== "undefined") {
 export default function (props: FileBlockProps) {
   const { context, content, isEditable, onUpdateContent } = props;
   const [excalModule, setExcalModule] = useState<any>(null);
+  const [version, setVersion] = useState<number | null>(null);
 
   useEffect(() => {
     import("@excalidraw/excalidraw").then((imp) => {
       setExcalModule(imp);
+      try {
+        const parsed = JSON.parse(content);
+        const elements = parsed?.elements || [];
+        setVersion(imp.getSceneVersion(elements));
+      } catch {}
     });
   }, []);
 
@@ -28,7 +34,9 @@ export default function (props: FileBlockProps) {
       console.error("Excalidraw is not loaded.");
       return;
     }
+    const newVersion = excalModule.getSceneVersion(elements);
     const serialized = excalModule.serializeAsJSON(elements, appState);
+    if (newVersion === version) return;
     onUpdateContent(serialized);
   };
 
