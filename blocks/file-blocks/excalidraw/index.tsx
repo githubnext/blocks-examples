@@ -19,6 +19,7 @@ export default function (props: FileBlockProps) {
   const [version, setVersion] = useState<number | null>(null);
 
   useEffect(() => {
+    if (excalModule) return;
     import("@excalidraw/excalidraw").then((imp) => {
       setExcalModule(imp);
       try {
