@@ -1,6 +1,6 @@
 import { tw } from "twind";
 import { FileBlockProps } from "@githubnext/blocks";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./style.css";
 
 if (typeof window !== "undefined") {
@@ -14,19 +14,25 @@ if (typeof window !== "undefined") {
   }
 }
 export default function (props: FileBlockProps) {
-  const { context, content, isEditable, onUpdateContent } = props;
+  const { content, isEditable, onUpdateContent } = props;
   const [excalModule, setExcalModule] = useState<any>(null);
-  const [version, setVersion] = useState<number | null>(null);
+  const version = useRef<number>(null);
+  const key = useRef<number>(0);
+
+  const parsedContent = JSON.parse(content);
+  if (excalModule) {
+    const newVersion = excalModule.getSceneVersion(parsedContent.elements);
+    if (newVersion !== version.current) {
+      version.current = newVersion;
+      key.current += 1;
+    }
+  }
 
   useEffect(() => {
     if (excalModule) return;
     import("@excalidraw/excalidraw").then((imp) => {
+      version.current = imp.getSceneVersion(parsedContent.elements);
       setExcalModule(imp);
-      try {
-        const parsed = JSON.parse(content);
-        const elements = parsed?.elements || [];
-        setVersion(imp.getSceneVersion(elements));
-      } catch {}
     });
   }, []);
 
@@ -36,23 +42,21 @@ export default function (props: FileBlockProps) {
       return;
     }
     const newVersion = excalModule.getSceneVersion(elements);
+    if (newVersion === version.current) return;
+    version.current = newVersion;
     const serialized = excalModule.serializeAsJSON(elements, appState);
-    if (newVersion === version) return;
     onUpdateContent(serialized);
   };
 
   const ExcalidrawComponent = excalModule ? excalModule.default : null;
 
   return (
-    <div
-      className={tw(`width-full`)}
-      key={context.path}
-      style={{ height: "100vh" }}
-    >
+    <div className={tw(`width-full`)} style={{ height: "100vh" }}>
       {ExcalidrawComponent && (
         <ExcalidrawComponent
+          key={String(key.current)}
           viewModeEnabled={!isEditable}
-          initialData={JSON.parse(content)}
+          initialData={parsedContent}
           onChange={handleChange}
         />
       )}
