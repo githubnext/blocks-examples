@@ -94,7 +94,7 @@
     "description": "A block for flat data files",
     "sandbox": false,
     "entry": "blocks/file-blocks/flat.tsx",
-    "matches": ["*.csv"],
+    "matches": ["*.csv", "*.yml", "*.yaml"],
     "example_path": "https://github.com/githubnext/blocks-tutorial/blob/main/data.csv"
   },
   {
