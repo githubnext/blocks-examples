@@ -1,0 +1,30 @@
+/* ./src/index.css */
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.sandbox-wrapper .sp-loading:before {
+  content: "Loading...";
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  font-size: 1.2em;
+  opacity: 0.5;
+  transform: translate(-50%, -50%);
+  font-style: italic;
+}
+
+.sandbox-wrapper .sp-preview-iframe {
+  outline: none;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+.sandbox-wrapper .sp-stack,
+.sandbox-wrapper .sp-preview-container {
+  width: 100%;
+  height: 100%;
+}
