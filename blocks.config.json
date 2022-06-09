@@ -129,6 +129,16 @@
   },
   {
     "type": "file",
+    "id": "use-case-block",
+    "title": "Blocks use case",
+    "description": "View Blocks use case writeups",
+    "sandbox": false,
+    "entry": "blocks/file-blocks/use-case/index.tsx",
+    "matches": ["*.md", "*.mdx"],
+    "example_path": "https://github.com/githubnext/blocks-tutorial/blob/main/README.md"
+  },
+  {
+    "type": "file",
     "id": "react-feedback-block",
     "title": "React component feedback",
     "description": "Give feedback on a React component",
