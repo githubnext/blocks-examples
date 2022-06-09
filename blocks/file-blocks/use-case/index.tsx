@@ -3,12 +3,11 @@ import { Block, FileBlockProps } from "@githubnext/blocks";
 // @ts-ignore
 import MDX from "@mdx-js/runtime";
 import { Box, Link } from "@primer/react";
-import { createContext, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { ErrorBoundary } from "./ErrorBoundary";
 import "./style.css";
 
-export const MarkdownContext = createContext<any>({});
 export default function (props: FileBlockProps) {
   const { content, onRequestBlocksRepos } = props;
 
