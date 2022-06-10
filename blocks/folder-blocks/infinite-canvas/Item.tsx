@@ -3,7 +3,7 @@ import { useMemo, useRef, useState } from "react";
 import { useDrag } from "./useDrag";
 import { BlockPicker } from "./BlockPicker";
 import { ResizeButton } from "./ResizeButton";
-import pm from "picomatch";
+import pm from "picomatch-browser";
 import { roundToInterval, Position, ItemType, Dimensions } from "./index";
 import { Box } from "@primer/react";
 
