@@ -1,7 +1,6 @@
 import { tw } from "twind";
 import { Block, FolderBlockProps, getNestedFileTree } from "@githubnext/blocks";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Buffer } from "buffer";
 import { FilePicker } from "./FilePicker";
 import { useDrag } from "./useDrag";
 import { Item } from "./Item";
