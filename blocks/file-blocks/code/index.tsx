@@ -11,7 +11,7 @@ import {
   keymap,
 } from "@codemirror/view";
 import { EditorView } from "@codemirror/view";
-import { EditorState, Compartment } from "@codemirror/state";
+import { EditorState, Compartment, Transaction } from "@codemirror/state";
 import { history, historyKeymap } from "@codemirror/history";
 import { foldGutter, foldKeymap } from "@codemirror/fold";
 import { indentOnInput } from "@codemirror/language";
@@ -93,6 +93,8 @@ export default function (props: FileBlockProps) {
     if (doc !== content) {
       view.dispatch({
         changes: { from: 0, to: doc.length, insert: content },
+        // mark the transaction remote so we don't call `onUpdateContent` for it below
+        annotations: Transaction.remote.of(true),
       });
     }
   }
@@ -106,7 +108,11 @@ export default function (props: FileBlockProps) {
         extensions,
         EditorView.editable.of(isEditable),
         EditorView.updateListener.of((v) => {
-          if (!v.docChanged) return;
+          if (
+            !v.docChanged ||
+            v.transactions.every((t) => t.annotation(Transaction.remote))
+          )
+            return;
           onUpdateContent(v.state.doc.sliceString(0));
         }),
       ],
