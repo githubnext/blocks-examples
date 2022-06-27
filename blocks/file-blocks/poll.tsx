@@ -49,7 +49,7 @@ export default function (props: FileBlockProps) {
                     !isEditable ? "pointer-events-none" : ""
                   }`
                 )}
-                onClick={() => onClick(index)}
+                onClick={onClick(index)}
               >
                 Vote
               </button>
