@@ -29,7 +29,8 @@ import { languages } from "@codemirror/language-data";
 import interact from "@replit/codemirror-interact";
 import { theme } from "./theme";
 
-const languageConf = new Compartment();
+const languageCompartment = new Compartment();
+const isEditableCompartment = new Compartment();
 
 const extensions = [
   lineNumbers(),
@@ -73,7 +74,8 @@ const extensions = [
     ...lintKeymap,
   ]),
 
-  languageConf.of([]),
+  languageCompartment.of([]),
+  isEditableCompartment.of([]),
 ];
 
 export default function (props: FileBlockProps) {
@@ -87,18 +89,6 @@ export default function (props: FileBlockProps) {
   const editorRef = React.useRef<HTMLDivElement>(null);
   const viewRef = React.useRef<EditorView>();
 
-  if (viewRef.current) {
-    const view = viewRef.current;
-    const doc = view.state.doc.sliceString(0);
-    if (doc !== content) {
-      view.dispatch({
-        changes: { from: 0, to: doc.length, insert: content },
-        // mark the transaction remote so we don't call `onUpdateContent` for it below
-        annotations: Transaction.remote.of(true),
-      });
-    }
-  }
-
   React.useEffect(() => {
     if (viewRef.current || !editorRef.current) return;
 
@@ -106,7 +96,6 @@ export default function (props: FileBlockProps) {
       doc: content,
       extensions: [
         extensions,
-        EditorView.editable.of(isEditable),
         EditorView.updateListener.of((v) => {
           if (
             !v.docChanged ||
@@ -122,23 +111,52 @@ export default function (props: FileBlockProps) {
       parent: editorRef.current,
     });
 
+    viewRef.current = view;
+  }, []);
+
+  React.useEffect(() => {
+    if (!viewRef.current) return;
+    const view = viewRef.current;
+
+    const doc = view.state.doc.sliceString(0);
+    if (doc !== content) {
+      view.dispatch({
+        changes: { from: 0, to: doc.length, insert: content },
+        // mark the transaction remote so we don't call `onUpdateContent` for it below
+        annotations: Transaction.remote.of(true),
+      });
+    }
+  }, [content]);
+
+  React.useEffect(() => {
+    if (!viewRef.current) return;
+    const view = viewRef.current;
+
     const language = LanguageDescription.matchFilename(languages, path);
 
     if (language) {
       language.load().then((lang) => {
         view.dispatch({
-          effects: languageConf.reconfigure(lang),
+          effects: languageCompartment.reconfigure(lang),
         });
       });
     }
+  }, [path]);
 
-    viewRef.current = view;
-  }, []);
+  React.useEffect(() => {
+    if (!viewRef.current) return;
+    const view = viewRef.current;
+
+    view.dispatch({
+      effects: isEditableCompartment.reconfigure(
+        EditorView.editable.of(isEditable)
+      ),
+    });
+  }, [isEditable]);
 
   return (
     <div
       className={tw(`relative w-full h-full overflow-auto`)}
-      key={path}
       ref={editorRef}
     />
   );
