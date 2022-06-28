@@ -177,7 +177,10 @@ export default function (props: FolderBlockProps) {
                 <BlockComponent
                   {...props}
                   block={block.block}
-                  path={block.path}
+                  context={{
+                    path: block.path,
+                  }}
+                  path={block.path} // soon to be deprecated, leaving for backwards compatibility
                 />
               ) : (
                 "No BlockComponent"

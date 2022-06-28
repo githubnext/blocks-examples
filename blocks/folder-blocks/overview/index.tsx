@@ -144,14 +144,20 @@ export default function (props: FolderBlockProps) {
               <BlockComponent
                 {...props}
                 block={readmeBlock}
-                path={`${context.path}/README.md`}
+                path={`${context.path}/README.md`} // soon to be deprecated, leaving for backwards compatibility
+                context={{
+                  path: `${context.path}/README.md`,
+                }}
               />
             </div>
           ) : (
             <BlockComponent
               {...props}
               block={minimapBlock}
-              path={context.path}
+              path={context.path} // soon to be deprecated, leaving for backwards compatibility
+              context={{
+                path: context.path,
+              }}
             />
           )}
         </div>
