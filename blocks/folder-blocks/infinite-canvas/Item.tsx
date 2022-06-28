@@ -149,7 +149,10 @@ export const Item = ({
                   <BlockComponent
                     {...(blockProps || {})}
                     block={block}
-                    path={path}
+                    path={path} // soon to be deprecated, leaving for backwards compatibility
+                    context={{
+                      path,
+                    }}
                     content={contents}
                     onRequestGitHubData={async (...args) => {
                       // catch API errors
