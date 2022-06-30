@@ -14,7 +14,7 @@ if (typeof window !== "undefined") {
   }
 }
 export default function (props: FileBlockProps) {
-  const { content, isEditable, onUpdateContent } = props;
+  const { context, content, isEditable, onUpdateContent } = props;
   const [excalModule, setExcalModule] = useState<any>(null);
   const version = useRef<number>(null);
   const key = useRef<number>(0);
@@ -51,7 +51,11 @@ export default function (props: FileBlockProps) {
   const ExcalidrawComponent = excalModule ? excalModule.default : null;
 
   return (
-    <div className={tw(`width-full`)} style={{ height: "100vh" }}>
+    <div
+      className={tw(`width-full`)}
+      style={{ height: "100vh" }}
+      key={context.sha}
+    >
       {ExcalidrawComponent && (
         <ExcalidrawComponent
           key={String(key.current)}
