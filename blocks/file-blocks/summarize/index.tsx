@@ -9,6 +9,8 @@ import "./index.css";
 
 export default function (props: FileBlockProps) {
   const { content, context } = props;
+  const onFetchInternalEndpoint =
+    props.private__onFetchInternalEndpoint || onFetchInternalEndpointPolyfill;
   const [sections, setSections] = useState<CodeSection[]>([]);
   const [sectionExplanations, setSectionExplanations] = useState<string[]>([]);
   const [isCollapsed, setIsCollapsed] = useState<boolean>(false);
@@ -39,7 +41,7 @@ export default function (props: FileBlockProps) {
         type === "function" &&
         // don't hammer the endpoint
         index < 30
-          ? await fetchCodeSummary(text, language)
+          ? await fetchCodeSummary(text, language, onFetchInternalEndpoint)
           : "";
       setSectionExplanations((sectionExplanations) => {
         let newSectionExplanations = [...sectionExplanations];
@@ -191,9 +193,13 @@ const Section = ({
   );
 };
 
-const fetchCodeSummary = async (code: string, language: string) => {
+const fetchCodeSummary = async (
+  code: string,
+  language: string,
+  onFetchInternalEndpoint: (url: string, params: any) => Promise<any>
+) => {
   // this is an endpoint on the main prototype
-  const response = await axios("/api/explain", {
+  const response = await onFetchInternalEndpoint("/api/explain", {
     method: "POST",
     data: {
       language,
@@ -281,4 +287,8 @@ const breakCodeIntoSections = async (
     });
   });
   return sections.filter((d) => !!d.text.trim());
+};
+
+const onFetchInternalEndpointPolyfill = async (url: string, params: any) => {
+  return await axios(url, params);
 };

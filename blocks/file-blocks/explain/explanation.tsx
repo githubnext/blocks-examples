@@ -3,10 +3,17 @@ import axios from "axios";
 import { useQuery } from "react-query";
 import type { Explanation } from ".";
 
-const fetchExplanation = async (code: string, language: string) => {
-  const res = await axios.post(`/api/explain`, {
-    code,
-    language,
+const fetchExplanation = async (
+  code: string,
+  language: string,
+  onFetchInternalEndpoint: (url: string, params: any) => Promise<any>
+): Promise<Explanation> => {
+  const res = await onFetchInternalEndpoint("/api/explain", {
+    method: "POST",
+    data: {
+      code,
+      language,
+    },
   });
   return res.data;
 };
@@ -16,9 +23,17 @@ export function ExplanationComponent(props: {
   language: string;
 }) {
   const { explanation } = props;
+  const onFetchInternalEndpoint =
+    props.private__onFetchInternalEndpoint || onFetchInternalEndpointPolyfill;
+
   const { data, status } = useQuery(
     ["explanation", props.explanation.code],
-    () => fetchExplanation(props.explanation.code, props.language),
+    () =>
+      fetchExplanation(
+        props.explanation.code,
+        props.language,
+        onFetchInternalEndpoint
+      ),
     { refetchOnWindowFocus: false }
   );
 
@@ -49,3 +64,7 @@ export function ExplanationComponent(props: {
     </>
   );
 }
+
+const onFetchInternalEndpointPolyfill = async (url: string, params: any) => {
+  return await axios(url, params);
+};

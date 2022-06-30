@@ -12,6 +12,8 @@ import { Button, FormControl, TextInput } from "@primer/react";
 
 export default function (props: FileBlockProps) {
   const { content, context, onUpdateContent } = props;
+  const onFetchInternalEndpoint =
+    props.private__onFetchInternalEndpoint || onFetchInternalEndpointPolyfill;
 
   const [instruction, setInstruction] = useState<string>("");
   const [newContent, setNewContent] = useState<string>("");
@@ -46,9 +48,12 @@ export default function (props: FileBlockProps) {
         onSubmit={async (e) => {
           e.preventDefault();
           setIsLoading(true);
-          const res = await axios.post("/api/openai-edit", {
-            instruction: instruction,
-            input: content,
+          const res = await onFetchInternalEndpoint("/api/openai-edit", {
+            method: "POST",
+            data: {
+              instruction: instruction,
+              input: content,
+            },
           });
           setNewContent(res.data);
           setIsLoading(false);
@@ -195,4 +200,8 @@ const Change = ({ change, language }: { change: Hunk; language: string }) => {
       </SyntaxHighlighter>
     </div>
   );
+};
+
+const onFetchInternalEndpointPolyfill = async (url: string, params: any) => {
+  return await axios(url, params);
 };
