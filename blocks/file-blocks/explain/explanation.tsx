@@ -24,7 +24,7 @@ export function ExplanationComponent(props: {
 }) {
   const { explanation } = props;
   const onFetchInternalEndpoint =
-    props.onFetchInternalEndpoint || onFetchInternalEndpointPolyfill;
+    props.private__onFetchInternalEndpoint || onFetchInternalEndpointPolyfill;
 
   const { data, status } = useQuery(
     ["explanation", props.explanation.code],

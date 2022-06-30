@@ -13,7 +13,7 @@ import { Button, FormControl, TextInput } from "@primer/react";
 export default function (props: FileBlockProps) {
   const { content, context, onUpdateContent } = props;
   const onFetchInternalEndpoint =
-    props.onFetchInternalEndpoint || onFetchInternalEndpointPolyfill;
+    props.private__onFetchInternalEndpoint || onFetchInternalEndpointPolyfill;
 
   const [instruction, setInstruction] = useState<string>("");
   const [newContent, setNewContent] = useState<string>("");

@@ -10,7 +10,7 @@ import "./index.css";
 export default function (props: FileBlockProps) {
   const { content, context } = props;
   const onFetchInternalEndpoint =
-    props.onFetchInternalEndpoint || onFetchInternalEndpointPolyfill;
+    props.private__onFetchInternalEndpoint || onFetchInternalEndpointPolyfill;
   const [sections, setSections] = useState<CodeSection[]>([]);
   const [sectionExplanations, setSectionExplanations] = useState<string[]>([]);
   const [isCollapsed, setIsCollapsed] = useState<boolean>(false);
