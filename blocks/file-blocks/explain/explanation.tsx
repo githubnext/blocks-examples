@@ -66,6 +66,5 @@ export function ExplanationComponent(props: {
 }
 
 const onFetchInternalEndpointPolyfill = async (url: string, params: any) => {
-  const res = await axios(url, params);
-  return res.data;
+  return await axios(url, params);
 };

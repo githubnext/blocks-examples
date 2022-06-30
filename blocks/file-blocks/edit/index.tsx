@@ -55,7 +55,7 @@ export default function (props: FileBlockProps) {
               input: content,
             },
           });
-          setNewContent(res);
+          setNewContent(res.data);
           setIsLoading(false);
         }}
       >
@@ -203,6 +203,5 @@ const Change = ({ change, language }: { change: Hunk; language: string }) => {
 };
 
 const onFetchInternalEndpointPolyfill = async (url: string, params: any) => {
-  const res = await axios(url, params);
-  return res.data;
+  return await axios(url, params);
 };
