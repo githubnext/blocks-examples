@@ -66,6 +66,7 @@ export default function (props: FileBlockProps) {
                 How would you like to edit the code?
               </FormControl.Label>
               <TextInput
+                width="100%"
                 value={instruction}
                 disabled={isLoading}
                 onChange={(e) => {
