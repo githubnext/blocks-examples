@@ -11,20 +11,20 @@ import "./index.css";
 import { Button, FormControl, TextInput } from "@primer/react";
 
 export default function (props: FileBlockProps) {
-  const { content, context, onUpdateContent } = props;
+  const { originalContent, content, context, onUpdateContent } = props;
   const onFetchInternalEndpoint =
     props.private__onFetchInternalEndpoint || onFetchInternalEndpointPolyfill;
 
   const [instruction, setInstruction] = useState<string>("");
-  const [newContent, setNewContent] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const language = getLanguageFromFilename(context.path.split("/").pop() || "");
 
+  const hasChanged = content !== originalContent;
   const hunks = useMemo(() => {
-    if (!newContent) return [];
+    if (!hasChanged) return [];
     const hunks = parseDiff(
-      diffAsText(content, newContent, {
+      diffAsText(originalContent, content, {
         context: 100,
       }),
       {
@@ -33,7 +33,7 @@ export default function (props: FileBlockProps) {
     );
 
     return hunks;
-  }, [content, newContent]);
+  }, [originalContent, content]);
 
   return (
     <div
@@ -52,26 +52,28 @@ export default function (props: FileBlockProps) {
             method: "POST",
             data: {
               instruction: instruction,
-              input: content,
+              input: originalContent,
             },
           });
-          setNewContent(res.data);
+          onUpdateContent(res.data);
           setIsLoading(false);
         }}
       >
-        <div className={tw(`flex items-end mt-1`)}>
-          <FormControl>
-            <FormControl.Label>
-              How would you like to edit the code?
-            </FormControl.Label>
-            <TextInput
-              value={instruction}
-              disabled={isLoading}
-              onChange={(e) => {
-                setInstruction(e.target.value);
-              }}
-            />
-          </FormControl>
+        <div className={tw(`flex items-end w-full mt-1`)}>
+          <div className={tw(`flex-1`)}>
+            <FormControl>
+              <FormControl.Label>
+                How would you like to edit the code?
+              </FormControl.Label>
+              <TextInput
+                value={instruction}
+                disabled={isLoading}
+                onChange={(e) => {
+                  setInstruction(e.target.value);
+                }}
+              />
+            </FormControl>
+          </div>
 
           <div>
             <Button
@@ -79,29 +81,25 @@ export default function (props: FileBlockProps) {
               disabled={isLoading}
               className={tw(`ml-1 self-stretch`)}
             >
-              {newContent ? "Re-generate modified code" : "Get modified code"}
+              Modify code
             </Button>
           </div>
         </div>
       </form>
 
-      <div className={tw(`flex items-end px-5 py-2`)}>
-        {newContent && (
-          <div className={tw(`w-full flex justify-between`)}>
-            <div className={tw(`text-gray-500`)}>Proposed code</div>
-            <Button
-              variant="primary"
-              onClick={() => {
-                onUpdateContent(newContent);
-              }}
-            >
-              Save changes
-            </Button>
-          </div>
+      <div className={tw(`flex justify-end items-end px-5 py-2`)}>
+        {hasChanged && (
+          <Button
+            onClick={() => {
+              onUpdateContent(originalContent);
+            }}
+          >
+            Reset to original
+          </Button>
         )}
       </div>
 
-      {newContent ? (
+      {hunks?.length ? (
         <div className={tw(`col-span-2`)}>
           <div className={tw(`w-full`)}>
             {hunks?.[0]?.hunks?.map((hunk: Hunk) => (
@@ -124,7 +122,7 @@ export default function (props: FileBlockProps) {
             wrapLines
             wrapLongLines
           >
-            {content}
+            {originalContent}
           </SyntaxHighlighter>
         </pre>
       )}
