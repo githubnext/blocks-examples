@@ -9,6 +9,8 @@ export default function (props: FileBlockProps) {
 
   useEffect(() => {
     if (p5Ref.current) {
+      // clear wrapper
+      p5Ref.current.innerHTML = "";
       window.eval(content);
       try {
         new p5(undefined as any, p5Ref.current);
