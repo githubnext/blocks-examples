@@ -20,7 +20,11 @@ export default function (props: FileBlockProps) {
   const updateSections = async () => {
     let sections = [] as CodeSection[];
     try {
-      sections = await breakCodeIntoSections(content, language);
+      sections = await breakCodeIntoSections(
+        content,
+        language,
+        onFetchInternalEndpoint
+      );
     } catch {
     } finally {
       if (!sections.length) {
@@ -228,10 +232,11 @@ type FunctionResponse = {
 // break code string up into separate functions
 const breakCodeIntoSections = async (
   code: string,
-  language: string
+  language: string,
+  onFetchInternalEndpoint: (url: string, params: any) => Promise<any>
 ): Promise<CodeSection[]> => {
   // this is an endpoint on the main prototype
-  const res = await axios(`/api/code-chunk`, {
+  const res = await onFetchInternalEndpoint(`/api/code-chunk`, {
     method: "POST",
     data: {
       code,
