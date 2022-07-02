@@ -71,7 +71,7 @@ export default function (
       items = items.reduce(
         (items, item, id) => ({
           ...items,
-          id: { ...item, id },
+          [id]: { ...item, id },
         }),
         {}
       );
@@ -109,9 +109,9 @@ export default function (
           onClick={() => {
             const id = nextId.current;
             nextId.current += 1;
-            const newItems = {
+            const newItems: { [id: number]: ItemType } = {
               ...items,
-              id: {
+              [id]: {
                 id,
                 type: "text",
                 text: "Hello World",
@@ -135,9 +135,9 @@ export default function (
           onFileSelected={(file) => {
             const id = nextId.current;
             nextId.current += 1;
-            const newItems = {
+            const newItems: { [id: number]: ItemType } = {
               ...items,
-              id: {
+              [id]: {
                 id,
                 type: "file",
                 path: file.path,
@@ -192,7 +192,7 @@ export default function (
               onChange={(newContents: Partial<ItemType>) => {
                 setItems({
                   ...items,
-                  [item.id]: { ...items[item.id], ...newContents },
+                  [item.id]: { ...item, ...newContents },
                 });
                 setIsDirty(true);
               }}
