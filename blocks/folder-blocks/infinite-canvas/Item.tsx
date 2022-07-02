@@ -11,10 +11,7 @@ export const Item = ({
   type,
   text,
   path,
-  url,
   block,
-  blockProps,
-  contents = "",
   position,
   dimensions,
   blockOptions = [],
@@ -22,10 +19,8 @@ export const Item = ({
   onDelete,
   onChange,
 }: ItemType & {
-  contents?: string;
   blockOptions: any[];
   BlockComponent?: any;
-  blockProps?: any;
   onDelete: () => void;
   onChange: (newContents: Partial<ItemType>) => void;
 }) => {
@@ -46,7 +41,6 @@ export const Item = ({
 
   const relevantBlockOptions = useMemo(() => {
     if (type !== "file") return null;
-    const extension = path?.split(".").pop();
     return blockOptions.filter((block: any) => {
       // don't include example Blocks
       if (block.title === "Example File Block") {
@@ -143,36 +137,12 @@ export const Item = ({
                 options={relevantBlockOptions || []}
               />
             </div>
-            {BlockComponent && block ? (
+            {BlockComponent && block && (
               <div className={tw(`w-full flex-1`)}>
                 <div className={tw(`scaled-down`)}>
-                  <BlockComponent
-                    {...(blockProps || {})}
-                    block={block}
-                    path={path} // soon to be deprecated, leaving for backwards compatibility
-                    context={{
-                      path,
-                    }}
-                    content={contents}
-                    onRequestGitHubData={async (...args) => {
-                      // catch API errors
-                      try {
-                        return await blockProps.onRequestGitHubData(...args);
-                      } catch (e) {
-                        console.error(e);
-                      }
-                    }}
-                  />
+                  <BlockComponent block={block} context={{ path }} />
                 </div>
               </div>
-            ) : (
-              <pre
-                className={tw(
-                  `text-xs pl-[1.7em] overflow-auto py-1 text-gray-500`
-                )}
-              >
-                {contents}
-              </pre>
             )}
           </div>
         ) : null}
