@@ -190,10 +190,10 @@ export default function (
               blockOptions={blockOptions}
               BlockComponent={BlockComponent}
               onChange={(newContents: Partial<ItemType>) => {
-                setItems({
+                setItems((items) => ({
                   ...items,
-                  [item.id]: { ...item, ...newContents },
-                });
+                  [item.id]: { ...items[item.id], ...newContents },
+                }));
                 setIsDirty(true);
               }}
               onDelete={() => {
