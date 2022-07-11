@@ -100,6 +100,17 @@ export default function (
     getBlocks();
   }, []);
 
+  const addItem = (item: Omit<ItemType, "id">) => {
+    const id = nextId.current;
+    nextId.current += 1;
+    const newItems: { [id: number]: ItemType } = {
+      ...items,
+      [id]: { ...item, id },
+    };
+    setItems(newItems);
+    setIsDirty(true);
+  };
+
   return (
     <div className={tw(`wrapper`)}>
       {/* add new item buttons */}
@@ -107,23 +118,15 @@ export default function (
         {/* add text */}
         <Button
           onClick={() => {
-            const id = nextId.current;
-            nextId.current += 1;
-            const newItems: { [id: number]: ItemType } = {
-              ...items,
-              [id]: {
-                id,
-                type: "text",
-                text: "Hello World",
-                position: [
-                  width / 2 - defaultDimensions[0] / 2,
-                  height / 2 - defaultDimensions[1] / 2,
-                ],
-                dimensions: defaultDimensions,
-              },
-            };
-            setItems(newItems);
-            setIsDirty(true);
+            addItem({
+              type: "text",
+              text: "Hello World",
+              position: [
+                width / 2 - defaultDimensions[0] / 2,
+                height / 2 - defaultDimensions[1] / 2,
+              ],
+              dimensions: defaultDimensions,
+            });
           }}
         >
           + Add text
@@ -133,30 +136,22 @@ export default function (
         <FilePicker
           files={files}
           onFileSelected={(file) => {
-            const id = nextId.current;
-            nextId.current += 1;
-            const newItems: { [id: number]: ItemType } = {
-              ...items,
-              [id]: {
-                id,
+            addItem({
+              type: "file",
+              path: file.path,
+              position: [width / 2 - 500 / 2, height / 2 - 360 / 2],
+              dimensions: [500, 360],
+              block: {
                 type: "file",
-                path: file.path,
-                position: [width / 2 - 500 / 2, height / 2 - 360 / 2],
-                dimensions: [500, 360],
-                block: {
-                  type: "file",
-                  id: "code-block",
-                  title: "Code block",
-                  description: "A basic code block",
-                  owner: "githubnext",
-                  repo: "blocks-examples",
-                  sandbox: false,
-                  entry: "/src/blocks/file-blocks/code/index.tsx",
-                },
+                id: "code-block",
+                title: "Code block",
+                description: "A basic code block",
+                owner: "githubnext",
+                repo: "blocks-examples",
+                sandbox: false,
+                entry: "/src/blocks/file-blocks/code/index.tsx",
               },
-            };
-            setItems(newItems);
-            setIsDirty(true);
+            });
           }}
         />
       </div>
