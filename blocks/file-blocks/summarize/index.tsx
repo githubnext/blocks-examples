@@ -138,9 +138,11 @@ const Section = ({
 
   return (
     <div
-      className={`hover:bg-white whitespace-pre-wrap grid grid-cols-[2fr,1fr] min-h-[3em] ${
-        isCollapsedLocally ? "cursor-pointer" : ""
-      }`}
+      className={tw(
+        `hover:bg-white whitespace-pre-wrap grid grid-cols-[2fr,1fr] min-h-[3em] ${
+          isCollapsedLocally ? "cursor-pointer" : ""
+        }`
+      )}
       // click to expand, but don't act as a button when expanded, for easier text selection
       tabIndex={isCollapsedLocally ? 0 : 1}
       onClick={() => {
