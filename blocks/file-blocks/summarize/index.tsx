@@ -143,6 +143,9 @@ const Section = ({
           isCollapsedLocally ? "cursor-pointer" : ""
         }`
       )}
+      style={{
+        gridTemplateColumns: "2fr 1fr",
+      }}
       // click to expand, but don't act as a button when expanded, for easier text selection
       tabIndex={isCollapsedLocally ? 0 : 1}
       onClick={() => {
