@@ -13,18 +13,17 @@ const height = 5000;
 const defaultDimensions: Dimensions = [200, 100];
 export default function (
   props: FolderBlockProps & {
-    metadata: { items: ItemType[] };
+    metadata: { items: ItemType[] | { [id: number]: ItemType } };
   }
 ) {
   const {
-    context,
     tree,
     metadata,
     BlockComponent,
     onUpdateMetadata,
-    onRequestGitHubData,
     onRequestBlocksRepos,
   } = props;
+  const nextId = useRef(0);
 
   const wrapperElement = useRef<HTMLDivElement>(null);
 
@@ -58,42 +57,29 @@ export default function (
     setPan(boundedDimensions);
   });
 
-  const [items, setItems] = useState<ItemType[]>([]);
+  const [items, setItems] = useState<{ [id: number]: ItemType }>({});
   const [isDirty, setIsDirty] = useState(false);
 
-  const [fileContents, setFileContents] = useState<Record<string, string>>({});
   const files = useMemo(
     () => getNestedFileTree(tree)[0].children.filter((d) => d.type === "blob"),
     [tree]
   );
 
-  const getFileContents = async (path: string) => {
-    const url = `/repos/${context.owner}/${context.repo}/contents/${path}`;
-    const data = await onRequestGitHubData(url);
-    if (!data.content) {
-      return;
+  useEffect(() => {
+    let items = metadata.items || placeholderItems;
+    if (Array.isArray(items)) {
+      items = items.reduce(
+        (items, item, id) => ({
+          ...items,
+          [id]: { ...item, id },
+        }),
+        {}
+      );
     }
-    const decodedContent = Buffer.from(data.content, "base64").toString("utf8");
-    return decodedContent;
-  };
-
-  useEffect(() => {
-    items.forEach(async (item) => {
-      const path = item.path;
-      if (!path) return;
-      if (fileContents[path]) return;
-      setFileContents((fileContents) => ({
-        ...fileContents,
-        [path]: "Loading...",
-      }));
-      const content = await getFileContents(path);
-      if (!content) return;
-      setFileContents((fileContents) => ({ ...fileContents, [path]: content }));
-    });
-  }, [items]);
-
-  useEffect(() => {
-    setItems(metadata.items || placeholderItems);
+    nextId.current =
+      Object.keys(items).reduce((max, curr) => Math.max(max, Number(curr)), 0) +
+      1;
+    setItems(items);
   }, [metadata]);
 
   const [blockOptions, setBlockOptions] = useState<Block[]>([]);
@@ -102,23 +88,28 @@ export default function (
     const blocksRepos = await onRequestBlocksRepos();
     const exampleBlocks = blocksRepos || [];
     setBlockOptions(
-      flatten(
-        exampleBlocks.map((blocksRepo) =>
-          blocksRepo.blocks.map((block) => ({
-            ...block,
-            owner: blocksRepo.owner,
-            repo: blocksRepo.repo,
-          }))
-        )
-      ).map((block) => ({
-        ...block,
-        key: getBlockKey(block),
-      }))
+      flatten(exampleBlocks.map((blocksRepo) => blocksRepo.blocks)).map(
+        (block) => ({
+          ...block,
+          key: getBlockKey(block),
+        })
+      )
     );
   };
   useEffect(() => {
     getBlocks();
   }, []);
+
+  const addItem = (item: Omit<ItemType, "id">) => {
+    const id = nextId.current;
+    nextId.current += 1;
+    const newItems: { [id: number]: ItemType } = {
+      ...items,
+      [id]: { ...item, id },
+    };
+    setItems(newItems);
+    setIsDirty(true);
+  };
 
   return (
     <div className={tw(`wrapper`)}>
@@ -127,20 +118,15 @@ export default function (
         {/* add text */}
         <Button
           onClick={() => {
-            const newItems: ItemType[] = [
-              ...items,
-              {
-                type: "text",
-                text: "Hello World",
-                position: [
-                  width / 2 - defaultDimensions[0] / 2,
-                  height / 2 - defaultDimensions[1] / 2,
-                ],
-                dimensions: defaultDimensions,
-              },
-            ];
-            setItems(newItems);
-            setIsDirty(true);
+            addItem({
+              type: "text",
+              text: "Hello World",
+              position: [
+                width / 2 - defaultDimensions[0] / 2,
+                height / 2 - defaultDimensions[1] / 2,
+              ],
+              dimensions: defaultDimensions,
+            });
           }}
         >
           + Add text
@@ -150,27 +136,22 @@ export default function (
         <FilePicker
           files={files}
           onFileSelected={(file) => {
-            const newItems: ItemType[] = [
-              ...items,
-              {
+            addItem({
+              type: "file",
+              path: file.path,
+              position: [width / 2 - 500 / 2, height / 2 - 360 / 2],
+              dimensions: [500, 360],
+              block: {
                 type: "file",
-                path: file.path,
-                position: [width / 2 - 500 / 2, height / 2 - 360 / 2],
-                dimensions: [500, 360],
-                block: {
-                  type: "file",
-                  id: "code-block",
-                  title: "Code block",
-                  description: "A basic code block",
-                  owner: "githubnext",
-                  repo: "blocks-examples",
-                  sandbox: false,
-                  entry: "/src/blocks/file-blocks/code/index.tsx",
-                },
+                id: "code-block",
+                title: "Code block",
+                description: "A basic code block",
+                owner: "githubnext",
+                repo: "blocks-examples",
+                sandbox: false,
+                entry: "/src/blocks/file-blocks/code/index.tsx",
               },
-            ];
-            setItems(newItems);
-            setIsDirty(true);
+            });
           }}
         />
       </div>
@@ -196,33 +177,23 @@ export default function (
         />
 
         {/* our items */}
-        {items.map((item: ItemType, index: number) => {
+        {Object.values(items).map((item) => {
           return (
             <Item
               {...item}
-              key={item.id || index} // to re-render text when placeholder is replaced
-              contents={
-                item.type === "file"
-                  ? fileContents[item.path || ""] || "Loading file contents..."
-                  : undefined
-              }
+              key={item.id} // to re-render text when placeholder is replaced
               blockOptions={blockOptions}
-              blockProps={props}
               BlockComponent={BlockComponent}
               onChange={(newContents: Partial<ItemType>) => {
-                setItems((items) => {
-                  const newItems = [...items].map((d) => ({ ...d }));
-                  newItems[index] = {
-                    ...newItems[index],
-                    ...newContents,
-                  };
-                  return newItems;
-                });
+                setItems((items) => ({
+                  ...items,
+                  [item.id]: { ...items[item.id], ...newContents },
+                }));
                 setIsDirty(true);
               }}
               onDelete={() => {
-                const newItems = [...items];
-                newItems.splice(index, 1);
+                const newItems = { ...items };
+                delete newItems[item.id];
                 setItems(newItems);
                 setIsDirty(true);
               }}
@@ -250,9 +221,9 @@ export default function (
   );
 }
 
-const placeholderItems = [
-  {
-    id: "placeholder",
+const placeholderItems = {
+  0: {
+    id: 0,
     type: "text",
     text: "Start typing or grab a file",
     position: [
@@ -261,7 +232,7 @@ const placeholderItems = [
     ],
     dimensions: defaultDimensions,
   },
-];
+};
 
 export const roundToInterval = (n: number, interval: number) => {
   return Math.round(n / interval) * interval;
@@ -281,7 +252,7 @@ export type ItemType = {
   path?: string;
   text?: string;
   url?: string;
-  id?: string;
+  id: number;
   block?: Block;
   position: Position;
   dimensions: Dimensions;
