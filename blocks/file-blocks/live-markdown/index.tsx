@@ -61,7 +61,10 @@ export default function (props: FileBlockProps) {
       Releases,
       Commits,
       CodeSandbox,
-      BlockComponent: BlockComponentWrapper(BlockComponent),
+      BlockComponent: BlockComponentWrapper({
+        BlockComponent,
+        parentContext: context,
+      }),
       code({
         inline,
         className,
