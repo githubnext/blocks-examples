@@ -21,7 +21,7 @@ export const MarkdownContext = createContext<RepoInfo>({
   commits: [],
 });
 export default function (props: FileBlockProps) {
-  const { context, content } = props;
+  const { context, content, BlockComponent } = props;
 
   const [repoInfo, setRepoInfo] = useState<RepoInfo>({
     issues: [],
@@ -55,6 +55,38 @@ export default function (props: FileBlockProps) {
     getRepoInfo();
   }, []);
 
+  const components = useMemo(
+    () => ({
+      Issues,
+      Releases,
+      Commits,
+      CodeSandbox,
+      BlockComponent,
+      code({
+        inline,
+        className,
+        children,
+      }: {
+        inline: boolean;
+        className: string;
+        children: any;
+      }) {
+        const match = /language-(\w+)/.exec(className || "");
+        return !inline && match ? (
+          <div className={tw(`code`)}>
+            <SyntaxHighlighter language={match[1]}>
+              {String(children).replace(/\n$/, "")}
+            </SyntaxHighlighter>
+          </div>
+        ) : (
+          <code className={className}>{children}</code>
+        );
+      },
+      a: Link,
+    }),
+    [BlockComponent]
+  );
+
   return (
     <MarkdownContext.Provider value={repoInfo} key={content}>
       <div className={tw(`w-full h-full flex items-stretch overflow-hidden`)}>
@@ -75,33 +107,6 @@ export default function (props: FileBlockProps) {
     </MarkdownContext.Provider>
   );
 }
-const components = {
-  Issues,
-  Releases,
-  Commits,
-  CodeSandbox,
-  code({
-    inline,
-    className,
-    children,
-  }: {
-    inline: boolean;
-    className: string;
-    children: any;
-  }) {
-    const match = /language-(\w+)/.exec(className || "");
-    return !inline && match ? (
-      <div className={tw(`code`)}>
-        <SyntaxHighlighter language={match[1]}>
-          {String(children).replace(/\n$/, "")}
-        </SyntaxHighlighter>
-      </div>
-    ) : (
-      <code className={className}>{children}</code>
-    );
-  },
-  a: Link,
-};
 
 function Link(props: Record<string, any>) {
   const videoExtensions =
