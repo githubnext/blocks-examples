@@ -284,13 +284,16 @@ const BlockComponentWrapper =
       block: Block;
     }
   ) => {
-    if (!props.block || !props.context)
+    if (!BlockComponent || !props.block || !props.context)
       return (
         <div className={tw(`flex h-full w-full items-center justify-center`)}>
           <p>
             <strong>
-              BlockComponent needs{" "}
-              {!props.block ? "block" : !props.context ? "context" : ""}
+              {!props.block
+                ? "BlockComponent needs a block"
+                : !props.context
+                ? "BlockComponent needs a context"
+                : "BlockComponent not defined"}
             </strong>
           </p>
         </div>
