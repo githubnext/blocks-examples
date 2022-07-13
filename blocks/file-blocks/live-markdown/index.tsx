@@ -1,5 +1,5 @@
 import { tw } from "twind";
-import { FileBlockProps } from "@githubnext/blocks";
+import { Block, FileBlockProps, FolderBlockProps } from "@githubnext/blocks";
 // @ts-ignore
 import MDX from "@mdx-js/runtime";
 import { Avatar, Box, StateLabel } from "@primer/react";
@@ -61,7 +61,7 @@ export default function (props: FileBlockProps) {
       Releases,
       Commits,
       CodeSandbox,
-      BlockComponent,
+      BlockComponent: BlockComponentWrapper(BlockComponent),
       code({
         inline,
         className,
@@ -270,3 +270,76 @@ function Commits({ num = 2 }) {
     </div>
   );
 }
+
+const BlockComponentWrapper =
+  (BlockComponent: React.FC<FileBlockProps | FolderBlockProps>) =>
+  (
+    props: (FileBlockProps | FolderBlockProps) & {
+      block: Block;
+    }
+  ) => {
+    if (!props.block || !props.context)
+      return (
+        <div className={tw(`flex h-full w-full items-center justify-center`)}>
+          <p>
+            <strong>
+              BlockComponent needs{" "}
+              {!props.block ? "block" : !props.context ? "context" : ""}
+            </strong>
+          </p>
+        </div>
+      );
+
+    const blockId = [props.block.owner, props.block.repo, props.block.id].join(
+      "__"
+    );
+
+    return (
+      <div className={tw(`mt-3 mb-6`)}>
+        <Box
+          className={tw(
+            `flex items-center justify-between py-3 px-5 bg-slate-100`
+          )}
+          bg="canvas.subtle"
+        >
+          <div>
+            <strong>
+              {props.block.owner}/{props.block.repo}:{props.block.id}
+            </strong>{" "}
+            showing
+            <code className="!ml-1 inline-block">
+              {props.context.owner}/{props.context.repo}
+            </code>
+            :
+            <code className="!ml-1 inline-block">
+              {props.context.path || "/"}
+            </code>
+          </div>
+          <Link
+            href={`https://blocks.githubnext.com/${props.context.owner}/${
+              props.context.repo
+            }?path=${props.context.path || "/"}&blockKey=${blockId}`}
+            target="_blank"
+            rel="noreferrer"
+            className={tw(
+              `text-sm !text-gray-600 hover:!text-gray-900 flex items-center`
+            )}
+          >
+            See in context
+            <svg
+              viewBox="0 0 24 24"
+              width="1em"
+              className={tw(`ml-1 flex-none`)}
+            >
+              <path d="M15.5 2.25a.75.75 0 01.75-.75h5.5a.75.75 0 01.75.75v5.5a.75.75 0 01-1.5 0V4.06l-6.22 6.22a.75.75 0 11-1.06-1.06L19.94 3h-3.69a.75.75 0 01-.75-.75z"></path>
+              <path d="M2.5 4.25c0-.966.784-1.75 1.75-1.75h8.5a.75.75 0 010 1.5h-8.5a.25.25 0 00-.25.25v15.5c0 .138.112.25.25.25h15.5a.25.25 0 00.25-.25v-8.5a.75.75 0 011.5 0v8.5a1.75 1.75 0 01-1.75 1.75H4.25a1.75 1.75 0 01-1.75-1.75V4.25z"></path>
+            </svg>
+          </Link>
+        </Box>
+
+        <Box className={tw(`h-[22em] overflow-auto border border-slate-100`)}>
+          <BlockComponent {...props} />
+        </Box>
+      </div>
+    );
+  };
