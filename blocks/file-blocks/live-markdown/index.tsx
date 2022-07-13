@@ -272,7 +272,13 @@ function Commits({ num = 2 }) {
 }
 
 const BlockComponentWrapper =
-  (BlockComponent: React.FC<FileBlockProps | FolderBlockProps>) =>
+  ({
+    BlockComponent,
+    parentContext,
+  }: {
+    BlockComponent: React.FC<FileBlockProps | FolderBlockProps>;
+    parentContext: FileBlockProps["context"];
+  }) =>
   (
     props: (FileBlockProps | FolderBlockProps) & {
       block: Block;
@@ -290,6 +296,11 @@ const BlockComponentWrapper =
         </div>
       );
 
+    const mergedContext = {
+      ...parentContext,
+      ...props.context,
+    };
+
     const blockId = [props.block.owner, props.block.repo, props.block.id].join(
       "__"
     );
@@ -306,19 +317,19 @@ const BlockComponentWrapper =
             <strong>
               {props.block.owner}/{props.block.repo}:{props.block.id}
             </strong>{" "}
-            showing
+            showing{" "}
             <code className="!ml-1 inline-block">
-              {props.context.owner}/{props.context.repo}
+              {mergedContext.owner}/{mergedContext.repo}
             </code>
             :
             <code className="!ml-1 inline-block">
-              {props.context.path || "/"}
+              {mergedContext.path || "/"}
             </code>
           </div>
           <Link
-            href={`https://blocks.githubnext.com/${props.context.owner}/${
-              props.context.repo
-            }?path=${props.context.path || "/"}&blockKey=${blockId}`}
+            href={`https://blocks.githubnext.com/${mergedContext.owner}/${
+              mergedContext.repo
+            }?path=${mergedContext.path || ""}&blockKey=${blockId}`}
             target="_blank"
             rel="noreferrer"
             className={tw(
