@@ -48,15 +48,19 @@ export default function (props: FileBlockProps) {
         onSubmit={async (e) => {
           e.preventDefault();
           setIsLoading(true);
-          const res = await onFetchInternalEndpoint("/api/openai-edit", {
-            method: "POST",
-            data: {
-              instruction: instruction,
-              input: originalContent,
-            },
-          });
-          onUpdateContent(res.data);
-          setIsLoading(false);
+          try {
+            const res = await onFetchInternalEndpoint("/api/openai-edit", {
+              method: "POST",
+              data: {
+                instruction: instruction,
+                input: originalContent,
+              },
+            });
+            onUpdateContent(res.data);
+          } catch {
+          } finally {
+            setIsLoading(false);
+          }
         }}
       >
         <div className={tw(`flex items-end w-full mt-1`)}>
