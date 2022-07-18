@@ -198,6 +198,16 @@
     "example_path": "https://github.com/githubnext/blocks-tutorial/blob/main/processing-sketch.js"
   },
   {
+    "type": "file",
+    "id": "edit-and-preview-block",
+    "title": "Edit with Preview",
+    "description": "Edit code side-by-side with a preview",
+    "sandbox": false,
+    "entry": "blocks/file-blocks/edit-and-preview/index.tsx",
+    "matches": ["*"],
+    "example_path": "https://github.com/githubnext/blocks-tutorial/blob/main/README.md"
+  },
+  {
     "type": "folder",
     "id": "minimap-block",
     "title": "Minimap",
