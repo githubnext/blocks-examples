@@ -5,7 +5,7 @@ import {
   FileBlockProps,
 } from "@githubnext/blocks";
 import { Box } from "@primer/react";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 export default function (props: FileBlockProps) {
   const { metadata, BlockComponent, context, onRequestBlocksRepos } = props;
@@ -28,6 +28,13 @@ export default function (props: FileBlockProps) {
     setDefaultBlockOptions();
   }, [context.path]);
 
+  const onRequestBlocksReposFiltered = useCallback(
+    (params) => {
+      return onRequestBlocksRepos({ ...params, path });
+    },
+    [onRequestBlocksRepos, path]
+  );
+
   return (
     <Box
       display="grid"
@@ -37,7 +44,7 @@ export default function (props: FileBlockProps) {
       width="100%"
       overflow="hidden"
       p={2}
-      relative
+      position="relative"
     >
       {panes.map((pane, index) => (
         <Box
@@ -65,7 +72,7 @@ export default function (props: FileBlockProps) {
                 newPanes[index] = pane;
                 setPanes(newPanes);
               }}
-              onRequestBlocksRepos={onRequestBlocksRepos}
+              onRequestBlocksRepos={onRequestBlocksReposFiltered}
             />
           </Box>
           <Box flex="1" overflow="auto">
