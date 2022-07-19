@@ -30,9 +30,9 @@ export default function (props: FileBlockProps) {
 
   const onRequestBlocksReposFiltered = useCallback(
     (params) => {
-      return onRequestBlocksRepos({ ...params, path });
+      return onRequestBlocksRepos({ ...params, path: context.path });
     },
-    [onRequestBlocksRepos, path]
+    [onRequestBlocksRepos, context.path]
   );
 
   return (
