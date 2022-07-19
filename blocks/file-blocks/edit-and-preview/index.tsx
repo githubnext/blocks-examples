@@ -13,7 +13,7 @@ export default function (props: FileBlockProps) {
   const [panes, setPanes] = useState<Block[]>(metadata?.panes || []);
 
   const setDefaultBlockOptions = async () => {
-    const blockRepoOptions = await onRequestBlocksRepos(context.path);
+    const blockRepoOptions = await onRequestBlocksRepos({ path: context.path });
     const blockOptions = blockRepoOptions.reduce(
       (acc: Block[], repo: BlocksRepo) => {
         return [...acc, ...repo.blocks];
