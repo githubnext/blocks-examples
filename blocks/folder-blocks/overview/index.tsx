@@ -71,7 +71,7 @@ export default function (props: FolderBlockProps) {
   }, []);
 
   return (
-    <div className={tw(`w-full`)}>
+    <div className={tw(`w-full h-full`)}>
       <div className={tw(`p-3 flex-none`)}>
         {!isRoot ? null : !hasLoadedActivity ? (
           <div className={tw(`px-3 py-10 w-full text-center`)}>
@@ -80,7 +80,7 @@ export default function (props: FolderBlockProps) {
             </Text>
           </div>
         ) : (
-          <div className={tw(`flex w-full`)}>
+          <div className={tw(`flex w-full h-full`)}>
             <div className={tw(`flex-1 p-2`)}>
               <Heading sx={{ fontSize: 4 }} className={tw(`px-3 py-1`)}>
                 Issues
@@ -131,7 +131,7 @@ export default function (props: FolderBlockProps) {
         )}
       </div>
       {hasLoadedReadme && (
-        <div className={tw(`w-full`)}>
+        <div className={tw(`w-full h-full`)}>
           {!BlockComponent ? (
             "No BlockComponent"
           ) : doesHaveReadme ? (
