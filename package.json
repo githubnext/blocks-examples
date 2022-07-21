@@ -30,7 +30,7 @@
     "@excalidraw/excalidraw": "^0.10.0",
     "@fullstackio/cq": "^6.0.9",
     "@fullstackio/remark-cq": "^6.1.2",
-    "@githubnext/blocks": "^1.0.2",
+    "@githubnext/blocks": "^2.0.0",
     "@githubocto/flat-ui": "^0.14.1",
     "@mdx-js/runtime": "2.0.0-next.9",
     "@octokit/rest": "^18.12.0",
