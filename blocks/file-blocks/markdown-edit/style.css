@@ -1,0 +1,131 @@
+@import url("https://rsms.me/inter/inter.css");
+html {
+  font-family: "Inter", sans-serif;
+}
+@supports (font-variation-settings: normal) {
+  html {
+    font-family: "Inter var", sans-serif;
+  }
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+.cm-editor {
+  padding: 2em 1em 10em;
+  max-width: 60em;
+  min-height: 100%;
+  margin: 0 auto;
+  outline: none !important;
+}
+
+.cm-scroller {
+}
+
+.cm-editor div.cm-scroller {
+  font-size: 1.1em;
+  font-family: "Inter var", sans-serif;
+  font-feature-settings: "tnum" 1;
+}
+
+.cm-line {
+  white-space: pre-wrap;
+}
+.cm-line .cm {
+  opacity: 0.5;
+}
+
+.cm-copy-header {
+  font-size: 1.2em;
+  font-weight: 900;
+  padding: 1em 0 0;
+  display: inline-block;
+}
+.cm-copy-header--1 {
+  font-size: 2em;
+}
+.cm-copy-header--2 {
+  font-size: 1.7em;
+}
+.cm-copy-header--3 {
+  font-size: 1.4em;
+}
+
+.cm-copy-link {
+  display: inline-block;
+  cursor: pointer;
+  pointer-events: all;
+}
+
+.cm-copy-hr:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  border-top: 1px solid rgb(225, 228, 232);
+  transform: translate(0, 0.7em);
+}
+
+.cm-autocomplete-wrapper {
+  position: absolute;
+  z-index: 1;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+  min-width: 10em;
+  min-height: 2em;
+  padding: 0.3em 0.6em;
+  transform: translate(0, 0.2em);
+}
+
+.cm-line .BlockComponentWrapper input {
+  caret-color: #000;
+}
+.cm-editor .cm-line::selection,
+.cm-editor .cm-activeLine::selection,
+.cm-editor .ͼy::selection {
+  background: rgba(84, 174, 255, 0.4) !important;
+}
+.cm-line .BlockComponentWrapper input::selection {
+  background: rgba(84, 174, 255, 0.4) !important;
+}
+
+.cm-copy-header .ͼ15 {
+  display: inline-block;
+  width: 0;
+  opacity: 0;
+  margin-right: -0.3em;
+}
+.cm-copy-link span {
+  display: none;
+}
+.cm-copy-link:after {
+  content: attr(title);
+  color: #0550ae;
+}
+
+.cm-activeLine .ͼ15,
+.cm-activeLine .ͼu,
+.cm-activeLine .cm-copy-link span {
+  display: inline-block;
+  width: auto;
+  opacity: 1;
+  margin-right: 0;
+}
+.cm-activeLine .cm-copy-link:after {
+  display: none;
+}
+
+.cm-copy-hr {
+  color: transparent;
+}
+.cm-activeLine .cm-copy-hr {
+  color: inherit;
+}
+.cm-activeLine .cm-copy-hr:after {
+  display: none;
+}

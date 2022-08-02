@@ -119,6 +119,16 @@
   },
   {
     "type": "file",
+    "id": "markdown-edit-block",
+    "title": "Markdown Edit block",
+    "description": "Edit Markdown content like rich text",
+    "sandbox": false,
+    "entry": "blocks/file-blocks/markdown-edit/index.tsx",
+    "matches": ["*"],
+    "example_path": "https://github.com/githubnext/blocks-tutorial/blob/main/README.md"
+  },
+  {
+    "type": "file",
     "id": "markdown-block",
     "title": "Markdown",
     "description": "View markdown files. You can also view live repo info, using Issues, Releases, and Commits custom components, as well as live code examples with CodeSandbox.",
