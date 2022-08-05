@@ -27,6 +27,8 @@ import {
   ThemeProvider,
 } from "@primer/react";
 import React, {
+  EventHandler,
+  MouseEventHandler,
   useCallback,
   useEffect,
   useMemo,
@@ -197,10 +199,27 @@ const BlockComponentWrapper = ({
   onChangeProps,
 }: {
   parentProps: FileBlockProps;
-  props: Partial<FullProps>;
-  onChangeProps: (newProps: Partial<FullProps>) => void;
+  props: Partial<FullProps> & { height?: number };
+  onChangeProps: (newProps: Partial<FullProps> & { height?: number }) => void;
 }) => {
+  const resizingStart = useRef<number | null>(null);
+  const [resizingHeight, setResizingHeight] = useState<number | undefined>(
+    undefined
+  );
+  const resizingHeightRef = useRef<number | undefined>(undefined);
+  const eventHandlers = useRef<[string, (e: any) => void][]>([]);
+  useEffect(() => {
+    resizingHeightRef.current = resizingHeight;
+  }, [resizingHeight]);
   const BlockComponent = parentProps.BlockComponent;
+
+  useEffect(() => {
+    return () => {
+      eventHandlers.current.forEach((handler) => {
+        window.removeEventListener(handler[0], handler[1]);
+      });
+    };
+  }, []);
 
   return (
     // @ts-ignore
@@ -211,16 +230,57 @@ const BlockComponentWrapper = ({
           height: "100%",
         }}
       >
-        <div className={tw("h-full w-full pr-2 -my-5")}>
+        <div className={tw("relative h-full w-full pr-2 -my-5 mb-2")}>
           <div className={tw("h-full w-full bg-white border border-gray-200")}>
             <ContextControls
               props={props}
               onChangeProps={onChangeProps}
               parentProps={parentProps}
             />
-            <Box className={tw("w-full h-[30em] overflow-auto")}>
+            <Box
+              className={tw("w-full  overflow-auto")}
+              style={{
+                height: resizingHeight || props.height || 300,
+              }}
+            >
               <BlockComponent {...props} />
+              {!!resizingHeight && (
+                // to keep the pointer events in this window
+                <div className={tw("absolute inset-0")} />
+              )}
             </Box>
+            <Box
+              className={tw(
+                "cursor-ns-resize h-2 w-full bg-grey-100 absolute bottom-0 transform translate-y-full"
+              )}
+              onMouseDown={(e) => {
+                const { clientY } = e;
+                resizingStart.current = clientY;
+
+                const onMouseMove = (e) => {
+                  if (!resizingStart.current) return;
+                  const { clientY } = e;
+                  const diff = clientY - resizingStart.current;
+                  setResizingHeight((props.height || 300) + diff);
+                };
+                const onMouseUp = () => {
+                  onChangeProps({
+                    ...props,
+                    height: resizingHeightRef.current,
+                  });
+                  setResizingHeight(undefined);
+                  resizingStart.current = null;
+                  window.removeEventListener("mousemove", onMouseMove);
+                  window.removeEventListener("mouseup", onMouseUp);
+                };
+                eventHandlers.current = [
+                  ["mousemove", onMouseMove],
+                  ["mouseup", onMouseUp],
+                ];
+                window.addEventListener("mousemove", onMouseMove);
+                window.addEventListener("mouseup", onMouseUp);
+              }}
+            />
           </div>
         </div>
       </BaseStyles>
