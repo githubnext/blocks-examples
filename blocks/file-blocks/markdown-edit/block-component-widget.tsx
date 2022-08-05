@@ -98,7 +98,6 @@ export const blockComponentWidget = ({
 
   const decorate = (state: EditorState) => {
     const widgets: Range<Decoration>[] = [];
-    // starts with any number of #
 
     syntaxTree(state).iterate({
       enter: (type, from, to) => {
@@ -178,11 +177,11 @@ export const blockComponentWidget = ({
       return decorate(state);
     },
     update(copys, transaction) {
-      if (transaction.docChanged) {
-        return decorate(transaction.state);
-      }
+      // if (transaction.docChanged) {
+      return decorate(transaction.state);
+      // }
 
-      return copys.map(transaction.changes);
+      // return copys.map(transaction.changes);
     },
     provide(field) {
       return EditorView.decorations.from(field);

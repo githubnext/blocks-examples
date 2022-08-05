@@ -32,8 +32,8 @@ const activeLineHighlighter = ViewPlugin.fromClass(
       let lastLineStart = -1,
         deco = [];
       for (let r of view.state.selection.ranges) {
+        // commenting out this line to add class when there are multiple selections
         // if (!r.empty) return Decoration.none;
-        console.log(view.state.selection.ranges);
         let line = view.lineBlockAt(r.head);
         if (line.from > lastLineStart) {
           deco.push(lineDeco.range(line.from));

@@ -59,17 +59,30 @@ class ImageWidget extends WidgetType {
 
     return container;
   }
+
+  ignoreEvent(_event: Event): boolean {
+    return false;
+  }
 }
 
 export const images = (): Extension => {
-  const imageRegex = /!\[.*?\]\((?<url>.*?)\)/;
-  const imageRegexHtml = /<img.*?src="(?<url>.*?)".*?>/;
+  const imageRegex = /!\[(?<alt>.*?)\]\((?<url>.*?)\)/;
+  const imageRegexHtml = /<img.*?src="(?<url>.*?)".*?alt="(?<alt>.*?)".*?>/;
 
   const imageDecoration = (imageWidgetParams: ImageWidgetParams) =>
     Decoration.widget({
       widget: new ImageWidget(imageWidgetParams),
       side: 1,
       block: true,
+      class: "image",
+    });
+
+  const imageTextDecoration = (alt: string) =>
+    Decoration.mark({
+      class: "cm-image",
+      attributes: {
+        title: alt,
+      },
     });
 
   const decorate = (state: EditorState) => {
@@ -86,6 +99,12 @@ export const images = (): Extension => {
                 state.doc.lineAt(from).from
               )
             );
+            widgets.push(
+              imageTextDecoration(result.groups.alt || result.groups.url).range(
+                state.doc.lineAt(from).from,
+                state.doc.lineAt(to).to
+              )
+            );
           }
         } else if (type.name === "HTMLBlock") {
           const result = imageRegexHtml.exec(state.doc.sliceString(from, to));
@@ -94,6 +113,13 @@ export const images = (): Extension => {
             widgets.push(
               imageDecoration({ url: result.groups.url }).range(
                 state.doc.lineAt(from).from
+              )
+            );
+            console.log(result);
+            widgets.push(
+              imageTextDecoration(result.groups.alt || result.groups.url).range(
+                state.doc.lineAt(from).from,
+                state.doc.lineAt(to).to
               )
             );
           }
@@ -115,11 +141,13 @@ export const images = (): Extension => {
       return decorate(state);
     },
     update(images, transaction) {
-      if (transaction.docChanged) {
-        return decorate(transaction.state);
-      }
+      // taking out restrictions for now,
+      // it wasn't updating outside of the active scroll window
+      // if (transaction.docChanged) {
+      return decorate(transaction.state);
+      // }
 
-      return images.map(transaction.changes);
+      // return images.map(transaction.changes);
     },
     provide(field) {
       return EditorView.decorations.from(field);

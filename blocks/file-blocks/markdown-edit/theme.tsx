@@ -2,8 +2,6 @@ import { EditorView } from "@codemirror/view";
 import { Extension } from "@codemirror/state";
 import { HighlightStyle } from "@codemirror/highlight";
 import { tags as t } from "@lezer/highlight";
-import { parser } from "@lezer/markdown";
-console.log(parser);
 import primer from "@primer/primitives";
 
 const colors = primer.colors.light.codemirror;
@@ -39,7 +37,7 @@ export const colorTheme = EditorView.theme(
       backgroundColor: "#6199ff2f",
     },
 
-    ".cm-activeLine": { backgroundColor: colors.bg },
+    ".cm-activeLine": { backgroundColor: "transparent" },
 
     ".cm-selectionMatch": { backgroundColor: colors.selectionBg },
 
@@ -49,7 +47,8 @@ export const colorTheme = EditorView.theme(
     },
 
     ".cm-gutters": {
-      backgroundColor: colors.guttersBg,
+      // backgroundColor: colors.guttersBg,
+      backgroundColor: "transparent",
       color: colors.guttermarkerSubtleText,
       border: "none",
     },
@@ -100,6 +99,10 @@ export const highlightStyle = HighlightStyle.define([
     color: colors.syntax.entity,
   },
   {
+    tag: [t.list],
+    class: "cm-list",
+  },
+  {
     tag: [t.color, t.constant(t.name), t.standard(t.name)],
     color: colors.syntax.string,
   },
@@ -131,7 +134,7 @@ export const highlightStyle = HighlightStyle.define([
   },
   {
     tag: t.quote,
-    // paddingLeft: "2em",
+    class: "cm-quote",
   },
   {
     tag: t.emphasis,
@@ -162,8 +165,7 @@ export const highlightStyle = HighlightStyle.define([
   },
   {
     tag: [t.processingInstruction, t.inserted],
-    color: primer.colors.light.primer.canvas.backdrop,
-    opacity: 0.5,
+    class: "cm-instruction",
   },
   {
     tag: [t.special(t.variableName), t.special(t.propertyName)],

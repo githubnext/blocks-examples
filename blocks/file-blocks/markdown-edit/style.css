@@ -68,6 +68,38 @@ body,
   border-top: 1px solid rgb(225, 228, 232);
   transform: translate(0, 0.7em);
 }
+.cm-editor .cm-copy-blockquote {
+  position: relative;
+  display: block;
+  color: #57606a;
+  border-left: 0.25em solid #d0d7de;
+  padding: 0.6em 0.9em;
+  background: #f6f8fa;
+}
+
+.cm-code {
+  background: #f6f8fa;
+}
+.cm-code .ͼx {
+  background: transparent;
+}
+.cm-code.cm-activeLine + .cm-line .cm-instruction {
+  display: inline-block;
+}
+.cm-editor .cm-list-item {
+  display: list-item;
+  margin: 0.6em 0 0.9em 1em;
+}
+.cm-editor .cm-list-item--ul::marker {
+  content: "•";
+}
+.cm-editor .cm-list-item--ol {
+  display: list-item;
+  list-style-type: decimal;
+}
+.cm-editor .cm-list-item--ol::marker {
+  content: attr(data-index);
+}
 
 .cm-autocomplete-wrapper {
   position: absolute;
@@ -85,37 +117,51 @@ body,
 .cm-line .BlockComponentWrapper input {
   caret-color: #000;
 }
-.cm-editor .cm-line::selection,
-.cm-editor .cm-activeLine::selection,
-.cm-editor .ͼy::selection {
-  background: rgba(84, 174, 255, 0.4) !important;
-}
 .cm-line .BlockComponentWrapper input::selection {
   background: rgba(84, 174, 255, 0.4) !important;
 }
 
-.cm-copy-header .ͼ15 {
-  display: inline-block;
+.cm-line .cm-instruction {
+  display: none;
+  color: rgb(175, 178, 182);
+}
+.cm-copy-header .cm-instruction {
+  display: inline-block !important;
   width: 0;
   opacity: 0;
-  margin-right: -0.3em;
+  margin-right: -0.5ch;
 }
+.cm-image span,
 .cm-copy-link span {
   display: none;
 }
+.cm-image:first-of-type:after,
 .cm-copy-link:after {
   content: attr(title);
-  color: #0550ae;
+  color: #0969da;
+}
+.cm-image:first-of-type:after {
+  margin: auto;
+  text-align: center;
+  display: block;
+}
+.cm-image:first-of-type:after {
+  color: rgb(75, 78, 82);
+  font-style: italic;
 }
 
-.cm-activeLine .ͼ15,
+.cm-activeLine .cm-instruction,
 .cm-activeLine .ͼu,
+.cm-activeLine .cm-image span,
+.cm-activeLine + .cm-image-container + .cm-line .cm-image span,
 .cm-activeLine .cm-copy-link span {
   display: inline-block;
   width: auto;
   opacity: 1;
   margin-right: 0;
 }
+.cm-activeLine + .cm-image-container + .cm-line .cm-image:after,
+.cm-activeLine .cm-image:first-of-type:after,
 .cm-activeLine .cm-copy-link:after {
   display: none;
 }

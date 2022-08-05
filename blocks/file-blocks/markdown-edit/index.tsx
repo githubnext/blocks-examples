@@ -29,12 +29,13 @@ import {
 } from "@codemirror/view";
 import { Block } from "@githubnext/blocks";
 import interact from "@replit/codemirror-interact";
-import { copy } from "./copy-widget";
+import { copy, markdownKeymap } from "./copy-widget";
 import { blockComponentWidget } from "./block-component-widget";
 import { images } from "./image-widget";
 import { highlightActiveLine } from "./highlightActiveLine";
 import { theme } from "./theme";
-const languageConf = new Compartment();
+
+// TODO: code block syntax highlighting
 
 const extensions = [
   // lineNumbers(),
@@ -82,7 +83,6 @@ export default function (props: FileBlockProps) {
     isEditable,
     onUpdateContent,
     onRequestBlocksRepos,
-    BlockComponent,
   } = props;
 
   const editorRef = React.useRef<HTMLDivElement>(null);
@@ -185,7 +185,6 @@ export default function (props: FileBlockProps) {
   React.useEffect(() => {
     if (viewRef.current || !editorRef.current) return;
     const onDispatchChanges = (changes: any) => {
-      console.log(changes);
       if (viewRef.current) viewRef.current.dispatch(changes);
     };
     const state = EditorState.create({
@@ -219,6 +218,7 @@ export default function (props: FileBlockProps) {
               return true;
             },
           },
+          ...markdownKeymap,
           ...closeBracketsKeymap,
           ...defaultKeymap,
           ...searchKeymap,
