@@ -78,7 +78,14 @@ class BlockWidget extends WidgetType {
   }
 
   eq(_widget: WidgetType): boolean {
-    return JSON.stringify(this.props) === JSON.stringify(_widget.props);
+    const removeUnnecessaryProps = (props: Record<string, any>) => {
+      const { height, ...rest } = props;
+      return rest;
+    };
+    return (
+      JSON.stringify(removeUnnecessaryProps(this.props)) ===
+      JSON.stringify(removeUnnecessaryProps(_widget.props))
+    );
   }
 
   ignoreEvent(_event: Event): boolean {
@@ -206,12 +213,21 @@ const BlockComponentWrapper = ({
   const [resizingHeight, setResizingHeight] = useState<number | undefined>(
     undefined
   );
+
   const resizingHeightRef = useRef<number | undefined>(undefined);
   const eventHandlers = useRef<[string, (e: any) => void][]>([]);
   useEffect(() => {
     resizingHeightRef.current = resizingHeight;
   }, [resizingHeight]);
   const BlockComponent = parentProps.BlockComponent;
+
+  // so we don't have to re-render
+  const [overrideHeight, setOverrideHeight] = useState<number | undefined>(
+    props.height
+  );
+  useEffect(() => {
+    setOverrideHeight(props.height);
+  }, [props.height]);
 
   useEffect(() => {
     return () => {
@@ -240,7 +256,7 @@ const BlockComponentWrapper = ({
             <Box
               className={tw("w-full  overflow-auto")}
               style={{
-                height: resizingHeight || props.height || 300,
+                height: resizingHeight || overrideHeight || props.height || 300,
               }}
             >
               <BlockComponent {...props} />
@@ -261,13 +277,16 @@ const BlockComponentWrapper = ({
                   if (!resizingStart.current) return;
                   const { clientY } = e;
                   const diff = clientY - resizingStart.current;
-                  setResizingHeight((props.height || 300) + diff);
+                  setResizingHeight(
+                    (overrideHeight || props.height || 300) + diff
+                  );
                 };
                 const onMouseUp = () => {
                   onChangeProps({
                     ...props,
                     height: resizingHeightRef.current,
                   });
+                  setOverrideHeight(resizingHeightRef.current);
                   setResizingHeight(undefined);
                   resizingStart.current = null;
                   window.removeEventListener("mousemove", onMouseMove);
