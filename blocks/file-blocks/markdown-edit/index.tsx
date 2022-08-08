@@ -1,6 +1,6 @@
 import { FileBlockProps } from "@githubnext/utils";
 import { ActionList, ActionMenu, Text } from "@primer/react";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { tw } from "twind";
 import "./style.css";
 
@@ -18,7 +18,7 @@ import { lintKeymap } from "@codemirror/lint";
 import { bracketMatching } from "@codemirror/matchbrackets";
 import { rectangularSelection } from "@codemirror/rectangular-selection";
 import { highlightSelectionMatches, searchKeymap } from "@codemirror/search";
-import { Compartment, EditorState } from "@codemirror/state";
+import { EditorState } from "@codemirror/state";
 import {
   drawSelection,
   dropCursor,
@@ -29,10 +29,10 @@ import {
 } from "@codemirror/view";
 import { Block } from "@githubnext/blocks";
 import interact from "@replit/codemirror-interact";
-import { copy, markdownKeymap } from "./copy-widget";
 import { blockComponentWidget } from "./block-component-widget";
-import { images } from "./image-widget";
+import { copy, markdownKeymap } from "./copy-widget";
 import { highlightActiveLine } from "./highlightActiveLine";
+import { images } from "./image-widget";
 import { theme } from "./theme";
 
 // TODO: code block syntax highlighting

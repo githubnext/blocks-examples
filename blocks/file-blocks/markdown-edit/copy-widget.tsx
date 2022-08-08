@@ -12,22 +12,72 @@ import {
   DecorationSet,
   EditorView,
   KeyBinding,
+  WidgetType,
 } from "@codemirror/view";
 
+class LinkAltWidget extends WidgetType {
+  readonly text;
+  readonly linkText;
+  readonly url;
+
+  constructor({
+    text,
+    linkText,
+    url,
+  }: {
+    text: string;
+    linkText: string;
+    url: string;
+  }) {
+    super();
+
+    this.text = text;
+    this.linkText = linkText;
+    this.url = url;
+  }
+
+  eq(widget: LinkAltWidget) {
+    return (
+      widget.url === this.url &&
+      widget.text === this.text &&
+      widget.linkText === this.linkText
+    );
+  }
+
+  toDOM() {
+    const container = document.createElement("a");
+    container.setAttribute("aria-hidden", "true");
+    container.className = "cm-copy-link-alt";
+    container.href = this.url;
+    container.target = "_blank";
+    container.textContent = this.linkText;
+
+    return container;
+  }
+
+  ignoreEvent(_event: Event): boolean {
+    return false;
+  }
+}
 export const copy = (): Extension => {
   const headerDecoration = ({ level }: { level: string }) =>
     Decoration.mark({
       class: `cm-copy-header cm-copy-header--${level}`,
     });
+  const linkAltDecoration = (text: string, linkText: string, url: string) =>
+    Decoration.widget({
+      widget: new LinkAltWidget({ text, linkText, url }),
+      class: "cm-copy-link-alt",
+    });
   const linkDecoration = (text: string, linkText: string, url: string) =>
     Decoration.mark({
-      class: text.includes(url) ? "cm-copy-link" : "",
       tagName: "a",
+      class: "cm-copy-link",
       attributes: {
         href: url,
         target: "_top",
+        onclick: `window.open('${url}', '_blank'); return false;`,
         title: linkText,
-        onclick: `top.window.location.href='${url}'`,
       },
     });
   const horizontalRuleDecorationAfter = () =>
@@ -52,14 +102,10 @@ export const copy = (): Extension => {
 
   const decorate = (state: EditorState) => {
     const widgets: Range<Decoration>[] = [];
-    // starts with any number of #
 
     const tree = syntaxTree(state);
     tree.iterate({
       enter: (type, from, to) => {
-        // const text = state.doc.sliceString(from, to);
-        // useful for finding the type of some text
-        // console.log(type, text)
         if (type.name.startsWith("ATXHeading")) {
           const level = type.name.split("Heading")[1];
           const newDecoration = headerDecoration({ level });
@@ -79,18 +125,18 @@ export const copy = (): Extension => {
           const linkTextRegex = /\[(?<text>.*?)\]/;
           const linkText = linkTextRegex.exec(text)?.groups?.text || "";
           if (url) {
-            const newDecoration = linkDecoration(text, linkText, url);
-            widgets.push(newDecoration.range(from, to));
+            const newDecoration = linkAltDecoration(text, linkText, url);
+            widgets.push(newDecoration.range(from));
+            const newAltDecoration = linkDecoration(text, linkText, url);
+            widgets.push(newAltDecoration.range(from, to));
           }
         } else if (type.name === "Blockquote") {
           const newDecoration = blockquoteDecoration();
           widgets.push(newDecoration.range(from));
         } else if (type.name === "ListItem") {
           const text = state.doc.sliceString(from, to);
-          console.log(type);
           const listType = ["-", "*"].includes(text[0]) ? "ul" : "ol";
           const index = text.split(" ")[0];
-          console.log({ text, index });
           const newDecoration = listItemDecoration(listType, index);
           widgets.push(newDecoration.range(from));
         } else if (type.name === "CodeText") {

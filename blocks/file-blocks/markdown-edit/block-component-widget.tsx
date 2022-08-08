@@ -23,6 +23,7 @@ import {
   Autocomplete,
   BaseStyles,
   Box,
+  Button,
   FormControl,
   ThemeProvider,
 } from "@primer/react";
@@ -236,6 +237,7 @@ const BlockComponentWrapper = ({
       });
     };
   }, []);
+  console.log({ props });
 
   return (
     // @ts-ignore
@@ -426,6 +428,8 @@ const ContextControls = ({
     [parentProps.onRequestBlocksRepos, blocksRepo]
   );
 
+  const [isUsingCustomContent, setIsUsingCustomContent] = useState(false);
+
   return (
     <Box className="BlockComponentWrapper">
       <Box
@@ -448,29 +452,48 @@ const ContextControls = ({
             </div>
           </BlockPicker>
         </FormControl>
-        <Input
-          label="Content Repo"
-          value={contentRepo}
-          itemSearchFunction={onFetchRepos}
-          onChange={(newValue) => {
-            onChangeProps({
-              ...props,
-              context: { ...combinedContext, ...newValue },
-            });
-          }}
-        />
-        <Input
-          label="File Path"
-          value={(props.context || {}).path}
-          placeholder="/"
-          itemSearchFunction={onFetchRepoPaths}
-          onChange={(newValue) => {
-            onChangeProps({
-              ...props,
-              context: { ...combinedContext, ...newValue },
-            });
-          }}
-        />
+        {isUsingCustomContent ? (
+          <textarea
+            className={tw("w-full")}
+            onChange={(e) => {
+              e.stopPropagation();
+              e.preventDefault();
+              onChangeProps({ ...props, children: e.target.value });
+            }}
+            value={props.children}
+          />
+        ) : (
+          <>
+            <Input
+              label="Content Repo"
+              value={contentRepo}
+              itemSearchFunction={onFetchRepos}
+              onChange={(newValue) => {
+                onChangeProps({
+                  ...props,
+                  context: { ...combinedContext, ...newValue },
+                });
+              }}
+            />
+            <Input
+              label="File Path"
+              value={(props.context || {}).path}
+              placeholder="/"
+              itemSearchFunction={onFetchRepoPaths}
+              onChange={(newValue) => {
+                onChangeProps({
+                  ...props,
+                  context: { ...combinedContext, ...newValue },
+                });
+              }}
+            />
+          </>
+        )}
+        <Button onClick={() => setIsUsingCustomContent(!isUsingCustomContent)}>
+          {isUsingCustomContent
+            ? "Use content from GitHub file or folder"
+            : "Use custom content"}
+        </Button>
       </Box>
     </Box>
   );
