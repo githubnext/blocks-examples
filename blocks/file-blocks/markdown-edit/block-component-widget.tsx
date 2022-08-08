@@ -237,7 +237,6 @@ const BlockComponentWrapper = ({
       });
     };
   }, []);
-  console.log({ props });
 
   return (
     // @ts-ignore
@@ -323,11 +322,14 @@ const useOnRequestData = (
   const [data, setData] = useState<any>();
   const [error, setError] = useState<any>();
   const [isLoading, setIsLoading] = useState(false);
+  const iteration = useRef(0);
 
   const fetchData = async () => {
     setIsLoading(true);
+    iteration.current++;
     try {
       const res = await fetch();
+      if (iteration.current !== iteration.current) return;
       setIsLoading(false);
       setData(res);
       setError(null);
@@ -362,11 +364,9 @@ const ContextControls = ({
   };
   const blocksRepo = `${(props.block || {}).owner}/${(props.block || {}).repo}`;
 
-  const currentSearchTermRepos = useRef<string>("");
   const contentRepo = `${combinedContext.owner}/${combinedContext.repo}`;
   const onFetchRepos = useCallback(
     async (searchTerm: string) => {
-      currentSearchTermRepos.current = searchTerm;
       const repos = await parentProps.onRequestGitHubData(
         "/search/repositories",
         {
@@ -376,7 +376,6 @@ const ContextControls = ({
           q: searchTerm || "blocks",
         }
       );
-      if (currentSearchTermRepos.current !== searchTerm) return;
       const repoNames = repos.items.map((repo) => ({
         text: repo.full_name,
         id: repo.full_name,
@@ -391,17 +390,14 @@ const ContextControls = ({
     [parentProps.onRequestBlocksRepos, blocksRepo]
   );
 
-  const currentSearchTermPaths = useRef<string>("");
   const onFetchRepoPaths = useCallback(
     async (searchTerm: string) => {
-      currentSearchTermPaths.current = searchTerm;
       const paths = await parentProps.onRequestGitHubData(
         `/repos/${contentRepo}/contents`,
         {
           per_page: 100,
         }
       );
-      if (currentSearchTermPaths.current !== searchTerm) return;
       const repoPaths = paths
         .filter(
           (path) =>
