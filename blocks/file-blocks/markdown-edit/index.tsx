@@ -1,5 +1,5 @@
 import { FileBlockProps } from "@githubnext/utils";
-import { ActionList, ActionMenu, Text } from "@primer/react";
+import { ActionList, ActionMenu, Box, Link, Text } from "@primer/react";
 import React, { useEffect, useRef, useState } from "react";
 import { tw } from "twind";
 import "./style.css";
@@ -34,6 +34,12 @@ import { copy, markdownKeymap } from "./copy-widget";
 import { highlightActiveLine } from "./highlightActiveLine";
 import { images } from "./image-widget";
 import { theme } from "./theme";
+import {
+  InfoIcon,
+  LinkExternalIcon,
+  RepoIcon,
+  VerifiedIcon,
+} from "@primer/octicons-react";
 
 // TODO: code block syntax highlighting
 
@@ -102,10 +108,6 @@ export default function (props: FileBlockProps) {
   const [blocks, setBlocks] = useState<Block[]>([]);
   const [isLoadingBlocks, setIsLoadingBlocks] = useState(false);
 
-  // useEffect(() => {
-  //   if (typeof window === "undefined") return;
-  //   window.BlockComponent = BlockComponent
-  // }, [])
   useEffect(() => {
     isAutocompleting.current = !!autocompleteLocation;
   }, [autocompleteLocation]);
@@ -280,6 +282,11 @@ export default function (props: FileBlockProps) {
             focusedBlockIndex={autocompleteFocusedBlockIndex}
             blocks={blocks}
             isLoading={isLoadingBlocks}
+            onFocus={setAutocompleteFocusedBlockIndex}
+            onSelect={(index) => {
+              setAutocompleteFocusedBlockIndex(index);
+              onSelectAutocompleteFocusedBlock.current();
+            }}
             onClose={() => {
               setAutocompleteLocation(null);
               setSearchTerm("");
@@ -302,37 +309,17 @@ const WidgetPicker = ({
   blocks,
   focusedBlockIndex,
   onClose,
+  onSelect,
+  onFocus,
 }: {
   location?: DOMRect;
   isLoading: boolean;
   blocks: Block[];
   focusedBlockIndex: number;
   onClose: () => void;
+  onFocus: (index: number) => void;
+  onSelect: (index: number) => void;
 }) => {
-  // useEffect(() => {
-  //   const onKeyDown = (e: KeyboardEvent) => {
-  //     if (e.key === "ArrowDown") {
-  //       e.preventDefault();
-  //       e.stopPropagation()
-  //       // firstItemRef.current && firstItemRef.current.focus()
-  //       setFocusedItemIndex(i => i + 1)
-  //     } else if (e.key === "ArrowUp") {
-  //       e.preventDefault();
-  //       e.stopPropagation()
-  //       setFocusedItemIndex(i => i - 1)
-  //       // const isLastItemFocused = lastItemRef.current && lastItemRef.current === document.activeElement
-  //       // if (isLastItemFocused) {
-  //       //   onFocusEditor()
-  //       // }
-  //     }
-  //   }
-  //   window.addEventListener("keydown", onKeyDown)
-
-  //   return () => {
-  //     window.removeEventListener("keydown", onKeyDown)
-  //   }
-  // }, [blocks])
-
   return (
     <div className={tw("")}>
       <ActionMenu open={true} onChange={onClose}>
@@ -342,7 +329,8 @@ const WidgetPicker = ({
         <ActionMenu.Overlay
           top={(location?.top || 0) + 56}
           left={(location?.left || 0) - 10}
-          width="medium"
+          width="large"
+          sx={{ px: 2 }}
           onEscape={onClose}
           className={tw("max-h-[20em] overflow-auto")}
           onClickOutside={onClose}
@@ -357,23 +345,75 @@ const WidgetPicker = ({
             </div>
           ) : (
             <ActionList selectionVariant="single">
-              {blocks.map((block, index) => (
-                <div
-                  className={tw(
-                    "bg-white px-3 py-2 rounded-md cursor-pointer hover:bg-gray-100",
-                    focusedBlockIndex === index
-                      ? "bg-gray-100"
-                      : "bg-transparent"
-                  )}
-                  key={[block.owner, block.repo, block.id].join("__")}
-                >
-                  <div className={tw("font-medium")}>{block.title}</div>
-                  <div variant="block">
-                    {block.owner}/{block.repo}
-                  </div>
-                  {/* <ActionList.TrailingVisual>⌘O</ActionList.TrailingVisual> */}
-                </div>
-              ))}
+              <ActionList.Group title="Blocks" selectionVariant="single">
+                {blocks.map((block, index) => {
+                  const isExampleBlock =
+                    [block.owner, block.repo].join("/") ===
+                    `githubnext/blocks-examples`;
+                  return (
+                    // <div> because <button> steals the focus, even with tabIndex="-1" & preventFocusOnOpen
+                    <div
+                      className={tw(
+                        "group w-full text-left bg-white px-4 py-2 cursor-pointer hover:bg-gray-100 focus:outline-none",
+                        focusedBlockIndex === index
+                          ? "bg-gray-100 rounded-md"
+                          : "bg-transparent"
+                      )}
+                      onMouseEnter={() => onFocus(index)}
+                      onClick={() => onSelect(index)}
+                      key={[block.owner, block.repo, block.id].join("__")}
+                    >
+                      <div className={tw("flex justify-between text-sm")}>
+                        <div className={tw("font-semibold")}>{block.title}</div>
+                        {/* <div> because <a> steals the focus, even with tabIndex="-1" & preventFocusOnOpen */}
+                        <div
+                          onClick={(e) => {
+                            e.preventDefault();
+                            const url = `https://github.com/${block.owner}/${block.repo}`;
+                            window.top?.open(url, "_blank");
+                          }}
+                          className={tw(
+                            "text-xs mt-[2px] opacity-0 focus:opacity-100 group-hover:opacity-100"
+                          )}
+                          color="fg.muted"
+                        >
+                          <Text
+                            className={tw("flex items-center")}
+                            color="fg.muted"
+                          >
+                            View code
+                            <LinkExternalIcon
+                              className={tw("ml-1 opacity-50")}
+                            />
+                          </Text>
+                        </div>
+                      </div>
+
+                      <Box className={tw("text-xs")} color="fg.muted">
+                        <Box className={tw("flex items-center mt-1")}>
+                          <Text className={tw("mr-1")} color="fg.muted">
+                            <RepoIcon />
+                          </Text>
+                          <Text color="fg.muted" pb="1">
+                            {block.owner}/{block.repo}
+                            {isExampleBlock && (
+                              <Text ml={1} color="ansi.blue">
+                                <VerifiedIcon />
+                              </Text>
+                            )}
+                          </Text>
+                        </Box>
+                        <div className={tw("flex items-start mt-1")}>
+                          <div className={tw("mr-1")}>
+                            <InfoIcon />
+                          </div>
+                          {block.description}
+                        </div>
+                      </Box>
+                    </div>
+                  );
+                })}
+              </ActionList.Group>
             </ActionList>
           )}
         </ActionMenu.Overlay>

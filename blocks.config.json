@@ -119,7 +119,7 @@
   },
   {
     "type": "file",
-    "id": "markdown-edit-block",
+    "id": "markdown-block",
     "title": "Markdown block",
     "description": "View and edit Markdown content",
     "sandbox": false,
