@@ -124,7 +124,7 @@
     "description": "View and edit Markdown content",
     "sandbox": false,
     "entry": "blocks/file-blocks/markdown-edit/index.tsx",
-    "matches": ["*"],
+    "matches": ["*.md", "*.markdown", "*.mdx"],
     "example_path": "https://github.com/githubnext/blocks-tutorial/blob/main/README.md"
   },
   {
@@ -134,7 +134,7 @@
     "description": "Execute Javascript code",
     "sandbox": false,
     "entry": "blocks/file-blocks/sandbox/index.tsx",
-    "matches": ["*"],
+    "matches": ["*.js", "*.ts", "*.tsx", "*.jsx"],
     "example_path": "https://github.com/githubnext/blocks-tutorial/blob/main/README.md"
   },
   {
