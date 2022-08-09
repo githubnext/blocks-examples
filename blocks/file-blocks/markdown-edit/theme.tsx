@@ -1,11 +1,12 @@
 import { EditorView } from "@codemirror/view";
 import { Extension } from "@codemirror/state";
-import { HighlightStyle, tags as t } from "@codemirror/highlight";
+import { HighlightStyle } from "@codemirror/highlight";
+import { tags as t } from "@lezer/highlight";
 import primer from "@primer/primitives";
 
 const colors = primer.colors.light.codemirror;
 
-export const oneDarkTheme = EditorView.theme(
+export const colorTheme = EditorView.theme(
   {
     "&": {
       color: colors.text,
@@ -36,7 +37,8 @@ export const oneDarkTheme = EditorView.theme(
       backgroundColor: "#6199ff2f",
     },
 
-    ".cm-activeLine": { backgroundColor: colors.activelineBg },
+    ".cm-activeLine": { backgroundColor: "transparent" },
+
     ".cm-selectionMatch": { backgroundColor: colors.selectionBg },
 
     "&.cm-focused .cm-matchingBracket, &.cm-focused .cm-nonmatchingBracket": {
@@ -45,13 +47,14 @@ export const oneDarkTheme = EditorView.theme(
     },
 
     ".cm-gutters": {
-      backgroundColor: colors.guttersBg,
+      // backgroundColor: colors.guttersBg,
+      backgroundColor: "transparent",
       color: colors.guttermarkerSubtleText,
       border: "none",
     },
 
     ".cm-activeLineGutter": {
-      backgroundColor: colors.activelineBg,
+      backgroundColor: colors.bg,
     },
 
     ".cm-foldPlaceholder": {
@@ -82,7 +85,7 @@ export const oneDarkTheme = EditorView.theme(
   { dark: true }
 );
 
-export const oneDarkHighlightStyle = HighlightStyle.define([
+export const highlightStyle = HighlightStyle.define([
   {
     tag: t.keyword,
     color: colors.syntax.keyword,
@@ -94,6 +97,10 @@ export const oneDarkHighlightStyle = HighlightStyle.define([
   {
     tag: [t.function(t.variableName), t.labelName],
     color: colors.syntax.entity,
+  },
+  {
+    tag: [t.list],
+    class: "cm-list",
   },
   {
     tag: [t.color, t.constant(t.name), t.standard(t.name)],
@@ -120,6 +127,16 @@ export const oneDarkHighlightStyle = HighlightStyle.define([
     fontWeight: "bold",
   },
   {
+    tag: t.monospace,
+    fontFamily: "monospace",
+    fontSize: "1.1em",
+    backgroundColor: colors.activelineBg,
+  },
+  {
+    tag: t.quote,
+    class: "cm-quote",
+  },
+  {
     tag: t.emphasis,
     fontStyle: "italic",
   },
@@ -129,21 +146,26 @@ export const oneDarkHighlightStyle = HighlightStyle.define([
   },
   {
     tag: t.link,
-    color: colors.syntax.string,
+    color: colors.syntax.constant,
     textDecoration: "underline",
   },
   {
     tag: t.heading,
     fontWeight: "bold",
-    color: colors.syntax.string,
+    // color: colors.syntax.entity
+    color: primer.colors.light.header.bg,
   },
   {
     tag: [t.atom, t.bool, t.special(t.variableName)],
     color: colors.syntax.keyword,
   },
   {
-    tag: [t.processingInstruction, t.string, t.inserted],
+    tag: [t.string],
     color: colors.syntax.string,
+  },
+  {
+    tag: [t.processingInstruction, t.inserted],
+    class: "cm-instruction",
   },
   {
     tag: [t.special(t.variableName), t.special(t.propertyName)],
@@ -159,4 +181,4 @@ export const oneDarkHighlightStyle = HighlightStyle.define([
   },
 ]);
 
-export const theme: Extension = [oneDarkTheme, oneDarkHighlightStyle];
+export const theme: Extension = [colorTheme, highlightStyle];

@@ -802,10 +802,8 @@
     unist-util-visit "^1.0.0"
     uuid "^3.3.2"
 
-"@githubnext/blocks@^2.0.2":
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/@githubnext/blocks/-/blocks-2.0.2.tgz#4d32dc76745234a10e111b83623edc2d3a0652f7"
-  integrity sha512-PEpp1QNu3xinypSNvrV/GHBOkMF+C4YAvMib4MI7wWIyB/lHxokoHuWNIdyZCzCgBht8SCB4G/TjsjKx5orQxA==
+"@githubnext/blocks@file:.yalc/@githubnext/blocks":
+  version "2.0.3"
   dependencies:
     "@loadable/component" "^5.15.0"
     "@octokit/openapi-types" "^11.2.0"
@@ -905,6 +903,11 @@
   resolved "https://registry.yarnpkg.com/@lezer/common/-/common-0.15.12.tgz#2f21aec551dd5fd7d24eb069f90f54d5bc6ee5e9"
   integrity sha512-edfwCxNLnzq5pBA/yaIhwJ3U3Kz8VAUOTRg0hhxaizaI1N+qxV7EXDv/kLCkLeq2RzSFvxexlaj5Mzfn2kY0Ig==
 
+"@lezer/common@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@lezer/common/-/common-1.0.0.tgz#1c95ae53ec17706aa3cbcc88b52c23f22ed56096"
+  integrity sha512-ohydQe+Hb+w4oMDvXzs8uuJd2NoA3D8YDcLiuDsLqH+yflDTPEpgCsWI3/6rH5C3BAedtH1/R51dxENldQceEA==
+
 "@lezer/cpp@^0.15.0":
   version "0.15.3"
   resolved "https://registry.yarnpkg.com/@lezer/cpp/-/cpp-0.15.3.tgz#51499ec09da0eef9f6d7fa3f6497c57c46162c3e"
@@ -918,6 +921,13 @@
   integrity sha512-tnMOMZY0Zs6JQeVjqfmREYMV0GnmZR1NitndLWioZMD6mA7VQF/PPKPmJX1f+ZgVZQc5Am0df9mX3aiJnNJlKQ==
   dependencies:
     "@lezer/lr" "^0.15.0"
+
+"@lezer/highlight@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@lezer/highlight/-/highlight-1.0.0.tgz#1dc82300f5d39fbd67ae1194b5519b4c381878d3"
+  integrity sha512-nsCnNtim90UKsB5YxoX65v3GEIw3iCHw9RM2DtdgkiqAbKh9pCdvi8AWNwkYf10Lu6fxNhXPpkpHbW6mihhvJA==
+  dependencies:
+    "@lezer/common" "^1.0.0"
 
 "@lezer/html@^0.15.0":
   version "0.15.1"
@@ -960,6 +970,14 @@
   integrity sha512-1XXLa4q0ZthryUEfO47ipvZHxNb+sCKoQIMM9dKs5vXZOBbgF2Vah/GL3g26BFIAEc2uCv4VQnI+lSrv58BT3g==
   dependencies:
     "@lezer/common" "^0.15.0"
+
+"@lezer/markdown@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@lezer/markdown/-/markdown-1.0.1.tgz#ea4f50dc4b94a54d2cdae27c34d5cebb6b723f33"
+  integrity sha512-LlpNWLqes3XQvd8TwpJTHf9ENl4fI6H32xQkMgltUITFMMdQpOASXQtDawWR03yS6hskh4bkhATQbgjdGMoUvA==
+  dependencies:
+    "@lezer/common" "^1.0.0"
+    "@lezer/highlight" "^1.0.0"
 
 "@lezer/php@^0.15.0":
   version "0.15.0"
@@ -2109,6 +2127,13 @@
   version "4.4.7"
   resolved "https://registry.yarnpkg.com/@types/lodash.flatten/-/lodash.flatten-4.4.7.tgz#0072c8fc0b7e2d0741c118c9bbcb1c1f3602504e"
   integrity sha512-6yyP/mHEKL2sa86V61F7TnEcUKlLML9+aWI7TCKvnS4SFt7RD4zTVwkdDgluOJqxVkwZ/2z7HvtRs/7j/Uru7g==
+  dependencies:
+    "@types/lodash" "*"
+
+"@types/lodash.unescape@^4.0.7":
+  version "4.0.7"
+  resolved "https://registry.yarnpkg.com/@types/lodash.unescape/-/lodash.unescape-4.0.7.tgz#69f1cab2e755b824151346a44faeaaf93702972b"
+  integrity sha512-KGxcfHpWcOnLeK5g71YErXL6m947wQC9XfhVjENlCku85C6WxsqNIxwxpqDCpL06rY5ExQiXZH50KgJDFLzc7Q==
   dependencies:
     "@types/lodash" "*"
 
@@ -3974,6 +3999,11 @@ error-stack-parser@^2.0.6:
   dependencies:
     stackframe "^1.1.1"
 
+es-module-lexer@0.4.1:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/es-module-lexer/-/es-module-lexer-0.4.1.tgz#dda8c6a14d8f340a24e34331e0fab0cb50438e0e"
+  integrity sha512-ooYciCUtfw6/d2w56UVeqHPcoCFAiJdz5XOkYpv/Txl1HMUozpXjz/2RIQgqwKdXNDPSF1W7mJCFse3G+HDyAA==
+
 es5-ext@^0.10.35, es5-ext@^0.10.50:
   version "0.10.61"
   resolved "https://registry.yarnpkg.com/es5-ext/-/es5-ext-0.10.61.tgz#311de37949ef86b6b0dcea894d1ffedb909d3269"
@@ -5185,6 +5215,11 @@ lodash.topath@^4.5.2:
   resolved "https://registry.yarnpkg.com/lodash.topath/-/lodash.topath-4.5.2.tgz#3616351f3bba61994a0931989660bd03254fd009"
   integrity sha1-NhY1Hzu6YZlKCTGYlmC9AyVP0Ak=
 
+lodash.unescape@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/lodash.unescape/-/lodash.unescape-4.0.1.tgz#bf2249886ce514cda112fae9218cdc065211fc9c"
+  integrity sha512-DhhGRshNS1aX6s5YdBE3njCCouPgnG29ebyHvImlZzXZf2SHgt+J08DHgytTPnpywNbO1Y8mNUFyQuIDBq2JZg==
+
 lodash.uniqueid@^4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/lodash.uniqueid/-/lodash.uniqueid-4.0.1.tgz#3268f26a7c88e4f4b1758d679271814e31fa5b26"
@@ -5760,6 +5795,14 @@ parse-headers@^2.0.2:
   version "2.0.5"
   resolved "https://registry.yarnpkg.com/parse-headers/-/parse-headers-2.0.5.tgz#069793f9356a54008571eb7f9761153e6c770da9"
   integrity sha512-ft3iAoLOB/MlwbNXgzy43SWGP6sQki2jQvAyBg/zDFAgr9bfNWZIUj42Kw2eJIl8kEi4PbgE6U1Zau/HwI75HA==
+
+parse-imports@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/parse-imports/-/parse-imports-1.1.0.tgz#39a694f293537342eb556d2e5936a2e9893289bb"
+  integrity sha512-ov3Rc9e3wX9+BLR7nFx08+ThdLJfzi8ZXQrqZXfmuxdL+JCCN24m2uuBFBoaa/yyiZ9s8HjcHGDKSXJbKAyDQA==
+  dependencies:
+    es-module-lexer "0.4.1"
+    slashes "2.0.2"
 
 parse-json@^2.2.0:
   version "2.2.0"
@@ -6821,6 +6864,11 @@ simple-swizzle@^0.2.2:
   integrity sha1-pNprY1/8zMoz9w0Xy5JZLeleVXo=
   dependencies:
     is-arrayish "^0.3.1"
+
+slashes@2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/slashes/-/slashes-2.0.2.tgz#c149dd3555bd236fdc3b43ec56e748e924425613"
+  integrity sha512-68p+QkFAQQRetIUzNXAdktNJr8AYLxJukjBegYQz8F7VATsBJG621UYtY/vS2j9jerxdJ1k6Tc25K4DXEw1d5w==
 
 slice-ansi@^3.0.0:
   version "3.0.0"
