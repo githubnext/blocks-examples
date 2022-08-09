@@ -149,21 +149,24 @@ export const copy = (): Extension => {
           }
           // widgets.push(newDecoration.range(from));
         } else if (type.name === "HTMLTag") {
-          // punting for now, it splits the text into multiple widgets:
-          // start tag, text, end tag
-          // const linkRegexHtml = /<a.*?href="(?<url>.*?)".*?>(?<text>.*?)[<\/a>]*/
-          // const result = linkRegexHtml.exec(state.doc.sliceString(from, to))
-          // if (result && result.groups && result.groups.url) {
-          //   let linkText = result.groups.text
-          //   if (!linkText && !linkText.includes("</a>")) {
-          //     const nextNode = tree.resolve(to)
-          //     linkText = state.doc.slice(nextNode.from, nextNode.to).text[0]
-          //     to += linkText.length
-          //   }
-          //   const url = result.groups.url
-          //   const newDecoration = linkDecoration(linkText, url)
-          //   widgets.push(newDecoration.range(from, to))
-          // }
+          const text = state.doc.sliceString(from, to);
+          console.log(text);
+          const linkRegexHtml =
+            /<a.*?href="(?<url>.*?)".*?>(?<text>.*?)[<\/a>]*/;
+          const result = linkRegexHtml.exec(text);
+          if (result && result.groups && result.groups.url) {
+            let linkText = result.groups.text;
+            const url = result.groups.url;
+            if (url) {
+              const newDecoration = linkAltDecoration(text, linkText, url);
+              widgets.push(newDecoration.range(from));
+              const newAltDecoration = linkDecoration(text, linkText, url);
+              widgets.push(newAltDecoration.range(from, to));
+            }
+          } else if (text === "</a>") {
+            const newAltDecoration = linkDecoration(text, "", "");
+            widgets.push(newAltDecoration.range(from, to));
+          }
         } else if (type.name === "HorizontalRule") {
           const newDecoration = horizontalRuleDecorationAfter();
           widgets.push(newDecoration.range(from, to));
