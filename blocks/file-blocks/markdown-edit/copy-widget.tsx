@@ -150,7 +150,6 @@ export const copy = (): Extension => {
           // widgets.push(newDecoration.range(from));
         } else if (type.name === "HTMLTag") {
           const text = state.doc.sliceString(from, to);
-          console.log(text);
           const linkRegexHtml =
             /<a.*?href="(?<url>.*?)".*?>(?<text>.*?)[<\/a>]*/;
           const result = linkRegexHtml.exec(text);

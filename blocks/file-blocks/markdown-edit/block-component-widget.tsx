@@ -36,8 +36,7 @@ import React, {
   useRef,
   useState,
 } from "react";
-import ReactDOM from "react-dom/client";
-import ReactDOMPlain from "react-dom";
+import ReactDOM from "react-dom";
 import { tw } from "twind";
 
 interface BlockParams {
@@ -102,8 +101,6 @@ export const blockComponentWidget = ({
   parentProps: FileBlockProps;
   onDispatchChanges: (changes: TransactionSpec) => void;
 }): Extension => {
-  console.log({ ReactDOM, ReactDOMPlain });
-
   const blockComponentDecoration = (BlockParams: BlockParams) =>
     Decoration.replace({
       widget: new BlockWidget(BlockParams),
