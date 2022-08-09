@@ -60,17 +60,18 @@ export default ({ content, state = {} }: FileBlockProps) => {
   );
 };
 
-const importRegex =
-  /import\s+(?<variables>.+)\s+from\s+["'](?<dependency>[^"']+)["']/g;
 const getDependenciesFromString = (content: string) => {
   const importStatements = content
     .slice(content.indexOf("import"))
     .split("import");
   let dependencies = {};
   importStatements.forEach((statement) => {
-    const imports = importRegex.exec(`import${statement}`);
+    const importRegex =
+      /import\s+(?<variables>.+)\s+from\s+["'](?<dependency>[^"']+)["']/gm;
+    const imports = importRegex.exec(`import ${statement}`);
     if (imports?.groups?.dependency) {
-      dependencies[imports.groups.dependency] = "latest";
+      const dependencyRoot = imports.groups.dependency.split("/")[0];
+      dependencies[dependencyRoot] = "latest";
     }
   });
   return dependencies;

@@ -143,7 +143,12 @@ export const blockComponentWidget = ({
 
             // TODO: extract props from string in a more robust way
             try {
-              eval(`window.parsedValue = ${valueString.trim().slice(1, -1)}`);
+              eval(
+                `window.parsedValue = ${valueString
+                  .trim()
+                  // remove start and end curly braces
+                  .replace(/^\{|\}$/g, "")}`
+              );
               props[key] = window.parsedValue;
             } catch (e) {
               props[key] = valueString;
