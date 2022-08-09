@@ -516,7 +516,7 @@ const Input = ({
   const { data: items, isLoading } = useOnRequestData(requestDataFunction);
 
   return (
-    <FormControl sx={{ flex: 1, position: "relative" }}>
+    <FormControl sx={{ flex: 1, position: "relative", alignItems: "stretch" }}>
       <FormControl.Label htmlFor={id}>{label}</FormControl.Label>
       <Autocomplete>
         <Autocomplete.Input
