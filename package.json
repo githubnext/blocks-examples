@@ -76,7 +76,8 @@
     "styled-components": "^5.3.5",
     "three": "^0.134.0",
     "twind": "^0.16.17",
-    "unidiff": "^1.0.2"
+    "unidiff": "^1.0.2",
+    "use-debounce": "^8.0.3"
   },
   "devDependencies": {
     "@types/git-url-parse": "^9.0.1",

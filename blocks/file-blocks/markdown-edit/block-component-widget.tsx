@@ -38,6 +38,7 @@ import React, {
 } from "react";
 import ReactDOM from "react-dom";
 import { tw } from "twind";
+import { useDebouncedCallback } from "use-debounce";
 
 interface BlockParams {
   props: Record<string, any>;
@@ -343,8 +344,9 @@ const useOnRequestData = (
       setError(e);
     }
   };
+  const fetchDataDebounced = useDebouncedCallback(fetchData, 500);
   useEffect(() => {
-    fetchData();
+    fetchDataDebounced();
   }, [fetch]);
 
   return { data, error, isLoading };
@@ -397,23 +399,24 @@ const ContextControls = ({
 
   const onFetchRepoPaths = useCallback(
     async (searchTerm: string) => {
-      const paths = await parentProps.onRequestGitHubData(
-        `/repos/${contentRepo}/contents`,
+      const res = await parentProps.onRequestGitHubData(
+        `/repos/${contentRepo}/git/trees/${combinedContext.sha}`,
         {
           per_page: 100,
+          recursive: true,
         }
       );
-      const repoPaths = paths
+      const repoPaths = res.tree
         .filter(
           (path) =>
             !props.block?.type ||
-            (props.block?.type === "file" && path.type === "file") ||
-            (props.block?.type === "folder" && path.type === "dir")
+            (props.block?.type === "file" && path.type === "blob") ||
+            (props.block?.type === "folder" && path.type === "tree")
         )
         .map((path) => ({
-          text: path.name,
-          id: path.name,
-          value: { path: path.name },
+          text: path.path,
+          id: path.path,
+          value: { path: path.path },
         }));
       const rootPath =
         props.block?.type === "folder"
