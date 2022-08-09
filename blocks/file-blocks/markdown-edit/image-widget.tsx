@@ -39,7 +39,6 @@ class ImageWidget extends WidgetType {
   toDOM() {
     const figure = document.createElement("figure");
     const image = figure.appendChild(document.createElement("img"));
-    console.log(this);
 
     figure.className = "cm-image-container";
     image.src = this.url;
@@ -51,7 +50,8 @@ class ImageWidget extends WidgetType {
       if (Number.isFinite(+style)) return `${style}px`;
       return style;
     };
-    image.style.width = parseStyle(this.width) || "100%";
+    image.style.width = parseStyle(this.width) || "auto";
+    image.style.maxWidth = "100%";
     image.style.height = parseStyle(this.height) || "auto";
 
     return figure;
@@ -115,7 +115,6 @@ export const images = (): Extension => {
 
     syntaxTree(state).iterate({
       enter: (type, from, to) => {
-        const text = state.doc.slice(from, to);
         if (type.name === "Image") {
           const result = imageRegex.exec(state.doc.sliceString(from, to));
 
@@ -124,7 +123,6 @@ export const images = (): Extension => {
             const heightRegex = /height="(?<height>.*?)"/;
             const widthResult = widthRegex.exec(result.groups.url);
             const heightResult = heightRegex.exec(result.groups.url);
-            console.log(state.doc.lineAt(from));
             widgets.push(
               imageDecoration({
                 url: result.groups.url,
