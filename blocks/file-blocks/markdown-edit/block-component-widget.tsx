@@ -36,7 +36,8 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { createRoot } from "react-dom/client";
+import ReactDOM from "react-dom/client";
+import ReactDOMPlain from "react-dom";
 import { tw } from "twind";
 
 interface BlockParams {
@@ -63,7 +64,7 @@ class BlockWidget extends WidgetType {
     const parentProps = this.parentProps;
     const BlockComponent = parentProps.BlockComponent;
     if (!BlockComponent) return container;
-    createRoot(container).render(
+    ReactDOM.createRoot(container).render(
       <BlockComponentWrapper
         parentProps={parentProps}
         props={this.props}
@@ -101,6 +102,8 @@ export const blockComponentWidget = ({
   parentProps: FileBlockProps;
   onDispatchChanges: (changes: TransactionSpec) => void;
 }): Extension => {
+  console.log({ ReactDOM, ReactDOMPlain });
+
   const blockComponentDecoration = (BlockParams: BlockParams) =>
     Decoration.replace({
       widget: new BlockWidget(BlockParams),

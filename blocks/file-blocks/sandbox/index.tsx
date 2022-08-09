@@ -47,7 +47,7 @@ export default ({ content, state = {} }: FileBlockProps) => {
   }, []);
 
   return (
-    <div className={tw(`w-full h-full mt-3 mb-10`)}>
+    <div className={tw(`w-full h-full`)}>
       {!!url && (
         <iframe
           className={tw(`w-full h-full outline-none`)}

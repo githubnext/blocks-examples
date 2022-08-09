@@ -250,6 +250,7 @@ export default function (props: FileBlockProps) {
               setAutocompleteLocation(null);
               return;
             }
+            if (!v.view) return;
             const cursorLocation = v.view.coordsAtPos(startOfLinePosition);
             const scrollOffset = -v.view.contentDOM.getBoundingClientRect().top;
             cursorLocation["top"] += scrollOffset;
