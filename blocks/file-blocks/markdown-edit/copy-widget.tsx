@@ -205,7 +205,9 @@ export const markdownKeymap: KeyBinding[] = [
   },
   {
     key: "`",
-    run: (view) => toggleWrapSelectionWithSymbols(view, "`"),
+    run: (view) => {
+      return toggleWrapSelectionWithSymbols(view, "`", false);
+    },
   },
   {
     key: "Mod-i",
@@ -213,9 +215,14 @@ export const markdownKeymap: KeyBinding[] = [
   },
 ];
 
-const toggleWrapSelectionWithSymbols = (view: EditorView, symbols: string) => {
+const toggleWrapSelectionWithSymbols = (
+  view: EditorView,
+  symbols: string,
+  doTriggerOnEmptySelection = true
+) => {
   const selection = view.state.selection;
   let runningDiff = 0; // to keep track of previous changes with multiple selections
+  let numberOfChanges = 0;
 
   selection.ranges.forEach((range, i) => {
     let from = range.from + runningDiff;
@@ -223,6 +230,14 @@ const toggleWrapSelectionWithSymbols = (view: EditorView, symbols: string) => {
     let text = view.state.doc.sliceString(from, to);
 
     if (!text) {
+      if (!doTriggerOnEmptySelection) {
+        const newRange = EditorSelection.range(from, to);
+        let newState = view.state.update({
+          selection: view.state.selection.replaceRange(newRange, i),
+        });
+        view.dispatch(newState);
+        return;
+      }
       // select word at cursor
       const edgeOfWordLeft = moveBySubword(view, range, false).from;
       const edgeOfWordRight = moveBySubword(view, range, true).from;
@@ -270,9 +285,10 @@ const toggleWrapSelectionWithSymbols = (view: EditorView, symbols: string) => {
       selection: view.state.selection.replaceRange(newRange, i),
     });
     view.dispatch(newState);
+    numberOfChanges++;
   });
 
-  return true; // return true to always use this behavior
+  return numberOfChanges > 0; // return true to always use this behavior
 };
 
 // nabbed from @codemirror/commands/dist/index.js
