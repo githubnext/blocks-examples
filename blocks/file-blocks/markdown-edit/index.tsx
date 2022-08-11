@@ -58,7 +58,6 @@ const extensions = [
   closeBrackets(),
   autocompletion(),
   rectangularSelection(),
-  highlightActiveLine(),
   highlightSelectionMatches(),
 
   markdown(),
@@ -193,6 +192,7 @@ export default function (props: FileBlockProps) {
       doc: content,
       extensions: [
         extensions,
+        isEditable && highlightActiveLine(),
         blockComponentWidget({ parentProps: props, onDispatchChanges }),
         keymap.of([
           // prevent default behavior for arrow keys when autocompleting
@@ -259,7 +259,7 @@ export default function (props: FileBlockProps) {
             // } else if (v.transactions[0]) {
           }
         }),
-      ],
+      ].filter(Boolean),
     });
     const view = new EditorView({
       state,
