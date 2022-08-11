@@ -117,11 +117,17 @@ body,
 .cm-line .BlockComponentWrapper input {
   caret-color: #000;
 }
+.cm-editor div.cm-line ::selection {
+  background: #bddfff !important;
+}
+html body div.cm-editor .cm-line::selection {
+  background: #bddfff !important;
+}
 .cm-line .BlockComponentWrapper input::selection {
-  background: rgba(84, 174, 255, 0.4) !important;
+  background: #bddfff !important;
 }
 .cm-line .BlockComponentWrapper textarea::selection {
-  background: rgba(84, 174, 255, 0.4) !important;
+  background: #bddfff !important;
 }
 
 .cm-line .cm-instruction {
