@@ -12,61 +12,16 @@ import {
   DecorationSet,
   EditorView,
   KeyBinding,
-  WidgetType,
 } from "@codemirror/view";
 
-class LinkAltWidget extends WidgetType {
-  readonly text;
-  readonly linkText;
-  readonly url;
-
-  constructor({
-    text,
-    linkText,
-    url,
-  }: {
-    text: string;
-    linkText: string;
-    url: string;
-  }) {
-    super();
-
-    this.text = text;
-    this.linkText = linkText;
-    this.url = url;
-  }
-
-  eq(widget: LinkAltWidget) {
-    return (
-      widget.url === this.url &&
-      widget.text === this.text &&
-      widget.linkText === this.linkText
-    );
-  }
-
-  toDOM() {
-    const container = document.createElement("a");
-    container.setAttribute("aria-hidden", "true");
-    container.className = "cm-copy-link-alt";
-    container.href = this.url;
-    container.target = "_blank";
-    container.textContent = this.linkText;
-
-    return container;
-  }
-
-  ignoreEvent(_event: Event): boolean {
-    return false;
-  }
-}
 export const copy = (): Extension => {
   const headerDecoration = ({ level }: { level: string }) =>
     Decoration.mark({
       class: `cm-copy-header cm-copy-header--${level}`,
     });
   const linkAltDecoration = (text: string, linkText: string, url: string) =>
-    Decoration.widget({
-      widget: new LinkAltWidget({ text, linkText, url }),
+    Decoration.mark({
+      tagName: "a",
       class: "cm-copy-link-alt",
     });
   const linkDecoration = (text: string, linkText: string, url: string) =>
@@ -125,10 +80,16 @@ export const copy = (): Extension => {
           const linkTextRegex = /\[(?<text>.*?)\]/;
           const linkText = linkTextRegex.exec(text)?.groups?.text || "";
           if (url) {
-            const newDecoration = linkAltDecoration(text, linkText, url);
-            widgets.push(newDecoration.range(from));
-            const newAltDecoration = linkDecoration(text, linkText, url);
-            widgets.push(newAltDecoration.range(from, to));
+            const newAltDecoration = linkAltDecoration(text, linkText, url);
+            const altIndexStart = from + text.indexOf(linkText);
+            widgets.push(
+              newAltDecoration.range(
+                altIndexStart,
+                altIndexStart + linkText.length
+              )
+            );
+            const newDecoration = linkDecoration(text, linkText, url);
+            widgets.push(newDecoration.range(from, to));
           }
         } else if (type.name === "Blockquote") {
           const newDecoration = blockquoteDecoration();
@@ -149,18 +110,33 @@ export const copy = (): Extension => {
           }
           // widgets.push(newDecoration.range(from));
         } else if (type.name === "HTMLTag") {
-          const text = state.doc.sliceString(from, to);
+          let text = state.doc.sliceString(from, to);
           const linkRegexHtml =
             /<a.*?href="(?<url>.*?)".*?>(?<text>.*?)[<\/a>]*/;
-          const result = linkRegexHtml.exec(text);
+          let result = linkRegexHtml.exec(text);
           if (result && result.groups && result.groups.url) {
+            if (!text.includes("</a>")) {
+              // extend range to include closing tag
+              const endTagIndex = state.doc.lineAt(to).text.indexOf("</a>");
+              text = state.doc.sliceString(from, to + endTagIndex);
+              const linkRegexHtml =
+                /<a.*?href="(?<url>.*?)".*?>(?<text>.*?)<\/a>/;
+              result = linkRegexHtml.exec(text);
+            }
             let linkText = result.groups.text;
             const url = result.groups.url;
             if (url) {
-              const newDecoration = linkAltDecoration(text, linkText, url);
-              widgets.push(newDecoration.range(from));
-              const newAltDecoration = linkDecoration(text, linkText, url);
-              widgets.push(newAltDecoration.range(from, to));
+              const newAltDecoration = linkAltDecoration(text, linkText, url);
+              const altIndexStart = from + text.indexOf(linkText);
+              if (linkText)
+                widgets.push(
+                  newAltDecoration.range(
+                    altIndexStart,
+                    altIndexStart + linkText.length
+                  )
+                );
+              const newDecoration = linkDecoration(text, linkText, url);
+              widgets.push(newDecoration.range(from, to));
             }
           } else if (text === "</a>") {
             const newAltDecoration = linkDecoration(text, "", "");
@@ -173,7 +149,15 @@ export const copy = (): Extension => {
       },
     });
 
-    return widgets.length > 0 ? RangeSet.of(widgets) : Decoration.none;
+    if (!widgets.length) return Decoration.none;
+
+    // we need to return the widgets in order
+    const sortedWidgets = widgets.sort((a, b) => {
+      if (a.from < b.from) return -1;
+      if (a.from > b.from) return 1;
+      return a.value.startSide < b.value.startSide ? -1 : 1;
+    });
+    return RangeSet.of(sortedWidgets);
   };
 
   const copysTheme = EditorView.baseTheme({});

@@ -61,31 +61,6 @@ class ImageWidget extends WidgetType {
     return false;
   }
 }
-class ImageAltWidget extends WidgetType {
-  readonly text;
-
-  constructor({ text }: { text: string }) {
-    super();
-
-    this.text = text;
-  }
-
-  eq(widget: ImageAltWidget) {
-    return widget.text === this.text;
-  }
-
-  toDOM() {
-    const container = document.createElement("span");
-    container.setAttribute("aria-hidden", "true");
-    container.className = "cm-image-alt";
-    container.textContent = unescape(this.text);
-    return container;
-  }
-
-  ignoreEvent(_event: Event): boolean {
-    return false;
-  }
-}
 
 export const images = (): Extension => {
   const imageRegex = /!\[(?<alt>.*?)\]\((?<url>.*?)\)/;
@@ -99,14 +74,13 @@ export const images = (): Extension => {
       class: "image",
     });
 
-  const imageTextDecoration = (alt: string) =>
+  const imageTextDecoration = () =>
     Decoration.mark({
       class: "cm-image",
     });
 
-  const imageAltDecoration = (alt: string) =>
-    Decoration.widget({
-      widget: new ImageAltWidget({ text: alt }),
+  const imageAltDecoration = () =>
+    Decoration.mark({
       class: "cm-image-alt",
     });
 
@@ -116,7 +90,8 @@ export const images = (): Extension => {
     syntaxTree(state).iterate({
       enter: (type, from, to) => {
         if (type.name === "Image") {
-          const result = imageRegex.exec(state.doc.sliceString(from, to));
+          const text = state.doc.sliceString(from, to);
+          const result = imageRegex.exec(text);
 
           if (result && result.groups && result.groups.url) {
             const widthRegex = /width="(?<width>.*?)"/;
@@ -131,15 +106,16 @@ export const images = (): Extension => {
               }).range(state.doc.lineAt(from).from)
             );
             widgets.push(
-              imageAltDecoration(result.groups.alt || result.groups.url).range(
-                state.doc.lineAt(to).to
-              )
-            );
-            widgets.push(
-              imageTextDecoration(result.groups.alt || result.groups.url).range(
+              imageTextDecoration().range(
                 state.doc.lineAt(from).from,
                 state.doc.lineAt(to).to
               )
+            );
+            let alt = result.groups.alt || text;
+            const altIndex = from + text.indexOf(alt);
+            console.log(alt);
+            widgets.push(
+              imageAltDecoration().range(altIndex, altIndex + alt.length)
             );
           }
         } else if (["HTMLBlock", "Paragraph"].includes(type.name)) {
@@ -158,22 +134,25 @@ export const images = (): Extension => {
                 height: heightResult?.groups?.height,
               }).range(state.doc.lineAt(from).from)
             );
+            widgets.push(
+              imageTextDecoration().range(
+                state.doc.lineAt(from).from,
+                state.doc.lineAt(to).to
+              )
+            );
             const altRegex = /alt="(?<alt>.*?)"/;
             const altResult = altRegex.exec(text);
+            let alt = altResult?.groups?.alt || text;
+            const altIndex = from + text.indexOf(alt);
+            console.log(alt);
             widgets.push(
-              imageAltDecoration(
-                altResult?.groups?.alt || result.groups.url
-              ).range(state.doc.lineAt(to).to)
-            );
-            widgets.push(
-              imageTextDecoration(
-                altResult?.groups?.alt || result.groups.url
-              ).range(state.doc.lineAt(from).from, state.doc.lineAt(to).to)
+              imageAltDecoration().range(altIndex, altIndex + alt.length)
             );
           }
         }
       },
     });
+
     if (!widgets.length) return Decoration.none;
     // we need to return the widgets in order
     const sortedWidgets = widgets.sort((a, b) => {

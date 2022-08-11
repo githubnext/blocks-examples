@@ -134,12 +134,12 @@ html body div.cm-editor .cm-line::selection {
   display: none;
   color: rgb(175, 178, 182);
 }
-.cm-copy-header .cm-instruction {
+.cm-copy-header:first-child .cm-instruction {
   display: inline-block !important;
   width: 0;
   opacity: 0;
 }
-.cm-copy-header .cm-instruction:first-child {
+.cm-copy-header:first-child .cm-instruction:first-child {
   margin-right: -0.5ch;
 }
 .cm-image-container {
@@ -151,8 +151,13 @@ html body div.cm-editor .cm-line::selection {
 .cm-copy-link {
   display: none;
 }
-.cm-copy-link-alt {
-  color: #0969da;
+.cm-copy-link-alt,
+.cm-copy-link-alt .cm-copy-link {
+  color: #0969da !important;
+  display: inline !important;
+}
+.cm-image-alt .cm-image {
+  display: inline !important;
 }
 .cm-image-alt {
   color: rgb(75, 78, 82);
@@ -166,17 +171,18 @@ html body div.cm-editor .cm-line::selection {
 .cm-activeLine .ͼu,
 .cm-activeLine .cm-image,
 .cm-activeLine + .cm-image-container + .cm-line .cm-image,
-.cm-activeLine .cm-copy-link {
-  display: inline;
-  width: auto;
-  opacity: 1;
+.cm-activeLine + .cm-image-container + .cm-line .cm-image-alt,
+.cm-activeLine + .cm-image-container + .cm-line .cm-instruction,
+.cm-activeLine .cm-copy-link,
+.cm-activeLine .cm-image-alt {
+  display: inline !important;
+  width: auto !important;
+  opacity: 1 !important;
 }
 .cm-activeLine .cm-instruction:first-child {
-  margin-right: 0;
+  margin-right: 0 !important;
 }
-.cm-activeLine + .cm-image-container + .cm-line .cm-image-alt,
-.cm-activeLine .cm-image:first-of-type:after,
-.cm-activeLine .cm-copy-link-alt {
+.cm-activeLine .cm-image:first-of-type:after {
   display: none;
 }
 
