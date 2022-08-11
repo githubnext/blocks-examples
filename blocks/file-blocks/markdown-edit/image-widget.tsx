@@ -7,7 +7,7 @@ import {
   EditorView,
   WidgetType,
 } from "@codemirror/view";
-import unescape from "lodash.unescape";
+import { FileContext, FolderContext } from "@githubnext/blocks";
 
 interface ImageWidgetParams {
   url: string;
@@ -62,7 +62,11 @@ class ImageWidget extends WidgetType {
   }
 }
 
-export const images = (): Extension => {
+export const images = ({
+  context,
+}: {
+  context: FileContext | FolderContext;
+}): Extension => {
   const imageRegex = /!\[(?<alt>.*?)\]\((?<url>.*?)\)/;
   const imageRegexHtml = /<img.*?src="(?<url>.*?)".*?>/;
 
@@ -100,7 +104,7 @@ export const images = (): Extension => {
             const heightResult = heightRegex.exec(result.groups.url);
             widgets.push(
               imageDecoration({
-                url: result.groups.url,
+                url: parseImageUrl(result.groups.url, context),
                 width: widthResult?.groups?.width,
                 height: heightResult?.groups?.height,
               }).range(state.doc.lineAt(from).from)
@@ -188,4 +192,16 @@ export const images = (): Extension => {
   });
 
   return [imagesTheme, imagesField];
+};
+
+export const parseImageUrl = (
+  url: string,
+  context: FileContext | FolderContext
+) => {
+  if (!url.startsWith("http")) {
+    const pathRoot = context.path.split("/").slice(0, -1).join("/");
+    return `https://raw.githubusercontent.com/${context.owner}/${context.repo}/${context.sha}/${pathRoot}/${url}`;
+  } else {
+    return url;
+  }
 };

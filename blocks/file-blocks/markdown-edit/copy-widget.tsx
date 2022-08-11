@@ -13,11 +13,33 @@ import {
   EditorView,
   KeyBinding,
 } from "@codemirror/view";
+import {
+  CommonBlockProps,
+  FileContent,
+  FileContext,
+  FolderContext,
+} from "@githubnext/blocks";
 
-export const copy = (): Extension => {
-  const headerDecoration = ({ level }: { level: string }) =>
+export const parseUrl = (url: string, context: FileContext | FolderContext) => {
+  if (url.startsWith("/")) {
+    return `https://github.com/${context.owner}/${context.repo}/${url}`;
+  } else {
+    return url;
+  }
+};
+export const copy = ({
+  context,
+  onScrollTo,
+}: {
+  context: FileContext | FolderContext;
+  onScrollTo: (from) => void;
+}): Extension => {
+  const headerDecoration = ({ level, id }: { level: string; id: string }) =>
     Decoration.mark({
       class: `cm-copy-header cm-copy-header--${level}`,
+      attributes: {
+        id,
+      },
     });
   const linkAltDecoration = (text: string, linkText: string, url: string) =>
     Decoration.mark({
@@ -29,9 +51,11 @@ export const copy = (): Extension => {
       tagName: "a",
       class: "cm-copy-link",
       attributes: {
-        href: url,
+        href: url.startsWith("#") ? "javascript:void(0)" : url,
         target: "_top",
-        onclick: `window.open('${url}', '_blank'); return false;`,
+        onclick: url.startsWith("#")
+          ? `window.scrollToHash("${slugifyId(url.slice(1))}"); return false`
+          : `window.open('${url}', '_blank'); return false;`,
         title: linkText,
       },
     });
@@ -57,13 +81,31 @@ export const copy = (): Extension => {
 
   const decorate = (state: EditorState) => {
     const widgets: Range<Decoration>[] = [];
+    window.scrollToHash = (hash: string) => {
+      let element = document.getElementById(hash);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth", block: "start" });
+      } else {
+        const fullText = state.doc.toString();
+        const headings = fullText.match(/^#+\s*(.*)$/gm);
+        const matchingLink = headings.find((heading) => {
+          return slugifyHeading(heading) === hash;
+        });
+        if (matchingLink) {
+          const index = fullText.indexOf(matchingLink);
+          onScrollTo(index);
+        }
+      }
+    };
 
     const tree = syntaxTree(state);
     tree.iterate({
       enter: (type, from, to) => {
         if (type.name.startsWith("ATXHeading")) {
+          const text = state.doc.sliceString(from, to);
           const level = type.name.split("Heading")[1];
-          const newDecoration = headerDecoration({ level });
+          let id = slugifyHeading(text);
+          const newDecoration = headerDecoration({ level, id });
           widgets.push(
             newDecoration.range(
               state.doc.lineAt(from).from,
@@ -80,7 +122,12 @@ export const copy = (): Extension => {
           const linkTextRegex = /\[(?<text>.*?)\]/;
           const linkText = linkTextRegex.exec(text)?.groups?.text || "";
           if (url) {
-            const newAltDecoration = linkAltDecoration(text, linkText, url);
+            const absoluteUrl = parseUrl(url, context);
+            const newAltDecoration = linkAltDecoration(
+              text,
+              linkText,
+              absoluteUrl
+            );
             const altIndexStart = from + text.indexOf(linkText);
             widgets.push(
               newAltDecoration.range(
@@ -88,7 +135,7 @@ export const copy = (): Extension => {
                 altIndexStart + linkText.length
               )
             );
-            const newDecoration = linkDecoration(text, linkText, url);
+            const newDecoration = linkDecoration(text, linkText, absoluteUrl);
             widgets.push(newDecoration.range(from, to));
           }
         } else if (type.name === "Blockquote") {
@@ -126,7 +173,12 @@ export const copy = (): Extension => {
             let linkText = result.groups.text;
             const url = result.groups.url;
             if (url) {
-              const newAltDecoration = linkAltDecoration(text, linkText, url);
+              const absoluteUrl = parseUrl(url, context);
+              const newAltDecoration = linkAltDecoration(
+                text,
+                linkText,
+                absoluteUrl
+              );
               const altIndexStart = from + text.indexOf(linkText);
               if (linkText)
                 widgets.push(
@@ -135,7 +187,7 @@ export const copy = (): Extension => {
                     altIndexStart + linkText.length
                   )
                 );
-              const newDecoration = linkDecoration(text, linkText, url);
+              const newDecoration = linkDecoration(text, linkText, absoluteUrl);
               widgets.push(newDecoration.range(from, to));
             }
           } else if (text === "</a>") {
@@ -167,11 +219,11 @@ export const copy = (): Extension => {
       return decorate(state);
     },
     update(copys, transaction) {
-      if (transaction.docChanged || transaction.changes.length > 0) {
-        return decorate(transaction.state);
-      }
+      // if (transaction.docChanged || transaction.changes.length > 0) {
+      return decorate(transaction.state);
+      // }
 
-      return copys.map(transaction.changes);
+      // return copys.map(transaction.changes);
     },
     provide(field) {
       return EditorView.decorations.from(field);
@@ -316,3 +368,25 @@ function moveBySubword(view, range, forward) {
     return step;
   });
 }
+
+export const slugifyId = (str: string) => {
+  return (
+    str
+      .toLowerCase()
+      // replace spaces with dashes
+      .replace(/\s+/g, "-")
+      // remove non alphanumeric characters
+      .replace(/[^a-z0-9-]/g, "")
+      // remove leading and trailing dashes
+      .replace(/^-+|-+$/g, "")
+  );
+};
+const slugifyHeading = (str: string) =>
+  slugifyId(
+    str
+      // remove leading # & space
+      .replace(/^#+\s*/, "")
+      // handle links
+      .replace(/\[([^\]]+)\]\(([^\)]+)\)/g, (match, text, url) => text)
+      .trim()
+  );

@@ -159,6 +159,10 @@ html body div.cm-editor .cm-line::selection {
 .cm-image-alt .cm-image {
   display: inline !important;
 }
+.cm-image-alt > .cm-image > span {
+  color: rgb(75, 78, 82, 0.8);
+  text-decoration: none;
+}
 .cm-image-alt {
   color: rgb(75, 78, 82);
   font-style: italic;

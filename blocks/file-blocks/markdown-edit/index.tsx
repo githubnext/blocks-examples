@@ -18,7 +18,7 @@ import { lintKeymap } from "@codemirror/lint";
 import { bracketMatching } from "@codemirror/matchbrackets";
 import { rectangularSelection } from "@codemirror/rectangular-selection";
 import { highlightSelectionMatches, searchKeymap } from "@codemirror/search";
-import { EditorState } from "@codemirror/state";
+import { EditorSelection, EditorState } from "@codemirror/state";
 import {
   drawSelection,
   dropCursor,
@@ -61,8 +61,6 @@ const extensions = [
   highlightSelectionMatches(),
 
   markdown(),
-  images(),
-  copy(),
   theme,
 
   interact({
@@ -84,7 +82,7 @@ const extensions = [
 export default function (props: FileBlockProps) {
   const {
     content,
-    context: { path },
+    context,
     isEditable,
     onUpdateContent,
     onRequestBlocksRepos,
@@ -188,12 +186,20 @@ export default function (props: FileBlockProps) {
     const onDispatchChanges = (changes: any) => {
       if (viewRef.current) viewRef.current.dispatch(changes);
     };
+    const onScrollTo = (pos: any) => {
+      const view = viewRef.current;
+      if (!view) return;
+      // scroll to pos
+      view.scrollPosIntoView(pos);
+    };
     const state = EditorState.create({
       doc: content,
       extensions: [
         extensions,
         isEditable && highlightActiveLine(),
         blockComponentWidget({ parentProps: props, onDispatchChanges }),
+        copy({ context, onScrollTo }),
+        images({ context }),
         keymap.of([
           // prevent default behavior for arrow keys when autocompleting
           {
@@ -297,7 +303,7 @@ export default function (props: FileBlockProps) {
       )}
       <div
         className={tw(`relative w-full h-[30em]`)}
-        key={path}
+        key={context.path}
         ref={editorRef}
       />
     </div>

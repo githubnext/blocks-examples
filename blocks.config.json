@@ -124,7 +124,7 @@
     "description": "View and edit Markdown content",
     "sandbox": false,
     "entry": "blocks/file-blocks/markdown-edit/index.tsx",
-    "matches": ["*.md", "*.markdown", "*.mdx"],
+    "matches": ["*.md", "*.markdown", "*.mdx", "*"],
     "example_path": "https://github.com/githubnext/blocks-tutorial/blob/main/README.md"
   },
   {
