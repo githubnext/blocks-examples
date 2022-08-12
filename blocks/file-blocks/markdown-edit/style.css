@@ -84,13 +84,14 @@ body,
 .cm-code {
   background: #f6f8fa;
   padding: 0.6em 1em !important;
-  margin-top: -1.2em !important;
+  margin: -0.9em 0 !important;
 }
 .cm-line:not(.cm-code) + .cm-code {
   margin-top: 0 !important;
 }
-.cm-line:not(.cm-code) + .cm-code {
-  padding-top: 0.5em;
+.cm-activeLine.cm-code {
+  z-index: 10;
+  background: #f6f8fa;
 }
 .cm-code .ͼx {
   background: transparent;

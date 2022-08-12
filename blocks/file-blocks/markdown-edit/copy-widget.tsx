@@ -199,7 +199,6 @@ export const copy = ({
         } else if (["HTMLTag", "HTMLBlock"].includes(type.name)) {
           let text = state.doc.sliceString(from, to);
           const tag = /<\/*(?<tag>.*?)[>\s]/.exec(text)?.groups?.tag;
-          console.log(tag, text);
           if (tag === "a") {
             const linkRegexHtml =
               /<a.*?href="(?<url>.*?)".*?>(?<text>.*?)[<\/a>]*/;
