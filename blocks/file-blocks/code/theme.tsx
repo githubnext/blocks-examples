@@ -79,6 +79,15 @@ export const oneDarkTheme = EditorView.theme(
         color: colors.text,
       },
     },
+    ".cm-fat-cursor": {
+      background: `${colors.selectionBg} !important`,
+    },
+    "&:not(.cm-focused) .cm-fat-cursor": {
+      outline: `solid 1px ${colors.selectionBg} !important`,
+    },
+    ".cm-indentation-marker": {
+      opacity: 0.3,
+    },
   },
   { dark: true }
 );

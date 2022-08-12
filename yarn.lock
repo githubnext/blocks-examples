@@ -1744,6 +1744,11 @@
     utility-types "^3.10.0"
     zustand "^3.5.1"
 
+"@replit/codemirror-indentation-markers@^6.0.0":
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/@replit/codemirror-indentation-markers/-/codemirror-indentation-markers-6.0.0.tgz#6504ac1ccb59db8eedd310c2812920e2e904b76e"
+  integrity sha512-8mUORAWA++5e8xSBfDWWbitvIyM2Ox4rjiJEw9ldqIbiKce+U3+kHVaYQMjPVFz9SsR3J1blwoWgbTuNA1aKtw==
+
 "@replit/codemirror-interact@^6.0.1":
   version "6.0.1"
   resolved "https://registry.yarnpkg.com/@replit/codemirror-interact/-/codemirror-interact-6.0.1.tgz#80b0538f91cb7902ef8f9226a6dc522115d09d7e"

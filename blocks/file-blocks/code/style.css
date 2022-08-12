@@ -9,8 +9,7 @@ body,
 }
 
 .cm-editor {
-  padding: 2em 1em 10em;
-  max-width: 70em;
+  padding: 1em 1em 10em;
   min-height: 100%;
   margin: 0 auto;
   outline: none !important;
