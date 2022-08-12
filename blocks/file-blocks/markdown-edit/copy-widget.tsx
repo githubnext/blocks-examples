@@ -12,14 +12,39 @@ import {
   DecorationSet,
   EditorView,
   KeyBinding,
+  WidgetType,
 } from "@codemirror/view";
-import {
-  CommonBlockProps,
-  FileContent,
-  FileContext,
-  FolderContext,
-} from "@githubnext/blocks";
+import { FileContext, FolderContext } from "@githubnext/blocks";
 
+interface HtmlWidgetParams {
+  url: string;
+  tag: string;
+}
+
+class HtmlWidget extends WidgetType {
+  readonly text;
+
+  constructor({ text }: HtmlWidgetParams) {
+    super();
+
+    this.text = text;
+  }
+
+  eq(htmlWidget: HtmlWidget) {
+    return htmlWidget.text === this.text;
+  }
+
+  toDOM() {
+    const container = document.createElement("span");
+    container.className = "cm-html-container";
+    container.innerHTML = this.text;
+    return container;
+  }
+
+  ignoreEvent(_event: Event): boolean {
+    return false;
+  }
+}
 export const parseUrl = (url: string, context: FileContext | FolderContext) => {
   if (url.startsWith("/")) {
     return `https://github.com/${context.owner}/${context.repo}/${url}`;
@@ -40,6 +65,14 @@ export const copy = ({
       attributes: {
         id,
       },
+    });
+  const htmlTagDecoration = ({ text }: { text: string }) =>
+    Decoration.widget({
+      widget: new HtmlWidget({ text }),
+    });
+  const htmlTagTextDecoration = () =>
+    Decoration.mark({
+      class: "cm-copy-html-tag",
     });
   const linkAltDecoration = (text: string, linkText: string, url: string) =>
     Decoration.mark({
@@ -70,6 +103,10 @@ export const copy = ({
   const codeBlockDecoration = () =>
     Decoration.line({
       class: "cm-code",
+    });
+  const tableDecoration = () =>
+    Decoration.mark({
+      class: "cm-table",
     });
   const listItemDecoration = (listType, index) =>
     Decoration.line({
@@ -141,6 +178,9 @@ export const copy = ({
         } else if (type.name === "Blockquote") {
           const newDecoration = blockquoteDecoration();
           widgets.push(newDecoration.range(from));
+        } else if (type.name === "Table") {
+          const newDecoration = tableDecoration();
+          widgets.push(newDecoration.range(from, to));
         } else if (type.name === "ListItem") {
           const text = state.doc.sliceString(from, to);
           const listType = ["-", "*"].includes(text[0]) ? "ul" : "ol";
@@ -156,43 +196,66 @@ export const copy = ({
             widgets.push(newDecoration.range(linePosition.from));
           }
           // widgets.push(newDecoration.range(from));
-        } else if (type.name === "HTMLTag") {
+        } else if (["HTMLTag", "HTMLBlock"].includes(type.name)) {
           let text = state.doc.sliceString(from, to);
-          const linkRegexHtml =
-            /<a.*?href="(?<url>.*?)".*?>(?<text>.*?)[<\/a>]*/;
-          let result = linkRegexHtml.exec(text);
-          if (result && result.groups && result.groups.url) {
-            if (!text.includes("</a>")) {
-              // extend range to include closing tag
-              const endTagIndex = state.doc.lineAt(to).text.indexOf("</a>");
-              text = state.doc.sliceString(from, to + endTagIndex);
-              const linkRegexHtml =
-                /<a.*?href="(?<url>.*?)".*?>(?<text>.*?)<\/a>/;
-              result = linkRegexHtml.exec(text);
-            }
-            let linkText = result.groups.text;
-            const url = result.groups.url;
-            if (url) {
-              const absoluteUrl = parseUrl(url, context);
-              const newAltDecoration = linkAltDecoration(
-                text,
-                linkText,
-                absoluteUrl
-              );
-              const altIndexStart = from + text.indexOf(linkText);
-              if (linkText)
-                widgets.push(
-                  newAltDecoration.range(
-                    altIndexStart,
-                    altIndexStart + linkText.length
-                  )
+          const tag = /<\/*(?<tag>.*?)[>\s]/.exec(text)?.groups?.tag;
+          console.log(tag, text);
+          if (tag === "a") {
+            const linkRegexHtml =
+              /<a.*?href="(?<url>.*?)".*?>(?<text>.*?)[<\/a>]*/;
+            let urlResult = linkRegexHtml.exec(text);
+            if (urlResult && urlResult.groups && urlResult.groups.url) {
+              if (!text.includes("</a>")) {
+                // extend range to include closing tag
+                const endTagIndex = state.doc.lineAt(to).text.indexOf("</a>");
+                text = state.doc.sliceString(from, to + endTagIndex);
+                const linkRegexHtml =
+                  /<a.*?href="(?<url>.*?)".*?>(?<text>.*?)<\/a>/;
+                urlResult = linkRegexHtml.exec(text);
+              }
+              let linkText = urlResult.groups.text;
+              const url = urlResult.groups.url;
+              if (url) {
+                const absoluteUrl = parseUrl(url, context);
+                const newAltDecoration = linkAltDecoration(
+                  text,
+                  linkText,
+                  absoluteUrl
                 );
-              const newDecoration = linkDecoration(text, linkText, absoluteUrl);
-              widgets.push(newDecoration.range(from, to));
+                const altIndexStart = from + text.indexOf(linkText);
+                if (linkText)
+                  widgets.push(
+                    newAltDecoration.range(
+                      altIndexStart,
+                      altIndexStart + linkText.length
+                    )
+                  );
+                const newDecoration = linkDecoration(
+                  text,
+                  linkText,
+                  absoluteUrl
+                );
+                widgets.push(newDecoration.range(from, to));
+              }
+            } else if (text === "</a>") {
+              const newAltDecoration = linkDecoration(text, "", "");
+              widgets.push(newAltDecoration.range(from, to));
             }
-          } else if (text === "</a>") {
-            const newAltDecoration = linkDecoration(text, "", "");
-            widgets.push(newAltDecoration.range(from, to));
+          } else if (["i", "b", "u", "details", "summary"].includes(tag)) {
+            const endOfTagRegex = new RegExp(`(</${tag}\s*>)|(\s*/>)`);
+            let endOfTag = endOfTagRegex.exec(text);
+            if (!endOfTag) {
+              const subsequentText = state.doc.sliceString(to, to + 1000);
+              const matches = endOfTagRegex.exec(subsequentText);
+              const matchIndex = subsequentText.indexOf(matches?.[0]);
+              if (matchIndex === -1) return;
+              to = to + matchIndex + matches?.[0].length;
+              text = state.doc.sliceString(from, to);
+              const newDecoration = htmlTagDecoration({ text });
+              widgets.push(newDecoration.range(from, from));
+              const newAltDecoration = htmlTagTextDecoration({ text });
+              widgets.push(newAltDecoration.range(from, to));
+            }
           }
         } else if (type.name === "HorizontalRule") {
           const newDecoration = horizontalRuleDecorationAfter();
@@ -240,14 +303,24 @@ export const markdownKeymap: KeyBinding[] = [
     run: (view) => toggleWrapSelectionWithSymbols(view, "**"),
   },
   {
-    key: "`",
-    run: (view) => {
-      return toggleWrapSelectionWithSymbols(view, "`", false);
-    },
-  },
-  {
     key: "Mod-i",
     run: (view) => toggleWrapSelectionWithSymbols(view, "_"),
+  },
+  {
+    key: "`",
+    run: (view) => toggleWrapSelectionWithSymbols(view, "`", false),
+  },
+  {
+    key: "_",
+    run: (view) => toggleWrapSelectionWithSymbols(view, "_", false),
+  },
+  {
+    key: "~",
+    run: (view) => toggleWrapSelectionWithSymbols(view, "~", false),
+  },
+  {
+    key: "^",
+    run: (view) => toggleWrapSelectionWithSymbols(view, "^", false),
   },
 ];
 

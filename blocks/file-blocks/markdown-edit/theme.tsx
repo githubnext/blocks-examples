@@ -92,7 +92,7 @@ export const highlightStyle = HighlightStyle.define([
   },
   {
     tag: [t.deleted, t.character, t.propertyName, t.macroName],
-    color: colors.syntax.constant,
+    color: colors.syntax.entity,
   },
   {
     tag: [t.function(t.variableName), t.labelName],
@@ -146,8 +146,7 @@ export const highlightStyle = HighlightStyle.define([
   },
   {
     tag: t.link,
-    color: colors.syntax.constant,
-    textDecoration: "underline",
+    color: "#0969da",
   },
   {
     tag: t.heading,

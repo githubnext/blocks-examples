@@ -16,7 +16,7 @@ body,
 
 .cm-editor {
   padding: 2em 1em 10em;
-  max-width: 60em;
+  max-width: 70em;
   min-height: 100%;
   margin: 0 auto;
   outline: none !important;
@@ -26,9 +26,10 @@ body,
 }
 
 .cm-editor div.cm-scroller {
-  font-size: 1.1em;
+  font-size: 1.03em;
   font-family: "Inter var", sans-serif;
   font-feature-settings: "tnum" 1;
+  line-height: 1.6em;
 }
 
 .cm-line {
@@ -77,8 +78,19 @@ body,
   background: #f6f8fa;
 }
 
+.ͼx {
+  padding: 0.2em 0.4em;
+}
 .cm-code {
   background: #f6f8fa;
+  padding: 0.6em 1em !important;
+  margin-top: -1.2em !important;
+}
+.cm-line:not(.cm-code) + .cm-code {
+  margin-top: 0 !important;
+}
+.cm-line:not(.cm-code) + .cm-code {
+  padding-top: 0.5em;
 }
 .cm-code .ͼx {
   background: transparent;
@@ -88,7 +100,7 @@ body,
 }
 .cm-editor .cm-list-item {
   display: list-item;
-  margin: 0.6em 0 0.9em 1em;
+  margin: 0.3em 0 0.3em 1em;
 }
 .cm-editor .cm-list-item--ul::marker {
   content: "•";
@@ -167,10 +179,32 @@ html body div.cm-editor .cm-line::selection {
   color: rgb(75, 78, 82);
   font-style: italic;
   text-align: center;
-  display: inline-block;
+  display: inline;
+  width: 100%;
+}
+.cm-image-container + .cm-line {
+  text-align: center;
+}
+
+.cm-table {
+  font-family: monospace;
+}
+.cm-table .cm-instruction {
+  display: inline !important;
+}
+
+.cm-copy-html-tag {
+  display: none;
+}
+.cm-activeLine .cm-html-container {
+  display: none;
+}
+.cm-line:not(.cm-activeLine) .cm-image-container ~ .cm-image-alt {
+  display: block;
   width: 100%;
 }
 
+.cm-activeLine .cm-copy-html-tag,
 .cm-activeLine .cm-instruction,
 .cm-activeLine .ͼu,
 .cm-activeLine .cm-image,

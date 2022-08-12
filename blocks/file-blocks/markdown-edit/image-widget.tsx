@@ -73,9 +73,6 @@ export const images = ({
   const imageDecoration = (imageWidgetParams: ImageWidgetParams) =>
     Decoration.widget({
       widget: new ImageWidget(imageWidgetParams),
-      side: 1,
-      block: true,
-      class: "image",
     });
 
   const imageTextDecoration = () =>

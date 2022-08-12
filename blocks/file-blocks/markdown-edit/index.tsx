@@ -1,5 +1,5 @@
 import { FileBlockProps } from "@githubnext/utils";
-import { ActionList, ActionMenu, Box, Link, Text } from "@primer/react";
+import { ActionList, ActionMenu, Box, Text } from "@primer/react";
 import React, { useEffect, useRef, useState } from "react";
 import { tw } from "twind";
 import "./style.css";
@@ -8,17 +8,17 @@ import { autocompletion, completionKeymap } from "@codemirror/autocomplete";
 import { closeBrackets, closeBracketsKeymap } from "@codemirror/closebrackets";
 import { defaultKeymap } from "@codemirror/commands";
 import { commentKeymap } from "@codemirror/comment";
-import { foldGutter, foldKeymap } from "@codemirror/fold";
 import { highlightActiveLineGutter } from "@codemirror/gutter";
 import { defaultHighlightStyle } from "@codemirror/highlight";
 import { history, historyKeymap } from "@codemirror/history";
-import { markdown } from "@codemirror/lang-markdown";
+import { markdown, markdownLanguage } from "@codemirror/lang-markdown";
 import { indentOnInput } from "@codemirror/language";
+import { languages } from "@codemirror/language-data";
 import { lintKeymap } from "@codemirror/lint";
 import { bracketMatching } from "@codemirror/matchbrackets";
 import { rectangularSelection } from "@codemirror/rectangular-selection";
 import { highlightSelectionMatches, searchKeymap } from "@codemirror/search";
-import { EditorSelection, EditorState } from "@codemirror/state";
+import { EditorState } from "@codemirror/state";
 import {
   drawSelection,
   dropCursor,
@@ -28,18 +28,18 @@ import {
   ViewUpdate,
 } from "@codemirror/view";
 import { Block } from "@githubnext/blocks";
-import interact from "@replit/codemirror-interact";
-import { blockComponentWidget } from "./block-component-widget";
-import { copy, markdownKeymap } from "./copy-widget";
-import { highlightActiveLine } from "./highlightActiveLine";
-import { images } from "./image-widget";
-import { theme } from "./theme";
 import {
   InfoIcon,
   LinkExternalIcon,
   RepoIcon,
   VerifiedIcon,
 } from "@primer/octicons-react";
+import interact from "@replit/codemirror-interact";
+import { blockComponentWidget } from "./block-component-widget";
+import { copy, markdownKeymap } from "./copy-widget";
+import { highlightActiveLine } from "./highlightActiveLine";
+import { images } from "./image-widget";
+import { theme } from "./theme";
 
 // TODO: code block syntax highlighting
 
@@ -48,7 +48,8 @@ const extensions = [
   highlightActiveLineGutter(),
   highlightSpecialChars(),
   history(),
-  foldGutter(),
+  // taking folding out for now
+  // foldGutter(),
   drawSelection(),
   dropCursor(),
   EditorState.allowMultipleSelections.of(true),
@@ -60,7 +61,11 @@ const extensions = [
   rectangularSelection(),
   highlightSelectionMatches(),
 
-  markdown(),
+  markdown({
+    base: markdownLanguage,
+    codeLanguages: languages,
+    // extensions: [GFM]
+  }),
   theme,
 
   interact({
@@ -83,10 +88,11 @@ export default function (props: FileBlockProps) {
   const {
     content,
     context,
-    isEditable,
+    // isEditable,
     onUpdateContent,
     onRequestBlocksRepos,
   } = props;
+  const isEditable = true;
 
   const editorRef = React.useRef<HTMLDivElement>(null);
   const viewRef = React.useRef<EditorView>();
@@ -226,15 +232,16 @@ export default function (props: FileBlockProps) {
               return true;
             },
           },
-          ...markdownKeymap,
           ...closeBracketsKeymap,
           ...defaultKeymap,
           ...searchKeymap,
           ...historyKeymap,
-          ...foldKeymap,
+          // taking folding out for now
+          // ...foldKeymap,
           ...commentKeymap,
           ...completionKeymap,
           ...lintKeymap,
+          ...markdownKeymap,
         ]),
         EditorView.editable.of(isEditable),
         EditorView.updateListener.of((v) => {
