@@ -218,7 +218,6 @@ export default function (props: FileBlockProps) {
           {
             key: "ArrowDown",
             run: () => {
-              console.log(viewRef.current?.defaultLineHeight);
               if (!isAutocompleting.current) return false;
               onDiffAutocompleteFocusedBlockIndex.current(1);
               return true;
