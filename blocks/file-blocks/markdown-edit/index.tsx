@@ -88,11 +88,10 @@ export default function (props: FileBlockProps) {
   const {
     content,
     context,
-    // isEditable,
+    isEditable,
     onUpdateContent,
     onRequestBlocksRepos,
   } = props;
-  const isEditable = true;
 
   const editorRef = React.useRef<HTMLDivElement>(null);
   const viewRef = React.useRef<EditorView>();
