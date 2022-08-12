@@ -1,24 +1,27 @@
 import { FileBlockProps } from "@githubnext/utils";
-import { ActionList, ActionMenu, Box, Text } from "@primer/react";
+import { ActionList, ActionMenu, Box, Button, Text } from "@primer/react";
 import React, { useEffect, useRef, useState } from "react";
 import { tw } from "twind";
-import "./style.css";
 
-import { autocompletion, completionKeymap } from "@codemirror/autocomplete";
-import { closeBrackets, closeBracketsKeymap } from "@codemirror/closebrackets";
-import { defaultKeymap } from "@codemirror/commands";
-import { commentKeymap } from "@codemirror/comment";
-import { highlightActiveLineGutter } from "@codemirror/gutter";
-import { defaultHighlightStyle } from "@codemirror/highlight";
-import { history, historyKeymap } from "@codemirror/history";
+import {
+  autocompletion,
+  completionKeymap,
+  closeBrackets,
+  closeBracketsKeymap,
+} from "@codemirror/autocomplete";
+import { defaultKeymap, history, historyKeymap } from "@codemirror/commands";
 import { markdown, markdownLanguage } from "@codemirror/lang-markdown";
-import { indentOnInput } from "@codemirror/language";
+import {
+  indentOnInput,
+  bracketMatching,
+  defaultHighlightStyle,
+  syntaxHighlighting,
+} from "@codemirror/language";
 import { languages } from "@codemirror/language-data";
 import { lintKeymap } from "@codemirror/lint";
-import { bracketMatching } from "@codemirror/matchbrackets";
-import { rectangularSelection } from "@codemirror/rectangular-selection";
 import { highlightSelectionMatches, searchKeymap } from "@codemirror/search";
-import { EditorState } from "@codemirror/state";
+import { vim } from "@replit/codemirror-vim";
+import { Compartment, EditorState } from "@codemirror/state";
 import {
   drawSelection,
   dropCursor,
@@ -26,6 +29,8 @@ import {
   highlightSpecialChars,
   keymap,
   ViewUpdate,
+  rectangularSelection,
+  highlightActiveLineGutter,
 } from "@codemirror/view";
 import { Block } from "@githubnext/blocks";
 import {
@@ -40,9 +45,9 @@ import { copy, markdownKeymap } from "./copy-widget";
 import { highlightActiveLine } from "./highlightActiveLine";
 import { images } from "./image-widget";
 import { theme } from "./theme";
+import "./style.css";
 
-// TODO: code block syntax highlighting
-
+let vimModeCompartment = new Compartment();
 const extensions = [
   // lineNumbers(),
   highlightActiveLineGutter(),
@@ -54,20 +59,20 @@ const extensions = [
   dropCursor(),
   EditorState.allowMultipleSelections.of(true),
   indentOnInput(),
-  defaultHighlightStyle.fallback,
+  // syntaxHighlighting(defaultHighlightStyle),
   bracketMatching(),
   closeBrackets(),
   autocompletion(),
   rectangularSelection(),
   highlightSelectionMatches(),
 
+  theme,
+
   markdown({
     base: markdownLanguage,
     codeLanguages: languages,
     // extensions: [GFM]
   }),
-  theme,
-
   interact({
     rules: [
       // dragging numbers
@@ -96,6 +101,7 @@ export default function (props: FileBlockProps) {
   const editorRef = React.useRef<HTMLDivElement>(null);
   const viewRef = React.useRef<EditorView>();
   const [searchTerm, setSearchTerm] = useState("");
+  const [isUsingVim, setIsUsingVim] = useState(false);
   const currentSearchTerm = useRef(searchTerm);
   useEffect(() => {
     currentSearchTerm.current = searchTerm;
@@ -200,6 +206,7 @@ export default function (props: FileBlockProps) {
     const state = EditorState.create({
       doc: content,
       extensions: [
+        vimModeCompartment.of(isUsingVim ? vim() : []),
         extensions,
         isEditable && highlightActiveLine(),
         blockComponentWidget({ parentProps: props, onDispatchChanges }),
@@ -238,7 +245,6 @@ export default function (props: FileBlockProps) {
           ...historyKeymap,
           // taking folding out for now
           // ...foldKeymap,
-          ...commentKeymap,
           ...completionKeymap,
           ...lintKeymap,
           ...markdownKeymap,
@@ -280,7 +286,7 @@ export default function (props: FileBlockProps) {
     });
 
     viewRef.current = view;
-  }, []);
+  }, [isUsingVim]);
 
   return (
     <div className={tw("relative w-full h-full")}>
@@ -308,6 +314,38 @@ export default function (props: FileBlockProps) {
           />
         </div>
       )}
+      <button
+        className={tw`absolute top-3 right-3 z-50 appearance-none`}
+        style={{
+          opacity: isUsingVim ? 1 : 0.5,
+          filter: isUsingVim ? "" : "grayscale(100%)",
+        }}
+        title={isUsingVim ? "Disable Vim Mode" : "Enable Vim Mode"}
+        onClick={() => {
+          const newIsUsingVim = !isUsingVim;
+          setIsUsingVim(newIsUsingVim);
+          if (!viewRef.current) return;
+          viewRef.current.dispatch({
+            effects: vimModeCompartment.reconfigure(newIsUsingVim ? vim() : []),
+          });
+          viewRef.current.focus();
+        }}
+      >
+        {/* the vim logo */}
+        <svg width="2em" viewBox="0 0 544.8642 544.8642">
+          <g transform="translate(-69.980994,-160.33288) matrix(1.532388,0,0,1.3939671,-54.912136,-41.792396)">
+            <path
+              d="M 260.50744,170.69515 105.98412,340.79094 259.8636,510.178 414.38691,340.08221 260.50744,170.69515 z"
+              fill="#019833"
+            ></path>
+            <path
+              transform="matrix(0.90138601,0,0,0.99222542,-437.42287,-185.30615)"
+              d="m 828.9375,369.5 -4.28125,4.28125 0,15.71875 3.75,3.75 19.8125,0 0,15.1875 -131.0625,132.84375 0,-147.84375 21.78125,0 4.46875,-4.46875 0,-15.90625 -4.125,-3.1875 -114.625,0 -3.75,3.75 0,16.25 3.8125,3.8125 19.9375,0 0,272.25 3.75,3.75 22.65625,0 274.65625,-283.40625 0,-12.5 -4.28125,-4.28125 -112.5,0 z"
+              fill="#cccccc"
+            ></path>
+          </g>
+        </svg>
+      </button>
       <div
         className={tw(`relative w-full h-[30em]`)}
         key={context.path}

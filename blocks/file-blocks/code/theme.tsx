@@ -1,6 +1,7 @@
 import { EditorView } from "@codemirror/view";
 import { Extension } from "@codemirror/state";
-import { HighlightStyle, tags as t } from "@codemirror/highlight";
+import { HighlightStyle, syntaxHighlighting } from "@codemirror/language";
+import { tags as t } from "@lezer/highlight";
 import primer from "@primer/primitives";
 
 const colors = primer.colors.light.codemirror;
@@ -159,4 +160,7 @@ export const oneDarkHighlightStyle = HighlightStyle.define([
   },
 ]);
 
-export const theme: Extension = [oneDarkTheme, oneDarkHighlightStyle];
+export const theme: Extension = [
+  oneDarkTheme,
+  syntaxHighlighting(oneDarkHighlightStyle),
+];

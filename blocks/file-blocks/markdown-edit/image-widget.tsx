@@ -1,6 +1,11 @@
 import { syntaxTree } from "@codemirror/language";
-import { Range, RangeSet } from "@codemirror/rangeset";
-import { EditorState, Extension, StateField } from "@codemirror/state";
+import {
+  EditorState,
+  Extension,
+  StateField,
+  Range,
+  RangeSet,
+} from "@codemirror/state";
 import {
   Decoration,
   DecorationSet,
@@ -89,7 +94,7 @@ export const images = ({
     const widgets: Range<Decoration>[] = [];
 
     syntaxTree(state).iterate({
-      enter: (type, from, to) => {
+      enter: ({ type, from, to }) => {
         if (type.name === "Image") {
           const text = state.doc.sliceString(from, to);
           const result = imageRegex.exec(text);
@@ -114,7 +119,6 @@ export const images = ({
             );
             let alt = result.groups.alt || text;
             const altIndex = from + text.indexOf(alt);
-            console.log(alt);
             widgets.push(
               imageAltDecoration().range(altIndex, altIndex + alt.length)
             );
@@ -145,7 +149,6 @@ export const images = ({
             const altResult = altRegex.exec(text);
             let alt = altResult?.groups?.alt || text;
             const altIndex = from + text.indexOf(alt);
-            console.log(alt);
             widgets.push(
               imageAltDecoration().range(altIndex, altIndex + alt.length)
             );

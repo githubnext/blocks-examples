@@ -4,27 +4,33 @@ import React from "react";
 import { FileBlockProps } from "@githubnext/blocks";
 
 import {
-  highlightSpecialChars,
+  highlightActiveLine,
   drawSelection,
   dropCursor,
-  highlightActiveLine,
+  EditorView,
+  highlightSpecialChars,
   keymap,
+  rectangularSelection,
+  highlightActiveLineGutter,
+  lineNumbers,
 } from "@codemirror/view";
-import { EditorView } from "@codemirror/view";
 import { EditorState, Compartment, Transaction } from "@codemirror/state";
-import { history, historyKeymap } from "@codemirror/history";
-import { foldGutter, foldKeymap } from "@codemirror/fold";
 import { indentOnInput } from "@codemirror/language";
-import { lineNumbers, highlightActiveLineGutter } from "@codemirror/gutter";
-import { defaultKeymap } from "@codemirror/commands";
-import { bracketMatching } from "@codemirror/matchbrackets";
-import { closeBrackets, closeBracketsKeymap } from "@codemirror/closebrackets";
+import { defaultKeymap, history, historyKeymap } from "@codemirror/commands";
 import { highlightSelectionMatches, searchKeymap } from "@codemirror/search";
-import { autocompletion, completionKeymap } from "@codemirror/autocomplete";
-import { commentKeymap } from "@codemirror/comment";
-import { rectangularSelection } from "@codemirror/rectangular-selection";
+import {
+  autocompletion,
+  completionKeymap,
+  closeBrackets,
+  closeBracketsKeymap,
+} from "@codemirror/autocomplete";
 import { lintKeymap } from "@codemirror/lint";
-import { LanguageDescription } from "@codemirror/language";
+import {
+  LanguageDescription,
+  foldGutter,
+  foldKeymap,
+  bracketMatching,
+} from "@codemirror/language";
 import { languages } from "@codemirror/language-data";
 import interact from "@replit/codemirror-interact";
 import { theme } from "./theme";
@@ -69,7 +75,6 @@ const extensions = [
     ...searchKeymap,
     ...historyKeymap,
     ...foldKeymap,
-    ...commentKeymap,
     ...completionKeymap,
     ...lintKeymap,
   ]),

@@ -1,11 +1,12 @@
 import { syntaxTree } from "@codemirror/language";
-import { Range, RangeSet } from "@codemirror/rangeset";
 import {
   EditorState,
   Extension,
   StateField,
   Text,
   TransactionSpec,
+  Range,
+  RangeSet,
 } from "@codemirror/state";
 import {
   Decoration,
@@ -111,7 +112,7 @@ export const blockComponentWidget = ({
     const widgets: Range<Decoration>[] = [];
 
     syntaxTree(state).iterate({
-      enter: (type, from, to) => {
+      enter: ({ type, from, to }) => {
         let text = state.doc.sliceString(from, to);
         if (type.name === "Document") return;
 

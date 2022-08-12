@@ -7,3 +7,25 @@ body,
 #root {
   height: 100%;
 }
+
+.cm-editor {
+  padding: 2em 1em 10em;
+  max-width: 70em;
+  min-height: 100%;
+  margin: 0 auto;
+  outline: none !important;
+}
+
+.cm-scroller {
+}
+
+.cm-editor div.cm-scroller {
+  line-height: 1.6em;
+}
+.cm-content {
+  max-width: 100%;
+}
+
+.cm-line {
+  white-space: pre-wrap;
+}

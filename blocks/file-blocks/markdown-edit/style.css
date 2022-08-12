@@ -31,6 +31,9 @@ body,
   font-feature-settings: "tnum" 1;
   line-height: 1.6em;
 }
+.cm-content {
+  max-width: 100%;
+}
 
 .cm-line {
   white-space: pre-wrap;

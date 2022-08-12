@@ -10,23 +10,15 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "@codemirror/autocomplete": "^0.19.15",
-    "@codemirror/closebrackets": "^0.19.1",
-    "@codemirror/commands": "^0.19.8",
-    "@codemirror/comment": "^0.19.1",
-    "@codemirror/fold": "^0.19.3",
-    "@codemirror/gutter": "^0.19.9",
-    "@codemirror/highlight": "^0.19.8",
-    "@codemirror/history": "^0.19.2",
-    "@codemirror/language": "^0.19.10",
-    "@codemirror/language-data": "^0.19.2",
-    "@codemirror/lint": "^0.19.6",
-    "@codemirror/matchbrackets": "^0.19.4",
-    "@codemirror/rectangular-selection": "^0.19.2",
-    "@codemirror/search": "^0.19.9",
-    "@codemirror/state": "^0.19.9",
-    "@codemirror/view": "^0.19.48",
-    "@codesandbox/sandpack-react": "^0.19.3",
+    "@codemirror/autocomplete": "^6.1.0",
+    "@codemirror/commands": "^6.0.1",
+    "@codemirror/lang-markdown": "^6.0.1",
+    "@codemirror/language-data": "^6.1.0",
+    "@codemirror/lint": "^6.0.0",
+    "@codemirror/search": "^6.0.1",
+    "@codemirror/state": "^6.1.1",
+    "@codemirror/view": "^6.2.0",
+    "@codesandbox/sandpack-react": "^1.5.0",
     "@excalidraw/excalidraw": "^0.10.0",
     "@fullstackio/cq": "^6.0.9",
     "@fullstackio/remark-cq": "^6.1.2",
@@ -41,7 +33,8 @@
     "@primer/react": "^35.2.0",
     "@react-three/drei": "^7.20.5",
     "@react-three/fiber": "^7.0.19",
-    "@replit/codemirror-interact": "^0.19.2",
+    "@replit/codemirror-interact": "^6.0.1",
+    "@replit/codemirror-vim": "^6.0.2",
     "@tensorflow-models/universal-sentence-encoder": "^1.3.3",
     "@tensorflow/tfjs": "^3.14.0",
     "@types/d3": "^7.1.0",
@@ -94,5 +87,8 @@
     "lint-staged": "^12.3.5",
     "prettier": "2.5.1",
     "typescript": "^4.3.2"
+  },
+  "resolutions": {
+    "@codemirror/state": "^6.1.1"
   }
 }

@@ -28,7 +28,7 @@ export const CodeSandbox = ({
         height: "100%",
       }}
     >
-      <SandpackProvider
+      {/* <SandpackProvider
         template="react"
         customSetup={{
           dependencies: parsedDependencies,
@@ -40,7 +40,7 @@ export const CodeSandbox = ({
           showOpenInCodeSandbox={false}
           showRefreshButton={false}
         />
-      </SandpackProvider>
+      </SandpackProvider> */}
     </div>
   );
 };

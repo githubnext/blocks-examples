@@ -1,11 +1,12 @@
 import { syntaxTree } from "@codemirror/language";
-import { Range, RangeSet } from "@codemirror/rangeset";
 import {
   CharCategory,
   EditorSelection,
   EditorState,
   Extension,
   StateField,
+  Range,
+  RangeSet,
 } from "@codemirror/state";
 import {
   Decoration,
@@ -137,7 +138,8 @@ export const copy = ({
 
     const tree = syntaxTree(state);
     tree.iterate({
-      enter: (type, from, to) => {
+      enter: ({ type, from, to }) => {
+        if (from === undefined || to === undefined) return;
         if (type.name.startsWith("ATXHeading")) {
           const text = state.doc.sliceString(from, to);
           const level = type.name.split("Heading")[1];

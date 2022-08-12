@@ -1,6 +1,6 @@
 import { EditorView } from "@codemirror/view";
 import { Extension } from "@codemirror/state";
-import { HighlightStyle } from "@codemirror/highlight";
+import { HighlightStyle, syntaxHighlighting } from "@codemirror/language";
 import { tags as t } from "@lezer/highlight";
 import primer from "@primer/primitives";
 
@@ -81,6 +81,12 @@ export const colorTheme = EditorView.theme(
         color: colors.text,
       },
     },
+    ".cm-fat-cursor": {
+      background: `${colors.selectionBg} !important`,
+    },
+    "&:not(.cm-focused) .cm-fat-cursor": {
+      outline: `solid 1px ${colors.selectionBg} !important`,
+    },
   },
   { dark: true }
 );
@@ -147,10 +153,12 @@ export const highlightStyle = HighlightStyle.define([
   {
     tag: t.link,
     color: "#0969da",
+    textDecoration: "none !important",
   },
   {
     tag: t.heading,
     fontWeight: "bold",
+    textDecoration: "none !important",
     // color: colors.syntax.entity
     color: primer.colors.light.header.bg,
   },
@@ -180,4 +188,7 @@ export const highlightStyle = HighlightStyle.define([
   },
 ]);
 
-export const theme: Extension = [colorTheme, highlightStyle];
+export const theme: Extension = [
+  colorTheme,
+  syntaxHighlighting(highlightStyle),
+];
