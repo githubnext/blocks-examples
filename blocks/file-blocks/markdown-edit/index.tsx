@@ -29,7 +29,6 @@ import {
   highlightSpecialChars,
   keymap,
   ViewUpdate,
-  rectangularSelection,
   highlightActiveLineGutter,
 } from "@codemirror/view";
 import { Block } from "@githubnext/blocks";
@@ -64,7 +63,6 @@ const extensions = [
   bracketMatching(),
   closeBrackets(),
   autocompletion(),
-  rectangularSelection(),
   highlightSelectionMatches(),
 
   theme,
