@@ -21,7 +21,7 @@ import {
   TextInput,
   ActionList,
 } from "@primer/react";
-import { CheckIcon, PlusIcon, TrashIcon } from "@primer/octicons-react";
+import { PlusIcon, TrashIcon } from "@primer/octicons-react";
 
 export default function ({
   content,
@@ -41,21 +41,22 @@ export default function ({
     typeof document === "undefined"
       ? ""
       : `
-import ReactDOM from "react-dom";
+import ReactDOM from "react-dom/client";
 
   ${content}
 
 // render element
-
-ReactDOM.render(
-  ${componentDefinition || `<${componentName} />`},
-  document.getElementById('root')
+const container = document.createElement("div");
+document.body.appendChild(container);
+const root = ReactDOM.createRoot(container)
+root.render(
+  ${componentDefinition || `<${componentName} />`}
 )
 `;
 
   return (
-    <div className={tw(`relative w-full flex h-full`)}>
-      <div className={tw(`flex flex-col flex-1 h-full max-w-[80em]`)}>
+    <div className={tw(`relative w-full flex h-screen overflow-hidden`)}>
+      <div className={tw(`flex flex-col flex-1 max-w-[80em] overflow-auto`)}>
         <Annotator
           annotations={annotations}
           // @ts-ignore
@@ -136,7 +137,7 @@ const Annotator = ({
   };
 
   return (
-    <div className={tw(`flex w-full h-full`)}>
+    <div className={tw(`flex w-full h-full overflow-auto`)}>
       <div className={tw(`flex-1 w-full h-full p-5 z-10`)}>
         <div className={tw(`p-3`)}>
           <RadioGroup name="annotationType">
@@ -202,7 +203,11 @@ const AnnotationSetList = ({
   );
 
   return (
-    <div className={tw(`w-80 h-full flex flex-col divide-y divide-gray-200`)}>
+    <div
+      className={tw(
+        `w-80 h-full flex flex-col divide-y divide-gray-200 overflow-auto`
+      )}
+    >
       <form
         className={tw(`px-5 pt-5 pb-2`)}
         onSubmit={(e) => {
@@ -257,7 +262,7 @@ const AnnotationSetList = ({
           Save new annotation set
         </Button>
       </form>
-      <div className={tw(`flex-1 px-5 py-3 flex flex-col h-full w-full mt-3`)}>
+      <div className={tw(`flex-1 px-5 py-3 flex flex-col w-full mt-3 pb-28`)}>
         <div className={tw(`font-semibold`)}>Saved annotation sets</div>
         <ActionList selectionVariant="single">
           {saved.map((annotationSet, index) => {

@@ -11,7 +11,8 @@ export const CodeSandbox = ({
 }) => {
   const files = useMemo(
     () => ({
-      "/App.js": children,
+      "/src/index.js": { code: children },
+      "/src/styles.css": { code: "" },
     }),
     [children]
   );
@@ -28,8 +29,8 @@ export const CodeSandbox = ({
         height: "100%",
       }}
     >
-      {/* <SandpackProvider
-        template="react"
+      <SandpackProvider
+        template="vanilla"
         customSetup={{
           dependencies: parsedDependencies,
           files,
@@ -40,7 +41,7 @@ export const CodeSandbox = ({
           showOpenInCodeSandbox={false}
           showRefreshButton={false}
         />
-      </SandpackProvider> */}
+      </SandpackProvider>
     </div>
   );
 };
