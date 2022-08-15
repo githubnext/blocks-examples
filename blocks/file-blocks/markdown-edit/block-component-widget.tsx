@@ -381,7 +381,7 @@ const ContextControls = ({
           sort: "stars",
           direction: "desc",
           per_page: 10,
-          q: searchTerm || "blocks",
+          q: `${searchTerm || "blocks"} in:name`,
         }
       );
       const repoNames = repos.items.map((repo) => ({
