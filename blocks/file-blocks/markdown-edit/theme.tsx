@@ -97,6 +97,10 @@ export const highlightStyle = HighlightStyle.define([
     color: colors.syntax.keyword,
   },
   {
+    tag: t.url,
+    class: "cm-url",
+  },
+  {
     tag: [t.deleted, t.character, t.propertyName, t.macroName],
     color: colors.syntax.entity,
   },

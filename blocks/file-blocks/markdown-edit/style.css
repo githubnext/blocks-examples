@@ -56,20 +56,27 @@ body,
 .cm-line h1,
 .cm-line.cm-copy-header--1 {
   font-size: 2em;
+  line-height: 1.2em;
 }
 .cm-line h2,
 .cm-line.cm-copy-header--2 {
   font-size: 1.5em;
+  line-height: 1.2em;
 }
 .cm-line h3,
 .cm-line.cm-copy-header--3 {
   font-size: 1.4em;
+  line-height: 1.2em;
 }
 
+.cm-copy-link-raw,
 .cm-copy-link {
-  display: inline-block;
+  display: inline;
   cursor: pointer;
   pointer-events: all;
+}
+.cm-copy-link-raw .ͼv {
+  color: #0969da;
 }
 
 .cm-copy-hr:after {

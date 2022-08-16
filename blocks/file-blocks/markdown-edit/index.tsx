@@ -41,6 +41,9 @@ import { highlightActiveLine } from "./highlightActiveLine";
 import { images } from "./image-widget";
 import "./style.css";
 import { theme } from "./theme";
+import { MarkdownExtension } from "@lezer/markdown";
+import { MarkdownParser } from "@lezer/markdown";
+import { tags } from "@lezer/highlight";
 
 const vimModeCompartment = new Compartment();
 
@@ -66,6 +69,35 @@ const extensions = [
   markdown({
     base: markdownLanguage,
     codeLanguages: languages,
+    extensions: [
+      {
+        defineNodes: [
+          {
+            name: "URL",
+            style: tags.url,
+          },
+        ],
+        parseInline: [
+          {
+            name: "URL",
+            parse(cx, next, start) {
+              const fullText = cx.slice(start, cx.end);
+              const prev = cx.text.slice(start - 1, start);
+              let match;
+              if (
+                next != 104 /* 'h' */ ||
+                [" ", "\n", "\t"].includes(prev) ||
+                !(match = /^https?:\/\/.*/.exec(fullText))
+              )
+                return -1;
+              return cx.addElement(
+                cx.elt("URL", start, start + 1 + match[0].length)
+              );
+            },
+          },
+        ],
+      },
+    ],
   }),
   interact({
     rules: [

@@ -89,6 +89,18 @@ export const copy = ({
     Decoration.mark({
       class: "cm-copy-html-tag",
     });
+  const rawLinkDecoration = (url: string) =>
+    Decoration.mark({
+      tagName: "a",
+      class: "cm-copy-link-raw",
+      attributes: {
+        href: url.startsWith("#") ? "javascript:void(0)" : url,
+        target: "_top",
+        onclick: url.startsWith("#")
+          ? `window.scrollToHash("${slugifyId(url.slice(1))}"); return false`
+          : `window.open('${url}', '_blank'); return false;`,
+      },
+    });
   const linkAltDecoration = (text: string, linkText: string, url: string) =>
     Decoration.mark({
       tagName: "a",
@@ -153,7 +165,6 @@ export const copy = ({
     const tree = syntaxTree(state);
     tree.iterate({
       enter: ({ type, from, to }) => {
-        if (type.name === "Comment") console.log(type.name);
         if (from === undefined || to === undefined) return;
         if (type.name.startsWith("ATXHeading")) {
           const text = state.doc.sliceString(from, to);
@@ -187,6 +198,10 @@ export const copy = ({
             const newDecoration = linkDecoration(text, linkText, absoluteUrl);
             widgets.push(newDecoration.range(from, to));
           }
+        } else if (type.name === "URL") {
+          const text = state.doc.sliceString(from, to);
+          const newDecoration = rawLinkDecoration(text);
+          widgets.push(newDecoration.range(from, to));
         } else if (type.name === "Blockquote") {
           const newDecoration = blockquoteDecoration();
           widgets.push(newDecoration.range(from));
@@ -211,7 +226,6 @@ export const copy = ({
         } else if (["HTMLTag", "HTMLBlock"].includes(type.name)) {
           let text = state.doc.sliceString(from, to);
           const tag = /<(?<tag>[^/\s>]*)/.exec(text)?.groups?.tag;
-          console.log(tag);
           if (tag === "a") {
             const linkRegexHtml =
               /<a.*?href="(?<url>.*?)".*?>(?<text>.*?)[<\/a>]*/;
