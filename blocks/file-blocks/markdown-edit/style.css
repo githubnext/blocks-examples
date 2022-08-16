@@ -174,7 +174,7 @@ html body div.cm-editor .cm-line::selection {
 .cm-copy-link {
   display: none;
 }
-a,
+.cm-html-container a,
 .cm-copy-link-alt,
 .cm-copy-link-alt .cm-copy-link {
   color: #0969da !important;
