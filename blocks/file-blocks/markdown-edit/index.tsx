@@ -1,35 +1,29 @@
 import { FileBlockProps } from "@githubnext/utils";
-import { ActionList, ActionMenu, Box, Button, Text } from "@primer/react";
-import React, { useEffect, useRef, useState } from "react";
+import { ActionList, ActionMenu, Box, Text } from "@primer/react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { tw } from "twind";
 
 import {
   autocompletion,
-  completionKeymap,
   closeBrackets,
   closeBracketsKeymap,
+  completionKeymap,
 } from "@codemirror/autocomplete";
 import { defaultKeymap, history, historyKeymap } from "@codemirror/commands";
 import { markdown, markdownLanguage } from "@codemirror/lang-markdown";
-import {
-  indentOnInput,
-  bracketMatching,
-  defaultHighlightStyle,
-  syntaxHighlighting,
-} from "@codemirror/language";
+import { bracketMatching, indentOnInput } from "@codemirror/language";
 import { languages } from "@codemirror/language-data";
 import { lintKeymap } from "@codemirror/lint";
 import { highlightSelectionMatches, searchKeymap } from "@codemirror/search";
-import { vim } from "@replit/codemirror-vim";
 import { Compartment, EditorState } from "@codemirror/state";
 import {
   drawSelection,
   dropCursor,
   EditorView,
+  highlightActiveLineGutter,
   highlightSpecialChars,
   keymap,
   ViewUpdate,
-  highlightActiveLineGutter,
 } from "@codemirror/view";
 import { Block } from "@githubnext/blocks";
 import {
@@ -39,12 +33,14 @@ import {
   VerifiedIcon,
 } from "@primer/octicons-react";
 import interact from "@replit/codemirror-interact";
+import { vim } from "@replit/codemirror-vim";
+import nodeEmoji from "node-emoji";
 import { blockComponentWidget } from "./block-component-widget";
 import { copy, markdownKeymap } from "./copy-widget";
 import { highlightActiveLine } from "./highlightActiveLine";
 import { images } from "./image-widget";
-import { theme } from "./theme";
 import "./style.css";
+import { theme } from "./theme";
 
 const vimModeCompartment = new Compartment();
 
@@ -70,7 +66,6 @@ const extensions = [
   markdown({
     base: markdownLanguage,
     codeLanguages: languages,
-    // extensions: [GFM]
   }),
   interact({
     rules: [
@@ -96,6 +91,15 @@ export default function (props: FileBlockProps) {
     onUpdateContent,
     onRequestBlocksRepos,
   } = props;
+
+  const parsedContent = useMemo(
+    () =>
+      nodeEmoji
+        .emojify(content, (name) => name)
+        // remove comments
+        .replace(/<!--[\s\S]*?-->/g, ""),
+    [content]
+  );
 
   const editorRef = React.useRef<HTMLDivElement>(null);
   const viewRef = React.useRef<EditorView>();
@@ -184,9 +188,9 @@ export default function (props: FileBlockProps) {
   if (viewRef.current) {
     const view = viewRef.current;
     const doc = view.state.doc.sliceString(0);
-    if (doc !== content) {
+    if (doc !== parsedContent) {
       view.dispatch({
-        changes: { from: 0, to: doc.length, insert: content },
+        changes: { from: 0, to: doc.length, insert: parsedContent },
       });
     }
   }
@@ -203,7 +207,7 @@ export default function (props: FileBlockProps) {
       view.scrollPosIntoView(pos);
     };
     const state = EditorState.create({
-      doc: content,
+      doc: parsedContent,
       extensions: [
         vimModeCompartment.of(isUsingVim ? vim() : []),
         extensions,

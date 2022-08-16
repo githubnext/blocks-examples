@@ -131,11 +131,13 @@ export const highlightStyle = HighlightStyle.define([
   {
     tag: t.strong,
     fontWeight: "bold",
+    padding: 0,
   },
   {
     tag: t.monospace,
     fontFamily: "monospace",
     fontSize: "1.1em",
+    padding: "0.2em 0.4em",
     backgroundColor: colors.activelineBg,
   },
   {
@@ -157,7 +159,7 @@ export const highlightStyle = HighlightStyle.define([
   },
   {
     tag: t.heading,
-    fontWeight: "bold",
+    fontWeight: 600,
     textDecoration: "none !important",
     // color: colors.syntax.entity
     color: primer.colors.light.header.bg,

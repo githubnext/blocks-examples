@@ -19,26 +19,34 @@ import { FileContext, FolderContext } from "@githubnext/blocks";
 
 interface HtmlWidgetParams {
   url: string;
-  tag: string;
+  context: FileContext | FolderContext;
 }
 
-class HtmlWidget extends WidgetType {
+export class HtmlWidget extends WidgetType {
   readonly text;
+  readonly context;
 
-  constructor({ text }: HtmlWidgetParams) {
+  constructor({ text, context }: HtmlWidgetParams) {
     super();
 
     this.text = text;
+    this.context = context;
   }
 
   eq(htmlWidget: HtmlWidget) {
     return htmlWidget.text === this.text;
+    return htmlWidget.context === this.context;
   }
 
   toDOM() {
     const container = document.createElement("span");
     container.className = "cm-html-container";
-    container.innerHTML = this.text;
+    const srcStringsRegex = /src="([^"]*)"/g;
+    const parsedText = this.text.replace(srcStringsRegex, (match, p1) => {
+      const url = parseImageUrl(p1, this.context);
+      return `src="${url}"`;
+    });
+    container.innerHTML = parsedText;
     return container;
   }
 
@@ -61,15 +69,21 @@ export const copy = ({
   onScrollTo: (from) => void;
 }): Extension => {
   const headerDecoration = ({ level, id }: { level: string; id: string }) =>
-    Decoration.mark({
+    Decoration.line({
       class: `cm-copy-header cm-copy-header--${level}`,
       attributes: {
         id,
       },
     });
-  const htmlTagDecoration = ({ text }: { text: string }) =>
+  const htmlTagDecoration = ({
+    text,
+    context,
+  }: {
+    text: string;
+    context: FileContext | FolderContext;
+  }) =>
     Decoration.widget({
-      widget: new HtmlWidget({ text }),
+      widget: new HtmlWidget({ text, context }),
     });
   const htmlTagTextDecoration = () =>
     Decoration.mark({
@@ -139,18 +153,14 @@ export const copy = ({
     const tree = syntaxTree(state);
     tree.iterate({
       enter: ({ type, from, to }) => {
+        if (type.name === "Comment") console.log(type.name);
         if (from === undefined || to === undefined) return;
         if (type.name.startsWith("ATXHeading")) {
           const text = state.doc.sliceString(from, to);
           const level = type.name.split("Heading")[1];
           let id = slugifyHeading(text);
           const newDecoration = headerDecoration({ level, id });
-          widgets.push(
-            newDecoration.range(
-              state.doc.lineAt(from).from,
-              state.doc.lineAt(to).to
-            )
-          );
+          widgets.push(newDecoration.range(state.doc.lineAt(from).from));
         } else if (type.name === "SetextHeading2") {
           const newDecoration = horizontalRuleDecorationAfter();
           widgets.push(newDecoration.range(from, to));
@@ -200,7 +210,8 @@ export const copy = ({
           // widgets.push(newDecoration.range(from));
         } else if (["HTMLTag", "HTMLBlock"].includes(type.name)) {
           let text = state.doc.sliceString(from, to);
-          const tag = /<\/*(?<tag>.*?)[>\s]/.exec(text)?.groups?.tag;
+          const tag = /<(?<tag>[^/\s>]*)/.exec(text)?.groups?.tag;
+          console.log(tag);
           if (tag === "a") {
             const linkRegexHtml =
               /<a.*?href="(?<url>.*?)".*?>(?<text>.*?)[<\/a>]*/;
@@ -242,21 +253,51 @@ export const copy = ({
               const newAltDecoration = linkDecoration(text, "", "");
               widgets.push(newAltDecoration.range(from, to));
             }
-          } else if (["i", "b", "u", "details", "summary"].includes(tag)) {
+          } else if (
+            [
+              "i",
+              "b",
+              "u",
+              "details",
+              "summary",
+              "video",
+              "img",
+              "br",
+              "h1",
+              "h2",
+              "h3",
+              "h4",
+              "h5",
+              "h6",
+              "p",
+              "table",
+              "center",
+              "pre",
+              "code",
+              "ul",
+              "ol",
+              "li",
+            ].includes(tag)
+          ) {
             const endOfTagRegex = new RegExp(`(</${tag}\s*>)|(\s*/>)`);
             let endOfTag = endOfTagRegex.exec(text);
+            const tagsWithNoEndNeeded = ["br", "img"];
             if (!endOfTag) {
               const subsequentText = state.doc.sliceString(to, to + 1000);
               const matches = endOfTagRegex.exec(subsequentText);
               const matchIndex = subsequentText.indexOf(matches?.[0]);
-              if (matchIndex === -1) return;
-              to = to + matchIndex + matches?.[0].length;
-              text = state.doc.sliceString(from, to);
-              const newDecoration = htmlTagDecoration({ text });
-              widgets.push(newDecoration.range(from, from));
-              const newAltDecoration = htmlTagTextDecoration({ text });
-              widgets.push(newAltDecoration.range(from, to));
+              if (matchIndex !== -1) {
+                to = to + matchIndex + matches?.[0].length;
+                text = state.doc.sliceString(from, to);
+              } else if (!tagsWithNoEndNeeded.includes(tag)) {
+                console.log("no end tag found for", tag);
+                return;
+              }
             }
+            const newDecoration = htmlTagDecoration({ text, context });
+            widgets.push(newDecoration.range(from, from));
+            const newAltDecoration = htmlTagTextDecoration({ text });
+            widgets.push(newAltDecoration.range(from, to));
           }
         } else if (type.name === "HorizontalRule") {
           const newDecoration = horizontalRuleDecorationAfter();
@@ -464,3 +505,15 @@ const slugifyHeading = (str: string) =>
       .replace(/\[([^\]]+)\]\(([^\)]+)\)/g, (match, text, url) => text)
       .trim()
   );
+
+export const parseImageUrl = (
+  url: string,
+  context: FileContext | FolderContext
+) => {
+  if (!url.startsWith("http")) {
+    const pathRoot = context.path.split("/").slice(0, -1).join("/");
+    return `https://raw.githubusercontent.com/${context.owner}/${context.repo}/${context.sha}/${pathRoot}/${url}`;
+  } else {
+    return url;
+  }
+};

@@ -2,9 +2,9 @@ import { syntaxTree } from "@codemirror/language";
 import {
   EditorState,
   Extension,
-  StateField,
   Range,
   RangeSet,
+  StateField,
 } from "@codemirror/state";
 import {
   Decoration,
@@ -24,20 +24,23 @@ class ImageWidget extends WidgetType {
   readonly url;
   readonly width;
   readonly height;
+  readonly alt;
 
-  constructor({ url, width, height }: ImageWidgetParams) {
+  constructor({ url, width, height, alt }: ImageWidgetParams) {
     super();
 
     this.url = url;
     this.width = width;
     this.height = height;
+    this.alt = alt;
   }
 
   eq(imageWidget: ImageWidget) {
     return (
       imageWidget.url === this.url &&
       imageWidget.width === this.width &&
-      imageWidget.height === this.height
+      imageWidget.height === this.height &&
+      imageWidget.alt === this.alt
     );
   }
 
@@ -58,6 +61,7 @@ class ImageWidget extends WidgetType {
     image.style.width = parseStyle(this.width) || "auto";
     image.style.maxWidth = "100%";
     image.style.height = parseStyle(this.height) || "auto";
+    image.alt = this.alt || "";
 
     return figure;
   }
@@ -73,7 +77,6 @@ export const images = ({
   context: FileContext | FolderContext;
 }): Extension => {
   const imageRegex = /!\[(?<alt>.*?)\]\((?<url>.*?)\)/;
-  const imageRegexHtml = /<img.*?src="(?<url>.*?)".*?>/;
 
   const imageDecoration = (imageWidgetParams: ImageWidgetParams) =>
     Decoration.widget({
@@ -83,11 +86,6 @@ export const images = ({
   const imageTextDecoration = () =>
     Decoration.mark({
       class: "cm-image",
-    });
-
-  const imageAltDecoration = () =>
-    Decoration.mark({
-      class: "cm-image-alt",
     });
 
   const decorate = (state: EditorState) => {
@@ -104,11 +102,13 @@ export const images = ({
             const heightRegex = /height="(?<height>.*?)"/;
             const widthResult = widthRegex.exec(result.groups.url);
             const heightResult = heightRegex.exec(result.groups.url);
+            let alt = result.groups.alt || text;
             widgets.push(
               imageDecoration({
                 url: parseImageUrl(result.groups.url, context),
                 width: widthResult?.groups?.width,
                 height: heightResult?.groups?.height,
+                alt,
               }).range(state.doc.lineAt(from).from)
             );
             widgets.push(
@@ -116,41 +116,6 @@ export const images = ({
                 state.doc.lineAt(from).from,
                 state.doc.lineAt(to).to
               )
-            );
-            let alt = result.groups.alt || text;
-            const altIndex = from + text.indexOf(alt);
-            widgets.push(
-              imageAltDecoration().range(altIndex, altIndex + alt.length)
-            );
-          }
-        } else if (["HTMLBlock", "Paragraph"].includes(type.name)) {
-          const text = state.doc.sliceString(from, to);
-          const result = imageRegexHtml.exec(text);
-
-          if (result && result.groups && result.groups.url) {
-            const widthRegex = /width="(?<width>.*?)"/;
-            const heightRegex = /height="(?<height>.*?)"/;
-            const widthResult = widthRegex.exec(text);
-            const heightResult = heightRegex.exec(text);
-            widgets.push(
-              imageDecoration({
-                url: result.groups.url,
-                width: widthResult?.groups?.width,
-                height: heightResult?.groups?.height,
-              }).range(state.doc.lineAt(from).from)
-            );
-            widgets.push(
-              imageTextDecoration().range(
-                state.doc.lineAt(from).from,
-                state.doc.lineAt(to).to
-              )
-            );
-            const altRegex = /alt="(?<alt>.*?)"/;
-            const altResult = altRegex.exec(text);
-            let alt = altResult?.groups?.alt || text;
-            const altIndex = from + text.indexOf(alt);
-            widgets.push(
-              imageAltDecoration().range(altIndex, altIndex + alt.length)
             );
           }
         }
@@ -167,11 +132,7 @@ export const images = ({
     return RangeSet.of(sortedWidgets);
   };
 
-  const imagesTheme = EditorView.baseTheme({
-    ".cm-image-backdrop": {
-      backgroundColor: "var(--ink-internal-block-background-color)",
-    },
-  });
+  const imagesTheme = EditorView.baseTheme({});
 
   const imagesField = StateField.define<DecorationSet>({
     create(state) {
