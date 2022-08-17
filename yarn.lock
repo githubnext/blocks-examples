@@ -871,10 +871,10 @@
     unist-util-visit "^1.0.0"
     uuid "^3.3.2"
 
-"@githubnext/blocks@^2.0.2":
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/@githubnext/blocks/-/blocks-2.0.3.tgz#1a05e360e35b1cdcbc645853defeb556771603f8"
-  integrity sha512-QhLs8XA9e7blhXnTWUMmTCtcx9dZbZO6pLcggtOMKIxhOHgUf2SXhiwn0snFUr9QyvS3AwuqwFKkR2nIFk3sWQ==
+"@githubnext/blocks@^2.0.5":
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/@githubnext/blocks/-/blocks-2.0.5.tgz#25f009f023185300892b0526f4160183518eeb0d"
+  integrity sha512-Fjwgi3vMl/igUE+Hhfrfj0ItgLTSkxAebGESkCd76eHKCLGje11q10tACg7RvZs6SP22AvrU79J7fkbuBeDziQ==
   dependencies:
     "@loadable/component" "^5.15.0"
     "@octokit/openapi-types" "^11.2.0"
