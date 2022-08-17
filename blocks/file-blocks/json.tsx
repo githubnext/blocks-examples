@@ -57,7 +57,8 @@ export default function (props: FileBlockProps) {
               fontSize: "1.2em",
               lineHeight: "1.2em",
               padding: "2em",
-              fontFamily: "monospace",
+              fontFamily:
+                "ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace",
               whiteSpace: "pre-wrap",
               wordBreak: "break-word",
               wordWrap: "break-word",

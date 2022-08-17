@@ -15,7 +15,9 @@ body,
   outline: none !important;
 }
 
-.cm-scroller {
+.cm-editor div.cm-scroller {
+  font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas,
+    Liberation Mono, monospace;
 }
 
 .cm-editor div.cm-scroller {
