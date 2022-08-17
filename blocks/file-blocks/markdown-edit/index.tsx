@@ -1,119 +1,20 @@
-import { FileBlockProps } from "@githubnext/utils";
-import { ActionList, ActionMenu, Box, Text } from "@primer/react";
+import { FileBlockProps } from "@githubnext/blocks";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { tw } from "twind";
 
-import {
-  autocompletion,
-  closeBrackets,
-  closeBracketsKeymap,
-  completionKeymap,
-} from "@codemirror/autocomplete";
-import { defaultKeymap, history, historyKeymap } from "@codemirror/commands";
-import { markdown, markdownLanguage } from "@codemirror/lang-markdown";
-import { bracketMatching, indentOnInput } from "@codemirror/language";
-import { languages } from "@codemirror/language-data";
-import { lintKeymap } from "@codemirror/lint";
-import { highlightSelectionMatches, searchKeymap } from "@codemirror/search";
-import { Compartment, EditorState } from "@codemirror/state";
-import {
-  drawSelection,
-  dropCursor,
-  EditorView,
-  highlightActiveLineGutter,
-  highlightSpecialChars,
-  keymap,
-  ViewUpdate,
-} from "@codemirror/view";
+import { EditorState } from "@codemirror/state";
+import { EditorView, Rect } from "@codemirror/view";
 import { Block } from "@githubnext/blocks";
-import {
-  InfoIcon,
-  LinkExternalIcon,
-  RepoIcon,
-  VerifiedIcon,
-} from "@primer/octicons-react";
-import interact from "@replit/codemirror-interact";
 import { vim } from "@replit/codemirror-vim";
 import nodeEmoji from "node-emoji";
-import { blockComponentWidget } from "./block-component-widget";
-import { copy, markdownKeymap } from "./copy-widget";
 import { highlightActiveLine } from "./highlightActiveLine";
-import { images } from "./image-widget";
 import "./style.css";
-import { theme } from "./theme";
-import { MarkdownExtension } from "@lezer/markdown";
-import { MarkdownParser } from "@lezer/markdown";
-import { tags } from "@lezer/highlight";
-
-const vimModeCompartment = new Compartment();
-
-const extensions = [
-  // lineNumbers(),
-  highlightActiveLineGutter(),
-  highlightSpecialChars(),
-  history(),
-  // taking folding out for now
-  // foldGutter(),
-  drawSelection(),
-  dropCursor(),
-  EditorState.allowMultipleSelections.of(true),
-  indentOnInput(),
-  // syntaxHighlighting(defaultHighlightStyle),
-  bracketMatching(),
-  closeBrackets(),
-  autocompletion(),
-  highlightSelectionMatches(),
-
-  theme,
-
-  markdown({
-    base: markdownLanguage,
-    codeLanguages: languages,
-    extensions: [
-      {
-        defineNodes: [
-          {
-            name: "URL",
-            style: tags.url,
-          },
-        ],
-        parseInline: [
-          {
-            name: "URL",
-            parse(cx, next, start) {
-              const fullText = cx.slice(start, cx.end);
-              const prev = cx.text.slice(start - 1, start);
-              let match;
-              if (
-                next != 104 /* 'h' */ ||
-                [" ", "\n", "\t"].includes(prev) ||
-                !(match = /^https?:\/\/.*/.exec(fullText))
-              )
-                return -1;
-              return cx.addElement(
-                cx.elt("URL", start, start + 1 + match[0].length)
-              );
-            },
-          },
-        ],
-      },
-    ],
-  }),
-  interact({
-    rules: [
-      // dragging numbers
-      {
-        regexp: /-?\b\d+\.?\d*\b/g,
-        cursor: "ew-resize",
-        onDrag: (text, setText, e) => {
-          const newVal = Number(text) + e.movementX;
-          if (isNaN(newVal)) return;
-          setText(newVal.toString());
-        },
-      },
-    ],
-  }),
-];
+import WidgetPicker from "./WidgetPicker";
+import {
+  vimModeCompartment,
+  isEditableCompartment,
+  makeExtensions,
+} from "./extensions";
 
 export default function (props: FileBlockProps) {
   const {
@@ -141,8 +42,9 @@ export default function (props: FileBlockProps) {
   useEffect(() => {
     currentSearchTerm.current = searchTerm;
   }, [searchTerm]);
-  const [autocompleteLocation, setAutocompleteLocation] =
-    useState<DOMRect | null>(null);
+  const [autocompleteLocation, setAutocompleteLocation] = useState<Rect | null>(
+    null
+  );
   const [autocompleteFocusedBlockIndex, setAutocompleteFocusedBlockIndex] =
     useState<number>(0);
   const isAutocompleting = useRef(false);
@@ -166,7 +68,7 @@ export default function (props: FileBlockProps) {
       );
     };
   }, [blocks]);
-  const onSelectAutocompleteFocusedBlock = useRef((diff: number) => {});
+  const onSelectAutocompleteFocusedBlock = useRef(() => {});
   useEffect(() => {
     onSelectAutocompleteFocusedBlock.current = () => {
       const view = viewRef.current;
@@ -240,79 +142,18 @@ export default function (props: FileBlockProps) {
     };
     const state = EditorState.create({
       doc: parsedContent,
-      extensions: [
-        vimModeCompartment.of(isUsingVim ? vim() : []),
-        extensions,
-        isEditable && highlightActiveLine(),
-        blockComponentWidget({ parentProps: props, onDispatchChanges }),
-        copy({ context, onScrollTo }),
-        images({ context }),
-        keymap.of([
-          // prevent default behavior for arrow keys when autocompleting
-          {
-            key: "ArrowDown",
-            run: () => {
-              if (!isAutocompleting.current) return false;
-              onDiffAutocompleteFocusedBlockIndex.current(1);
-              return true;
-            },
-          },
-          {
-            key: "ArrowUp",
-            run: () => {
-              if (!isAutocompleting.current) return false;
-              onDiffAutocompleteFocusedBlockIndex.current(-1);
-              return true;
-            },
-          },
-          {
-            key: "Enter",
-            run: () => {
-              if (!isAutocompleting.current) return false;
-              onSelectAutocompleteFocusedBlock.current();
-              return true;
-            },
-          },
-          ...closeBracketsKeymap,
-          ...defaultKeymap,
-          ...searchKeymap,
-          ...historyKeymap,
-          // taking folding out for now
-          // ...foldKeymap,
-          ...completionKeymap,
-          ...lintKeymap,
-          ...markdownKeymap,
-        ]),
-        EditorView.editable.of(isEditable),
-        EditorView.updateListener.of((v) => {
-          if (!v.docChanged) return;
-          onUpdateContent(v.state.doc.sliceString(0));
-          window.state = v.state;
-        }),
-
-        EditorView.updateListener.of((v: ViewUpdate) => {
-          if (v.docChanged || v.selectionChanged) {
-            const cursorPosition = v.state.selection.ranges[0].to;
-            const text = v.state.doc.sliceString(0, cursorPosition);
-            const activeLine = text.split("\n").slice(-1)[0];
-            const startOfLinePosition = cursorPosition - activeLine.length;
-            const isAutocompleting =
-              activeLine.startsWith("/") && !activeLine.includes("/>");
-            if (!isAutocompleting) {
-              setSearchTerm("");
-              setAutocompleteLocation(null);
-              return;
-            }
-            if (!v.view) return;
-            const cursorLocation = v.view.coordsAtPos(startOfLinePosition);
-            const scrollOffset = -v.view.contentDOM.getBoundingClientRect().top;
-            cursorLocation["top"] += scrollOffset;
-            setAutocompleteLocation(cursorLocation);
-            setSearchTerm(activeLine.slice(1));
-            // } else if (v.transactions[0]) {
-          }
-        }),
-      ].filter(Boolean),
+      extensions: makeExtensions({
+        props,
+        onDispatchChanges,
+        context,
+        onScrollTo,
+        isAutocompleting,
+        onDiffAutocompleteFocusedBlockIndex,
+        onSelectAutocompleteFocusedBlock,
+        onUpdateContent,
+        setSearchTerm,
+        setAutocompleteLocation,
+      }),
     });
     const view = new EditorView({
       state,
@@ -320,6 +161,28 @@ export default function (props: FileBlockProps) {
     });
 
     viewRef.current = view;
+  }, []);
+
+  React.useEffect(() => {
+    if (!viewRef.current) return;
+    const view = viewRef.current;
+
+    view.dispatch({
+      effects: isEditableCompartment.reconfigure([
+        EditorView.editable.of(isEditable),
+        isEditable ? highlightActiveLine() : [],
+      ]),
+    });
+  }, [isEditable]);
+
+  React.useEffect(() => {
+    if (!viewRef.current) return;
+    const view = viewRef.current;
+
+    view.dispatch({
+      effects: vimModeCompartment.reconfigure(isUsingVim ? vim() : []),
+    });
+    viewRef.current.focus();
   }, [isUsingVim]);
 
   return (
@@ -358,15 +221,7 @@ export default function (props: FileBlockProps) {
           }}
           title={isUsingVim ? "Disable Vim Mode" : "Enable Vim Mode"}
           onClick={() => {
-            const newIsUsingVim = !isUsingVim;
-            setIsUsingVim(newIsUsingVim);
-            if (!viewRef.current) return;
-            viewRef.current.dispatch({
-              effects: vimModeCompartment.reconfigure(
-                newIsUsingVim ? vim() : []
-              ),
-            });
-            viewRef.current.focus();
+            setIsUsingVim(!isUsingVim);
           }}
         >
           {/* the vim logo */}
@@ -394,122 +249,3 @@ export default function (props: FileBlockProps) {
     </div>
   );
 }
-
-const WidgetPicker = ({
-  location,
-  isLoading,
-  blocks,
-  focusedBlockIndex,
-  onClose,
-  onSelect,
-  onFocus,
-}: {
-  location?: DOMRect;
-  isLoading: boolean;
-  blocks: Block[];
-  focusedBlockIndex: number;
-  onClose: () => void;
-  onFocus: (index: number) => void;
-  onSelect: (index: number) => void;
-}) => {
-  return (
-    <div className={tw("")}>
-      <ActionMenu open={true} onChange={onClose}>
-        <ActionMenu.Button className={tw("hidden !h-0")}>
-          Open Actions Menu
-        </ActionMenu.Button>
-        <ActionMenu.Overlay
-          top={(location?.top || 0) + 56}
-          left={(location?.left || 0) - 10}
-          width="large"
-          sx={{ px: 2 }}
-          onEscape={onClose}
-          className={tw("max-h-[20em] overflow-auto")}
-          onClickOutside={onClose}
-        >
-          {isLoading ? (
-            <div className={tw("text-center w-full p-6 italic")}>
-              <Text color="fg.subtle">Loading...</Text>
-            </div>
-          ) : !blocks.length ? (
-            <div className={tw("text-center w-full p-6 italic")}>
-              <Text color="fg.subtle">No Blocks found</Text>
-            </div>
-          ) : (
-            <ActionList selectionVariant="single">
-              <ActionList.Group title="Blocks" selectionVariant="single">
-                {blocks.map((block, index) => {
-                  const isExampleBlock =
-                    [block.owner, block.repo].join("/") ===
-                    `githubnext/blocks-examples`;
-                  return (
-                    // <div> because <button> steals the focus, even with tabIndex="-1" & preventFocusOnOpen
-                    <div
-                      className={tw(
-                        "group w-full text-left bg-white px-4 py-2 cursor-pointer hover:bg-gray-100 focus:outline-none",
-                        focusedBlockIndex === index
-                          ? "bg-gray-100 rounded-md"
-                          : "bg-transparent"
-                      )}
-                      onMouseEnter={() => onFocus(index)}
-                      onClick={() => onSelect(index)}
-                      key={[block.owner, block.repo, block.id].join("__")}
-                    >
-                      <div className={tw("flex justify-between text-sm")}>
-                        <div className={tw("font-semibold")}>{block.title}</div>
-                        {/* <div> because <a> steals the focus, even with tabIndex="-1" & preventFocusOnOpen */}
-                        <div
-                          onClick={(e) => {
-                            e.preventDefault();
-                            const url = `https://github.com/${block.owner}/${block.repo}`;
-                            window.top?.open(url, "_blank");
-                          }}
-                          className={tw(
-                            "text-xs mt-[2px] opacity-0 focus:opacity-100 group-hover:opacity-100"
-                          )}
-                          color="fg.muted"
-                        >
-                          <Text
-                            className={tw("flex items-center")}
-                            color="fg.muted"
-                          >
-                            View code
-                            <LinkExternalIcon
-                              className={tw("ml-1 opacity-50")}
-                            />
-                          </Text>
-                        </div>
-                      </div>
-
-                      <Box className={tw("text-xs")} color="fg.muted">
-                        <Box className={tw("flex items-center mt-1")}>
-                          <Text className={tw("mr-1")} color="fg.muted">
-                            <RepoIcon />
-                          </Text>
-                          <Text color="fg.muted" pb="1">
-                            {block.owner}/{block.repo}
-                            {isExampleBlock && (
-                              <Text ml={1} color="ansi.blue">
-                                <VerifiedIcon />
-                              </Text>
-                            )}
-                          </Text>
-                        </Box>
-                        <div className={tw("flex items-start mt-1")}>
-                          <div className={tw("mr-1")}>
-                            <InfoIcon />
-                          </div>
-                          {block.description}
-                        </div>
-                      </Box>
-                    </div>
-                  );
-                })}
-              </ActionList.Group>
-            </ActionList>
-          )}
-        </ActionMenu.Overlay>
-      </ActionMenu>
-    </div>
-  );
-};
