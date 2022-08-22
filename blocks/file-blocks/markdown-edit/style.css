@@ -234,6 +234,8 @@ html body div.cm-editor .cm-line::selection {
 .cm-activeLine .cm-instruction,
 .cm-activeLine .ͼu,
 .cm-activeLine .cm-image,
+.cm-activeLine + .cm-code-start,
+.cm-activeLine + .cm-code-start .cm-instruction,
 .cm-activeLine + .cm-image-container + .cm-line .cm-image,
 .cm-activeLine + .cm-image-container + .cm-line .cm-image-alt,
 .cm-activeLine + .cm-image-container + .cm-line .cm-instruction,

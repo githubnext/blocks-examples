@@ -89,6 +89,10 @@ export const copy = ({
     Decoration.mark({
       class: "cm-copy-html-tag",
     });
+  const instructionDecoration = () =>
+    Decoration.mark({
+      class: "cm-instruction",
+    });
   const rawLinkDecoration = (url: string) =>
     Decoration.mark({
       tagName: "a",
@@ -126,6 +130,10 @@ export const copy = ({
   const blockquoteDecoration = () =>
     Decoration.line({
       class: "cm-copy-blockquote",
+    });
+  const codeBlockStartDecoration = () =>
+    Decoration.line({
+      class: "cm-code-start",
     });
   const codeBlockDecoration = () =>
     Decoration.line({
@@ -198,6 +206,10 @@ export const copy = ({
             const newDecoration = linkDecoration(text, linkText, absoluteUrl);
             widgets.push(newDecoration.range(from, to));
           }
+        } else if (type.name === "CodeInfo") {
+          let text = state.doc.sliceString(from, to);
+          const newDecoration = instructionDecoration();
+          widgets.push(newDecoration.range(from, to));
         } else if (type.name === "URL") {
           let text = state.doc.sliceString(from, to);
           const endOfLink = /\)/.exec(text);
@@ -225,6 +237,9 @@ export const copy = ({
             const linePosition = state.doc.lineAt(i);
             widgets.push(newDecoration.range(linePosition.from));
           }
+          const newStartDecoration = codeBlockStartDecoration();
+          const previousLineFrom = state.doc.lineAt(fromLine.from - 1).from;
+          widgets.push(newStartDecoration.range(previousLineFrom));
           // widgets.push(newDecoration.range(from));
         } else if (["HTMLTag", "HTMLBlock"].includes(type.name)) {
           let text = state.doc.sliceString(from, to);
