@@ -231,7 +231,7 @@ export const copy = ({
           const tag = /<(?<tag>[^/\s>]*)/.exec(text)?.groups?.tag;
           if (tag === "a") {
             const linkRegexHtml =
-              /<a.*?href="(?<url>.*?)".*?>(?<text>.*?)[<\/a>]*/;
+              /<a.*?href="(?<url>.*?)".*?>(?<linkText>[^]*?)[<\/a>]*/gm;
             let urlResult = linkRegexHtml.exec(text);
             if (urlResult && urlResult.groups && urlResult.groups.url) {
               if (!text.includes("</a>")) {
@@ -243,33 +243,42 @@ export const copy = ({
 
                 to = to + endTagIndex;
                 text = state.doc.sliceString(from, to);
-                const linkRegexHtml =
-                  /<a.*?href="(?<url>.*?)".*?>(?<text>.*?)<\/a>/;
-                urlResult = linkRegexHtml.exec(text);
               }
-              let linkText = urlResult.groups.text;
+              const linkRegexHtml =
+                /<a.*?href="(?<url>.*?)".*?>(?<linkText>[^]*?)<\/a>/gm;
+              const newUrlResult = linkRegexHtml.exec(text);
+              if (newUrlResult) urlResult = newUrlResult;
+              let linkText = urlResult.groups.linkText;
               const url = urlResult.groups.url;
               if (url) {
-                const absoluteUrl = parseUrl(url, context);
-                const newAltDecoration = linkAltDecoration(
-                  text,
-                  linkText,
-                  absoluteUrl
-                );
-                const altIndexStart = from + text.indexOf(linkText);
-                if (linkText)
-                  widgets.push(
-                    newAltDecoration.range(
-                      altIndexStart,
-                      altIndexStart + linkText.length
-                    )
+                const includesHtml = /<.*?>/.exec(linkText);
+                if (includesHtml) {
+                  const newDecoration = htmlTagDecoration({ text, context });
+                  widgets.push(newDecoration.range(from, from));
+                  const newAltDecoration = htmlTagTextDecoration({ text });
+                  widgets.push(newAltDecoration.range(from, to));
+                } else {
+                  const absoluteUrl = parseUrl(url, context);
+                  const newAltDecoration = linkAltDecoration(
+                    text,
+                    linkText,
+                    absoluteUrl
                   );
-                const newDecoration = linkDecoration(
-                  text,
-                  linkText,
-                  absoluteUrl
-                );
-                widgets.push(newDecoration.range(from, to));
+                  const altIndexStart = from + text.indexOf(linkText);
+                  if (linkText)
+                    widgets.push(
+                      newAltDecoration.range(
+                        altIndexStart,
+                        altIndexStart + linkText.length
+                      )
+                    );
+                  const newDecoration = linkDecoration(
+                    text,
+                    linkText,
+                    absoluteUrl
+                  );
+                  widgets.push(newDecoration.range(from, to));
+                }
               }
             } else if (text === "</a>") {
               const newAltDecoration = linkDecoration(text, "", "");
