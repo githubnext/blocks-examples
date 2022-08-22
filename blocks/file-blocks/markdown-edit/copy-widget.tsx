@@ -199,7 +199,10 @@ export const copy = ({
             widgets.push(newDecoration.range(from, to));
           }
         } else if (type.name === "URL") {
-          const text = state.doc.sliceString(from, to);
+          let text = state.doc.sliceString(from, to);
+          const endOfLink = /\)/.exec(text);
+          to = endOfLink ? from + endOfLink.index + 1 : to;
+          text = state.doc.sliceString(from, to);
           const newDecoration = rawLinkDecoration(text);
           widgets.push(newDecoration.range(from, to));
         } else if (type.name === "Blockquote") {
@@ -233,8 +236,13 @@ export const copy = ({
             if (urlResult && urlResult.groups && urlResult.groups.url) {
               if (!text.includes("</a>")) {
                 // extend range to include closing tag
-                const endTagIndex = state.doc.lineAt(to).text.indexOf("</a>");
-                text = state.doc.sliceString(from, to + endTagIndex);
+                const endTagRegexRes = /<\/a>/.exec(state.doc.sliceString(to));
+                const endTagIndex = endTagRegexRes
+                  ? endTagRegexRes.index + endTagRegexRes[0].length
+                  : 0;
+
+                to = to + endTagIndex;
+                text = state.doc.sliceString(from, to);
                 const linkRegexHtml =
                   /<a.*?href="(?<url>.*?)".*?>(?<text>.*?)<\/a>/;
                 urlResult = linkRegexHtml.exec(text);
@@ -291,13 +299,14 @@ export const copy = ({
               "ul",
               "ol",
               "li",
+              "iframe",
             ].includes(tag)
           ) {
             const endOfTagRegex = new RegExp(`(</${tag}\s*>)|(\s*/>)`);
             let endOfTag = endOfTagRegex.exec(text);
             const tagsWithNoEndNeeded = ["br", "img"];
             if (!endOfTag) {
-              const subsequentText = state.doc.sliceString(to, to + 1000);
+              const subsequentText = state.doc.sliceString(to, to + 5000);
               const matches = endOfTagRegex.exec(subsequentText);
               const matchIndex = subsequentText.indexOf(matches?.[0]);
               if (matchIndex !== -1) {

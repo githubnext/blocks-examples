@@ -107,6 +107,9 @@ pre,
 .cm-line:not(.cm-code) + .cm-code {
   margin-top: 0 !important;
 }
+.cm-code + .cm-line:not(.cm-code) {
+  margin-top: 1em !important;
+}
 .cm-activeLine.cm-code {
   z-index: 10;
   background: #f6f8fa;
@@ -210,6 +213,7 @@ html body div.cm-editor .cm-line::selection {
 .cm-table {
   font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas,
     Liberation Mono, monospace;
+  white-space: nowrap;
 }
 .cm-table .cm-instruction {
   display: inline !important;
