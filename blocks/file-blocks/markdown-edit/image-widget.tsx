@@ -46,6 +46,8 @@ class ImageWidget extends WidgetType {
 
   toDOM() {
     const figure = document.createElement("figure");
+    // we're only using light mode so far
+    if (this.url.endsWith("#gh-dark-mode-only")) return figure;
     const image = figure.appendChild(document.createElement("img"));
 
     figure.className = "cm-image-container";
@@ -95,6 +97,7 @@ export const images = ({
       enter: ({ type, from, to }) => {
         if (type.name === "Image") {
           const text = state.doc.sliceString(from, to);
+          console.log(text);
           const result = imageRegex.exec(text);
 
           if (result && result.groups && result.groups.url) {
@@ -109,14 +112,9 @@ export const images = ({
                 width: widthResult?.groups?.width,
                 height: heightResult?.groups?.height,
                 alt,
-              }).range(state.doc.lineAt(from).from)
+              }).range(from)
             );
-            widgets.push(
-              imageTextDecoration().range(
-                state.doc.lineAt(from).from,
-                state.doc.lineAt(to).to
-              )
-            );
+            widgets.push(imageTextDecoration().range(from, to));
           }
         }
       },

@@ -178,9 +178,8 @@ html body div.cm-editor .cm-line::selection {
   margin-right: -0.3ch;
 }
 .cm-image-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: inline-block;
+  margin: 0 auto;
 }
 .cm-image,
 .cm-copy-link {

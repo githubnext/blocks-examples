@@ -30,7 +30,9 @@ export default function (props: FileBlockProps) {
       nodeEmoji
         .emojify(content, (name) => name)
         // remove comments
-        .replace(/<!--[\s\S]*?-->/g, ""),
+        .replace(/<!--[\s\S]*?-->/g, "")
+        // remove <br> tags
+        .replace(/<br\s*\/?>/g, ""),
     [content]
   );
 

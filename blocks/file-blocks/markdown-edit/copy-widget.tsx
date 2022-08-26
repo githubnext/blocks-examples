@@ -308,7 +308,6 @@ export const copy = ({
               "summary",
               "video",
               "img",
-              "br",
               "h1",
               "h2",
               "h3",
@@ -319,11 +318,14 @@ export const copy = ({
               "table",
               "center",
               "pre",
+              "div",
+              "span",
               "code",
               "ul",
               "ol",
               "li",
               "iframe",
+              "svg",
             ].includes(tag)
           ) {
             const endOfTagRegex = new RegExp(`(</${tag}\s*>)|(\s*/>)`);
