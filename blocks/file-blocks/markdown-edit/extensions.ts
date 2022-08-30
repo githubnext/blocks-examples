@@ -166,8 +166,10 @@ export function makeExtensions({
                   !(match = /^https?:\/\/.*/.exec(fullText))
                 )
                   return -1;
+                const hasIncludedLink = match[0].indexOf("](http") !== -1;
+                if (hasIncludedLink) return -1;
                 return cx.addElement(
-                  cx.elt("URL", start, start + 1 + match[0].length)
+                  cx.elt("URL", start, start + 1 + firstMatch.length)
                 );
               },
             },

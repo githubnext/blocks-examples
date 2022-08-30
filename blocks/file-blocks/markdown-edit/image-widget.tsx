@@ -60,7 +60,7 @@ class ImageWidget extends WidgetType {
       if (Number.isFinite(+style)) return `${style}px`;
       return style;
     };
-    image.style.width = parseStyle(this.width) || "auto";
+    image.style.width = parseStyle(this.width) || "100%";
     image.style.maxWidth = "100%";
     image.style.height = parseStyle(this.height) || "auto";
     image.alt = this.alt || "";
@@ -97,7 +97,6 @@ export const images = ({
       enter: ({ type, from, to }) => {
         if (type.name === "Image") {
           const text = state.doc.sliceString(from, to);
-          console.log(text);
           const result = imageRegex.exec(text);
 
           if (result && result.groups && result.groups.url) {
