@@ -168,6 +168,7 @@ export function makeExtensions({
                   return -1;
                 const hasIncludedLink = match[0].indexOf("](http") !== -1;
                 if (hasIncludedLink) return -1;
+                const firstMatch = match[0];
                 if (!firstMatch) return -1;
                 return cx.addElement(
                   cx.elt("URL", start, start + 1 + firstMatch.length)
