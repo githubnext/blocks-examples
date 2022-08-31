@@ -254,15 +254,25 @@ const BlockComponentWrapper = ({
           height: "100%",
         }}
       >
-        <div className={tw("relative h-full w-full pr-2 -my-5 mb-2")}>
+        <div
+          className={tw(
+            "BlockComponentWrapper relative h-full w-full -my-5 mb-2 group"
+          )}
+        >
           <div className={tw("h-full w-full bg-white border border-gray-200")}>
-            <ContextControls
-              props={props}
-              onChangeProps={onChangeProps}
-              parentProps={parentProps}
-            />
+            <div
+              className={tw(
+                "absolute top-0 left-0 right-0 transform -translate-y-full"
+              )}
+            >
+              <ContextControls
+                props={props}
+                onChangeProps={onChangeProps}
+                parentProps={parentProps}
+              />
+            </div>
             <Box
-              className={tw("w-full  overflow-auto")}
+              className={tw("w-full overflow-auto")}
               style={{
                 height: resizingHeight || overrideHeight || props.height || 300,
               }}
@@ -434,7 +444,9 @@ const ContextControls = ({
   );
 
   return (
-    <Box className="BlockComponentWrapper">
+    <Box
+      className={tw`BlockComponentControls border border-gray-200 border-b-0`}
+    >
       <Box
         backgroundColor="canvas.inset"
         className={tw(

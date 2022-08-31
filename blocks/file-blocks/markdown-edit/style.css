@@ -148,7 +148,20 @@ pre,
   transform: translate(0, 0.2em);
 }
 
-.cm-line .BlockComponentWrapper input {
+.BlockComponentControls {
+  opacity: 0;
+  transition: all 0.2s ease-out;
+  transform: translate(0, 0.5em);
+  box-shadow: 0 -0.3em 0.5em -0.3em rgba(50, 50, 93, 0.06);
+}
+.cm-activeLine .BlockComponentControls,
+.BlockComponentControls:focus-within,
+.BlockComponentWrapper:hover .BlockComponentControls {
+  opacity: 1;
+  transform: translate(0, 1px); /* for border overlap */
+}
+
+.cm-line .BlockComponentControls input {
   caret-color: #000;
 }
 .cm-editor div.cm-line ::selection {
@@ -157,10 +170,10 @@ pre,
 html body div.cm-editor .cm-line::selection {
   background: #bddfff !important;
 }
-.cm-line .BlockComponentWrapper input::selection {
+.cm-line .BlockComponentControls input::selection {
   background: #bddfff !important;
 }
-.cm-line .BlockComponentWrapper textarea::selection {
+.cm-line .BlockComponentControls textarea::selection {
   background: #bddfff !important;
 }
 
