@@ -245,6 +245,24 @@ const BlockComponentWrapper = ({
     };
   }, []);
 
+  const combinedProps = useMemo(() => {
+    const isSameRepoAsParent =
+      `${parentProps.context?.owner}/${parentProps.context?.repo}` ===
+      `${props.context?.owner}/${props.context?.repo}`;
+    const combinedContext = {
+      ...(parentProps.context || {}),
+      ...(props.context || {}),
+      path:
+        props.context?.path ||
+        (props.block?.type === "folder" ? "/" : parentProps.context?.path),
+      sha: isSameRepoAsParent ? parentProps.context.sha : "HEAD",
+    };
+    return {
+      ...props,
+      context: combinedContext,
+    };
+  }, [props, parentProps.context]);
+
   return (
     // @ts-ignore
     <ThemeProvider>
@@ -266,7 +284,7 @@ const BlockComponentWrapper = ({
               )}
             >
               <ContextControls
-                props={props}
+                props={combinedProps}
                 onChangeProps={onChangeProps}
                 parentProps={parentProps}
               />
@@ -277,7 +295,7 @@ const BlockComponentWrapper = ({
                 height: resizingHeight || overrideHeight || props.height || 300,
               }}
             >
-              <BlockComponent {...props} />
+              <BlockComponent {...combinedProps} />
               {!!resizingHeight && (
                 // to keep the pointer events in this window
                 <div className={tw("absolute inset-0")} />
@@ -372,17 +390,9 @@ const ContextControls = ({
   parentProps: FileBlockProps;
   onChangeProps: (newProps: Partial<FullProps>) => void;
 }) => {
-  const isSameRepoAsParent =
-    `${parentProps.context?.owner}/${parentProps.context?.repo}` ===
-    `${props.context?.owner}/${props.context?.repo}`;
-  const combinedContext = {
-    ...(parentProps.context || {}),
-    ...(props.context || {}),
-    sha: isSameRepoAsParent ? parentProps.context.sha : "HEAD",
-  };
   const blocksRepo = `${(props.block || {}).owner}/${(props.block || {}).repo}`;
 
-  const contentRepo = `${combinedContext.owner}/${combinedContext.repo}`;
+  const contentRepo = `${props.context?.owner}/${props.context?.repo}`;
   const onFetchRepos = useCallback(
     async (searchTerm: string) => {
       const repos = await parentProps.onRequestGitHubData(
@@ -411,7 +421,7 @@ const ContextControls = ({
   const onFetchRepoPaths = useCallback(
     async (searchTerm: string) => {
       const res = await parentProps.onRequestGitHubData(
-        `/repos/${contentRepo}/git/trees/${combinedContext.sha}`,
+        `/repos/${contentRepo}/git/trees/${props.context?.sha}`,
         {
           per_page: 100,
           recursive: true,
@@ -474,7 +484,7 @@ const ContextControls = ({
           onChange={(newValue) => {
             onChangeProps({
               ...props,
-              context: { ...combinedContext, ...newValue },
+              context: { ...props.context, ...newValue },
             });
           }}
         />
@@ -486,7 +496,7 @@ const ContextControls = ({
           onChange={(newValue) => {
             onChangeProps({
               ...props,
-              context: { ...combinedContext, ...newValue },
+              context: { ...props.context, ...newValue },
             });
           }}
         />
