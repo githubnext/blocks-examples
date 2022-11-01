@@ -70,7 +70,7 @@ const getDependenciesFromString = (content: string) => {
       /import\s+(?<variables>.+)\s+from\s+["'](?<dependency>[^"']+)["']/gm;
     const imports = importRegex.exec(`import ${statement}`);
     if (imports?.groups?.dependency) {
-      const dependencyRoot = imports.groups.dependency.split("/")[0];
+      const dependencyRoot = imports.groups.dependency;
       dependencies[dependencyRoot] = "latest";
     }
   });

@@ -247,8 +247,9 @@ const BlockComponentWrapper = ({
 
   const combinedProps = useMemo(() => {
     const isSameRepoAsParent =
+      !props.context ||
       `${parentProps.context?.owner}/${parentProps.context?.repo}` ===
-      `${props.context?.owner}/${props.context?.repo}`;
+        `${props.context?.owner}/${props.context?.repo}`;
     const combinedContext = {
       ...(parentProps.context || {}),
       ...(props.context || {}),
