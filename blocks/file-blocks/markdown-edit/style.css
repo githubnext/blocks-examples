@@ -148,19 +148,25 @@ pre,
   transform: translate(0, 0.2em);
 }
 
+.BlockComponentControlsWrapper {
+  pointer-events: none;
+}
 .BlockComponentControls {
   opacity: 0;
   transition: all 0.2s ease-out;
   transform: translate(0, 0.5em);
   box-shadow: 0 -0.3em 0.5em -0.3em rgba(50, 50, 93, 0.06);
-  pointer-events: none;
+}
+.cm-activeLine .BlockComponentControlsWrapper,
+.BlockComponentControlsWrapper:focus-within,
+.BlockComponentWrapper:hover .BlockComponentControlsWrapper {
+  pointer-events: all;
 }
 .cm-activeLine .BlockComponentControls,
 .BlockComponentControls:focus-within,
 .BlockComponentWrapper:hover .BlockComponentControls {
   opacity: 1;
   transform: translate(0, 1px); /* for border overlap */
-  pointer-events: all;
 }
 
 .cm-line .BlockComponentControls input {

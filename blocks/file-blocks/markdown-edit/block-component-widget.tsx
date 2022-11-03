@@ -281,7 +281,7 @@ const BlockComponentWrapper = ({
           <div className={tw("h-full w-full bg-white border border-gray-200")}>
             <div
               className={tw(
-                "absolute top-0 left-0 right-0 transform -translate-y-full"
+                "BlockComponentControlsWrapper absolute top-0 left-0 right-0 transform -translate-y-full"
               )}
             >
               <ContextControls
