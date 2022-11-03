@@ -74,23 +74,25 @@ function Wrapper(props: FileBlockProps) {
               Metrics
             </h6>
             <Select
-              label="x"
-              value={xMetric}
-              onChange={setXMetric}
-              options={keys}
-            />
-            <Select
-              label="y"
-              value={yMetric}
-              onChange={setYMetric}
-              options={keys}
-            />
-            <Select
               label="type"
               value={chartType}
               onChange={setChartType}
               options={chartTypes}
             />
+            <Select
+              label={chartType === "pie" ? "category" : "x"}
+              value={xMetric}
+              onChange={setXMetric}
+              options={keys}
+            />
+            {chartType !== "pie" && (
+              <Select
+                label="y"
+                value={yMetric}
+                onChange={setYMetric}
+                options={keys}
+              />
+            )}
           </div>
 
           <h6
@@ -113,8 +115,12 @@ function Wrapper(props: FileBlockProps) {
                 >
                   <div className={tw(`py-1`)}>
                     <span className={tw("font-bold")}>{xMetric}</span>
-                    <span className={tw("mx-1")}>vs</span>
-                    <span className={tw("font-bold")}>{yMetric}</span>
+                    {chartType !== "pie" && (
+                      <>
+                        <span className={tw("mx-1")}>vs</span>
+                        <span className={tw("font-bold")}>{yMetric}</span>
+                      </>
+                    )}
                     <ActionList.Description>{chartType}</ActionList.Description>
                   </div>
                   {activeChartConfigIndex === index && (
@@ -202,7 +208,7 @@ const Select = ({
   const [search, setSearch] = useState("");
   return (
     <div className={tw(`flex items-center`)}>
-      <div className={tw(`font-mono text-sm text-gray-500 w-16`)}>{label}</div>
+      <div className={tw(`font-mono text-sm text-gray-500 w-20`)}>{label}</div>
       <ActionMenu>
         <ActionMenu.Button>{value}</ActionMenu.Button>
         <ActionMenu.Overlay>

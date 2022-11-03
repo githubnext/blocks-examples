@@ -437,18 +437,15 @@ const ScatterPoint = ({ xMetric, yMetric, cx, cy, payload }: any) => {
 };
 
 const COLORS = [
-  "#7F3C8D",
-  "#11A579",
-  "#3969AC",
-  "#F2B701",
-  "#E73F74",
-  "#80BA5A",
-  "#E68310",
-  "#008695",
-  "#CF1C90",
-  "#f97b72",
-  "#4b4b8f",
-  "#A5AA99",
+  "#218bff",
+  "#2da44e",
+  "#bf8700",
+  "#e16f24",
+  "#fa4549",
+  "#a475f9",
+  "#e85aad",
+  "#ec6547",
+  "#8c959f",
 ];
 const PieChartInners = ({
   data,
@@ -457,18 +454,30 @@ const PieChartInners = ({
   formatXTick,
   formatYTick,
 }: ChartProps) => {
-  const parsedData = data.map((d) => ({
-    ...d,
-    value: +d[xMetric],
+  const counts = data.reduce((acc, item) => {
+    const key = item[xMetric];
+    const isNumber = typeof key === "number";
+    if (isNumber) {
+      acc[key] = (acc[key] || 0) + 1;
+    } else {
+      acc[key] = (acc[key] || 0) + 1;
+    }
+    return acc;
+  }, {} as Record<string, number>);
+  console.log(counts);
+
+  const countData = Object.entries(counts).map(([key, value]) => ({
+    name: key,
+    value,
   }));
   return (
     <PieChart width={500} height={500}>
       <Pie
-        data={parsedData}
+        data={countData}
         dataKey="value"
-        nameKey={yMetric}
+        nameKey={"name"}
         fill="#939AFF"
-        label={(d) => d[yMetric]}
+        label={(d) => d["name"]}
         labelLine={false}
       >
         {data.map((entry, index) => (
@@ -479,7 +488,13 @@ const PieChartInners = ({
       <Tooltip
         content={
           <TooltipContent
-            {...{ data, xMetric, yMetric, formatXTick, formatYTick }}
+            {...{
+              data: countData,
+              xMetric: "name",
+              yMetric: "value",
+              formatXTick: (d) => d,
+              formatYTick: (d) => d,
+            }}
           />
         }
       />
@@ -502,10 +517,12 @@ const TooltipContent = ({
         <strong>{xMetric}</strong>:{" "}
         <span className={tw("font-mono")}>{formatXTick(d[xMetric])}</span>
       </p>
-      <p>
-        <strong>{yMetric}</strong>:{" "}
-        <span className={tw("font-mono")}>{formatYTick(d[yMetric])}</span>
-      </p>
+      {formatYTick && (
+        <p>
+          <strong>{yMetric}</strong>:{" "}
+          <span className={tw("font-mono")}>{formatYTick(d[yMetric])}</span>
+        </p>
+      )}
     </div>
   );
 };
