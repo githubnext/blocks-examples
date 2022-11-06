@@ -1,6 +1,12 @@
-import { FileBlockProps } from "@githubnext/blocks";
+import {
+  FileBlockProps,
+  TreeItem,
+  getNestedFileTree,
+} from "@githubnext/blocks";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { tw } from "twind";
+import { Endpoints } from "@octokit/types";
+import pm from "picomatch-browser";
 
 import { EditorState } from "@codemirror/state";
 import { EditorView, Rect } from "@codemirror/view";
@@ -23,7 +29,22 @@ export default function (props: FileBlockProps) {
     isEditable,
     onUpdateContent,
     onRequestBlocksRepos,
+    onRequestGitHubData,
   } = props;
+
+  const [tree, setTree] = useState<TreeItem[]>([]);
+
+  const updateFileTree = async () => {
+    const res = (await onRequestGitHubData(
+      `/repos/${context.owner}/${context.repo}/git/trees/${context.sha}?recursive=1`
+    )) as Endpoints[`GET /repos/{owner}/{repo}/git/trees/{tree_sha}`]["response"]["data"];
+    const flatTree = res.tree;
+    const rootItem = { path: "/", type: "tree" };
+    setTree([rootItem, ...flatTree]);
+  };
+  useEffect(() => {
+    updateFileTree();
+  }, [context.owner, context.repo, context.sha]);
 
   const parsedContent = useMemo(
     () =>
@@ -81,6 +102,21 @@ export default function (props: FileBlockProps) {
       const activeLineText = previousText.split("\n").slice(-1)[0];
       const block = autocompleteFocusedBlock.current;
       if (!block) return false;
+      let defaultPath = tree.length
+        ? tree.find(({ path, type }) => {
+            if ((block.type === "folder") !== (type === "tree")) return false;
+            if (!block.matches) return true;
+            return block.matches.find((key) => {
+              if (!path && !key) return true;
+              const doesMatch = pm(key, { bash: true, dot: true })(path);
+              return doesMatch;
+            });
+          })?.path
+        : "";
+      if (!defaultPath) {
+        defaultPath = block.type === "file" ? context.path : "/";
+      }
+
       const newText = `<BlockComponent
   block={{
     owner: "${block.owner}",
@@ -88,7 +124,11 @@ export default function (props: FileBlockProps) {
     id: "${block.id}",
     type: "${block.type}",
   }}
-/>`;
+  context={{
+    path: "${defaultPath}"
+  }}
+/>
+`;
       view.dispatch({
         changes: {
           from: from - activeLineText.length,

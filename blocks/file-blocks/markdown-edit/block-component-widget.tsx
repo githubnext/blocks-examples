@@ -111,74 +111,80 @@ export const blockComponentWidget = ({
   const decorate = (state: EditorState) => {
     const widgets: Range<Decoration>[] = [];
 
+    const onAddBlockComponent = (from: number, to: number, text: string) => {
+      const blockComponentPropsRegex =
+        /(?!\<BlockComponent[\s\S\n]*)([\s\S\n]*?)(?=\/\>)/;
+      const propsString = blockComponentPropsRegex
+        .exec(text)?.[0]
+        .split("BlockComponent")[1];
+      if (!propsString) return;
+      let props = {};
+      const propsArray = propsString.split("=");
+      let runningLastPropKey = "";
+      propsArray.forEach((prop, index) => {
+        const lastWordInString =
+          prop.split(/\s+/)[prop.split(/\s+/).length - 1];
+        const key = runningLastPropKey;
+        runningLastPropKey = lastWordInString;
+        // slice lastWordInString from end
+        const valueString = prop.slice(
+          0,
+          prop.length - lastWordInString.length
+        );
+        if (!key || !valueString) return;
+
+        // TODO: extract props from string in a more robust way
+        try {
+          eval(
+            `window.parsedValue = ${valueString
+              .trim()
+              // remove start and end curly braces
+              .replace(/^\{|\}$/g, "")}`
+          );
+          props[key] = window.parsedValue;
+        } catch (e) {
+          props[key] = valueString;
+        }
+      });
+
+      const onChangeProps = (newProps: any) => {
+        const newString = `<BlockComponent
+${Object.keys(newProps)
+  .map((key) => `${key}={${JSON.stringify(newProps[key])}}`)
+  .join("\n")}
+/>`;
+
+        onDispatchChanges({
+          changes: {
+            from,
+            to,
+            insert: Text.of([newString]),
+          },
+        });
+      };
+      const newDecoration = blockComponentDecoration({
+        parentProps,
+        props,
+        onChangeProps,
+      });
+      widgets.push(newDecoration.range(from, to));
+    };
+
     syntaxTree(state).iterate({
       enter: ({ type, from, to }) => {
         let text = state.doc.sliceString(from, to);
         if (type.name === "Document") return;
 
-        const locationOfCloseTag = text.indexOf("/>");
-        to = from + locationOfCloseTag + 2;
-
-        const blockComponentRegex = /\<BlockComponent[\s\S\n]/;
-        const isBlockComponent = blockComponentRegex.test(text);
-        if (isBlockComponent) {
-          const blockComponentPropsRegex =
-            /(?!\<BlockComponent[\s\S\n]*)([\s\S\n]*?)(?=\/\>)/;
-          const propsString = blockComponentPropsRegex
-            .exec(text)?.[0]
-            .split("BlockComponent")[1];
-          if (!propsString) return;
-          let props = {};
-          const propsArray = propsString.split("=");
-          let runningLastPropKey = "";
-          propsArray.forEach((prop, index) => {
-            const lastWordInString =
-              prop.split(/\s+/)[prop.split(/\s+/).length - 1];
-            const key = runningLastPropKey;
-            runningLastPropKey = lastWordInString;
-            // slice lastWordInString from end
-            const valueString = prop.slice(
-              0,
-              prop.length - lastWordInString.length
-            );
-            if (!key || !valueString) return;
-
-            // TODO: extract props from string in a more robust way
-            try {
-              eval(
-                `window.parsedValue = ${valueString
-                  .trim()
-                  // remove start and end curly braces
-                  .replace(/^\{|\}$/g, "")}`
-              );
-              props[key] = window.parsedValue;
-            } catch (e) {
-              props[key] = valueString;
-            }
-          });
-
-          const onChangeProps = (newProps: any) => {
-            const newString = `<BlockComponent
-  ${Object.keys(newProps)
-    .map((key) => `${key}={${JSON.stringify(newProps[key])}}`)
-    .join("\n")}
-/>`;
-
-            onDispatchChanges({
-              changes: {
-                from,
-                to,
-                insert: Text.of([newString]),
-              },
-            });
-          };
-          const newDecoration = blockComponentDecoration({
-            parentProps,
-            props,
-            onChangeProps,
-          });
-          widgets.push(newDecoration.range(from, to));
-        }
+        const blockComponentRegex = /\<BlockComponent[\s\S]*?\/\>/gm;
+        const blockComponentMatches = text.match(blockComponentRegex);
+        blockComponentMatches?.forEach((match) => {
+          const locationOfOpenTag = text.indexOf(match);
+          onAddBlockComponent(
+            from + locationOfOpenTag,
+            from + locationOfOpenTag + match.length,
+            match
+          );
+        });
       },
     });
 
