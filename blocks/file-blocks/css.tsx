@@ -43,52 +43,16 @@ function Wrapper({ content, context }: FileBlockProps) {
     );
 
   return (
-    <div className={tw(`p-8 mt-10 grid grid-cols-1 lg:grid-cols-2 gap-20`)}>
-      <div className={tw(``)}>
-        <style dangerouslySetInnerHTML={{ __html: content }} />
-        <h1 className={tw(`text-6xl font-medium mb-4`)}>Colors</h1>
-        <div
-          className={tw(
-            `grid grid-cols-2 lg:grid-cols-3 min-w-[27em] max-w-[50em] mt-6`
-          )}
-        >
-          {colors.map(([color, shades]) => {
-            const isSingleShade = shades.length === 1;
-            const mainShade = isSingleShade ? shades[0] : shades[4];
-            return (
-              <div className={tw(`flex-1 flex flex-col my-2 ml-0 mr-3`)}>
-                {/* <h2 className={tw(`text-md font-medium`)}>{color}</h2> */}
-                <div className={tw(``)}>
-                  <div
-                    className={tw(`w-full h-40`)}
-                    style={{ backgroundColor: mainShade }}
-                  />
-                  <div className={tw(`w-full h-12 flex flex-wrap mt-4`)}>
-                    {!isSingleShade &&
-                      shades.map((shade) => {
-                        return (
-                          <div
-                            className={tw(`w-[20%] h-[50%]`)}
-                            style={{ backgroundColor: shade }}
-                          ></div>
-                        );
-                      })}
-                  </div>
-                </div>
-                <div className={tw(`text-sm mt-2 font-mono`)}>{color}</div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-
+    <div className={tw(`p-8 mt-[3vh] grid grid-cols-1 sm:grid-cols-2 gap-10`)}>
       <div className={tw(`w-full flex flex-col m-2`)}>
-        <h2 className={tw(`text-6xl font-medium mb-4`)}>Fonts</h2>
+        <h2 className={tw(`text-4xl font-medium mb-4`)}>Fonts</h2>
         <div className={tw(`flex flex-wrap`)}>
           {fonts.map(([name, value]) => {
             return (
               <div
-                className={tw(`flex-1 flex flex-col my-2 mr-10 max-w-[20em]`)}
+                className={tw(
+                  `flex-1 flex flex-col mt-2 mb-10 mr-10 min-w-[10em]`
+                )}
               >
                 <div className={tw(`text-sm font-mono`)}>{name}</div>
                 <div
@@ -113,7 +77,7 @@ function Wrapper({ content, context }: FileBlockProps) {
                   ))}
                 </p>
                 <p
-                  className={tw(`flex flex-wrap mt-1 text-sm mt-2`)}
+                  className={tw(`flex flex-wrap mt-1 text-xs mt-2`)}
                   style={{
                     fontFamily: value,
                   }}
@@ -129,6 +93,39 @@ function Wrapper({ content, context }: FileBlockProps) {
                   ultrices eros. Quis hendrerit dolor magna eget est. Ipsum
                   consequat nisl vel pretium lectus quam.
                 </p>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+      <div className={tw(``)}>
+        <style dangerouslySetInnerHTML={{ __html: content }} />
+        <h1 className={tw(`text-4xl font-medium mb-4`)}>Colors</h1>
+        <div className={tw(`grid grid-cols-2 mt-6`)}>
+          {colors.map(([color, shades]) => {
+            const isSingleShade = shades.length === 1;
+            const mainShade = isSingleShade ? shades[0] : shades[4];
+            return (
+              <div className={tw(`flex-1 flex flex-col my-2 ml-0 mr-3`)}>
+                {/* <h2 className={tw(`text-md font-medium`)}>{color}</h2> */}
+                <div className={tw(``)}>
+                  <div
+                    className={tw(`w-full h-40`)}
+                    style={{ backgroundColor: mainShade }}
+                  />
+                  <div className={tw(`w-full h-12 flex flex-wrap mt-4`)}>
+                    {!isSingleShade &&
+                      shades.map((shade) => {
+                        return (
+                          <div
+                            className={tw(`w-[20%] h-[50%]`)}
+                            style={{ backgroundColor: shade }}
+                          ></div>
+                        );
+                      })}
+                  </div>
+                </div>
+                <div className={tw(`text-sm mt-2 font-mono`)}>{color}</div>
               </div>
             );
           })}
