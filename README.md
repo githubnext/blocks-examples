@@ -19,7 +19,7 @@ All blocks require an object within [`package.json`](https://github.com/githubne
 }
 ```
 
-> 👀 Preview these example blocks by going to the [Blocks Marketplace](https://blocks-marketplace.githubnext.com/)!
+> 👀 Preview these example blocks by going to the [Blocks tutorial](https://blocks.githubnext.com/githubnext/blocks-tutorial)!
 
 ### File blocks
 
