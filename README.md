@@ -6,15 +6,17 @@ The [GitHub Blocks](https://github.com/githubnext/blocks) app depends on a set o
 
 Blocks come in two types: file blocks and folder blocks.
 
-All blocks require an object within [`package.json`](https://github.com/githubnext/blocks-examples/blob/main/package.json#L20) to describe their intended use. For example:
+All blocks require an object within [`blocks.config.json`](https://github.com/githubnext/blocks-examples/blob/main/blocks.config.json#L32) to describe their intended use. For example:
 
 ```json
 {
   "type": "file",
-  "title": "CSS block",
+  "id": "css-block",
+  "title": "Styleguide block",
   "description": "View selectors in a css file",
-  "entry": "/blocks/file-blocks/css.tsx",
-  "extensions": ["css"],
+  "sandbox": false,
+  "entry": "blocks/file-blocks/css.tsx",
+  "matches": ["*.css"],
   "example_path": "https://github.com/githubnext/blocks-tutorial/blob/main/global.css"
 }
 ```
