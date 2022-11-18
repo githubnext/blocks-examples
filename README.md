@@ -21,7 +21,7 @@ All blocks require an object within [`blocks.config.json`](https://github.com/gi
 }
 ```
 
-> 👀 Preview these example blocks by going to the [Blocks tutorial](https://blocks.githubnext.com/githubnext/blocks-tutorial)!
+> 👀 Preview these example blocks by going to [`blocks.githubnext.com`](https://blocks.githubnext.com/githubnext/blocks)!
 
 ### File blocks
 
