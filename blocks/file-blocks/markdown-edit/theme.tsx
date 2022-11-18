@@ -141,7 +141,6 @@ export const highlightStyle = HighlightStyle.define([
     tag: t.monospace,
     fontFamily:
       "ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace",
-    fontSize: "1.1em",
     padding: "0.2em 0.4em",
     backgroundColor: colors.activelineBg,
   },
