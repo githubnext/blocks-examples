@@ -15,7 +15,7 @@ body,
 }
 
 .cm-editor {
-  padding: 2em 1em 10em;
+  padding: 1em 2em 10em;
   max-width: 70em;
   min-height: 100%;
   margin: 0 auto;
@@ -23,6 +23,7 @@ body,
 }
 
 .cm-scroller {
+  min-height: 70vh;
 }
 
 .cm-editor div.cm-scroller {
