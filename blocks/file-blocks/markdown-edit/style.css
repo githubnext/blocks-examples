@@ -100,8 +100,8 @@ body,
 pre,
 .cm-code {
   background: #f6f8fa;
-  padding: 0.6em 1em !important;
-  margin: -0.9em -1em !important;
+  padding: 0 1em !important;
+  margin: 0 0 !important;
   font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas,
     Liberation Mono, monospace;
 }
@@ -187,9 +187,8 @@ html body div.cm-editor .cm-line::selection {
 }
 
 .cm-line .cm-instruction {
-  display: none;
   color: rgb(175, 178, 182);
-  padding: 0;
+  opacity: 0.3;
 }
 .cm-copy-header .cm-instruction:first-child {
   display: inline-block !important;
