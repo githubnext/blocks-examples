@@ -2,6 +2,8 @@ import { tw } from "twind";
 import { ReactNode, useEffect, useState } from "react";
 import LZString from "lz-string";
 import { FileBlockProps } from "@githubnext/blocks";
+import { Sandpack } from "@codesandbox/sandpack-react";
+import { githubLight } from "@codesandbox/sandpack-themes";
 
 const optionsDefaults = {
   fontsize: 14,
@@ -12,6 +14,8 @@ const optionsDefaults = {
   view: "split",
 };
 export default ({ content, state = {} }: FileBlockProps) => {
+  return <Sandpack theme={githubLight} options={{ editorHeight: 292 }} />;
+
   const [url, setUrl] = useState("");
   const parameters = getParameters({
     files: {

@@ -284,7 +284,7 @@ const BlockComponentWrapper = ({
             "BlockComponentWrapper relative h-full w-full -my-5 mb-2 group"
           )}
         >
-          <div className={tw("h-full w-full bg-white border border-gray-200")}>
+          <div className={tw("h-full w-full bg-white")}>
             <div
               className={tw(
                 "BlockComponentControlsWrapper absolute top-0 left-0 right-0 transform -translate-y-full"
