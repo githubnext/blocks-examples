@@ -13,8 +13,16 @@ const optionsDefaults = {
   expanddevtools: 1,
   view: "split",
 };
-export default ({ content, state = {} }: FileBlockProps) => {
-  return <Sandpack theme={githubLight} options={{ editorHeight: 292 }} />;
+
+export default ({ content, ...props }: FileBlockProps) => {
+  const files = { "index.js": content };
+  return (
+    <Sandpack
+      files={files}
+      theme={githubLight}
+      options={{ editorHeight: 292 }}
+    />
+  );
 
   const [url, setUrl] = useState("");
   const parameters = getParameters({
