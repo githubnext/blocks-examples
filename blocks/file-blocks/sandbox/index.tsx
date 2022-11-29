@@ -4,14 +4,16 @@ import { Sandpack } from "@codesandbox/sandpack-react";
 import { githubLight } from "@codesandbox/sandpack-themes";
 
 export default ({ content }: FileBlockProps) => {
-  const files = { "src/index.js": content };
+  const files = { "index.js": content };
 
   return (
     <Sandpack
-      template="vanilla"
       files={files}
       theme={githubLight}
-      customSetup={{ dependencies: getDependenciesFromString(content) }}
+      customSetup={{
+        dependencies: getDependenciesFromString(content),
+        entry: "index.js",
+      }}
       options={{
         editorHeight: 300,
         showConsole: content.includes("console."),
