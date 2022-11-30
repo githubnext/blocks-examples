@@ -8,7 +8,7 @@ Creates an array of elements split into groups the length of size. If array can'
 block={{
     owner: "codesandbox",
     repo: "blocks-examples",
-    id: "sandbox-block-csb",
+    id: "sandbox-block",
     type: "file",
     height: "294"
   }}
@@ -23,7 +23,7 @@ Creates an array with all falsey values removed. The values false, null, 0, "", 
 block={{
     owner: "codesandbox",
     repo: "blocks-examples",
-    id: "sandbox-block-csb",
+    id: "sandbox-block",
     type: "file",
   }}
 context={{path: "examples/example2.js"}}
@@ -37,7 +37,7 @@ Creates a new array concatenating array with any additional arrays and/or values
 block={{
     owner: "codesandbox",
     repo: "blocks-examples",
-    id: "sandbox-block-csb",
+    id: "sandbox-block",
     type: "file",
   }}
 context={{path: "examples/example3.js"}}
