@@ -15,6 +15,7 @@ export default ({ content }: FileBlockProps) => {
         entry: "/index.js",
       }}
       options={{
+        showLineNumbers: true,
         editorHeight: 300,
         showConsole: content.includes("console."),
         showTabs: true,

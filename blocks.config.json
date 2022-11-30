@@ -129,8 +129,8 @@
   },
   {
     "type": "file",
-    "id": "sandbox-block",
-    "title": "JS Sandbox block",
+    "id": "sandbox-block-csb",
+    "title": "JS Sandbox block CSB",
     "description": "Execute Javascript code",
     "sandbox": false,
     "entry": "blocks/file-blocks/sandbox/index.tsx",
