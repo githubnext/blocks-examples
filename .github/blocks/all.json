@@ -1,0 +1,5 @@
+{
+  "examples/index.md": {
+    "default": "codesandbox__blocks-examples__markdown-block"
+  }
+}
