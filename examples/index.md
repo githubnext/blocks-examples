@@ -10,10 +10,8 @@ block={{
     repo: "blocks-examples",
     id: "sandbox-block-csb",
     type: "file",
-    height: "294"
   }}
 context={{"path":"examples/example1.js"}}
-
 />
 
 `_.compact`
