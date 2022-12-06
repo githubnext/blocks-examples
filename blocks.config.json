@@ -4,7 +4,6 @@
     "id": "code-block",
     "title": "Code",
     "description": "Read & edit code",
-    "sandbox": false,
     "entry": "blocks/file-blocks/code/index.tsx",
     "matches": ["*"],
     "example_path": "https://github.com/githubnext/blocks-tutorial/blob/main/Aside.jsx"
@@ -14,7 +13,6 @@
     "id": "excalidraw",
     "title": "Excalidraw diagram",
     "description": "View and edit Excalidraw diagrams",
-    "sandbox": false,
     "entry": "blocks/file-blocks/excalidraw/index.tsx",
     "matches": ["*.excalidraw"],
     "example_path": "https://github.com/githubnext/blocks-tutorial/blob/main/drawing.excalidraw"
@@ -24,7 +22,6 @@
     "id": "html",
     "title": "HTML",
     "description": "View basic HTML content",
-    "sandbox": false,
     "entry": "blocks/file-blocks/html.tsx",
     "matches": ["*.html", "*.svelte"],
     "example_path": "https://github.com/githubnext/blocks-tutorial/blob/main/photos.html"
@@ -34,7 +31,6 @@
     "id": "css",
     "title": "CSS Styleguide",
     "description": "View CSS styles in an example styleguide",
-    "sandbox": false,
     "entry": "blocks/file-blocks/css.tsx",
     "matches": ["*.css"],
     "example_path": "https://github.com/githubnext/blocks-tutorial/blob/main/global.css"
@@ -44,7 +40,6 @@
     "id": "image",
     "title": "Image",
     "description": "View PNG, JPG, GIF, and SVG images",
-    "sandbox": false,
     "entry": "blocks/file-blocks/image.tsx",
     "matches": ["*.png", "*.jpg", "*.jpeg", "*.gif", "*.svg"],
     "example_path": "https://github.com/pmndrs/react-spring/blob/HEAD/assets/projects/aragon.png?raw=true"
@@ -54,7 +49,6 @@
     "id": "json",
     "title": "JSON explorer",
     "description": "An interactive view of JSON data",
-    "sandbox": false,
     "entry": "blocks/file-blocks/json.tsx",
     "matches": [
       "*.json",
@@ -72,7 +66,6 @@
     "id": "geojson",
     "title": "GeoJSON explorer",
     "description": "View & edit GeoJSON data",
-    "sandbox": false,
     "entry": "blocks/file-blocks/geojson.tsx",
     "matches": ["*.geo.json", "*.geojson"],
     "example_path": "https://github.com/d3/d3-geo/blob/main/package.json"
@@ -82,7 +75,6 @@
     "id": "3d-model",
     "title": "3D model",
     "description": "View 3D models",
-    "sandbox": false,
     "entry": "blocks/file-blocks/3d-files.tsx",
     "matches": ["*.gltf", "*.glb"],
     "example_path": "https://github.com/githubnext/blocks-tutorial/blob/main/avocado.glb"
@@ -92,7 +84,6 @@
     "id": "flat",
     "title": "Spreadsheet",
     "description": "View & edit CSV and YAML files in a spreadsheet",
-    "sandbox": false,
     "entry": "blocks/file-blocks/flat.tsx",
     "matches": ["*.csv", "*.yml", "*.yaml"],
     "example_path": "https://github.com/githubnext/blocks-tutorial/blob/main/data.csv"
@@ -102,7 +93,6 @@
     "id": "chart",
     "title": "Chart",
     "description": "Visualize CSV data in a few different chart types",
-    "sandbox": false,
     "entry": "blocks/file-blocks/charts/index.tsx",
     "matches": ["*.csv"],
     "example_path": "https://github.com/the-pudding/data/blob/master/pockets/measurements.csv"
@@ -112,7 +102,6 @@
     "id": "markdown-block",
     "title": "Markdown",
     "description": "View and edit Markdown content, with the ability to embed other blocks",
-    "sandbox": false,
     "entry": "blocks/file-blocks/markdown-edit/index.tsx",
     "matches": ["*.md", "*.markdown", "*.mdx", "*"],
     "example_path": "https://github.com/githubnext/blocks-tutorial/blob/main/README.md"
@@ -122,7 +111,6 @@
     "id": "sandbox",
     "title": "JS Sandbox",
     "description": "Run JavaScript code in a sandbox",
-    "sandbox": false,
     "entry": "blocks/file-blocks/sandbox/index.tsx",
     "matches": ["*.js", "*.ts", "*.tsx", "*.jsx"],
     "example_path": "https://github.com/githubnext/blocks-tutorial/blob/main/README.md"
@@ -132,7 +120,6 @@
     "id": "react-feedback",
     "title": "React component feedback",
     "description": "View & give feedback on a React component",
-    "sandbox": false,
     "entry": "blocks/file-blocks/annotate-react/index.tsx",
     "matches": ["*.jsx", "*.tsx"],
     "example_path": "https://github.com/githubnext/blocks-tutorial/blob/main/Aside.jsx"
@@ -142,7 +129,6 @@
     "id": "sentence-encoder",
     "title": "Sentence encoder",
     "description": "Experiment with a sentence-encoder",
-    "sandbox": false,
     "entry": "blocks/file-blocks/sentence-encoder.tsx",
     "matches": ["*.json"],
     "example_path": "https://github.com/githubnext/blocks-tutorial/blob/main/queries.json"
@@ -162,7 +148,6 @@
     "id": "summarize",
     "title": "Summarize",
     "description": "Summarize parts of a file using ML",
-    "sandbox": false,
     "entry": "blocks/file-blocks/summarize/index.tsx",
     "matches": ["*.js", "*.ts", "*.tsx", "*.jsx"],
     "example_path": "https://github.com/mattdesl/canvas-sketch/blob/master/lib/save.js"
@@ -172,7 +157,6 @@
     "id": "explain",
     "title": "Explain",
     "description": "Explain parts of a file using ML",
-    "sandbox": false,
     "entry": "blocks/file-blocks/explain/index.tsx",
     "matches": ["*.js", "*.ts", "*.tsx", "*.jsx", "*.rb", "*.py"],
     "example_path": "https://github.com/mattdesl/canvas-sketch/blob/master/lib/save.js"
@@ -182,7 +166,6 @@
     "id": "edit",
     "title": "Edit code with ML",
     "description": "Edit code by prompting a Machine Learning model",
-    "sandbox": false,
     "entry": "blocks/file-blocks/edit/index.tsx",
     "matches": ["*"],
     "example_path": "https://github.com/githubnext/blocks-tutorial/blob/main/processing-sketch.js"
@@ -192,7 +175,6 @@
     "id": "edit-and-preview",
     "title": "Edit with Preview",
     "description": "Edit code side-by-side with a preview",
-    "sandbox": false,
     "entry": "blocks/file-blocks/edit-and-preview/index.tsx",
     "matches": ["*"],
     "example_path": "https://github.com/githubnext/blocks-tutorial/blob/main/README.md"
@@ -202,7 +184,6 @@
     "id": "minimap",
     "title": "Minimap",
     "description": "Visualize your folders and files in a minimap",
-    "sandbox": false,
     "entry": "blocks/folder-blocks/minimap/index.tsx",
     "example_path": "https://github.com/githubnext/blocks-tutorial"
   },
@@ -211,7 +192,6 @@
     "id": "overview",
     "title": "Overview",
     "description": "View an overview of a folder: including README, license, and recent activity",
-    "sandbox": false,
     "entry": "blocks/folder-blocks/overview/index.tsx",
     "example_path": "https://github.com/githubnext/blocks-tutorial"
   },
@@ -220,7 +200,6 @@
     "id": "dashboard",
     "title": "Dashboard",
     "description": "View other blocks in a dashboard view",
-    "sandbox": false,
     "entry": "blocks/folder-blocks/dashboard/index.tsx",
     "example_path": "https://github.com/githubnext/blocks-tutorial"
   },
@@ -229,7 +208,6 @@
     "id": "code-tour",
     "title": "Code Tour",
     "description": "Create documented tours of your code",
-    "sandbox": false,
     "entry": "blocks/folder-blocks/code-tour/index.tsx",
     "example_path": "https://github.com/githubnext/blocks-tutorial"
   },
@@ -238,7 +216,6 @@
     "id": "infinite-canvas",
     "title": "Infinite Canvas",
     "description": "View and annotate your files in an infinite canvas",
-    "sandbox": false,
     "entry": "blocks/folder-blocks/infinite-canvas/index.tsx",
     "example_path": "https://github.com/githubnext/blocks-tutorial"
   }
