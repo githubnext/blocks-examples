@@ -22,7 +22,7 @@
     "@excalidraw/excalidraw": "^0.10.0",
     "@fullstackio/cq": "^6.0.9",
     "@fullstackio/remark-cq": "^6.1.2",
-    "@githubnext/blocks": "^2.1.1",
+    "@githubnext/blocks": "^2.2.0",
     "@githubocto/flat-ui": "^0.14.1",
     "@lezer/highlight": "^1.0.0",
     "@lezer/markdown": "^1.0.1",

@@ -910,10 +910,10 @@
     unist-util-visit "^1.0.0"
     uuid "^3.3.2"
 
-"@githubnext/blocks@^2.1.1":
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/@githubnext/blocks/-/blocks-2.1.1.tgz#73c65f2ff3d75b2fb8203fdf8cc1e3083e7c1a4e"
-  integrity sha512-53YsSBZRagNRjbaRRlUe9E47Vz20YPx+ZxsB9TuUjdzmnI4h4WzewJprk/L2sjNh9WcVMVCtKNB6lQGA9A6Hbw==
+"@githubnext/blocks@^2.2.0":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@githubnext/blocks/-/blocks-2.2.0.tgz#e060b8718621fd7917f4dca4c68d178d9e7b93b8"
+  integrity sha512-as89UwPi3tQPYDjaAmRKYa/lndUH6ZW9gcZIuXiUnGWSpzn6qZyQTMA2NNpm7sjy9nOy6mtw3RYGt/EfJeIqdw==
   dependencies:
     "@loadable/component" "^5.15.0"
     "@octokit/openapi-types" "^11.2.0"
