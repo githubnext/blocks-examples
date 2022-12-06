@@ -105,21 +105,13 @@ pre,
   font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas,
     Liberation Mono, monospace;
 }
-.cm-line:not(.cm-code) + .cm-code {
-  margin-top: 0 !important;
-}
-.cm-code + .cm-line:not(.cm-code) {
-  margin-top: 1em !important;
-}
-.cm-activeLine.cm-code {
+.cm-activeLine.cm-code,
+.cm-activeLine.cm-code-start {
   z-index: 10;
   background: #f6f8fa;
 }
 .cm-code .ͼx {
   background: transparent;
-}
-.cm-code.cm-activeLine + .cm-line .cm-instruction {
-  display: inline-block;
 }
 .cm-editor .cm-list-item {
   display: list-item;
@@ -188,8 +180,18 @@ html body div.cm-editor .cm-line::selection {
 
 .cm-line .cm-instruction {
   color: rgb(175, 178, 182);
+  display: none;
+}
+.cm-code + .cm-line .cm-instruction,
+div.cm-code-start .cm-instruction {
+  display: inline-block;
   opacity: 0.3;
 }
+.cm-code + .cm-line,
+div.cm-code-start {
+  background: #f6f8fa;
+}
+
 .cm-copy-header .cm-instruction:first-child {
   display: inline-block !important;
   width: 0;
@@ -254,8 +256,7 @@ html body div.cm-editor .cm-line::selection {
 .cm-activeLine .cm-instruction,
 .cm-activeLine .ͼu,
 .cm-activeLine .cm-image,
-.cm-activeLine + .cm-code-start,
-.cm-activeLine + .cm-code-start .cm-instruction,
+.cm-activeLine.cm-code-start .cm-instruction,
 .cm-activeLine + .cm-image-container + .cm-line .cm-image,
 .cm-activeLine + .cm-image-container + .cm-line .cm-image-alt,
 .cm-activeLine + .cm-image-container + .cm-line .cm-instruction,
