@@ -182,7 +182,7 @@ export const copy = ({
           widgets.push(newDecoration.range(state.doc.lineAt(from).from));
         } else if (type.name === "SetextHeading2") {
           const newDecoration = horizontalRuleDecorationAfter();
-          widgets.push(newDecoration.range(from, to));
+          widgets.push(newDecoration.range(to - 3, to));
         } else if (type.name === "Link") {
           const text = state.doc.sliceString(from, to);
           const linkRegex = /\[.*?\]\((?<url>.*?)\)/;
