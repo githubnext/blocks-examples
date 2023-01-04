@@ -1,5 +1,10 @@
 import { tw } from "twind";
-import { Block, FolderBlockProps, getNestedFileTree } from "@githubnext/blocks";
+import {
+  Block,
+  FolderBlockProps,
+  getNestedFileTree,
+  buildTree,
+} from "@githubnext/blocks";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { FilePicker } from "./FilePicker";
 import { useDrag } from "./useDrag";
@@ -24,6 +29,7 @@ export default function (
     onRequestBlocksRepos,
   } = props;
   const nextId = useRef(0);
+  const { path } = props.context;
 
   const wrapperElement = useRef<HTMLDivElement>(null);
 
@@ -60,10 +66,11 @@ export default function (
   const [items, setItems] = useState<{ [id: number]: ItemType }>({});
   const [isDirty, setIsDirty] = useState(false);
 
-  const files = useMemo(
-    () => getNestedFileTree(tree)[0].children.filter((d) => d.type === "blob"),
-    [tree]
-  );
+  const builtTree = buildTree(tree);
+
+  const files = useMemo(() => {
+    return builtTree.getDirectoryFiles(path, { recursive: true });
+  }, [path]);
 
   useEffect(() => {
     let items = metadata.items || placeholderItems;
@@ -135,10 +142,10 @@ export default function (
         {/* add new file */}
         <FilePicker
           files={files}
-          onFileSelected={(file) => {
+          onFileSelected={(path) => {
             addItem({
+              path,
               type: "file",
-              path: file.path,
               position: [width / 2 - 500 / 2, height / 2 - 360 / 2],
               dimensions: [500, 360],
               block: {
