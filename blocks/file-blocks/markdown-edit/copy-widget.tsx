@@ -559,10 +559,8 @@ export const parseImageUrl = (
   url: string,
   context: FileContext | FolderContext
 ) => {
-  if (!url.startsWith("http")) {
-    const pathRoot = context.path.split("/").slice(0, -1).join("/");
-    return `https://raw.githubusercontent.com/${context.owner}/${context.repo}/${context.sha}/${pathRoot}/${url}`;
-  } else {
-    return url;
-  }
+  if (url.startsWith("http")) return url;
+  if (url.startsWith("data:")) return url;
+  const pathRoot = context.path.split("/").slice(0, -1).join("/");
+  return `https://raw.githubusercontent.com/${context.owner}/${context.repo}/${context.sha}/${pathRoot}/${url}`;
 };
