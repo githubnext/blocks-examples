@@ -129,7 +129,7 @@ export function makeExtensions({
     EditorView.domEventHandlers({
       paste(e, view) {
         const value = e.clipboardData?.items[0];
-        const MAX_IMAGE_SIZE = 5000000;
+        const MAX_URL_SIZE = 5000000;
         // handle images pasted from the web
         if (value && value.type === "text/html") {
           value.getAsString((str) => {
@@ -142,7 +142,7 @@ export function makeExtensions({
                   from: view.state.selection.main.from,
                   to: view.state.selection.main.to,
                   insert: images
-                    .filter((image) => image && image.length < MAX_IMAGE_SIZE)
+                    .filter((image) => image && image.length < MAX_URL_SIZE)
                     .map((image) => `![${image}](${image})`)
                     .join("\n"),
                 },
@@ -158,7 +158,7 @@ export function makeExtensions({
             const reader = new FileReader();
             reader.onload = (e) => {
               const image = e.target?.result as string;
-              if (image && image.length < MAX_IMAGE_SIZE) {
+              if (image && image.length < MAX_URL_SIZE) {
                 view.dispatch({
                   changes: {
                     from: view.state.selection.main.from,
