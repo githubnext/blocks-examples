@@ -32,7 +32,7 @@ import {
 import { tags } from "@lezer/highlight";
 import interact from "@replit/codemirror-interact";
 import { blockComponentWidget } from "./block-component-widget";
-import { copy, markdownKeymap } from "./copy-widget";
+import { copy, markdownKeymap, pasteKeymap } from "./copy-widget";
 import { images } from "./image-widget";
 import "./style.css";
 import { theme } from "./theme";
@@ -96,6 +96,7 @@ export function makeExtensions({
         },
       },
     ]),
+
     EditorView.updateListener.of((v) => {
       if (!v.docChanged) return;
       onUpdateContent(v.state.doc.sliceString(0));
@@ -108,6 +109,7 @@ export function makeExtensions({
         const text = v.state.doc.sliceString(0, cursorPosition);
         const activeLine = text.split("\n").slice(-1)[0];
         const startOfLinePosition = cursorPosition - activeLine.length;
+
         const isAutocompleting =
           activeLine.startsWith("/") && !activeLine.includes("/>");
         if (!isAutocompleting) {
@@ -122,6 +124,54 @@ export function makeExtensions({
         setAutocompleteLocation(cursorLocation);
         setSearchTerm(activeLine.slice(1));
       }
+    }),
+
+    EditorView.domEventHandlers({
+      paste(e, view) {
+        const value = e.clipboardData?.items[0];
+        const MAX_URL_SIZE = 5000000;
+        // handle images pasted from the web
+        if (value && value.type === "text/html") {
+          value.getAsString((str) => {
+            const htmlImgRegex = /<img[^>]*src="(?<src>[^"]*)"[^>]*>/gim;
+            const matches = [...str.matchAll(htmlImgRegex)];
+            const images = matches.map((match) => match.groups?.src);
+            if (images) {
+              view.dispatch({
+                changes: {
+                  from: view.state.selection.main.from,
+                  to: view.state.selection.main.to,
+                  insert: images
+                    .filter((image) => image && image.length < MAX_URL_SIZE)
+                    .map((image) => `![${image}](${image})`)
+                    .join("\n"),
+                },
+              });
+            }
+          });
+        } else if (
+          value &&
+          ["image/png", "image/jpeg"].includes(value.type || "")
+        ) {
+          const file = value.getAsFile();
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+              const image = e.target?.result as string;
+              if (image && image.length < MAX_URL_SIZE) {
+                view.dispatch({
+                  changes: {
+                    from: view.state.selection.main.from,
+                    to: view.state.selection.main.to,
+                    insert: `![${file.name}](${image})`,
+                  },
+                });
+              }
+            };
+            reader.readAsDataURL(file);
+          }
+        }
+      },
     }),
 
     // lineNumbers(),
