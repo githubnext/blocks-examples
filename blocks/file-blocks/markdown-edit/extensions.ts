@@ -129,13 +129,36 @@ export function makeExtensions({
     EditorView.domEventHandlers({
       paste(e, view) {
         const value = e.clipboardData?.items[0];
-        if (value.type === "image/png") {
+        const MAX_IMAGE_SIZE = 5000000;
+        // handle images pasted from the web
+        if (value && value.type === "text/html") {
+          value.getAsString((str) => {
+            const htmlImgRegex = /<img[^>]*src="(?<src>[^"]*)"[^>]*>/gim;
+            const matches = [...str.matchAll(htmlImgRegex)];
+            const images = matches.map((match) => match.groups?.src);
+            if (images) {
+              view.dispatch({
+                changes: {
+                  from: view.state.selection.main.from,
+                  to: view.state.selection.main.to,
+                  insert: images
+                    .filter((image) => image && image.length < MAX_IMAGE_SIZE)
+                    .map((image) => `![${image}](${image})`)
+                    .join("\n"),
+                },
+              });
+            }
+          });
+        } else if (
+          value &&
+          ["image/png", "image/jpeg"].includes(value.type || "")
+        ) {
           const file = value.getAsFile();
           if (file) {
             const reader = new FileReader();
             reader.onload = (e) => {
-              const image = e.target?.result;
-              if (image) {
+              const image = e.target?.result as string;
+              if (image && image.length < MAX_IMAGE_SIZE) {
                 view.dispatch({
                   changes: {
                     from: view.state.selection.main.from,
