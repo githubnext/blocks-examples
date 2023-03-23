@@ -39,9 +39,9 @@
     "type": "file",
     "id": "image",
     "title": "Image",
-    "description": "View PNG, JPG, GIF, and SVG images",
+    "description": "View PNG, JPG, GIF, ICO and SVG images",
     "entry": "blocks/file-blocks/image.tsx",
-    "matches": ["*.png", "*.jpg", "*.jpeg", "*.gif", "*.svg"],
+    "matches": ["*.png", "*.ico", "*.jpg", "*.jpeg", "*.gif", "*.svg"],
     "example_path": "https://github.com/pmndrs/react-spring/blob/HEAD/assets/projects/aragon.png?raw=true"
   },
   {
