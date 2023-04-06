@@ -1,5 +1,5 @@
 import { tw } from "twind";
-import cq from "@fullstackio/cq";
+import cq from "@fullstackio/cq/dist/cq.browser.js";
 import { FolderBlockProps, getLanguageFromFilename } from "@githubnext/blocks";
 import debounce from "lodash/debounce";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
