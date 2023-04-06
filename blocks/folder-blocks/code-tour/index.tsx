@@ -7,6 +7,7 @@ import Select from "react-select";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import "./style.css";
 import { Button, FormControl, TextInput } from "@primer/react";
+import { Buffer } from "buffer";
 
 export default function (props: FolderBlockProps) {
   const {
