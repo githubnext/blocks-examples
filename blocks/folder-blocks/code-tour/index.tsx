@@ -1,5 +1,5 @@
 import { tw } from "twind";
-import cq from "@fullstackio/cq";
+import cq from "@fullstackio/cq/dist/cq.browser.js";
 import { FolderBlockProps, getLanguageFromFilename } from "@githubnext/blocks";
 import debounce from "lodash/debounce";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -7,6 +7,7 @@ import Select from "react-select";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import "./style.css";
 import { Button, FormControl, TextInput } from "@primer/react";
+import { Buffer } from "buffer";
 
 export default function (props: FolderBlockProps) {
   const {
