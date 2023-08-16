@@ -19,7 +19,7 @@
     "@codemirror/state": "^6.1.1",
     "@codemirror/view": "^6.2.0",
     "@codesandbox/sandpack-react": "^1.5.0",
-    "@excalidraw/excalidraw": "^0.10.0",
+    "@excalidraw/excalidraw": "^0.15.3",
     "@fullstackio/cq": "^6.0.9",
     "@fullstackio/remark-cq": "^6.1.2",
     "@githubnext/blocks": "^2.2.0",
