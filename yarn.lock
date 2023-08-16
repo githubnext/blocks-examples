@@ -879,10 +879,10 @@
   resolved "https://registry.yarnpkg.com/@esbuild/linux-loong64/-/linux-loong64-0.14.54.tgz#de2a4be678bd4d0d1ffbb86e6de779cde5999028"
   integrity sha512-bZBrLAIX1kpWelV0XemxBZllyRmM6vgFQQG2GdNb+r3Fkp0FOh1NJSvekXDs7jq70k4euu1cryLMfU+mTXlEpw==
 
-"@excalidraw/excalidraw@^0.10.0":
-  version "0.10.1"
-  resolved "https://registry.yarnpkg.com/@excalidraw/excalidraw/-/excalidraw-0.10.1.tgz#86acd44747ad8b77a07d4e675784fb3fd1da3d54"
-  integrity sha512-UFv4j5vuQVkn4iBuqWcM8AbFmTxtcT37iCa8lKS6ip+w7AFyJIX1cHmo7y0frEiQn5YIbLMNksvnaF8D1NmNrw==
+"@excalidraw/excalidraw@^0.15.3":
+  version "0.15.3"
+  resolved "https://registry.yarnpkg.com/@excalidraw/excalidraw/-/excalidraw-0.15.3.tgz#5dea570f76451adf68bc24d4bfdd67a375cfeab1"
+  integrity sha512-/gpY7fgMO/AEaFLWnPqzbY8H7ly+/zocFf7D0Is5sWNMD2mhult5tana12lXKLSJ6EAz7ubo1A7LajXzvJXJDA==
 
 "@fullstackio/cq@^6.0.9":
   version "6.0.9"
