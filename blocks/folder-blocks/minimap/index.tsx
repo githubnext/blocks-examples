@@ -16,7 +16,7 @@ export default function (props: FolderBlockProps) {
       style={{
         width: 600,
         height: 600,
-        margin: "0 auto",
+        margin: "2% auto",
         display: "flex",
         alignItems: "center",
       }}
